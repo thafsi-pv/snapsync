@@ -1,11 +1,12 @@
-const userModal = require("../model/userModal");
+const userModal = require("../model/userModel");
 const { generatePasswordHash, comparePassword } = require("../utils/bcrypt");
 const { generateJWTToken } = require("../utils/jwt");
 
 const signUp = async (req, res) => {
   try {
     const data = req.body;
-    const isExist = await userModel.findOne({ emailPhone: data.emailPhone });
+    console.log("🚀 ~ file: auth.js:8 ~ signUp ~ data:", data);
+    const isExist = await userModal.findOne({ emailPhone: data.emailPhone });
     if (isExist) {
       return res.status(400).json({
         message: "This email/phone id already registered, use another one!",
@@ -49,5 +50,19 @@ const signIn = async (req, res) => {
   }
 };
 
+const checkUserNameAvailablity = async (req, res) => {
+  try {
+    const { userName } = req.body;
 
-module.exports = { signUp, signIn, unlockScreen };
+    const existingUser = await userModal.findOne({ userName });
+    if (existingUser) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false }); 
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { signUp, signIn, checkUserNameAvailablity };

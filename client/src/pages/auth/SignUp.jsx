@@ -3,6 +3,8 @@ import logo from "../../assets/img/snapsync_logo.png";
 import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../../utils/validation";
+import axiosInstance from "../../axios/axiosInterceptor";
+import { LOGIN_API } from "../../axios/const";
 
 function SignUp() {
   const signUpFormik = useFormik({
@@ -14,9 +16,15 @@ function SignUp() {
     },
     validationSchema: signUpValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      handleSignUp(values);
     },
   });
+
+  const handleSignUp = async (values) => {
+    const data =await axiosInstance.post(LOGIN_API, values);
+    console.log("🚀 ~ file: SignUp.jsx:25 ~ handleSignUp ~ data:", data);
+  };
 
   return (
     <div

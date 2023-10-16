@@ -2,15 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const { authRouter } = require("./router/auth");
 require("dotenv").config();
+const connectDb = require("./config/db");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
-app.use(express.static("public"));
+// app.use(express.static("public"));
 connectDb();
 
-app.use("api/auth", authRouter);
+app.use("/api/auth", authRouter);
 
 const PORT = process.env.PORT || 3457;
 app.listen(PORT, () => console.log("server started at " + PORT));
+   
