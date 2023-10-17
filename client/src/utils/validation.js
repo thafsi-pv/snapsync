@@ -15,7 +15,7 @@ export const signUpValidationSchema = Yup.object({
     .max(20, "Must be 20 characters or less")
     .required("Full Name Required"),
   userName: Yup.string()
-    .matches(/^[a-zA-Z0-9.-]+$/, "Invalid characters, Use . and -")
+    .matches(/^[a-zA-Z0-9.-]+$/, "Invalid characters, Use only . and -")
     .required("User Name Required"),
   password: Yup.string()
     .matches(

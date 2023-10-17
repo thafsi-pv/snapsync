@@ -4,7 +4,7 @@ import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../../utils/validation";
 import axiosInstance from "../../axios/axiosInterceptor";
-import { LOGIN_API } from "../../axios/const";
+import { ISUSERNAME_EXIST_API, LOGIN_API } from "../../axios/const";
 
 function SignUp() {
   const signUpFormik = useFormik({
@@ -22,8 +22,36 @@ function SignUp() {
   });
 
   const handleSignUp = async (values) => {
-    const data =await axiosInstance.post(LOGIN_API, values);
+    const data = await axiosInstance.post(LOGIN_API, values);
     console.log("🚀 ~ file: SignUp.jsx:25 ~ handleSignUp ~ data:", data);
+  };
+
+  const handleUsernameChange = async (e) => {
+    const newUsername = e.target.value;
+    signUpFormik.setFieldValue("userName", newUsername);
+
+    if (newUsername) {
+      const isExist = await checkUsernameAvailability(newUsername);
+      console.log("🚀 ~ file: SignUp.jsx:35 ~ handleUsernameChange ~ isExist:", isExist)
+      if (!isExist) {
+        signUpFormik.setFieldError("userName", "");
+      } else {
+        signUpFormik.setFieldError("userName", "Username is already taken");
+      }
+    }
+  };
+
+  const checkUsernameAvailability = async (username) => {
+    try {
+      const response = await axiosInstance.get(
+        `${ISUSERNAME_EXIST_API}?username=${username}`
+      );
+      
+      return response.data.exists;
+    } catch (error) {
+      console.error("Error checking username availability:", error);
+      throw error;
+    }
   };
 
   return (
@@ -113,7 +141,7 @@ function SignUp() {
                         ? "error"
                         : "success"
                     }
-                    onChange={signUpFormik.handleChange}
+                    onChange={handleUsernameChange}
                     onBlur={signUpFormik.handleBlur}
                     value={signUpFormik.values.userName}
                   />

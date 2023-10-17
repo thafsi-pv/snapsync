@@ -50,19 +50,21 @@ const signIn = async (req, res) => {
   }
 };
 
-const checkUserNameAvailablity = async (req, res) => {
+const isUserNameExist = async (req, res) => {
   try {
-    const { userName } = req.body;
+    const userName  = req.query.username;
+    console.log("🚀 ~ file: auth.js:56 ~ isUserNameExist ~ userName:", userName)
 
     const existingUser = await userModal.findOne({ userName });
+    console.log("🚀 ~ file: auth.js:59 ~ isUserNameExist ~ existingUser:", existingUser)
     if (existingUser) {
       res.json({ exists: true });
     } else {
-      res.json({ exists: false }); 
+      res.json({ exists: false });
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports = { signUp, signIn, checkUserNameAvailablity };
+module.exports = { signUp, signIn, isUserNameExist };
