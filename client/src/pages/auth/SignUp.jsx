@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "../../assets/img/snapsync_logo.png";
 import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../../utils/validation";
 import axiosInstance from "../../axios/axiosInterceptor";
 import { ISUSERNAME_EXIST_API, LOGIN_API } from "../../axios/const";
+import Logo from "../../components/logo/Logo";
 
 function SignUp() {
   const signUpFormik = useFormik({
@@ -32,7 +32,10 @@ function SignUp() {
 
     if (newUsername) {
       const isExist = await checkUsernameAvailability(newUsername);
-      console.log("🚀 ~ file: SignUp.jsx:35 ~ handleUsernameChange ~ isExist:", isExist)
+      console.log(
+        "🚀 ~ file: SignUp.jsx:35 ~ handleUsernameChange ~ isExist:",
+        isExist
+      );
       if (!isExist) {
         signUpFormik.setFieldError("userName", "");
       } else {
@@ -46,7 +49,7 @@ function SignUp() {
       const response = await axiosInstance.get(
         `${ISUSERNAME_EXIST_API}?username=${username}`
       );
-      
+
       return response.data.exists;
     } catch (error) {
       console.error("Error checking username availability:", error);
@@ -62,11 +65,7 @@ function SignUp() {
         <div className="self-start flex flex-col gap-3 w-[360px]">
           <div className="border-solid border-[#d7d7d7] flex flex-col gap-4 pt-6 pb-12 px-8 border">
             <div className="self-center flex flex-col   items-center">
-              <img
-                src={logo}
-                id="Logo"
-                className="bg-[undefined] bg-cover h-24 bg-blend-normal bg-no-repeat"
-              />
+              <Logo />
               <div className="w-full text-center text-base font-semibold text-gray-500">
                 Sign up to see photos and videos from your friends.
               </div>

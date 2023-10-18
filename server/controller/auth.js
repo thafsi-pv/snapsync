@@ -11,7 +11,6 @@ const { sendAccountActivationEmail } = require("../utils/nodemailer");
 const signUp = async (req, res) => {
   try {
     const data = req.body;
-    console.log("🚀 ~ file: auth.js:8 ~ signUp ~ data:", data);
     const isExist = await userModal.findOne({ emailPhone: data.emailPhone });
     if (isExist) {
       return res.status(400).json({
@@ -21,7 +20,6 @@ const signUp = async (req, res) => {
     const hash = await generatePasswordHash(data.password);
     delete data.cpassword;
     const newUser = await userModal.create({ ...data, password: hash });
-    console.log("🚀 ~ file: auth.js:16 ~ signUp ~ newUser:", newUser);
 
     const activationCode = uuidv4();
     const responseCode = userCodeModel.create({
@@ -36,7 +34,6 @@ const signUp = async (req, res) => {
       activationToken,
       newUser.fullName
     );
-    console.log("🚀 ~ file: auth.js:37 ~ signUp ~ mailStatus:", mailStatus);
 
     res.json(newUser);
   } catch (error) {

@@ -45,18 +45,20 @@ function InputField(props) {
           min={min}
           step={step}
           placeholder={placeholder}
-          className={`flex-1 text-sm flex h-5 w-full items-center justify-center bg-white/0 p-3 outline-none ${
+          className={`flex-1 text-xs flex h-5 w-full items-center justify-center bg-white/0 p-3 outline-none ${
             disabled === true
               ? "!border-none !bg-gray-100 dark:!bg-white/5 dark:placeholder:!text-[rgba(255,255,255,0.15)]"
               : state === "error"
               ? "border-red-500 text-red-500 placeholder:text-red-500 dark:!border-red-400 dark:!text-red-400 dark:placeholder:!text-red-400"
               : state === "success"
-              ? "border-green-500 text-green-500 placeholder:text-green-500 dark:!border-green-400 dark:!text-green-400 dark:placeholder:!text-green-400"
+              ? ""
               : "border-gray-200 dark:!border-white/10 dark:text-white"
           }`}
         />
         <span className="flex justify-end mr-2">
-          {state === "success" && <BiCheckCircle className="text-green-500" />}
+          {state === "success" && value != "" && (
+            <BiCheckCircle className="text-green-500" />
+          )}
           {state === "error" && (
             <IoIosCloseCircleOutline className="text-red-500" />
           )}

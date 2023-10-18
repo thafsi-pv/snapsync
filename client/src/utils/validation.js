@@ -24,3 +24,19 @@ export const signUpValidationSchema = Yup.object({
     )
     .required("Password Required"),
 });
+
+export const logInValidationSchema = Yup.object({
+  emailPhone: Yup.string().test(
+    "emailOrPhone",
+    "Invalid email or phone",
+    (value) => {
+      if (!value) return false;
+      // Check if it's a valid email
+      if (Yup.string().email().isValidSync(value)) return true;
+      // Check if it's a valid 10-digit phone number
+      if (/^\d{10}$/.test(value)) return true;
+      return false;
+    }
+  ),
+  password: Yup.string().required("Password is Required"),
+});
