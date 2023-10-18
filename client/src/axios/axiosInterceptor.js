@@ -26,9 +26,15 @@ axiosInstance.interceptors.request.use(
 );
 
 //Response Interceptor
-axiosInstance.interceptors.response.use(response, (error) => {
-  //handle error
-  genericError(error);
-});
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  function (error) {
+    //handle error
+    genericError(error);
+    return Promise.reject(error);
+  }
+);
 
 export default { axiosInstance, abortController };
