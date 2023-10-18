@@ -5,9 +5,9 @@ import { showLoader, hideLoader } from "../redux/loaderSlice";
 import { baseUrl } from "./const";
 import { useSelector } from "react-redux";
 
-const abortController = new AbortController();
+export const abortController = new AbortController();
 const signal = abortController.signal;
-const useAxiosInterceptor = axios.create({
+export const useAxiosInterceptor = axios.create({
   baseURL: baseUrl,
   signal: signal,
 });

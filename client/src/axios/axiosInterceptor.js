@@ -2,9 +2,9 @@ import axios from "axios";
 import { baseUrl } from "../axios/const";
 import { genericError } from "./genericError";
 
-const abortController = new AbortController();
+export const abortController = new AbortController();
 const signal = abortController.signal;
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: baseUrl,
   signal: signal,
 });
