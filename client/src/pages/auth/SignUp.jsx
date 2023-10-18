@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../../utils/validation";
-import axiosInstance from "../../axios/axiosInterceptor";
+import { axiosInstance, abortController } from "../../axios/axiosInterceptor";
 import { ISUSERNAME_EXIST_API, LOGIN_API } from "../../axios/const";
 import Logo from "../../components/logo/Logo";
 
 function SignUp() {
+  useEffect(() => {
+    return () => {
+      abortController.abort();
+    };
+  }, []);
+
   const signUpFormik = useFormik({
     initialValues: {
       emailPhone: "",

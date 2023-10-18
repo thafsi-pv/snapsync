@@ -5,11 +5,14 @@ import { showLoader, hideLoader } from "../redux/loaderSlice";
 import { baseUrl } from "./const";
 import { useSelector } from "react-redux";
 
-const axiosInstance2 = axios.create({
+const abortController = new AbortController();
+const signal = abortController.signal;
+const useAxiosInterceptor = axios.create({
   baseURL: baseUrl,
+  signal: signal,
 });
 
-axiosInstance2.interceptors.request.use(
+useAxiosInterceptor.interceptors.request.use(
   (config) => {
     store.dispatch(showLoader(true));
     const deData = JSON.parse(localStorage.getItem("DEPOS"));
@@ -22,7 +25,7 @@ axiosInstance2.interceptors.request.use(
   }
 );
 
-axiosInstance2.interceptors.response.use(
+useAxiosInterceptor.interceptors.response.use(
   (response) => {
     store.dispatch(hideLoader());
     return response;
@@ -33,4 +36,4 @@ axiosInstance2.interceptors.response.use(
   }
 );
 
-export default axiosInstance2;
+export default { useAxiosInterceptor, abortController };

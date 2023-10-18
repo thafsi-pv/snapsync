@@ -1,8 +1,12 @@
 import axios from "axios";
 import { baseUrl } from "../axios/const";
+import { genericError } from "./genericError";
 
+const abortController = new AbortController();
+const signal = abortController.signal;
 const axiosInstance = axios.create({
   baseURL: baseUrl,
+  signal: signal,
 });
 
 // Request Interceptor
@@ -21,6 +25,10 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// ... Rest of the code
+//Response Interceptor
+axiosInstance.interceptors.response.use(response, (error) => {
+  //handle error
+  genericError(error);
+});
 
-export default axiosInstance;
+export default { axiosInstance, abortController };

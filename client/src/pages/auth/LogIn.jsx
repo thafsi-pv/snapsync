@@ -126,7 +126,7 @@ function LogIn() {
             </div>
           </div>
         </div>
-        <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-20 shrink-0 items-center border mt-3">
+        <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center border mt-3">
           <div className="text-sm  tracking-[-0.63]">
             Don’t have an account? 
           </div>
