@@ -27,7 +27,7 @@ function LogIn() {
         <div className="relative flex flex-col w-[360px]">
           <div className="border-solid border-[#d7d7d7] relative flex flex-col justify-start  pb-5 shrink-0 px-10 border">
             <div className="flex flex-col gap-7">
-              <div className="self-center flex flex-col   items-center">
+              <div className="self-center flex flex-col w-56  items-center">
                 <Logo />
               </div>
               <form

@@ -6,7 +6,7 @@ function Logo() {
     <img
       src={logo}
       id="Logo"
-      className="bg-[undefined] bg-cover h-24 bg-blend-normal bg-no-repeat"
+      className="bg-[undefined] bg-cover h-24 bg-blend-normal bg-no-repeat scale-75"
     />
   );
 }
