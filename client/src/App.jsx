@@ -8,6 +8,7 @@ import ChangePassword from "./pages/auth/ChangePassword";
 import OTP from "./pages/auth/OTP";
 import ResetPassword from "./pages/auth/ResetPassword";
 import MainHomePage from "./pages/homepage/MainHomePage";
+import EmailVerification from "./pages/auth/EmailVerification";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +17,7 @@ function App() {
     <>
       <LogIn />
       <SignUp/>
+      <EmailVerification/>
       <ChangePassword/>
       <OTP/>
       <ResetPassword/>
