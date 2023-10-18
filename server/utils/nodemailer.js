@@ -1,18 +1,17 @@
 const nodemailer = require("nodemailer");
+const { baseUrl } = require("./const");
+const {
+  accountVerificatinMailTemplate,
+} = require("../templates/emailVerification");
 
-exports.sendPasswordResetEmailNodeMail = async (toEmail, verificationCode) => {
-  console.log(
-    "🚀 ~ file: nodeMail.js:4 ~ exports.sendPasswordResetEmailNodeMail= ~ toEmail:",
-    toEmail
-  );
+const sendPasswordResetEmail = async (toEmail, verificationCode) => {
   const transporter = nodemailer.createTransport({
     service: "gmail", // can be replaced with any email service provider
     auth: {
       user: process.env.GMAIL_USERNAME,
-      pass: process.env.GMAIL_PASSWORD, 
+      pass: process.env.GMAIL_PASSWORD,
     },
   });
-
   const mailOptions = {
     from: "reset@moviedb.com", // replace with your email
     to: toEmail,
@@ -30,3 +29,45 @@ exports.sendPasswordResetEmailNodeMail = async (toEmail, verificationCode) => {
   console.log("Email sent: " + info.response);
   return info;
 };
+
+const sendAccountActivationEmail = async (
+  toEmail,
+  activationToken,
+  username
+) => {
+  const activationUrl = `${baseUrl}/auth/accountactivation?code=${activationToken}`;
+  const mailTemplate = accountVerificatinMailTemplate;
+  const replacedTemplate = mailTemplate
+    .replace(/\[LOGO\]/, `${baseUrl}/img/snapsync_logo.png"`)
+    .replace(/\[ACTIVATION_URL\]/, activationUrl)
+    .replace(/\[ACTIVATION_URL\]/, activationUrl)
+    .replace(/\[USERNAME\]/, username);
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USERNAME,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: "reset@moviedb.com",
+    to: toEmail,
+    subject: "Snapsync Account Activation",
+    // text: ``, // replace with your message
+    html: replacedTemplate,
+  };
+
+  const info = await transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Email failed to send:", error);
+    } else {
+      console.log("Email sent successfully:", info.response);
+    }
+  });
+  console.log("Email sent: " + info.response);
+  return info;
+};
+
+module.exports = { sendPasswordResetEmail, sendAccountActivationEmail };

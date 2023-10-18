@@ -7,8 +7,9 @@ const userSchema = mongoose.Schema(
     userName: { type: String, required: true, trim: true },
     password: { type: String },
     imageUrl: { type: String },
+    isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

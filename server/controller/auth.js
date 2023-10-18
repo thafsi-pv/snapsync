@@ -1,6 +1,12 @@
 const userModal = require("../model/userModel");
 const { generatePasswordHash, comparePassword } = require("../utils/bcrypt");
-const { generateJWTToken } = require("../utils/jwt");
+const {
+  generateJWTToken,
+  generateAccoutActivationToken,
+} = require("../utils/jwt");
+const { v4: uuidv4 } = require("uuid");
+const userCodeModel = require("../model/userCodeModel");
+const { sendAccountActivationEmail } = require("../utils/nodemailer");
 
 const signUp = async (req, res) => {
   try {
@@ -16,6 +22,22 @@ const signUp = async (req, res) => {
     delete data.cpassword;
     const newUser = await userModal.create({ ...data, password: hash });
     console.log("🚀 ~ file: auth.js:16 ~ signUp ~ newUser:", newUser);
+
+    const activationCode = uuidv4();
+    const responseCode = userCodeModel.create({
+      user_id: newUser._id,
+      code: activationCode,
+    });
+
+    const activationToken = generateAccoutActivationToken(activationCode);
+
+    const mailStatus = await sendAccountActivationEmail(
+      newUser.emailPhone,
+      activationToken,
+      newUser.fullName
+    );
+    console.log("🚀 ~ file: auth.js:37 ~ signUp ~ mailStatus:", mailStatus);
+
     res.json(newUser);
   } catch (error) {
     console.log(error);
@@ -52,11 +74,17 @@ const signIn = async (req, res) => {
 
 const isUserNameExist = async (req, res) => {
   try {
-    const userName  = req.query.username;
-    console.log("🚀 ~ file: auth.js:56 ~ isUserNameExist ~ userName:", userName)
+    const userName = req.query.username;
+    console.log(
+      "🚀 ~ file: auth.js:56 ~ isUserNameExist ~ userName:",
+      userName
+    );
 
     const existingUser = await userModal.findOne({ userName });
-    console.log("🚀 ~ file: auth.js:59 ~ isUserNameExist ~ existingUser:", existingUser)
+    console.log(
+      "🚀 ~ file: auth.js:59 ~ isUserNameExist ~ existingUser:",
+      existingUser
+    );
     if (existingUser) {
       res.json({ exists: true });
     } else {
