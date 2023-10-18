@@ -8,6 +8,8 @@ import Logo from "../../components/logo/Logo";
 import { useFormik } from "formik";
 import { logInValidationSchema } from "../../utils/validation";
 import { AiFillFacebook } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { axiosInstance } from "../../axios/axiosInterceptor";
 
 function LogIn() {
   const logInFormik = useFormik({
@@ -17,10 +19,15 @@ function LogIn() {
     },
     validationSchema: logInValidationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      //handleLogIn(values);
+      //alert(JSON.stringify(values, null, 2));
+      handleLogIn(values);
     },
   });
+
+  const handleLogIn = async (values) => {
+    const result = await axiosInstance.post(values);
+  };
+
   return (
     <AuthLayout>
       <div className="flex flex-col items-center">
@@ -115,12 +122,12 @@ function LogIn() {
                     className="self-start mt-1 w-5 shrink-0"
                   />
                   <div className="text-center text-sm font-semibold mb-1 flex justify-center items-center gap-2 text-[#385185]">
-                    <AiFillFacebook  className="w-5 h-5 text-[#385185]"/>
+                    <AiFillFacebook className="w-5 h-5 text-[#385185]" />
                     Log in with Facebook
                   </div>
                 </div>
                 <div className="text-xs  self-center">
-                Forgotten your password?
+                  Forgotten your password?
                 </div>
               </div>
             </div>
@@ -128,11 +135,13 @@ function LogIn() {
         </div>
         <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center border mt-3">
           <div className="text-sm  tracking-[-0.63]">
-            Don’t have an account? 
+            Don’t have an account?
           </div>
-          <div className="text-sm text-[#0095f6]">
-           <strong>Sign up</strong>
-          </div>
+          <Link to="/auth/signup">
+            <div className="text-sm text-[#0095f6]">
+              <strong>Sign up</strong>
+            </div>
+          </Link>
         </div>
       </div>
     </AuthLayout>
