@@ -93,17 +93,26 @@ const isUserNameExist = async (req, res) => {
 
 const emailVerification = async (req, res) => {
   try {
-    const { userId, activationCode } = req.body;
+    const { userId, activationCode } = req;
 
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,
     });
-    if (savedActivationCode == activationCode) {
+    console.log(
+      "🚀 ~ file: auth.js:103 ~ emailVerification ~ savedActivationCode:",
+      savedActivationCode
+    );
+    if (savedActivationCode.code == activationCode) {
       const result = await userModal.updateOne(
         { _id: userId },
-        { $set: { isVerified: true } }
+        { $set: { isVerified: true } },
+        { new: true }
       );
-      if (result.nModified === 1) {
+      console.log(
+        "🚀 ~ file: auth.js:109 ~ emailVerification ~ result:",
+        result
+      );
+      if (result.modifiedCount === 1) {
         console.log(`User with userId ${userId} has been verified.`);
         res
           .status(200)
