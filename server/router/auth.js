@@ -5,6 +5,6 @@ const authRouter = express.Router();
 
 authRouter.post("/signUp", signUp);
 authRouter.get("/isUserNameExist", isUserNameExist);
-authRouter.post("/logIn", signIn);
+authRouter.post("/login", signIn);
 
 module.exports = { authRouter };

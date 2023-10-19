@@ -10,6 +10,7 @@ import { logInValidationSchema } from "../../utils/validation";
 import { AiFillFacebook } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
+import { LOGIN_API } from "../../axios/const";
 
 function LogIn() {
   const logInFormik = useFormik({
@@ -25,7 +26,9 @@ function LogIn() {
   });
 
   const handleLogIn = async (values) => {
-    const result = await axiosInstance.post(values);
+    console.log("🚀 ~ file: LogIn.jsx:29 ~ handleLogIn ~ values:", values)
+    const result = await axiosInstance.post(LOGIN_API, values);
+    console.log("🚀 ~ file: LogIn.jsx:30 ~ handleLogIn ~ result:", result)
   };
 
   return (
@@ -61,7 +64,7 @@ function LogIn() {
                     <InputField
                       placeholder="Password"
                       id="password"
-                      name="fullName"
+                      name="password"
                       type="text"
                       state={
                         logInFormik.touched.password &&

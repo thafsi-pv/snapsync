@@ -1,8 +1,8 @@
 const userModal = require("../model/userModel");
 const { generatePasswordHash, comparePassword } = require("../utils/bcrypt");
 const {
-  generateJWTToken,
   generateAccoutActivationToken,
+  generateAccessToken,
 } = require("../utils/jwt");
 const { v4: uuidv4 } = require("uuid");
 const userCodeModel = require("../model/userCodeModel");
@@ -44,6 +44,7 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const { emailPhone, password } = req.body;
+    console.log("🚀 ~ file: auth.js:47 ~ signIn ~ req.body:", req.body);
     const isUserExist = await userModal.findOne({ emailPhone });
     if (!isUserExist) {
       return res.status(400).json({ message: "Incorrect email/password" });
@@ -55,14 +56,10 @@ const signIn = async (req, res) => {
     }
 
     //generate access token
-    const accesstoken = generateJWTToken(isUserExist._id);
+    const accesstoken = generateAccessToken(isUserExist._id);
     return res.status(200).json({
       message: "Login success",
       accesstoken,
-      email: isUserExist.email,
-      firstName: isUserExist.firstName,
-      lastName: isUserExist.lastName,
-      imageUrl: isUserExist.imageUrl,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });

@@ -3,17 +3,17 @@ import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../../utils/validation";
 import { axiosInstance, abortController } from "../../axios/axiosInterceptor";
-import { ISUSERNAME_EXIST_API, LOGIN_API } from "../../axios/const";
+import { ISUSERNAME_EXIST_API, SIGNUP_API } from "../../axios/const";
 import Logo from "../../components/logo/Logo";
 import AuthLayout from "../../layout/AuthLayout";
 import { Link } from "react-router-dom";
 
 function SignUp() {
-  useEffect(() => {
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     abortController.abort();
+  //   };
+  // }, []);
 
   const signUpFormik = useFormik({
     initialValues: {
@@ -30,8 +30,11 @@ function SignUp() {
   });
 
   const handleSignUp = async (values) => {
-    const data = await axiosInstance.post(LOGIN_API, values);
-    console.log("🚀 ~ file: SignUp.jsx:25 ~ handleSignUp ~ data:", data);
+    const response = await axiosInstance.post(SIGNUP_API, values);
+    console.log(
+      "🚀 ~ file: SignUp.jsx:34 ~ handleSignUp ~ response:",
+      response
+    );
   };
 
   const handleUsernameChange = async (e) => {

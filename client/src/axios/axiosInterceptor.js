@@ -31,6 +31,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log("🚀 ~ file: axiosInterceptor.js:34 ~ error:", error)
     //handle error
     genericError(error);
     return Promise.reject(error);

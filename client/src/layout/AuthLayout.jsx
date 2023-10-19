@@ -4,7 +4,7 @@ import appstoreImg from "../assets/img/appstore.png";
 
 function AuthLayout({ children }) {
   return (
-    <div className="overflow-hidden bg-white flex flex-col justify-end w-full items-center">
+    <div className="overflow-hidden bg-white flex flex-col justify-center w-full items-center min-h-screen">
       <div className="flex flex-col gap-3 items-center">
         {children}
         <div className="text-center text-sm font-['Microsoft_Sans_Serif'] tracking-[-0.77] leading-[26.1px] text-[#6e6e6e]">
@@ -44,7 +44,7 @@ function AuthLayout({ children }) {
                 </a>
               </div>
               <div className="">
-                <a className="" href="/about/jobs/" role="link" tabindex="0">
+                <a className="" href="/about/jobs/" role="link" tabIndex="0">
                   <span dir="auto">Jobs</span>
                 </a>
               </div>
@@ -69,7 +69,7 @@ function AuthLayout({ children }) {
                   className=""
                   href="/legal/privacy/"
                   role="link"
-                  tabindex="0">
+                  tabIndex="0">
                   <span dir="auto">Privacy</span>
                 </a>
               </div>
@@ -78,7 +78,7 @@ function AuthLayout({ children }) {
                   className=""
                   href="/legal/terms/"
                   role="link"
-                  tabindex="0">
+                  tabIndex="0">
                   <span dir="auto">Terms</span>
                 </a>
               </div>
@@ -87,7 +87,7 @@ function AuthLayout({ children }) {
                   className=""
                   href="/explore/locations/"
                   role="link"
-                  tabindex="0">
+                  tabIndex="0">
                   <span dir="auto">Locations</span>
                 </a>
               </div>
@@ -96,7 +96,7 @@ function AuthLayout({ children }) {
                   className=""
                   href="/web/lite/"
                   role="link"
-                  tabindex="0">
+                  tabIndex="0">
                   <span dir="auto">Instagram Lite</span>
                 </a>
               </div>
@@ -111,7 +111,7 @@ function AuthLayout({ children }) {
                   href=""
                   rel="nofollow noreferrer"
                   role="link"
-                  tabindex="0"
+                  tabIndex="0"
                   target="_blank">
                   <span dir="auto">Contact uploading and non-users</span>
                 </a>
