@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { baseUrl } = require("./const");
+const { baseUrl, frondEndBaseUrl } = require("./const");
 const {
   accountVerificatinMailTemplate,
 } = require("../templates/emailVerification");
@@ -35,7 +35,7 @@ const sendAccountActivationEmail = async (
   activationToken,
   username
 ) => {
-  const activationUrl = `${baseUrl}/auth/accountactivation?code=${activationToken}`;
+  const activationUrl = `${frondEndBaseUrl}/auth/verifyemail?code=${activationToken}`;
   const mailTemplate = accountVerificatinMailTemplate;
   const replacedTemplate = mailTemplate
     .replace(/\[LOGO\]/, `${baseUrl}/img/snapsync_logo.png"`)

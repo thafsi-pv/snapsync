@@ -21,6 +21,7 @@ function App() {
         <Route path="/auth/login" element={<LogIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/home" element={<MainHomePage />} />
+        <Route path="/auth/verifyemail" element={<EmailVerification />} />
       </Routes>
     </>
   );
