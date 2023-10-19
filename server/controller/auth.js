@@ -1,8 +1,8 @@
 const userModal = require("../model/userModel");
 const { generatePasswordHash, comparePassword } = require("../utils/bcrypt");
 const {
-  generateAccoutActivationToken,
   generateAccessToken,
+  generateEmailVerifyToken,
 } = require("../utils/jwt");
 const { v4: uuidv4 } = require("uuid");
 const userCodeModel = require("../model/userCodeModel");
@@ -14,7 +14,7 @@ const signUp = async (req, res) => {
     const isExist = await userModal.findOne({ emailPhone: data.emailPhone });
     if (isExist) {
       return res.status(400).json({
-        message: "This email/phone id already registered, use another one!",
+        message: "This email/phone is already registered, use another one!",
       });
     }
     const hash = await generatePasswordHash(data.password);
@@ -27,7 +27,10 @@ const signUp = async (req, res) => {
       code: activationCode,
     });
 
-    const activationToken = generateAccoutActivationToken(activationCode);
+    const activationToken = generateEmailVerifyToken(
+      newUser._id,
+      activationCode
+    );
 
     const mailStatus = await sendAccountActivationEmail(
       newUser.emailPhone,
@@ -44,7 +47,6 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   try {
     const { emailPhone, password } = req.body;
-    console.log("🚀 ~ file: auth.js:47 ~ signIn ~ req.body:", req.body);
     const isUserExist = await userModal.findOne({ emailPhone });
     if (!isUserExist) {
       return res.status(400).json({ message: "Incorrect email/password" });
@@ -89,4 +91,35 @@ const isUserNameExist = async (req, res) => {
   }
 };
 
-module.exports = { signUp, signIn, isUserNameExist };
+const emailVerification = async (req, res) => {
+  try {
+    const { userId, activationCode } = req.body;
+
+    const savedActivationCode = await userCodeModel.findOne({
+      user_id: userId,
+    });
+    if (savedActivationCode == activationCode) {
+      const result = await userModal.updateOne(
+        { _id: userId },
+        { $set: { isVerified: true } }
+      );
+      if (result.nModified === 1) {
+        console.log(`User with userId ${userId} has been verified.`);
+        res
+          .status(200)
+          .json({ message: `User with userId ${userId} has been verified.` });
+      } else {
+        console.log(`User with userId ${userId} not found.`);
+        res
+          .status(400)
+          .json({ message: `User with userId ${userId} not found.` });
+      }
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: `Error updating user verification status: ${error.message}`,
+    });
+  }
+};
+
+module.exports = { signUp, signIn, isUserNameExist, emailVerification };

@@ -8,14 +8,14 @@ const generateRefreshToken = (userId) => {
   return jwt.sign({ _id: userId }, process.env.JWT_REFRESH_SECRET_KEY, options);
 };
 
-const generateAccoutActivationToken = (code) => {
-  const payload = { activationCode: code };
+const generateEmailVerifyToken = (userId, code) => {
+  const payload = { userId, activationCode: code };
   const options = { expiresIn: 600 };
-  return jwt.sign(payload, process.env.JWT_SECRET_KEY, options);
+  return jwt.sign(payload, process.env.JWT_ACC_VERIFY_SECRET_KEY, options);
 };
 
 module.exports = {
   generateAccessToken,
-  generateAccoutActivationToken,
+  generateEmailVerifyToken,
   generateRefreshToken,
 };

@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/button";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../axios/axiosInterceptor";
 
 const EmailVerification = () => {
+  const params = useParams();
+
+  useEffect(() => {
+    if (params) {
+      handleVerification()
+    }
+  }, []);
+
+  const handleVerification=async()=>{
+    const verification=await axiosInstance.post()
+  }
+
   const handleResendEmail = () => {
     // Add logic to resend the verification email here
   };
@@ -13,10 +27,11 @@ const EmailVerification = () => {
           Email Verification Pending
         </h1>
         <p className="text-gray-700 mb-4">
-          Thank you for signing up. We've sent you a verification email. on <strong>mail@sample.com</strong> Please
-          click the link in the email to verify your account.
+          Thank you for signing up. We've sent you a verification email. on
+          <strong>mail@sample.com</strong> Please click the link in the email to
+          verify your account.
         </p>
-        <Button onClick={handleResendEmail} label='Resend Email'  />
+        <Button onClick={handleResendEmail} label="Resend Email" />
       </div>
     </div>
   );
