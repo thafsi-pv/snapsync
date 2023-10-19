@@ -2,6 +2,7 @@ import axios from "axios";
 import { baseUrl } from "../axios/const";
 import { genericError } from "./genericError";
 
+axios.defaults.withCredentials = true;
 export const abortController = new AbortController();
 const signal = abortController.signal;
 export const axiosInstance = axios.create({

@@ -3,6 +3,7 @@ const { generatePasswordHash, comparePassword } = require("../utils/bcrypt");
 const {
   generateAccessToken,
   generateEmailVerifyToken,
+  generateRefreshToken,
 } = require("../utils/jwt");
 const { v4: uuidv4 } = require("uuid");
 const userCodeModel = require("../model/userCodeModel");
@@ -59,10 +60,18 @@ const signIn = async (req, res) => {
 
     //generate access token
     const accesstoken = generateAccessToken(isUserExist._id);
-    return res.status(200).json({
-      message: "Login success",
-      accesstoken,
-    });
+    //generate refresh token
+    const refreshToken = generateRefreshToken(isUserExist._id);
+
+    res
+      .cookie("token", refreshToken, {
+        httpOnly: true,
+        secure: true,
+      })
+      .json({
+        message: "Login success",
+        accesstoken,
+      });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

@@ -4,13 +4,15 @@ const { authRouter } = require("./router/auth");
 require("dotenv").config();
 const connectDb = require("./config/db");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 // app.use(express.static("public"));
-app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, "assets")));
+app.use(cookieParser());
 connectDb();
 
 app.use("/api/auth", authRouter);
