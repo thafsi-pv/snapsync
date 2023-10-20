@@ -14,8 +14,19 @@ const generateEmailVerifyToken = (userId, code) => {
   return jwt.sign(payload, process.env.JWT_ACC_VERIFY_SECRET_KEY, options);
 };
 
+const verifyRefreshToken = (refreshToken) => {
+  if (!refreshToken) return false;
+  const tokenValid = jwt.verify(
+    refreshToken,
+    process.env.JWT_REFRESH_SECRET_KEY
+  );
+  if (!tokenValid) return false;
+  return tokenValid._id;
+};
+
 module.exports = {
   generateAccessToken,
   generateEmailVerifyToken,
   generateRefreshToken,
+  verifyRefreshToken,
 };

@@ -58,20 +58,21 @@ const signIn = async (req, res) => {
       return res.status(400).json({ message: "Incorrect email/password" });
     }
 
-    //generate access token
-    const accesstoken = generateAccessToken(isUserExist._id);
-    //generate refresh token
-    const refreshToken = generateRefreshToken(isUserExist._id);
+    // //generate access token
+    // const accesstoken = generateAccessToken(isUserExist._id);
+    // //generate refresh token
+    // const refreshToken = generateRefreshToken(isUserExist._id);
 
-    res
-      .cookie("token", refreshToken, {
-        httpOnly: true,
-        secure: true,
-      })
-      .json({
-        message: "Login success",
-        accesstoken,
-      });
+    // res
+    //   .cookie("ssacctoken", refreshToken, {
+    //     httpOnly: true,
+    //     secure: true,
+    //   })
+    //   .json({
+    //     message: "Login success",
+    //     accesstoken,
+    //   });
+    generateAccessAndRefreshToken(isUserExist._id, res);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -139,5 +140,29 @@ const emailVerification = async (req, res) => {
     });
   }
 };
+
+const verifyRefreshToken = async (req, res) => {
+  const userId = verifyRefreshToken(req.cookies.ssacctoken);
+  if (!userId) {
+    return res.status(401).json({ message: "Refresh Token is expired" });
+  }
+  generateAccessAndRefreshToken(userId, res);
+};
+
+function generateAccessAndRefreshToken(userId, res) {
+  //generate access token
+  const accesstoken = generateAccessToken(userId);
+  //generate refresh token
+  const refreshToken = generateRefreshToken(userId);
+
+  res
+    .cookie("ssacctoken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+    })
+    .json({
+      accesstoken,
+    });
+}
 
 module.exports = { signUp, signIn, isUserNameExist, emailVerification };
