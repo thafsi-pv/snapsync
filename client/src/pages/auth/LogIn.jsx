@@ -8,11 +8,12 @@ import Logo from "../../components/logo/Logo";
 import { useFormik } from "formik";
 import { logInValidationSchema } from "../../utils/validation";
 import { AiFillFacebook } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { LOGIN_API } from "../../axios/const";
 
 function LogIn() {
+  const navigate = useNavigate();
   const logInFormik = useFormik({
     initialValues: {
       emailPhone: "",
@@ -26,9 +27,14 @@ function LogIn() {
   });
 
   const handleLogIn = async (values) => {
-    console.log("🚀 ~ file: LogIn.jsx:29 ~ handleLogIn ~ values:", values)
+    console.log("🚀 ~ file: LogIn.jsx:29 ~ handleLogIn ~ values:", values);
     const result = await axiosInstance.post(LOGIN_API, values);
-    console.log("🚀 ~ file: LogIn.jsx:30 ~ handleLogIn ~ result:", result)
+    console.log("🚀 ~ file: LogIn.jsx:30 ~ handleLogIn ~ result:", result);
+
+    if (result.status === 200) {
+      localStorage.setItem("ssaccestoken", result.data.accesstoken);
+      navigate("/home");
+    }
   };
 
   return (
