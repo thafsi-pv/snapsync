@@ -4,14 +4,16 @@ const {
   signIn,
   isUserNameExist,
   emailVerification,
+  rotateRefreshToken,
 } = require("../controller/auth");
 const { verifyEmail } = require("../middleware/verifyEmail");
 
 const authRouter = express.Router();
 
 authRouter.post("/signUp", signUp);
-authRouter.get("/isUserNameExist", isUserNameExist);
+authRouter.get("/isUserName-exist", isUserNameExist);
 authRouter.post("/login", signIn);
-authRouter.post("/verifyEmail", verifyEmail, emailVerification);
+authRouter.post("/verify-email", verifyEmail, emailVerification);
+authRouter.get("/refresh-token", rotateRefreshToken);
 
 module.exports = { authRouter };

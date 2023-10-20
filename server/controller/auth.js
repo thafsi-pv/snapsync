@@ -141,7 +141,7 @@ const emailVerification = async (req, res) => {
   }
 };
 
-const verifyRefreshToken = async (req, res) => {
+const rotateRefreshToken = async (req, res) => {
   const userId = verifyRefreshToken(req.cookies.ssacctoken);
   if (!userId) {
     return res.status(401).json({ message: "Refresh Token is expired" });
@@ -165,4 +165,10 @@ function generateAccessAndRefreshToken(userId, res) {
     });
 }
 
-module.exports = { signUp, signIn, isUserNameExist, emailVerification };
+module.exports = {
+  signUp,
+  signIn,
+  isUserNameExist,
+  emailVerification,
+  rotateRefreshToken,
+};
