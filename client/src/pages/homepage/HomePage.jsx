@@ -10,11 +10,15 @@ function HomePage() {
 
   useEffect(() => {
     getUserData();
-  },[]);
+  }, []);
 
   const getUserData = async () => {
     const response = await axiosInstance.get(GET_USER_DATA);
-    console.log("🚀 ~ file: HomePage.jsx:17 ~ getUserData ~ response:", response)
+    console.log(
+      "🚀 ~ file: HomePage.jsx:17 ~ getUserData ~ response:",
+      response
+    );
+    setUserData(response?.data);
   };
 
   return (

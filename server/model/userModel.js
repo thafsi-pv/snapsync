@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema(
     fullName: { type: String, required: true, trim: true },
     userName: { type: String, required: true, trim: true },
     password: { type: String },
-    imageUrl: { type: String },
+    imageUrl: { type: String,default:'https://res.cloudinary.com/dm4djc1b1/image/upload/v1696873271/ymkpg1ig0htdxdi96aey.png' },
     isVerified: { type: Boolean, default: false },
   },
   { timestamps: true }
