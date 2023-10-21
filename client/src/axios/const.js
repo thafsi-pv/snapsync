@@ -10,3 +10,5 @@ export const VERIFY_EMAIL_API = "/auth/verify-email";
 export const ROTATE_REFRESH_TOKEN_API = "/auth/refresh-token";
 
 export const GET_USER_DATA = "/user/details";
+
+export const CREATE_POST_API = "/api/post";

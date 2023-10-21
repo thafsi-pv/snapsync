@@ -43,7 +43,8 @@ function AddPost({ show, closeModal }) {
   };
 
   const handleSharPost = async () => {
-    const response = await handleUploadMedia(file);
+    const mediaUrl = await handleUploadMedia(file);
+    const post = { media_url: mediaUrl, location, caption };
   };
 
   const animationVariants = {

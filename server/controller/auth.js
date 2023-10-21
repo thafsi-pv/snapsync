@@ -58,21 +58,6 @@ const signIn = async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ message: "Incorrect email/password" });
     }
-
-    // //generate access token
-    // const accesstoken = generateAccessToken(isUserExist._id);
-    // //generate refresh token
-    // const refreshToken = generateRefreshToken(isUserExist._id);
-
-    // res
-    //   .cookie("ssacctoken", refreshToken, {
-    //     httpOnly: true,
-    //     secure: true,
-    //   })
-    //   .json({
-    //     message: "Login success",
-    //     accesstoken,
-    //   });
     generateAccessAndRefreshToken(isUserExist._id, res);
   } catch (error) {
     res.status(400).json({ message: error.message });
