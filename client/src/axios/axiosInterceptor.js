@@ -14,9 +14,8 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add the token to the request headers
-    const ssData = JSON.parse(localStorage.getItem("snapsync"));
-    const authToken = ssData?.token;
-    if (authToken) config.headers.Authorization = `Bearer ${authToken}`;
+    const acctoken = localStorage.getItem("ssaccestoken");
+    if (acctoken) config.headers.Authorization = `Bearer ${acctoken}`;
     return config;
   },
   (error) => {
