@@ -10,6 +10,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import EmailVerification from "./pages/auth/EmailVerification";
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
+import UserContextProvider from "./context/UserContext";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,8 +21,23 @@ function App() {
         <Route path="/" element={<Navigate to="/auth/login" replace />} />
         <Route path="/auth/login" element={<LogIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/auth/verifyemail" element={<EmailVerification />} />
+
+        <Route
+          path="/home"
+          element={
+            <UserContextProvider>
+              <HomePage />
+            </UserContextProvider>
+          }
+        />
+        <Route
+          path="/auth/verifyemail"
+          element={
+            <UserContextProvider>
+              <EmailVerification />
+            </UserContextProvider>
+          }
+        />
       </Routes>
     </>
   );

@@ -5,6 +5,7 @@ require("dotenv").config();
 const connectDb = require("./config/db");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const userRouter = require("./router/userRouter");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 connectDb();
 
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 const PORT = process.env.PORT || 3457;
 app.listen(PORT, () => console.log("server started at " + PORT));
