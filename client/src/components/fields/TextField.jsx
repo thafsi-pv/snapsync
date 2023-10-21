@@ -1,7 +1,7 @@
 // Custom components
 import React from "react";
 
-function InputField(props) {
+function TextField(props) {
   const {
     label,
     id,
@@ -13,6 +13,7 @@ function InputField(props) {
     disabled,
     value,
     onChange,
+    inputClass,
   } = props;
 
   return (
@@ -29,7 +30,7 @@ function InputField(props) {
           cols={cols}
           rows={rows}
           placeholder={placeholder}
-          className={`flex w-full items-center justify-center rounded-xl border bg-white/0 pl-3 pt-3 text-sm outline-none ${
+          className={`flex w-full items-center justify-center rounded-xl border bg-white/0 pl-3 pt-3 text-sm outline-none ${inputClass} ${
             disabled === true
               ? "!border-none !bg-gray-100 dark:!bg-white/5 dark:placeholder:!text-[rgba(255,255,255,0.15)]"
               : state === "error"
@@ -50,4 +51,4 @@ function InputField(props) {
   );
 }
 
-export default InputField;
+export default TextField;
