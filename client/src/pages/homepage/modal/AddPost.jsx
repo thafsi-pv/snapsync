@@ -7,20 +7,19 @@ import { UserContext } from "../../../context/UserContext";
 import TextField from "../../../components/fields/TextField";
 import InputField from "../../../components/fields/InputField";
 import { motion } from "framer-motion";
+import handleUploadMedia from "../../../utils/uploasMedia";
 
 function AddPost({ show, closeModal }) {
   const { userData } = useContext(UserContext);
 
   const [media, setMedia] = useState();
+  const [file, setFile] = useState();
 
   const handleMedia = (e) => {
     const selectedMedia = e.target.files[0];
-
-    // Check if media was selected
     if (selectedMedia) {
       const mediaType = selectedMedia.type;
-
-      // Check the media type and render accordingly
+      setFile(selectedMedia);
       if (mediaType.startsWith("image/")) {
         const imageURL = URL.createObjectURL(selectedMedia);
         setMedia(
@@ -43,14 +42,18 @@ function AddPost({ show, closeModal }) {
     setMedia(null);
   };
 
+  const handleSharPost = async () => {
+    const response = await handleUploadMedia(file);
+  };
+
   const animationVariants = {
-    hidden: { x: "100%" }, // Start with the element off-screen to the right
-    visible: { x: 0 }, // End with the element at its original position (0)
+    hidden: { x: "100%" },
+    visible: { x: 0 },
   };
 
   const animationTransition = {
-    type: "smooth", // Use the "tween" type for smooth transitions
-    duration: 0.4, // Adjust the duration of the animation in seconds
+    type: "smooth",
+    duration: 0.4,
   };
 
   if (!show) return null;

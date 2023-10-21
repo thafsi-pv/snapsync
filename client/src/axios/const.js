@@ -1,5 +1,8 @@
 export const baseUrl = "http://localhost:8090/api";
 
+export const CLOUDINARY_IMAGE_UPLOAD_URL =
+  "https://api.cloudinary.com/v1_1/dm4djc1b1/image/upload";
+
 export const LOGIN_API = "/auth/login";
 export const SIGNUP_API = "/auth/signUp";
 export const ISUSERNAME_EXIST_API = "/auth/isUserName-exist";
