@@ -1,4 +1,4 @@
-import { CLOUDINARY_IMAGE_UPLOAD_URL } from "../axios/const";
+import { CLOUDINARY_IMAGE_UPLOAD_URL, CLOUDINARY_VIDEO_UPLOAD_URL } from "../axios/const";
 
 const handleUploadMedia = async (file) => {
   var data = new FormData();
@@ -10,7 +10,7 @@ const handleUploadMedia = async (file) => {
     method: "POST",
     body: data,
   };
-  const response = await fetch(CLOUDINARY_IMAGE_UPLOAD_URL, config);
+  const response = await fetch(CLOUDINARY_VIDEO_UPLOAD_URL, config);
   const responseData = await response.json();
   return responseData.secure_url;
 };

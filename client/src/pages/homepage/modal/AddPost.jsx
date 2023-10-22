@@ -8,6 +8,9 @@ import TextField from "../../../components/fields/TextField";
 import InputField from "../../../components/fields/InputField";
 import { motion } from "framer-motion";
 import handleUploadMedia from "../../../utils/uploasMedia";
+import { useFormik } from "formik";
+import { axiosInstance } from "../../../axios/axiosInterceptor";
+import { CREATE_POST_API } from "../../../axios/const";
 
 function AddPost({ show, closeModal }) {
   const { userData } = useContext(UserContext);
@@ -42,10 +45,31 @@ function AddPost({ show, closeModal }) {
     setMedia(null);
   };
 
-  const handleSharPost = async () => {
+  const handleSharPost = async (values) => {
     const mediaUrl = await handleUploadMedia(file);
-    const post = { media_url: mediaUrl, location, caption };
+    const post = {
+      media_url: mediaUrl,
+      location: values.location,
+      caption: values.caption,
+    };
+    console.log("🚀 ~ file: AddPost.jsx:53 ~ handleSharPost ~ post:", post);
+
+    const createdPost = await axiosInstance.post(CREATE_POST_API, post);
+    console.log("🚀 ~ file: AddPost.jsx:58 ~ handleSharPost ~ createdPost:", createdPost)
   };
+
+  const postFormik = useFormik({
+    initialValues: {
+      caption: "",
+      location: "",
+    },
+    //validationSchema: signUpValidationSchema,
+    onSubmit: (values) => {
+      console.log("🚀 ~ file: AddPost.jsx:62 ~ AddPost ~ values:", values);
+
+      handleSharPost(values);
+    },
+  });
 
   const animationVariants = {
     hidden: { x: "100%" },
@@ -76,9 +100,11 @@ function AddPost({ show, closeModal }) {
                 <div className="flex-1 text-lg text-center font-semibold">
                   Create new post
                 </div>
-                <div className="flex-0 self-start mx-3 text-sm font-semibold text-blue-500">
+                <button
+                  onClick={() => postFormik.submitForm()}
+                  className="flex-0 self-start mx-3 text-sm font-semibold text-blue-500">
                   Share
-                </div>
+                </button>
               </div>
               <div
                 id="Line"
@@ -138,8 +164,20 @@ function AddPost({ show, closeModal }) {
                       rows={8}
                       placeholder="Write a caption"
                       inputClass="border-none"
+                      id="caption"
+                      name="caption"
+                      onChange={postFormik.handleChange}
+                      onBlur={postFormik.handleBlur}
+                      value={postFormik.values.caption}
                     />
-                    <InputField placeholder="Enter Location" />
+                    <InputField
+                      placeholder="Enter Location"
+                      id="location"
+                      name="location"
+                      onChange={postFormik.handleChange}
+                      onBlur={postFormik.handleBlur}
+                      value={postFormik.values.location}
+                    />
                   </motion.div>
                 </>
               )}
