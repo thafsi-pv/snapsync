@@ -26,7 +26,11 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const postDetails = await postModal.find();
+    const postDetails = await postModal.find().populate('user_id');
+    console.log(
+      "🚀 ~ file: postController.js:30 ~ getAllPosts ~ postDetails:",
+      postDetails
+    );
     if (!postDetails)
       return res.status(404).json({ message: "No post found!" });
     return res.status(200).json(postDetails);

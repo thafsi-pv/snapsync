@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import handleUploadMedia from "../../../utils/uploasMedia";
 import { useFormik } from "formik";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { CREATE_POST_API } from "../../../axios/const";
+import { POST_API } from "../../../axios/const";
 
 function AddPost({ show, closeModal }) {
   const { userData } = useContext(UserContext);
@@ -54,7 +54,7 @@ function AddPost({ show, closeModal }) {
     };
     console.log("🚀 ~ file: AddPost.jsx:53 ~ handleSharPost ~ post:", post);
 
-    const createdPost = await axiosInstance.post(CREATE_POST_API, post);
+    const createdPost = await axiosInstance.post(POST_API, post);
     console.log("🚀 ~ file: AddPost.jsx:58 ~ handleSharPost ~ createdPost:", createdPost)
   };
 
