@@ -51,11 +51,15 @@ function AddPost({ show, closeModal }) {
       media_url: mediaUrl,
       location: values.location,
       caption: values.caption,
+      media_type: file.type,
     };
     console.log("🚀 ~ file: AddPost.jsx:53 ~ handleSharPost ~ post:", post);
 
     const createdPost = await axiosInstance.post(POST_API, post);
-    console.log("🚀 ~ file: AddPost.jsx:58 ~ handleSharPost ~ createdPost:", createdPost)
+    console.log(
+      "🚀 ~ file: AddPost.jsx:58 ~ handleSharPost ~ createdPost:",
+      createdPost
+    );
   };
 
   const postFormik = useFormik({

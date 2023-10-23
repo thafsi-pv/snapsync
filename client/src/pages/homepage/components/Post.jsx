@@ -10,13 +10,44 @@ function Post() {
   const [posts, setPosts] = useState();
   useEffect(() => {
     getAllPosts();
+    mediatype();
   }, []);
 
   const getAllPosts = async () => {
     const post = await axiosInstance.get(POST_API);
-    console.log("🚀 ~ file: Post.jsx:14 ~ getAllPosts ~ post:", post);
+    // console.log("🚀 ~ file: Post.jsx:14 ~ getAllPosts ~ post:", post);
     setPosts(post.data);
   };
+
+  const mediatype = () => {
+    const cloudinaryUrl =
+      "https://res.cloudinary.com/dm4djc1b1/video/upload/v1697906116/zndggxq8dbsc9omndf9r.mp4"; // Replace with the actual Cloudinary URL
+    const cloudName = 'dm4djc1b1'; // Replace with your Cloudinary cloud name
+    const apiKey = "117214875635115"; // Replace with your Cloudinary API key
+    const apiSecret = "949z0CWmL_8oL1tYEkwu70Auy2k"; // Replace with your Cloudinary API secret
+
+    // Construct the URL for media analysis
+    const mediaAnalysisUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/analyze?url=${encodeURIComponent(
+      cloudinaryUrl
+    )}`;
+
+    // Make a GET request to Cloudinary Media Analysis
+    fetch(mediaAnalysisUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Data will contain information about the media type and more
+        console.log("Media Analysis Result:", data);
+      })
+      .catch((error) => {
+        console.error("Error analyzing media:", error);
+      });
+  };
+
   return (
     <div className="flex flex-col gap-4 mx-20">
       {posts?.map((post) => {
@@ -35,10 +66,10 @@ function Post() {
                 </div>
                 <div className="relative flex flex-row mb-px gap-4 w-24 shrink-0 items-start">
                   <div className="text-base font-['Microsoft_Sans_Serif'] tracking-[0.51] relative mt-1">
-                   {post.user_id.fullName}
+                    {post.user_id.fullName}
                   </div>
                   <div className="text-xs  tracking-[0.39] absolute top-8 left-0 h-4 w-24">
-                  {post.location}
+                    {post.location}
                   </div>
                   <div className="relative flex flex-row mb-3 gap-px w-6 shrink-0 items-start text-gray-400">
                     <div className="text-lg font-medium tracking-[0.54] mb-1">
