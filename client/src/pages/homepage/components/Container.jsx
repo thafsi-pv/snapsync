@@ -5,7 +5,7 @@ import Post from "./Post";
 
 function Container() {
   return (
-    <div className="flex overflow-y-scroll overflow-x-hidden min-h-full mx-20 w-fit">
+    <div className="flex overflow-hidden min-h-full mx-20 w-fit">
       <div className="self-start flex flex-col gap-16 w-4/6">
         <Story />
         <Post />
