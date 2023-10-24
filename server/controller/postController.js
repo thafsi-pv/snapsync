@@ -7,14 +7,14 @@ const createPost = async (req, res) => {
       "🚀 ~ file: postController.js:6 ~ createPost ~ userId:",
       userId
     );
-    const { media_url, caption, location } = req.body;
+    const { media_url, caption, location, media_type } = req.body;
     console.log(
       "🚀 ~ file: postController.js:7 ~ createPost ~ req.body:",
       req.body
     );
     if (!userId) return res.status(404).json({ message: "User not found!" });
 
-    const post = { user_id: userId, media_url, caption, location };
+    const post = { user_id: userId, media_url, caption, location, media_type };
     const newPost = await postModal.create(post);
 
     return res.status(200).json(newPost);
@@ -26,7 +26,7 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const postDetails = await postModal.find().populate('user_id');
+    const postDetails = await postModal.find().populate("user_id");
     console.log(
       "🚀 ~ file: postController.js:30 ~ getAllPosts ~ postDetails:",
       postDetails

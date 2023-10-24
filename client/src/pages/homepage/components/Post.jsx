@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsChat } from "react-icons/bs";
 import { HiOutlineBookmark } from "react-icons/hi";
 import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
@@ -7,52 +7,33 @@ import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
 
 function Post() {
+  const captionRef = useRef([]);
   const [posts, setPosts] = useState();
   useEffect(() => {
     getAllPosts();
-    mediatype();
   }, []);
 
   const getAllPosts = async () => {
     const post = await axiosInstance.get(POST_API);
-    // console.log("🚀 ~ file: Post.jsx:14 ~ getAllPosts ~ post:", post);
+    console.log("🚀 ~ file: Post.jsx:14 ~ getAllPosts ~ post:", post);
     setPosts(post.data);
   };
 
-  const mediatype = () => {
-    const cloudinaryUrl =
-      "https://res.cloudinary.com/dm4djc1b1/video/upload/v1697906116/zndggxq8dbsc9omndf9r.mp4"; // Replace with the actual Cloudinary URL
-    const cloudName = 'dm4djc1b1'; // Replace with your Cloudinary cloud name
-    const apiKey = "117214875635115"; // Replace with your Cloudinary API key
-    const apiSecret = "949z0CWmL_8oL1tYEkwu70Auy2k"; // Replace with your Cloudinary API secret
+  const handleMoreCaption = (index) => {
+    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ index:", index)
+    console.log("clicked");
+  console.log("🚀 ~ file: Post.jsx:11 ~ Post ~ captionRef:", captionRef)
 
-    // Construct the URL for media analysis
-    const mediaAnalysisUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/analyze?url=${encodeURIComponent(
-      cloudinaryUrl
-    )}`;
-
-    // Make a GET request to Cloudinary Media Analysis
-    fetch(mediaAnalysisUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Data will contain information about the media type and more
-        console.log("Media Analysis Result:", data);
-      })
-      .catch((error) => {
-        console.error("Error analyzing media:", error);
-      });
+    if (captionRef.current && captionRef.current[index]) {
+      captionRef.current[index].classList.remove("line-clamp-2");
+    }
   };
 
   return (
     <div className="flex flex-col gap-4 mx-20">
-      {posts?.map((post) => {
+      {posts?.map((post, index) => {
         return (
-          <div className="mb-px ml-4 mr-5">
+          <div className="mb-px ml-4 mr-5" key={index}>
             <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
               <div className="flex flex-row gap-4 items-start">
                 <div
@@ -87,15 +68,24 @@ function Post() {
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-3">
                   <div className="relative flex flex-col items-start">
-                    <img
-                      src={post.media_url}
-                      id="Element3"
-                      className="relative"
-                    />
+                    {post.media_type.startsWith("image/") ? (
+                      <img
+                        src={post.media_url}
+                        id="Element3"
+                        className="relative"
+                      />
+                    ) : (
+                      <video
+                        src={post.media_url}
+                        controls="false"
+                        autoPlay
+                        className="object-fit w-full h-full"
+                      />
+                    )}
                   </div>
                   <div className="flex flex-row justify-between items-center ml-3 mr-4">
                     <div className="flex flex-row gap-6 items-start">
-                      <IoIosHeartEmpty className="h-7 w-7" />
+                      <IoIosHeartEmpty className="h-7 w-7 cursor-pointer hover:text-gray-400 animate-ping" />
                       <BsChat className="h-6 w-6" />
                       <LuSend className="h-6 w-6" />
                     </div>
@@ -105,28 +95,21 @@ function Post() {
                 <div className="flex flex-row justify-between items-start ml-4 mr-8">
                   <div className="flex flex-col gap-1 w-[417px] items-start">
                     <div className="self-stretch flex flex-col gap-1 items-start">
-                      <div className="self-stretch flex flex-col items-start">
-                        <div className="relative flex flex-col w-16 items-end">
-                          <div className="text-sm  leading-[18px] lowercase text-[#262626] absolute top-0 left-0 h-4 w-8">
-                            1.069
-                          </div>
-                          <div
-                            id="Likes"
-                            className="text-sm  leading-[18px] lowercase text-[#262626] relative">
-                            {" "}
-                            Likes
-                          </div>
+                      <div className="self-stretch flex gap-2 flex-col items-start">
+                        <div className="relative flex text-sm font-semibold ">
+                          1.069 Likes
                         </div>
-                        <div className="self-stretch flex flex-row gap-5 items-start">
-                          <div className="text-sm  leading-[18px] text-[#262626]">
-                            Youtube
-                          </div>
-                          <div className="flex flex-col w-[343px] items-end">
-                            <div className="text-sm  leading-[18px]">
-                              the best charity match yet. top day, top play, top
-                              vibes ❤️ 🏆
-                            </div>
-                          </div>
+                        <div className="self-stretch gap-5 items-start  text-sm">
+                          <span className=" font-semibold text-[#262626]">
+                            {post.user_id.fullName}
+                          </span>
+                          <span
+                            ref={captionRef[index]}
+                            className=" font-semibold text-[#262626] line-clamp-2"
+                            onClick={() => handleMoreCaption(index)}>
+                            {post.caption}
+                            <span className="text-[#8e8e8e]">more</span>
+                          </span>
                         </div>
                       </div>
                       <div className="text-sm  leading-[18px]">
@@ -136,11 +119,6 @@ function Post() {
                     <div className="text-xs  tracking-[0.2] leading-[18px] uppercase">
                       1 hour ago
                     </div>
-                  </div>
-                  <div
-                    id="More1"
-                    className="text-sm  leading-[18px] text-[#262626] mt-4">
-                    ...<span className="text-[#8e8e8e]">more</span>
                   </div>
                 </div>
               </div>
