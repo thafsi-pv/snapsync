@@ -12,7 +12,7 @@ const likeSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    like: { type: Boolean, required: true },
+    liked: { type: Boolean, required: true },
   },
   { timestamps: true }
 );
