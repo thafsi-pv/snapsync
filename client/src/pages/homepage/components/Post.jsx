@@ -9,7 +9,7 @@ import { LIKE_API, POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
 import { timeAgo } from "../../../utils/timeAgo";
 
-function Post({ setComments }) {
+function Post({ setComments, setPostId }) {
   const [posts, setPosts] = useState();
   console.log("🚀 ~ file: Post.jsx:13 ~ Post ~ posts:", posts);
   useEffect(() => {
@@ -37,6 +37,11 @@ function Post({ setComments }) {
     setPosts(data);
   };
 
+  const handleViewComments = (postId) => {
+    setComments(true);
+    setPostId(postId);
+  };
+
   return (
     <div className="flex flex-col gap-4 mx-20">
       {posts?.map((post, index) => {
@@ -58,9 +63,7 @@ function Post({ setComments }) {
                     {post.location}
                   </div>
                   <div className="relative flex flex-row mb-3 gap-px w-full shrink-0 items-center text-gray-400">
-                    <div className="text-lg font-medium tracking-[0.54]">
-                      .
-                    </div>
+                    <div className="text-lg font-medium tracking-[0.54]">.</div>
                     <div className=" text-sm  mt-2">
                       {timeAgo(post.createdAt)}
                     </div>
@@ -110,7 +113,7 @@ function Post({ setComments }) {
                         src="https://file.rendit.io/n/2ojGnkou9SjgxNjbxFKw.svg"
                         className="mr-px w-6 shrink-0 cursor-pointer"
                         onClick={() => {
-                          setComments(true);
+                          handleViewComments(post._id);
                         }}
                       />
                       <img

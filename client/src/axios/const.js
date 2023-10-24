@@ -15,3 +15,4 @@ export const GET_USER_DATA = "/user/details";
 
 export const POST_API = "/post/";
 export const LIKE_API = "/like/";
+export const COMMENT_API = "/comment/";

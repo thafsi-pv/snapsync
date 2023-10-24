@@ -6,15 +6,20 @@ import Comments from "../modal/Comments";
 
 function Container() {
   const [comments, setComments] = useState(false);
+  const [postId, setPostId] = useState(null);
 
   return (
     <div className="flex overflow-hidden min-h-full mx-20 w-fit">
       <div className="self-start flex flex-col gap-16 w-4/6">
         <Story />
-        <Post setComments={setComments} />
+        <Post setPostId={setPostId} setComments={setComments} />
       </div>
       <Suggestions />
-      <Comments show={comments} closeModal={() => setComments(false)} />
+      <Comments
+        postId={postId}
+        show={comments}
+        closeModal={() => setComments(false)}
+      />
     </div>
   );
 }
