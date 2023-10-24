@@ -5,6 +5,7 @@ import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
 import { LuSend } from "react-icons/lu";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
+import InputField from "../../../components/fields/InputField";
 
 function Post() {
   const [posts, setPosts] = useState();
@@ -88,53 +89,48 @@ function Post() {
                     <HiOutlineBookmark className="h-7 w-7" />
                   </div>
                 </div>
-                <div className="flex flex-row justify-between items-start ml-4 mr-8">
-                  <div className="flex flex-col gap-1 w-[417px] items-start">
-                    <div className="self-stretch flex flex-col gap-1 items-start">
-                      <div className="self-stretch flex gap-2 flex-col items-start">
-                        <div className="relative flex text-sm font-semibold ">
-                          1.069 Likes
-                        </div>
-                        <div className="self-stretch gap-5 items-start  text-sm">
-                          <span
-                            className={`gap-2 bold text-[#262626] ${
-                              post.showFullCaption
-                                ? "line-clamp-none"
-                                : "line-clamp-2"
-                            }`}>
-                            <span className=" font-semibold text-[#262626]">
-                              {post.user_id.fullName} {"  "}
-                            </span>
-                            {post.caption}
-                          </span>
-                          {post.caption.length > 50 &&
-                            !post.showFullCaption && (
-                              <span
-                                className="text-[#8e8e8e] cursor-pointer"
-                                onClick={() => handleMoreCaption(index)}>
-                                more
-                              </span>
-                            )}
-                        </div>
-                      </div>
-                      <div className="text-sm  leading-[18px]">
-                        View all 100 comments
-                      </div>
+                <div className="flex flex-row justify-between items-start mr-8">
+                  <div className="self-stretch flex gap-2 flex-col items-start">
+                    <div className="relative flex text-sm font-semibold ">
+                      1.069 Likes
                     </div>
-                   
+                    <div className=" gap-2 items-start  text-sm">
+                      <span
+                        className={`bold text-[#262626] ${
+                          post.showFullCaption
+                            ? "line-clamp-none"
+                            : "line-clamp-2"
+                        }`}>
+                        <span className=" font-semibold text-[#262626]">
+                          {post.user_id.fullName} {"  "}
+                        </span>
+                        {post.caption}
+                      </span>
+                      {post.caption.length > 50 && !post.showFullCaption && (
+                        <span
+                          className="text-[#8e8e8e] cursor-pointer"
+                          onClick={() => handleMoreCaption(index)}>
+                          more
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-3 h-8 shrink-0">
-                <div id="Border" className="bg-[#efefef] h-px shrink-0" />
-                <div className="flex flex-row justify-between items-start ml-3 mr-4">
-                  <div className="text-sm  leading-[18px] text-[#676767] mt-1">
-                    Add a comment...
+              <div className="flex flex-col   shrink-0">
+                <div className="text-sm  leading-[18px]">
+                  View all 100 comments
+                </div>
+                <div id="Border" className="bg-[#efefef]  shrink-0" />
+                <div className="flex items-center">
+                  <div className="flex-1">
+                    <InputField
+                      inputClass="p-0"
+                      placeholder="Add a comment"
+                      extra="!border-none !bg-white"
+                    />
                   </div>
-                  <img
-                    src="https://compiler-vyindg4stq-uc.a.run.app/compiler/placeholder/24x24"
-                    className="w-6 shrink-0"
-                  />
+                  <span className="text-sm font-semibold text-blue-500 hover:text-black cursor-pointer">Post</span>
                 </div>
               </div>
             </div>

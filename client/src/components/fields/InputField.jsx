@@ -19,11 +19,12 @@ function InputField(props) {
     min,
     step,
     name,
+    inputClass,
   } = props;
 
   return (
     <div
-      className={`${extra}border-solid border-[#d7d7d7] bg-[#fafafa] flex flex-col justify-center h-9 shrink-0 items-start border`}>
+      className={`border border-solid border-[#d7d7d7] bg-[#fafafa] flex flex-col justify-center h-9 shrink-0 items-start ${extra}`}>
       {label && (
         <label
           htmlFor={id}
@@ -45,7 +46,7 @@ function InputField(props) {
           min={min}
           step={step}
           placeholder={placeholder}
-          className={`flex-1 text-xs flex h-5 w-full items-center justify-center bg-white/0 p-3 outline-none ${
+          className={`flex-1 text-xs flex h-5 w-full items-center justify-center bg-white/0 p-3 outline-none ${inputClass} ${
             disabled === true
               ? "!border-none !bg-gray-100 dark:!bg-white/5 dark:placeholder:!text-[rgba(255,255,255,0.15)]"
               : state === "error"
