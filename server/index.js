@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const userRouter = require("./router/userRouter");
 const postRouter = require("./router/postRouter");
 const likeRouter = require("./router/likeRouter");
+const commentRouter = require("./router/commentRouter");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 
 app.use("/api/like", likeRouter);
+app.use("/api/comment", commentRouter);
 
 const PORT = process.env.PORT || 3457;
 app.listen(PORT, () => console.log("server started at " + PORT));
