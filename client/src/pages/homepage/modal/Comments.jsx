@@ -5,7 +5,7 @@ function Comments({ show, closeModal }) {
   if (!show) return null;
   return (
     <PortalModal show={show}>
-      <div className="fixed inset-0 flex items-center justify-center overflow-hidden ">
+      <div className="fixed  flex items-center justify-center overflow-hidden ">
         <div
           className="fixed inset-0 bg-black opacity-50 "
           onClick={closeModal}></div>

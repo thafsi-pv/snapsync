@@ -7,6 +7,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./router/userRouter");
 const postRouter = require("./router/postRouter");
+const likeRouter = require("./router/likeRouter");
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 
 app.use("/api/post", postRouter);
+
+app.use("/api/like", likeRouter);
 
 const PORT = process.env.PORT || 3457;
 app.listen(PORT, () => console.log("server started at " + PORT));
