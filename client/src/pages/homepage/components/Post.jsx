@@ -7,26 +7,22 @@ import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
 
 function Post() {
-  const captionRef = useRef([]);
   const [posts, setPosts] = useState();
+  console.log("🚀 ~ file: Post.jsx:11 ~ Post ~ posts:", posts);
   useEffect(() => {
     getAllPosts();
   }, []);
 
   const getAllPosts = async () => {
     const post = await axiosInstance.get(POST_API);
-    console.log("🚀 ~ file: Post.jsx:14 ~ getAllPosts ~ post:", post);
     setPosts(post.data);
   };
 
   const handleMoreCaption = (index) => {
-    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ index:", index)
-    console.log("clicked");
-  console.log("🚀 ~ file: Post.jsx:11 ~ Post ~ captionRef:", captionRef)
-
-    if (captionRef.current && captionRef.current[index]) {
-      captionRef.current[index].classList.remove("line-clamp-2");
-    }
+    const data = [...posts];
+    data[index].showFullCaption = true;
+    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ data:", data);
+    setPosts(data);
   };
 
   return (
@@ -100,25 +96,32 @@ function Post() {
                           1.069 Likes
                         </div>
                         <div className="self-stretch gap-5 items-start  text-sm">
-                          <span className=" font-semibold text-[#262626]">
-                            {post.user_id.fullName}
-                          </span>
                           <span
-                            ref={captionRef[index]}
-                            className=" font-semibold text-[#262626] line-clamp-2"
-                            onClick={() => handleMoreCaption(index)}>
+                            className={`gap-2 bold text-[#262626] ${
+                              post.showFullCaption
+                                ? "line-clamp-none"
+                                : "line-clamp-2"
+                            }`}>
+                            <span className=" font-semibold text-[#262626]">
+                              {post.user_id.fullName} {"  "}
+                            </span>
                             {post.caption}
-                            <span className="text-[#8e8e8e]">more</span>
                           </span>
+                          {post.caption.length > 50 &&
+                            !post.showFullCaption && (
+                              <span
+                                className="text-[#8e8e8e] cursor-pointer"
+                                onClick={() => handleMoreCaption(index)}>
+                                more
+                              </span>
+                            )}
                         </div>
                       </div>
                       <div className="text-sm  leading-[18px]">
                         View all 100 comments
                       </div>
                     </div>
-                    <div className="text-xs  tracking-[0.2] leading-[18px] uppercase">
-                      1 hour ago
-                    </div>
+                   
                   </div>
                 </div>
               </div>
