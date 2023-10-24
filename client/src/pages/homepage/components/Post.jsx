@@ -10,7 +10,6 @@ import InputField from "../../../components/fields/InputField";
 
 function Post({ setComments }) {
   const [posts, setPosts] = useState();
-  console.log("🚀 ~ file: Post.jsx:11 ~ Post ~ posts:", posts);
   useEffect(() => {
     getAllPosts();
   }, []);
@@ -23,7 +22,6 @@ function Post({ setComments }) {
   const handleMoreCaption = (index) => {
     const data = [...posts];
     data[index].showFullCaption = true;
-    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ data:", data);
     setPosts(data);
   };
 
@@ -31,10 +29,7 @@ function Post({ setComments }) {
     const data = [...posts];
     const postData = { liked: !data[index].liked, post_id };
     const response = await axiosInstance.post(LIKE_API, postData);
-
-    data[index].liked = !data[index].likedd;
-
-    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ data:", data);
+    data[index].liked = !data[index].liked;
     setPosts(data);
   };
 
@@ -76,7 +71,7 @@ function Post({ setComments }) {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-3">
-                  <div className="relative flex flex-col items-start">
+                  <div className="relative flex flex-col items-start ">
                     {post.media_type.startsWith("image/") ? (
                       <img
                         src={post.media_url}
@@ -96,9 +91,15 @@ function Post({ setComments }) {
                     <div className="flex flex-row gap-6 items-start">
                       <div onClick={() => handleLikePost(index, post._id)}>
                         {post.liked ? (
-                          <AiFillHeart className="h-7 w-7 cursor-pointer hover:text-red-500 text-red-600" />
+                          <AiFillHeart
+                            className={`h-7 w-7 cursor-pointer hover:text-red-500 text-red-600`}
+                            id={`like-button-${post._id}`}
+                          />
                         ) : (
-                          <IoIosHeartEmpty className="h-7 w-7 cursor-pointer hover:text-gray-400" />
+                          <IoIosHeartEmpty
+                            className={`h-7 w-7 cursor-pointer hover:text-gray-400}`}
+                            id={`like-button-${post._id}`}
+                          />
                         )}
                       </div>
                       <BsChat
