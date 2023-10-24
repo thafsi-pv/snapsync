@@ -61,6 +61,7 @@ const getAllPosts = async (req, res) => {
           media_type: 1,
           caption: 1,
           location: 1,
+          createdAt:1,
           likeCount: { $size: "$likes" },
           liked: {
             $in: [

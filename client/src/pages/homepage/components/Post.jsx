@@ -7,6 +7,7 @@ import { LuSend } from "react-icons/lu";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { LIKE_API, POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
+import { timeAgo } from "../../../utils/timeAgo";
 
 function Post({ setComments }) {
   const [posts, setPosts] = useState();
@@ -56,11 +57,13 @@ function Post({ setComments }) {
                   <div className="text-xs  tracking-[0.39] absolute top-7 left-0 h-4 w-24">
                     {post.location}
                   </div>
-                  <div className="relative flex flex-row mb-3 gap-px w-6 shrink-0 items-start text-gray-400">
-                    <div className="text-lg font-medium tracking-[0.54] mb-1">
+                  <div className="relative flex flex-row mb-3 gap-px w-full shrink-0 items-center text-gray-400">
+                    <div className="text-lg font-medium tracking-[0.54]">
                       .
                     </div>
-                    <div className=" text-sm  mt-2">2h</div>
+                    <div className=" text-sm  mt-2">
+                      {timeAgo(post.createdAt)}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -102,13 +105,18 @@ function Post({ setComments }) {
                           />
                         )}
                       </div>
-                      <BsChat
-                        className="h-6 w-6 cursor-pointer"
+
+                      <img
+                        src="https://file.rendit.io/n/2ojGnkou9SjgxNjbxFKw.svg"
+                        className="mr-px w-6 shrink-0 cursor-pointer"
                         onClick={() => {
                           setComments(true);
                         }}
                       />
-                      <LuSend className="h-6 w-6" />
+                      <img
+                        src="https://file.rendit.io/n/5qjbxZc2qX75hQkoeJkP.svg"
+                        className="mt-px w-6 shrink-0 cursor-pointer"
+                      />
                     </div>
                     <HiOutlineBookmark className="h-7 w-7" />
                   </div>
