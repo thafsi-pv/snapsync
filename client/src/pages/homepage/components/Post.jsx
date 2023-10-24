@@ -10,7 +10,7 @@ import InputField from "../../../components/fields/InputField";
 
 function Post({ setComments }) {
   const [posts, setPosts] = useState();
-  console.log("🚀 ~ file: Post.jsx:13 ~ Post ~ posts:", posts)
+  console.log("🚀 ~ file: Post.jsx:13 ~ Post ~ posts:", posts);
   useEffect(() => {
     getAllPosts();
   }, []);
@@ -31,6 +31,8 @@ function Post({ setComments }) {
     const postData = { liked: !data[index].liked, post_id };
     const response = await axiosInstance.post(LIKE_API, postData);
     data[index].liked = !data[index].liked;
+    data[index].likeCount =
+      parseInt(data[index].likeCount) + (data[index].liked ? 1 : -1);
     setPosts(data);
   };
 
@@ -40,15 +42,12 @@ function Post({ setComments }) {
         return (
           <div className="mb-px ml-4 mr-5" key={index}>
             <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
-              <div className="flex flex-row gap-4 items-start">
-                <div
-                  id="Ellipse8"
-                  className="rounded-full bg-cover bg-50%_50% bg-blend-normal bg-no-repeat relative flex flex-col mt-2 w-10 shrink-0 items-start pt-1 pb-px px-px">
+              <div className="flex flex-row gap-3 items-start">
+                <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col mt-1 w-10 shrink-0 items-start pt-1 pb-px px-px">
                   <img
-                    src="https://4.img-dpreview.com/files/p/E~C667x0S5333x4000T1200x900~articles/3925134721/0266554465.jpeg"
-                    className="w-8 h-8 absolute top-1 left-1 rounded-full"
+                    src={post.user[0].imageUrl}
+                    className="w-8 h-8 absolute left-1 rounded-full"
                   />
-                  <img src="" className="relative w-8" />
                 </div>
                 <div className="relative flex flex-row mb-px gap-2 w-24 shrink-0 items-start">
                   <div className="text-base font-semibold tracking-[0.51] relative mt-1">
@@ -77,18 +76,18 @@ function Post({ setComments }) {
                       <img
                         src={post.media_url}
                         id="Element3"
-                        className="relative"
+                        className="relative rounded-sm"
                       />
                     ) : (
                       <video
                         src={post.media_url}
                         controls="false"
                         autoPlay
-                        className="object-fit w-full h-full"
+                        className="object-fit w-full h-full rounded-sm"
                       />
                     )}
                   </div>
-                  <div className="flex flex-row justify-between items-center ml-3 mr-4">
+                  <div className="flex flex-row justify-between items-center mr-4">
                     <div className="flex flex-row gap-6 items-start">
                       <div onClick={() => handleLikePost(index, post._id)}>
                         {post.liked ? (
@@ -104,7 +103,7 @@ function Post({ setComments }) {
                         )}
                       </div>
                       <BsChat
-                        className="h-6 w-6"
+                        className="h-6 w-6 cursor-pointer"
                         onClick={() => {
                           setComments(true);
                         }}
@@ -117,7 +116,7 @@ function Post({ setComments }) {
                 <div className="flex flex-row justify-between items-start mr-8">
                   <div className="self-stretch flex gap-2 flex-col items-start">
                     <div className="relative flex text-sm font-semibold ">
-                      1.069 Likes
+                      {post.likeCount} likes
                     </div>
                     <div className=" gap-2 items-start  text-sm">
                       <span
