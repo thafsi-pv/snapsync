@@ -37,17 +37,29 @@ function SideNav({ setAddPost }) {
             <p className="font-normal">Reels</p>
           </div>
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-            <BsChatQuote className="h-7 w-7" />
+            {/* <BsChatQuote className="h-7 w-7" /> */}
+            <img
+              src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
+              className="w-6 shrink-0"
+            />
             <p className="font-normal">Messages</p>
           </div>
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-            <AiOutlineHeart className="h-7 w-7" />
+            {/* <AiOutlineHeart className="h-7 w-7" /> */}
+            <img
+              src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
+              className="w-6 shrink-0"
+            />
             <p className="font-normal">Notification</p>
           </div>
           <div
             className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
             onClick={() => setAddPost(true)}>
-            <MdOutlineAddBox className="h-7 w-7" />
+            {/* <MdOutlineAddBox className="h-7 w-7" /> */}
+            <img
+              src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
+              className="mb-1 w-6 shrink-0"
+            />
             <p className="font-normal">Create</p>
           </div>
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">

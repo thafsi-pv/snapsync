@@ -7,7 +7,7 @@ import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
 
-function Post() {
+function Post({ setComments }) {
   const [posts, setPosts] = useState();
   console.log("🚀 ~ file: Post.jsx:11 ~ Post ~ posts:", posts);
   useEffect(() => {
@@ -83,7 +83,12 @@ function Post() {
                   <div className="flex flex-row justify-between items-center ml-3 mr-4">
                     <div className="flex flex-row gap-6 items-start">
                       <IoIosHeartEmpty className="h-7 w-7 cursor-pointer hover:text-gray-400 animate-ping" />
-                      <BsChat className="h-6 w-6" />
+                      <BsChat
+                        className="h-6 w-6"
+                        onClick={() => {
+                          setComments(true);
+                        }}
+                      />
                       <LuSend className="h-6 w-6" />
                     </div>
                     <HiOutlineBookmark className="h-7 w-7" />
@@ -130,7 +135,9 @@ function Post() {
                       extra="!border-none !bg-white"
                     />
                   </div>
-                  <span className="text-sm font-semibold text-blue-500 hover:text-black cursor-pointer">Post</span>
+                  <span className="text-sm font-semibold text-blue-500 hover:text-black cursor-pointer">
+                    Post
+                  </span>
                 </div>
               </div>
             </div>

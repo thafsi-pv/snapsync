@@ -26,6 +26,7 @@ function HomePage() {
       <SideNav setAddPost={setAddPost} />
       <Container />
       <AddPost show={addPost} closeModal={() => setAddPost(false)} />
+     
     </div>
   );
 }
