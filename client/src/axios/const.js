@@ -14,3 +14,4 @@ export const ROTATE_REFRESH_TOKEN_API = "/auth/refresh-token";
 export const GET_USER_DATA = "/user/details";
 
 export const POST_API = "/post/";
+export const LIKE_API = "/like/";

@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { BsChat } from "react-icons/bs";
 import { HiOutlineBookmark } from "react-icons/hi";
 import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
+import { AiFillHeart } from "react-icons/ai";
 import { LuSend } from "react-icons/lu";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { POST_API } from "../../../axios/const";
+import { LIKE_API, POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
 
 function Post({ setComments }) {
@@ -22,6 +23,17 @@ function Post({ setComments }) {
   const handleMoreCaption = (index) => {
     const data = [...posts];
     data[index].showFullCaption = true;
+    console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ data:", data);
+    setPosts(data);
+  };
+
+  const handleLikePost = async (index, post_id) => {
+    const data = [...posts];
+    const postData = { liked: !data[index].liked, post_id };
+    const response = await axiosInstance.post(LIKE_API, postData);
+
+    data[index].liked = !data[index].likedd;
+
     console.log("🚀 ~ file: Post.jsx:23 ~ handleMoreCaption ~ data:", data);
     setPosts(data);
   };
@@ -82,7 +94,13 @@ function Post({ setComments }) {
                   </div>
                   <div className="flex flex-row justify-between items-center ml-3 mr-4">
                     <div className="flex flex-row gap-6 items-start">
-                      <IoIosHeartEmpty className="h-7 w-7 cursor-pointer hover:text-gray-400 animate-ping" />
+                      <div onClick={() => handleLikePost(index, post._id)}>
+                        {post.liked ? (
+                          <AiFillHeart className="h-7 w-7 cursor-pointer hover:text-red-500 text-red-600" />
+                        ) : (
+                          <IoIosHeartEmpty className="h-7 w-7 cursor-pointer hover:text-gray-400" />
+                        )}
+                      </div>
                       <BsChat
                         className="h-6 w-6"
                         onClick={() => {
