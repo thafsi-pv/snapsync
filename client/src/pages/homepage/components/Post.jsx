@@ -10,6 +10,7 @@ import InputField from "../../../components/fields/InputField";
 
 function Post({ setComments }) {
   const [posts, setPosts] = useState();
+  console.log("🚀 ~ file: Post.jsx:13 ~ Post ~ posts:", posts)
   useEffect(() => {
     getAllPosts();
   }, []);
@@ -49,11 +50,11 @@ function Post({ setComments }) {
                   />
                   <img src="" className="relative w-8" />
                 </div>
-                <div className="relative flex flex-row mb-px gap-4 w-24 shrink-0 items-start">
-                  <div className="text-base font-['Microsoft_Sans_Serif'] tracking-[0.51] relative mt-1">
-                    {post.user_id.fullName}
+                <div className="relative flex flex-row mb-px gap-2 w-24 shrink-0 items-start">
+                  <div className="text-base font-semibold tracking-[0.51] relative mt-1">
+                    {post?.user[0]?.fullName}
                   </div>
-                  <div className="text-xs  tracking-[0.39] absolute top-8 left-0 h-4 w-24">
+                  <div className="text-xs  tracking-[0.39] absolute top-7 left-0 h-4 w-24">
                     {post.location}
                   </div>
                   <div className="relative flex flex-row mb-3 gap-px w-6 shrink-0 items-start text-gray-400">
@@ -126,7 +127,7 @@ function Post({ setComments }) {
                             : "line-clamp-2"
                         }`}>
                         <span className=" font-semibold text-[#262626]">
-                          {post.user_id.fullName} {"  "}
+                          {post?.user[0]?.fullName} {"  "}
                         </span>
                         {post.caption}
                       </span>

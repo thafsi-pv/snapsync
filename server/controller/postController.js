@@ -45,8 +45,18 @@ const getAllPosts = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "users", // Assuming the name of the users collection is "users"
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
         $project: {
-          user_id: 1,
+          "user.emailPhone": 1,
+          "user.fullName": 1,
+          "user.imageUrl": 1,
           media_url: 1,
           media_type: 1,
           caption: 1,
@@ -61,6 +71,7 @@ const getAllPosts = async (req, res) => {
         },
       },
     ]);
+    
     console.log(
       "🚀 ~ file: postController.js:58 ~ getAllPosts ~ postsWithLikes:",
       postsWithLikes
