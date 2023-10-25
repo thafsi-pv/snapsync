@@ -27,18 +27,13 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    // const postDetails = await postModal.find().populate("user_id");
-    // console.log(
-    //   "🚀 ~ file: postController.js:30 ~ getAllPosts ~ postDetails:",
-    //   postDetails
-    // );
 
     const user_id = req.userId;
 
     const postsWithLikes = await postModal.aggregate([
       {
         $lookup: {
-          from: "likes", // Assuming the name of the likes collection is "likes"
+          from: "likes",
           localField: "_id",
           foreignField: "post_id",
           as: "likes",
@@ -46,7 +41,7 @@ const getAllPosts = async (req, res) => {
       },
       {
         $lookup: {
-          from: "users", // Assuming the name of the users collection is "users"
+          from: "users", 
           localField: "user_id",
           foreignField: "_id",
           as: "user",
@@ -83,7 +78,7 @@ const getAllPosts = async (req, res) => {
     return res.status(200).json(postsWithLikes);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 };
 
