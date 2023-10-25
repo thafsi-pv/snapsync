@@ -9,8 +9,18 @@ const getUserData = async (req, res) => {
     return res.status(200).json(userDetails);
   } catch (error) {
     console.log(error);
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 };
 
-module.exports = { getUserData };
+const getSuggestionUsers = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const suggestionList = await userModal.find();
+    res.status(200).json(suggestionList);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { getUserData, getSuggestionUsers };
