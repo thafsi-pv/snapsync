@@ -4,15 +4,7 @@ const postModal = require("../model/postModel");
 const createPost = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log(
-      "🚀 ~ file: postController.js:6 ~ createPost ~ userId:",
-      userId
-    );
     const { media_url, caption, location, media_type } = req.body;
-    console.log(
-      "🚀 ~ file: postController.js:7 ~ createPost ~ req.body:",
-      req.body
-    );
     if (!userId) return res.status(404).json({ message: "User not found!" });
 
     const post = { user_id: userId, media_url, caption, location, media_type };
@@ -68,11 +60,6 @@ const getAllPosts = async (req, res) => {
       },
     ]);
     
-    console.log(
-      "🚀 ~ file: postController.js:58 ~ getAllPosts ~ postsWithLikes:",
-      postsWithLikes
-    );
-
     if (!postsWithLikes)
       return res.status(404).json({ message: "No post found!" });
     return res.status(200).json(postsWithLikes);

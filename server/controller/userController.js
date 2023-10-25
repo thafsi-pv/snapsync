@@ -16,9 +16,19 @@ const getUserData = async (req, res) => {
 const getSuggestionUsers = async (req, res) => {
   try {
     const userId = req.userId;
-    const suggestionList = await userModal.find();
+    const suggestionList = await userModal
+      .find({ _id: { $ne: userId } })
+      .limit(7);
+    console.log(
+      "🚀 ~ file: userController.js:23 ~ getSuggestionUsers ~ suggestionList:",
+      suggestionList
+    );
     res.status(200).json(suggestionList);
   } catch (error) {
+    console.log(
+      "🚀 ~ file: userController.js:26 ~ getSuggestionUsers ~ error:",
+      error
+    );
     res.status(500).json(error);
   }
 };

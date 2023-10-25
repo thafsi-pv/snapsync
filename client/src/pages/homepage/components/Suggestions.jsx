@@ -28,14 +28,14 @@ function Suggestions() {
               Suggesed for you
             </div>
             <div className="self-stretch flex flex-col justify-between ml-1 gap-5">
-              {suggestionList.map((user) => (
+              {suggestionList?.map((user) => (
                 <div className="flex flex-row gap-4 items-center ml-px">
                   <img
-                    src={user.imageUrl}
+                    src={user?.imageUrl}
                     className="w-11 h-11 shrink-0 rounded-full"
                   />
                   <div className="flex flex-col gap-1 w-24 shrink-0 flex-grow items-start">
-                    <p className="text-sm  tracking-[0.42]">{user.fullName}</p>
+                    <p className="text-sm  tracking-[0.42]">{user?.fullName}</p>
                     <p className="text-xs  tracking-[0.39] text-[#737373]">
                       Followed by zia
                     </p>
