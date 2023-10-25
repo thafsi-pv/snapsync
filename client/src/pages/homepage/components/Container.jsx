@@ -14,7 +14,7 @@ function Container() {
         <Story />
         <Post setPostId={setPostId} setComments={setComments} />
       </div>
-      <div className="hidden md:block">
+      <div className="hidden lg:block w-3/12">
         <Suggestions />
       </div>
       <Comments
