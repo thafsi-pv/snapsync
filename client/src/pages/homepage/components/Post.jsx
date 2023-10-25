@@ -82,14 +82,14 @@ function Post({ setComments, setPostId }) {
                       <img
                         src={post.media_url}
                         id="Element3"
-                        className="relative rounded-sm"
+                        className="relative object-cover rounded-sm w-[500px] max-w-[480px] max-h-[600px]"
                       />
                     ) : (
                       <video
                         src={post.media_url}
-                        controls="false"
-                        autoPlay
-                        className="object-fit w-full h-full rounded-sm"
+                        controls
+                        autoplay={false}
+                        className="object-fit w-full h-full rounded-sm max-w-[500px] max-h-[600px] bg-black"
                       />
                     )}
                   </div>

@@ -10,11 +10,13 @@ function Container() {
 
   return (
     <div className="flex overflow-hidden min-h-full mx-20 w-fit">
-      <div className="self-start flex flex-col gap-16 w-4/6">
+      <div className="self-start flex flex-col gap-16 lg:w-8/12 md:w-7/12 sm:w-full">
         <Story />
         <Post setPostId={setPostId} setComments={setComments} />
       </div>
-      <Suggestions />
+      <div className="hidden md:block">
+        <Suggestions />
+      </div>
       <Comments
         postId={postId}
         show={comments}
