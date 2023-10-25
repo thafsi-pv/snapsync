@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PortalModal from "../../../components/modal/PortalModal";
 import InputField from "../../../components/fields/InputField";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { useFormik } from "formik";
 import { COMMENT_API } from "../../../axios/const";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
+import PostFile from "../../../components/post/PostFile";
 
 function Comments({ show, closeModal, postId }) {
-  const [comment, setComment] = useState();
+  const [postDetails, setPostDetails] = useState();
+  console.log(
+    "🚀 ~ file: Comments.jsx:11 ~ Comments ~ postDetails:",
+    postDetails
+  );
+
+  useEffect(() => {
+    if (show) {
+      getCommentsByPostId();
+    }
+  }, [show]);
+
+  const getCommentsByPostId = async () => {
+    const comments = await axiosInstance.get(
+      `${COMMENT_API}?post_id=${postId}`
+    );
+    console.log(
+      "🚀 ~ file: Comments.jsx:16 ~ getCommentsByPostId ~ comments:",
+      comments
+    );
+    setPostDetails(comments.data[0]);
+  };
 
   const commentFormik = useFormik({
     initialValues: {
@@ -15,8 +37,7 @@ function Comments({ show, closeModal, postId }) {
     },
     onSubmit: (values) => {
       console.log("🚀 ~ file: AddPost.jsx:62 ~ AddPost ~ values:", values);
-
-       handleAddComment(values);
+      handleAddComment(values);
     },
   });
 
@@ -34,10 +55,9 @@ function Comments({ show, closeModal, postId }) {
           onClick={closeModal}></div>
         <div className="shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.25)]  w-4/5 h-[80%] bg-white  flex z-10  rounded">
           <div className="w-3/5 h-full">
-            <img
-              className="object-cover w-full h-full rounded-l"
-              src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698081757/xjn1yftddiogmk9q0vmq.jpg"
-              alt=""
+            <PostFile
+              media_type={postDetails?.media_type}
+              media_url={postDetails?.media_url}
             />
           </div>
           <div className="p-4 w-2/5 flex flex-col justify-between">
@@ -56,34 +76,22 @@ function Comments({ show, closeModal, postId }) {
                   </div>
                 </div>
                 <div className="flex flex-col gap-4 shrink-0 items-start overflow-y-auto w-full max-h-96">
-                  <div className="bg-cover flex w-12 items-center p-1 gap-3">
-                    <img
-                      src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698081757/xjn1yftddiogmk9q0vmq.jpg"
-                      className="w-10 rounded-full"
-                    />
-                    <div>
-                      <div className="text-base font-['Microsoft_Sans_Serif']">
-                        Abdul_ahad_desgins
-                      </div>
-                      <div className="font-['Microsoft_Sans_Serif'] text-[#bdbdbd]">
-                        kerala,india
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-cover flex w-12 items-center p-1 gap-3">
-                    <img
-                      src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698081757/xjn1yftddiogmk9q0vmq.jpg"
-                      className="w-10 rounded-full"
-                    />
-                    <div>
-                      <div className="text-base font-['Microsoft_Sans_Serif']">
-                        Abdul_ahad_desgins
-                      </div>
-                      <div className="font-['Microsoft_Sans_Serif'] text-[#bdbdbd]">
-                        kerala,india
+                  {postDetails?.comment?.map((cmt) => (
+                    <div className="bg-cover flex w-12 items-center p-1 gap-3">
+                      <img
+                        src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698081757/xjn1yftddiogmk9q0vmq.jpg"
+                        className="w-10 rounded-full"
+                      />
+                      <div>
+                        <div className="text-base font-['Microsoft_Sans_Serif']">
+                          Abdul_ahad_desgins
+                        </div>
+                        <div className="font-['Microsoft_Sans_Serif'] text-[#bdbdbd]">
+                          kerala,india
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
