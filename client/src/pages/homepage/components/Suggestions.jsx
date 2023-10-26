@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import User from "./User";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { GET_SUGGESTION_LIST } from "../../../axios/const";
+import { FOLLOW_USER, GET_SUGGESTION_LIST } from "../../../axios/const";
 
 function Suggestions() {
   const [suggestionList, setSuggestionList] = useState();
+  const [followedUserId, setFollowedUserId] = useState(null);
   useEffect(() => {
     suggestionUsers();
   }, []);
 
   const suggestionUsers = async () => {
     const response = await axiosInstance.get(GET_SUGGESTION_LIST);
-    console.log(
-      "🚀 ~ file: Suggestions.jsx:13 ~ suggestionUsers ~ response:",
-      response
-    );
     setSuggestionList(response.data);
+  };
+
+  const handleFollowing = async (followedUserId, followStatus) => {
+    const data = { followed_user_id: followedUserId, followStatus };
+    const response = axiosInstance.post(FOLLOW_USER, data);
+    console.log("🚀 ~ file: Suggestions.jsx:21 ~ handleFollowing ~ response:", response)
+    if (response.status == 200) {
+      setFollowedUserId(followedUserId);
+    }
   };
 
   return (
@@ -41,9 +47,23 @@ function Suggestions() {
                     </p>
                   </div>
                   <div className="items-end flex-grow-0 p-2">
-                    <button className="text-xs font-semibold text-blue-500">
-                      Follow
-                    </button>
+                    {user._id != followedUserId ? (
+                      <button
+                        className="text-xs font-semibold text-blue-500 "
+                        onClick={() => {
+                          handleFollowing(user._id, true);
+                        }}>
+                        Follow
+                      </button>
+                    ) : (
+                      <button
+                        className="text-xs font-semibold text-blue-500 "
+                        onClick={() => {
+                          handleFollowing(user._id, false);
+                        }}>
+                        Unfollow
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -54,7 +74,7 @@ function Suggestions() {
       <div className="flex flex-col gap-8 w-[279px] h-20 shrink-0">
         <div className="flex flex-col gap-2 items-start">
           <div className="text-xs font-['Microsoft_Sans_Serif'] tracking-[0.39] text-gray-400">
-            About . Help .Press .API .Jobs . Prtivacy . Terms .
+            About . Help .Press .API .Jobs . Privacy . Terms .
           </div>
           <div className="text-xs font-['Microsoft_Sans_Serif'] tracking-[0.39] text-gray-400">
             Locations . Languages .Meta Verified

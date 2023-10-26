@@ -2,7 +2,7 @@ const followsModel = require("../model/followsModel");
 
 const followUser = async (req, res) => {
   try {
-    const { follow, followed_user_id } = req.body;
+    const { followStatus, followed_user_id } = req.body;
     const following_user_id = req.userId;
 
     const alreadyFollowed = await followsModel.findOne({
@@ -18,7 +18,7 @@ const followUser = async (req, res) => {
     const newFollow = await followsModel.create({
       followed_user_id,
       following_user_id,
-      followStatus: follow,
+      followStatus,
     });
     return res.status(200).json(newFollow);
   } catch (error) {
