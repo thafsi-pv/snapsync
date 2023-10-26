@@ -17,7 +17,7 @@ function Suggestions() {
 
   const handleFollowing = async (followedUserId, followStatus) => {
     const data = { followed_user_id: followedUserId, followStatus };
-    const response = axiosInstance.post(FOLLOW_USER, data);
+    const response = await axiosInstance.post(FOLLOW_USER, data);
     console.log("🚀 ~ file: Suggestions.jsx:21 ~ handleFollowing ~ response:", response)
     if (response.status == 200) {
       setFollowedUserId(followedUserId);
@@ -57,7 +57,7 @@ function Suggestions() {
                       </button>
                     ) : (
                       <button
-                        className="text-xs font-semibold text-blue-500 "
+                        className="text-xs font-semibold text-gray-500 "
                         onClick={() => {
                           handleFollowing(user._id, false);
                         }}>

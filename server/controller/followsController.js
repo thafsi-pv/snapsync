@@ -10,7 +10,7 @@ const followUser = async (req, res) => {
       followed_user_id,
     });
 
-    if (alreadyFollowed && !follow) {
+    if (alreadyFollowed && !followStatus) {
       const data = await followsModel.findByIdAndDelete(alreadyFollowed._id);
       return res.status(200).json({ message: "unfollow" });
     }
