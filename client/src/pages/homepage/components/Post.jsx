@@ -49,23 +49,26 @@ function Post({ setComments, setPostId }) {
           <div className="mb-px ml-4 mr-5" key={index}>
             <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
               <div className="flex flex-row gap-3 items-start">
-                <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col mt-1 w-10 shrink-0 items-start pt-1 pb-px px-px">
+                <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col w-10 shrink-0 items-start pt-1 pb-px px-px">
                   <img
                     src={post.user[0].imageUrl}
                     className="w-8 h-8 absolute left-1 rounded-full"
                   />
                 </div>
-                <div className="relative flex flex-row mb-px gap-2 w-24 shrink-0 items-start">
-                  <div className="text-base font-semibold tracking-[0.51] relative mt-1">
-                    {post?.user[0]?.fullName}
+                <div className="relative flex flex-col mb-px w-full shrink-0 items-start">
+                  <div className="flex text-sm font-semibold w-full gap-2 items-center">
+                    <div>{post?.user[0]?.fullName}</div>
+                    <div className="flex items-center text-xs text-gray-400 gap-1">
+                      <div className="flex justify-center items-center font-bold">
+                        •
+                      </div>
+                      <div className=" text-sm font-normal ">{timeAgo(post.createdAt)}</div>
+                    </div>
                   </div>
-                  <div className="text-xs  tracking-[0.39] absolute top-7 left-0 h-4 w-24">
-                    {post.location}
-                  </div>
+
                   <div className="relative flex flex-row mb-3 gap-px w-full shrink-0 items-center text-gray-400">
-                    <div className="text-lg font-medium tracking-[0.54]">.</div>
-                    <div className=" text-sm  mt-2">
-                      {timeAgo(post.createdAt)}
+                    <div className="text-xs  tracking-[0.39]  w-24">
+                      {post.location}
                     </div>
                   </div>
                 </div>

@@ -12,16 +12,24 @@ function Suggestions() {
 
   const suggestionUsers = async () => {
     const response = await axiosInstance.get(GET_SUGGESTION_LIST);
-    console.log("🚀 ~ file: Suggestions.jsx:15 ~ suggestionUsers ~ response:", response)
+    console.log(
+      "🚀 ~ file: Suggestions.jsx:15 ~ suggestionUsers ~ response:",
+      response
+    );
     setSuggestionList(response.data);
   };
 
   const handleFollowing = async (followedUserId, followStatus) => {
     const data = { followed_user_id: followedUserId, followStatus };
     const response = await axiosInstance.post(FOLLOW_USER, data);
-    console.log("🚀 ~ file: Suggestions.jsx:21 ~ handleFollowing ~ response:", response)
-    if (response.status == 200) {
+    console.log(
+      "🚀 ~ file: Suggestions.jsx:21 ~ handleFollowing ~ response:",
+      response
+    );
+    if (response.status == 200 && followStatus == true) {
       setFollowedUserId(followedUserId);
+    } else {
+      setFollowedUserId(null);
     }
   };
 
