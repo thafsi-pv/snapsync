@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { FileUploadContext } from "../../../context/FileUploadContext";
 
 function UploadProgress() {
-  const { uploadProgress,uploadStatus } = useContext(FileUploadContext);
+  const { uploadProgress } = useContext(FileUploadContext);
 
-  if (uploadStatus == 0) return null;
+  if (uploadProgress == 0 || uploadProgress == undefined) return null;
   return ReactDOM.createPortal(
     <div className="fixed bottom-0 md:w-1/4 lg:w-1/6 sm:w-full right-0 p-4 m-2">
       <p className="text-xs font-semibold">Sending Post..</p>

@@ -36,8 +36,7 @@ const useUploadMedia = () => {
       });
 
       const responseData = response.data;
-      setUploadedUrl(responseData.secure_url);
-      setUploadProgress(0);
+      return responseData.secure_url;
     } catch (error) {
       console.error("Error uploading file:", error);
     }
