@@ -1,3 +1,4 @@
+const followsModel = require("../model/followsModel");
 const userModal = require("../model/userModel");
 
 const getUserData = async (req, res) => {
@@ -16,19 +17,28 @@ const getUserData = async (req, res) => {
 const getSuggestionUsers = async (req, res) => {
   try {
     const userId = req.userId;
-    const suggestionList = await userModal
-      .find({ _id: { $ne: userId } })
-      .limit(7);
-    console.log(
-      "🚀 ~ file: userController.js:23 ~ getSuggestionUsers ~ suggestionList:",
-      suggestionList
+
+    // Find the users that the userId is following
+    const followingUsers = await followsModel
+      .find({
+        following_user_id: userId,
+        followStatus: true,
+      })
+      .select("followed_user_id");
+
+    const followingUserIds = followingUsers.map(
+      (follow) => follow.followed_user_id
     );
+
+    // Find suggestionList excluding users that userId is following
+    const suggestionList = await userModal
+      .find({ _id: { $nin: [userId, ...followingUserIds] } })
+      .limit(7);
+    console.log("🚀 ~ file: userController.js:36 ~ getSuggestionUsers ~ suggestionList:", suggestionList)
+
     res.status(200).json(suggestionList);
   } catch (error) {
-    console.log(
-      "🚀 ~ file: userController.js:26 ~ getSuggestionUsers ~ error:",
-      error
-    );
+    console.log("🚀 ~ file: userController.js:40 ~ getSuggestionUsers ~ error:", error)
     res.status(500).json(error);
   }
 };

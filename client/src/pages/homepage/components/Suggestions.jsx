@@ -12,6 +12,7 @@ function Suggestions() {
 
   const suggestionUsers = async () => {
     const response = await axiosInstance.get(GET_SUGGESTION_LIST);
+    console.log("🚀 ~ file: Suggestions.jsx:15 ~ suggestionUsers ~ response:", response)
     setSuggestionList(response.data);
   };
 
