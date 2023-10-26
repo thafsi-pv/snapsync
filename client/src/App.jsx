@@ -11,6 +11,7 @@ import EmailVerification from "./pages/auth/EmailVerification";
 import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
 import UserContextProvider from "./context/UserContext";
+import FileUploadContextProvider from "./context/FileUploadContext";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,9 +26,11 @@ function App() {
         <Route
           path="/home"
           element={
-            <UserContextProvider>
-              <HomePage />
-            </UserContextProvider>
+            <FileUploadContextProvider>
+              <UserContextProvider>
+                <HomePage />
+              </UserContextProvider>
+            </FileUploadContextProvider>
           }
         />
         <Route

@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { GET_USER_DATA } from "../../axios/const";
 import AddPost from "./modal/AddPost";
+import UploadProgress from "./modal/UploadProgress";
 
 function HomePage() {
   const { userData, setUserData } = useContext(UserContext);
@@ -26,7 +27,7 @@ function HomePage() {
       <SideNav setAddPost={setAddPost} />
       <Container />
       <AddPost show={addPost} closeModal={() => setAddPost(false)} />
-     
+      <UploadProgress />
     </div>
   );
 }

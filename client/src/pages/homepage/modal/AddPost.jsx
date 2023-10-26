@@ -11,12 +11,18 @@ import handleUploadMedia from "../../../utils/uploasMedia";
 import { useFormik } from "formik";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
+import useUploadMedia from "../../../hooks/useUploadMedia";
+import { FileUploadContext } from "../../../context/FileUploadContext";
 
 function AddPost({ show, closeModal }) {
+  const { setUploadProgress } = useContext(FileUploadContext);
   const { userData } = useContext(UserContext);
-
+  const { uploadFileToCloudinary, uploadedUrl, uploadProgress } =
+    useUploadMedia();
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
+
+  setUploadProgress(uploadProgress);
 
   const handleMedia = (e) => {
     const selectedMedia = e.target.files[0];
@@ -46,20 +52,18 @@ function AddPost({ show, closeModal }) {
   };
 
   const handleSharPost = async (values) => {
-    const mediaUrl = await handleUploadMedia(file);
+    // const mediaUrl = await handleUploadMedia(file);
+    if (file) {
+      await uploadFileToCloudinary(file);
+    }
     const post = {
-      media_url: mediaUrl,
+      media_url: uploadedUrl,
       location: values.location,
       caption: values.caption,
       media_type: file.type,
     };
-    console.log("🚀 ~ file: AddPost.jsx:53 ~ handleSharPost ~ post:", post);
 
     const createdPost = await axiosInstance.post(POST_API, post);
-    console.log(
-      "🚀 ~ file: AddPost.jsx:58 ~ handleSharPost ~ createdPost:",
-      createdPost
-    );
   };
 
   const postFormik = useFormik({
@@ -185,6 +189,13 @@ function AddPost({ show, closeModal }) {
                   </motion.div>
                 </>
               )}
+              <div className="progress-bar">
+                <div
+                  className="progress"
+                  style={{ width: `${uploadProgress}%` }}>
+                  {uploadProgress}sdasd
+                </div>
+              </div>
             </div>
           </div>
         </div>

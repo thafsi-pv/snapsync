@@ -1,5 +1,6 @@
 export const baseUrl = "http://localhost:8090/api";
 
+
 export const CLOUDINARY_IMAGE_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dm4djc1b1/image/upload";
 export const CLOUDINARY_VIDEO_UPLOAD_URL =
