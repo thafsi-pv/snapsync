@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   AiFillHome,
   AiOutlineSearch,
@@ -11,8 +11,12 @@ import { MdOutlineAddBox } from "react-icons/md";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
+import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
-function SideNav({ setAddPost }) {
+function SideNav() {
+  const { userData, setAddPost } = useContext(UserContext);
+  console.log("🚀 ~ file: SideNav.jsx:18 ~ SideNav ~ userData:", userData);
   return (
     <div className="relative self-stretch w-[23%]  flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">
       <div className="fixed flex flex-col w-fit  items-center   py-8 pl-4 h-full ">
@@ -20,10 +24,12 @@ function SideNav({ setAddPost }) {
           <img src={logo} alt="" className="object-cover" />
         </div>
         <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full ">
-          <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-            <AiFillHome className="h-7 w-7" />
-            <p className="font-semibold">Home</p>
-          </div>
+          <Link to="/">
+            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+              <AiFillHome className="h-7 w-7" />
+              <p className="font-semibold">Home</p>
+            </div>
+          </Link>
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
             <AiOutlineSearch className="h-7 w-7" />
             <p className="font-normal">Search</p>
@@ -62,10 +68,16 @@ function SideNav({ setAddPost }) {
             />
             <p className="font-normal">Create</p>
           </div>
-          <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-            <AiOutlineHeart className="h-7 w-7" />
-            <p className="font-normal">Profile</p>
-          </div>
+          <Link to="/profile">
+            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+              <img
+                src={userData.imageUrl}
+                alt=""
+                className="w-7 h-7 rounded-full"
+              />
+              <p className="font-normal">Profile</p>
+            </div>
+          </Link>
         </div>
         <div className="fixed bottom-0 flex flex-col gap-3 p-3">
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">

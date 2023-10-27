@@ -22,12 +22,16 @@ import Profile from "./pages/myprofile/components/Profile";
 import HomeLayout from "./layout/HomeLayout";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   const appRouter = createBrowserRouter([
     {
       path: "/",
-      element: <HomeLayout />,
+      element: (
+        <FileUploadContextProvider>
+          <UserContextProvider>
+            <HomeLayout />
+          </UserContextProvider>
+        </FileUploadContextProvider>
+      ),
       children: [
         {
           path: "/",
@@ -49,13 +53,7 @@ function App() {
     },
   ]);
 
-  return (
-    <FileUploadContextProvider>
-      <UserContextProvider>
-        <RouterProvider router={appRouter} />
-      </UserContextProvider>
-    </FileUploadContextProvider>
-  );
+  return <RouterProvider router={appRouter} />;
 }
 
 export default App;

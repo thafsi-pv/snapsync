@@ -16,7 +16,7 @@ import { FileUploadContext } from "../../../context/FileUploadContext";
 
 function AddPost({ show, closeModal }) {
   const { setUploadProgress } = useContext(FileUploadContext);
-  const { userData } = useContext(UserContext);
+  const { userData, addPost, setAddPost } = useContext(UserContext);
   const { uploadFileToCloudinary, uploadProgress } = useUploadMedia();
 
   const [media, setMedia] = useState();
@@ -53,7 +53,7 @@ function AddPost({ show, closeModal }) {
 
   const handleSharPost = async (values) => {
     // const mediaUrl = await handleUploadMedia(file);
-    closeModal();
+    setAddPost(false);
     let fileUrl = null;
     if (file) {
       fileUrl = await uploadFileToCloudinary(file);
@@ -102,17 +102,17 @@ function AddPost({ show, closeModal }) {
     duration: 0.4,
   };
 
-  if (!show) return null;
+  if (!addPost) return null;
   return (
-    <PortalModal show={show}>
+    <PortalModal show={addPost}>
       <div className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm">
         <div
           className="fixed inset-0 bg-black opacity-50 "
-          onClick={closeModal}></div>
+          onClick={() => setAddPost(false)}></div>
         <div className="flex flex-col items-center justify-center h-[70%] w-[60%] ">
           <div
             className="absolute top-4 right-4 cursor-pointer"
-            onClick={closeModal}>
+            onClick={() => setAddPost(false)}>
             <AiOutlineClose className="h-6 w-6 text-white" />
           </div>
           <div className="bg-white w-full h-full relative flex flex-col justify-stretch  overflow-hidden items-stretch pt-4 pb- rounded-[20px]">
