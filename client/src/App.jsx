@@ -18,7 +18,7 @@ import {
 import HomePage from "./pages/homepage/HomePage";
 import UserContextProvider from "./context/UserContext";
 import FileUploadContextProvider from "./context/FileUploadContext";
-import Profile from "./pages/myprofile/components/Profile";
+import Profile from "./pages/profile/Profile";
 import HomeLayout from "./layout/HomeLayout";
 
 function App() {

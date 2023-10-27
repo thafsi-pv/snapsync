@@ -1,10 +1,28 @@
-import React from "react";
-import ReelIcon from "../../../assets/svg/ReelIcon";
+import React, { useEffect, useState } from "react";
+import ReelIcon from "../../assets/svg/ReelIcon";
 import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../axios/axiosInterceptor";
+import { PROFILE_API } from "../../axios/const";
 
 function Profile() {
+  const [profile, setProfile] = useState();
+  console.log("🚀 ~ file: Profile.jsx:9 ~ Profile ~ profile:", profile);
+  const [posts, setPosts] = useState();
+  console.log("🚀 ~ file: Profile.jsx:11 ~ Profile ~ posts:", posts);
   const { username } = useParams();
-  console.log("🚀 ~ file: Profile.jsx:7 ~ Profile ~ username:", username)
+  console.log("🚀 ~ file: Profile.jsx:7 ~ Profile ~ username:", username);
+
+  useEffect(() => {
+    getProfileData();
+  }, []);
+
+  const getProfileData = async () => {
+    const response = await axiosInstance.get(
+      `${PROFILE_API}?username=${username}`
+    );
+    setProfile(response.data.profile[0]);
+    setPosts(response.data.post);
+  };
 
   return (
     <div
@@ -14,7 +32,7 @@ function Profile() {
         <div className="flex flex-row justify-between items-start ml-20 w-full ">
           <div className="w-1/3 m-6">
             <img
-              src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1696873124/gfvwiaz7pw8qn6wtgvws.avif"
+              src={profile?.imageUrl}
               className="ml-px w-44 h-38 rounded-full"
             />
           </div>
@@ -116,77 +134,26 @@ function Profile() {
           </ul>
           <div className="flex justify-center items-center">
             <div className=" columns-3 gap-1">
-              <div className="relative">
-                <div className="absolute right-3 top-2 ">
-                  <ReelIcon />
-                </div>
-                <video
-                  className="h-72 w-72 py-[1px] object-cover"
-                  src="https://res.cloudinary.com/dm4djc1b1/video/upload/v1698401131/idg6rnf4gwwalwjl12zs.mp4"></video>
-              </div>
-              <div className="relative">
-                <div className="absolute right-3 top-2 ">
-                  <ReelIcon />
-                </div>
-                <video
-                  className="h-72 w-72 py-[1px] object-cover"
-                  src="https://res.cloudinary.com/dm4djc1b1/video/upload/v1698401706/dp20opdqjmlqmpikv0xe.mp4"></video>
-              </div>
-              <img
-                className="h-72 w-72 py-[1px] aspect-video"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
-              <img
-                className="h-72 w-72 py-[1px]"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698337545/u9bvxtd7lu27exnglueq.jpg"
-                alt=""
-              />
+              {posts?.map((post) =>
+                post.media_type.startsWith("image/") ? (
+                  <img
+                    className="h-72 w-72 py-[1px] aspect-video"
+                    src={post.media_url}
+                    alt=""
+                  />
+                ) : (
+                  <div className="relative">
+                    <div className="absolute right-3 top-2 ">
+                      <ReelIcon />
+                    </div>
+                    <video
+                      className="h-72 w-72 py-[1px] object-cover"
+                      src={post.media_url}></video>
+                  </div>
+                )
+              )}
+
+             
             </div>
           </div>
         </div>

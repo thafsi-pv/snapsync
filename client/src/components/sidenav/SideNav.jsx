@@ -68,7 +68,7 @@ function SideNav() {
             />
             <p className="font-normal">Create</p>
           </div>
-          <Link to="/profile">
+          <Link to={`/profile/${userData.userName}`}>
             <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
               <img
                 src={userData.imageUrl}
