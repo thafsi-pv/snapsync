@@ -5,8 +5,8 @@ function Profile() {
   return (
     <div
       id="MyProfileRoot"
-      className="overflow-hidden  bg-white relative flex flex-row justify-between w-full items-start pl-8 pr-56 py-10">
-      <div className="self-start relative flex flex-col mb-5 gap-16 w-full">
+      className="overflow-hidden  items-center relative flex flex-row justify-center w-full pl-8 py-10">
+      <div className="items-center justify-center relative flex flex-col mb-5 gap-16 w-4/5 p-5">
         <div className="flex flex-row justify-between items-start ml-20 w-full ">
           <div className="w-1/3 m-6">
             <img
@@ -110,8 +110,8 @@ function Profile() {
               </a>
             </li>
           </ul>
-          <div>
-            <div className=" columns-3 gap-0">
+          <div className="flex justify-center items-center">
+            <div className=" columns-3 gap-1">
               <div className="relative">
                 <div className="absolute right-3 top-2 ">
                   <ReelIcon />
