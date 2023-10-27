@@ -7,6 +7,7 @@ import { COMMENT_API } from "../../../axios/const";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import PostFile from "../../../components/post/PostFile";
 import { timeAgo } from "../../../utils/timeAgo";
+import Comment from "../components/Comment";
 
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
@@ -25,26 +26,15 @@ function Comments({ show, closeModal, postId }) {
     const comments = await axiosInstance.get(
       `${COMMENT_API}?post_id=${postId}`
     );
-    console.log(
-      "🚀 ~ file: Comments.jsx:16 ~ getCommentsByPostId ~ comments:",
-      comments
-    );
     setPostDetails(comments.data[0]);
   };
 
-  const commentFormik = useFormik({
-    initialValues: {
-      comment: "",
-    },
-    onSubmit: (values) => {
-      console.log("🚀 ~ file: AddPost.jsx:62 ~ AddPost ~ values:", values);
-      handleAddComment(values);
-    },
-  });
-
-  const handleAddComment = async (values) => {
+  const handleAddComment = async (postId, values) => {
     const data = { post_id: postId, comment: values.comment };
     const createdPost = await axiosInstance.post(COMMENT_API, data);
+    if (createdPost.status == 200) {
+      getCommentsByPostId();
+    }
   };
 
   if (!show) return null;
@@ -129,12 +119,14 @@ function Comments({ show, closeModal, postId }) {
                       {postDetails?.likeCount} likes
                     </div>
                     <div className="text-xs text-gray-400">
-                     {timeAgo(postDetails?.createdAt)}
+                      {timeAgo(postDetails?.createdAt)}
                     </div>
                   </div>
                 </div>
 
-                <form
+                <Comment postId={postId} callBack={handleAddComment} />
+
+                {/* <form
                   onSubmit={commentFormik.handleSubmit}
                   className="flex flex-row ml-1 gap-5 w-full  items-center border-t">
                   <img
@@ -161,7 +153,7 @@ function Comments({ show, closeModal, postId }) {
                       Post
                     </button>
                   )}
-                </form>
+                </form> */}
               </div>
             </div>
           </div>

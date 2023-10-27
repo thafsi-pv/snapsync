@@ -12,6 +12,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
 import UserContextProvider from "./context/UserContext";
 import FileUploadContextProvider from "./context/FileUploadContext";
+import Profile from "./pages/myprofile/components/Profile";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -41,6 +42,7 @@ function App() {
             </UserContextProvider>
           }
         />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

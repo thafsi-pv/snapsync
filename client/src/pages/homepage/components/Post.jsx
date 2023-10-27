@@ -5,9 +5,10 @@ import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
 import { AiFillHeart } from "react-icons/ai";
 import { LuSend } from "react-icons/lu";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { LIKE_API, POST_API } from "../../../axios/const";
+import { COMMENT_API, LIKE_API, POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
 import { timeAgo } from "../../../utils/timeAgo";
+import Comment from "./Comment";
 
 function Post({ setComments, setPostId }) {
   const [posts, setPosts] = useState();
@@ -43,11 +44,19 @@ function Post({ setComments, setPostId }) {
     setPostId(postId);
   };
 
+  const handleAddComment = async (postId, values) => {
+    const data = { post_id: postId, comment: values.comment };
+    const createdPost = await axiosInstance.post(COMMENT_API, data);
+    if (createdPost.status == 200) {
+      getAllPosts();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 mx-20">
       {posts?.map((post, index) => {
         return (
-          <div className="mb-px ml-4 mr-5 max-w-[500px]" key={index} >
+          <div className="mb-px ml-4 mr-5 max-w-[500px]" key={index}>
             <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
               <div className="flex flex-row gap-3 items-start">
                 <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col w-10 shrink-0 items-start pt-1 pb-px px-px">
@@ -160,23 +169,15 @@ function Post({ setComments, setPostId }) {
               </div>
               <div className="flex flex-col   shrink-0">
                 {post.commentCount > 0 && (
-                  <div className="text-sm  leading-[18px]">
+                  <div
+                    className="text-sm  leading-[18px] cursor-pointer"
+                    onClick={() => {
+                      handleViewComments(post._id);
+                    }}>
                     View all {post.commentCount} comments
                   </div>
                 )}
-                <div id="Border" className="bg-[#efefef]  shrink-0" />
-                <div className="flex items-center">
-                  <div className="flex-1">
-                    <InputField
-                      inputClass="p-0"
-                      placeholder="Add a comment"
-                      extra="!border-none !bg-white"
-                    />
-                  </div>
-                  <span className="text-sm font-semibold text-blue-500 hover:text-black cursor-pointer">
-                    Post
-                  </span>
-                </div>
+                <Comment postId={post._id} callBack={handleAddComment} />
               </div>
             </div>
             <div id="Border2" className="bg-[#efefef] h-px shrink-0" />
