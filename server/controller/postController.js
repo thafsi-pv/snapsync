@@ -87,10 +87,6 @@ const getAllPosts = async (req, res) => {
         },
       },
     ]);
-    console.log(
-      "🚀 ~ file: postController.js:91 ~ getAllPosts ~ postsWithLikes:",
-      postsWithLikes
-    );
 
     if (!postsWithLikes)
       return res.status(404).json({ message: "No post found!" });

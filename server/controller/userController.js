@@ -1,5 +1,6 @@
 const followsModel = require("../model/followsModel");
 const userModal = require("../model/userModel");
+const postModal = require("../model/postModel");
 
 const getUserData = async (req, res) => {
   try {
@@ -43,4 +44,81 @@ const getSuggestionUsers = async (req, res) => {
   }
 };
 
-module.exports = { getUserData, getSuggestionUsers };
+const getProfileData = async (req, res) => {
+  const username = req.query.username;
+  console.log(
+    "🚀 ~ file: userController.js:48 ~ getProfileData ~ username:",
+    username
+  );
+
+  const profile = await userModal.aggregate([
+    {
+      $match: { userName: { $eq: username } },
+    },
+    {
+      $lookup: {
+        from: "follows",
+        let: { userId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ["$following_user_id", "$$userId"] },
+              followStatus: true,
+            },
+          },
+        ],
+        as: "followingUsers",
+      },
+    },
+    {
+      $lookup: {
+        from: "follows",
+        let: { userId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ["$followed_user_id", "$$userId"] },
+              followStatus: true,
+            },
+          },
+        ],
+        as: "followedUsers",
+      },
+    },
+    {
+      $project: {
+        emailPhone: 1,
+        fullName: 1,
+        userName: 1,
+        imageUrl: 1,
+        followingCount: { $size: "$followingUsers" },
+        followedCount: { $size: "$followedUsers" },
+      },
+    },
+  ]);
+
+  if (profile.length > 0) {
+    const userProfile = profile[0];
+    const posts = await postModal.aggregate([
+      {
+        $match: { user_id: userProfile._id },
+      },
+      {
+        $project: {
+          media_url: 1,
+          media_type: 1,
+          caption: 1,
+          location: 1,
+          createdAt: 1,
+        },
+      },
+    ]);
+
+    profile.posts = posts;
+    res.status(200).json({ profile:profile, post:posts });
+  } else {
+    // Handle the case where no user with the specified username is found.
+  }
+};
+
+module.exports = { getUserData, getSuggestionUsers, getProfileData };
