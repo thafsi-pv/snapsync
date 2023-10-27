@@ -14,12 +14,12 @@ import logo from "../../assets/img/snapsync_logo.png";
 
 function SideNav({ setAddPost }) {
   return (
-    <div className=" self-stretch w-[18%] flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">
-      <div className="fixed flex flex-col  shrink-0 items-start py-8 pl-4 w-[15%] h-full">
+    <div className="relative self-stretch w-[23%]  flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">
+      <div className="fixed flex flex-col w-fit  items-center   py-8 pl-4 h-full ">
         <div className="w-[140px] flex items-center">
           <img src={logo} alt="" className="object-cover" />
         </div>
-        <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full">
+        <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full ">
           <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
             <AiFillHome className="h-7 w-7" />
             <p className="font-semibold">Home</p>

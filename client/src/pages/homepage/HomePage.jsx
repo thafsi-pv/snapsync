@@ -22,9 +22,7 @@ function HomePage() {
 
   return (
     <div
-      id="MainHomePageRoot"
-      className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10 max-w-[1650px]">
-      <SideNav setAddPost={setAddPost} />
+      className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
       <Container />
       <AddPost show={addPost} closeModal={() => setAddPost(false)} />
       <UploadProgress />
