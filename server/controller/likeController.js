@@ -3,11 +3,9 @@ const likeModel = require("../model/likeModel");
 const likePost = async (req, res) => {
   try {
     const { liked, post_id } = req.body;
-    console.log("🚀 ~ file: likeController.js:6 ~ likePost ~ liked:", liked)
     const user_id = req.userId;
 
     const existingLike = await likeModel.findOne({ user_id, post_id });
-    console.log("🚀 ~ file: likeController.js:9 ~ likePost ~ existingLike:", existingLike)
 
     if (existingLike && !liked) {
       // Update the existing like's "liked" property

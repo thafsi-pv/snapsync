@@ -18,6 +18,7 @@ function Post({ setComments, setPostId }) {
 
   const getAllPosts = async () => {
     const post = await axiosInstance.get(POST_API);
+    console.log("🚀 ~ file: Post.jsx:21 ~ getAllPosts ~ post:", post);
     setPosts(post.data);
   };
 
@@ -46,7 +47,7 @@ function Post({ setComments, setPostId }) {
     <div className="flex flex-col gap-4 mx-20">
       {posts?.map((post, index) => {
         return (
-          <div className="mb-px ml-4 mr-5" key={index}>
+          <div className="mb-px ml-4 mr-5 max-w-[500px]" key={index} >
             <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
               <div className="flex flex-row gap-3 items-start">
                 <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col w-10 shrink-0 items-start pt-1 pb-px px-px">
@@ -62,7 +63,9 @@ function Post({ setComments, setPostId }) {
                       <div className="flex justify-center items-center font-bold">
                         •
                       </div>
-                      <div className=" text-sm font-normal ">{timeAgo(post.createdAt)}</div>
+                      <div className=" text-sm font-normal ">
+                        {timeAgo(post.createdAt)}
+                      </div>
                     </div>
                   </div>
 
@@ -156,9 +159,11 @@ function Post({ setComments, setPostId }) {
                 </div>
               </div>
               <div className="flex flex-col   shrink-0">
-                <div className="text-sm  leading-[18px]">
-                  View all 100 comments
-                </div>
+                {post.commentCount > 0 && (
+                  <div className="text-sm  leading-[18px]">
+                    View all {post.commentCount} comments
+                  </div>
+                )}
                 <div id="Border" className="bg-[#efefef]  shrink-0" />
                 <div className="flex items-center">
                   <div className="flex-1">

@@ -14,7 +14,7 @@ import logo from "../../assets/img/snapsync_logo.png";
 
 function SideNav({ setAddPost }) {
   return (
-    <div className="self-stretch w-[25%] flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">
+    <div className=" self-stretch w-[18%] flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">
       <div className="fixed flex flex-col  shrink-0 items-start py-8 pl-4 w-[15%] h-full">
         <div className="w-[140px] flex items-center">
           <img src={logo} alt="" className="object-cover" />

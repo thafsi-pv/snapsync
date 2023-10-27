@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const postModal = require("../model/postModel");
+const followsModel = require("../model/followsModel");
 
 const createPost = async (req, res) => {
   try {
@@ -19,10 +20,28 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-
     const user_id = req.userId;
 
+    const followingUsers = await followsModel
+      .find({
+        following_user_id: user_id,
+        followStatus: true,
+      })
+      .select("followed_user_id");
+
+    const followingUserIds = followingUsers.map(
+      (follow) => follow.followed_user_id
+    );
+    const objUserId = new mongoose.Types.ObjectId(user_id);
     const postsWithLikes = await postModal.aggregate([
+      {
+        $match: {
+          user_id: { $in: [objUserId, ...followingUserIds] },
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
       {
         $lookup: {
           from: "likes",
@@ -33,10 +52,18 @@ const getAllPosts = async (req, res) => {
       },
       {
         $lookup: {
-          from: "users", 
+          from: "users",
           localField: "user_id",
           foreignField: "_id",
           as: "user",
+        },
+      },
+      {
+        $lookup: {
+          from: "comments",
+          localField: "_id",
+          foreignField: "post_id",
+          as: "comments",
         },
       },
       {
@@ -48,18 +75,23 @@ const getAllPosts = async (req, res) => {
           media_type: 1,
           caption: 1,
           location: 1,
-          createdAt:1,
+          createdAt: 1,
           likeCount: { $size: "$likes" },
+          commentCount: { $size: "$comments" },
           liked: {
             $in: [
               new mongoose.Types.ObjectId(user_id), // Convert user_id to ObjectId
-              { $map: { input: "$likes", as: "like", in: "$$like.user_id" } }
+              { $map: { input: "$likes", as: "like", in: "$$like.user_id" } },
             ],
           },
         },
       },
     ]);
-    
+    console.log(
+      "🚀 ~ file: postController.js:91 ~ getAllPosts ~ postsWithLikes:",
+      postsWithLikes
+    );
+
     if (!postsWithLikes)
       return res.status(404).json({ message: "No post found!" });
     return res.status(200).json(postsWithLikes);

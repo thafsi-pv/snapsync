@@ -9,8 +9,8 @@ function Container() {
   const [postId, setPostId] = useState(null);
 
   return (
-    <div className="flex overflow-hidden min-h-full mx-20 w-fit">
-      <div className="self-start flex flex-col gap-16 lg:w-8/12 md:w-7/12 sm:w-full">
+    <div className="flex overflow-hidden min-h-full">
+      <div className="self-start flex flex-col gap-16 lg:w-8/12 md:w-7/12 sm:w-full max-w-[680px]">
         <Story />
         <Post setPostId={setPostId} setComments={setComments} />
       </div>
