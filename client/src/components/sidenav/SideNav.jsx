@@ -11,11 +11,11 @@ import { MdOutlineAddBox } from "react-icons/md";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
-import { UserContext } from "../../context/UserContext";
+import { UserActionContext } from "../../context/UserActionContext";
 import { Link } from "react-router-dom";
 
 function SideNav() {
-  const { userData, setAddPost } = useContext(UserContext);
+  const { userData, setAddPost } = useContext(UserActionContext);
   console.log("🚀 ~ file: SideNav.jsx:18 ~ SideNav ~ userData:", userData);
   return (
     <div className="relative self-stretch w-[23%]  flex flex-row  items-start min-h-screen bg-white dark:bg-black border-r">

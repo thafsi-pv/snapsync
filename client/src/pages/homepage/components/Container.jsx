@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Story from "./Story";
 import Suggestions from "./Suggestions";
 import Post from "./Post";
 import Comments from "../modal/Comments";
+import { UserActionContext } from "../../../context/UserActionContext";
 
 function Container() {
-  const [comments, setComments] = useState(false);
-  const [postId, setPostId] = useState(null);
+  const { comments, setComments, postId, setPostId } = useContext(UserActionContext);
+
+  // const [comments, setComments] = useState(false);
+  // const [postId, setPostId] = useState(null);
 
   return (
     <div className="flex overflow-hidden min-h-full min-w-full justify-evenly">

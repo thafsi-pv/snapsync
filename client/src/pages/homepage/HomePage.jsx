@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import SideNav from "../../components/sidenav/SideNav";
 import Container from "./components/Container";
-import { UserContext } from "../../context/UserContext";
+import { UserActionContext } from "../../context/UserActionContext";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { GET_USER_DATA } from "../../axios/const";
 import AddPost from "./modal/AddPost";
 import UploadProgress from "./modal/UploadProgress";
 
 function HomePage() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserActionContext);
   const [addPost, setAddPost] = useState(false);
 
   useEffect(() => {

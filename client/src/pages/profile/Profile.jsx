@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReelIcon from "../../assets/svg/ReelIcon";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { PROFILE_API } from "../../axios/const";
+import { UserActionContext } from "../../context/UserActionContext";
+import Comments from "../homepage/modal/Comments";
 
 function Profile() {
   const [profile, setProfile] = useState();
-  console.log("🚀 ~ file: Profile.jsx:9 ~ Profile ~ profile:", profile);
   const [posts, setPosts] = useState();
-  console.log("🚀 ~ file: Profile.jsx:11 ~ Profile ~ posts:", posts);
   const { username } = useParams();
-  console.log("🚀 ~ file: Profile.jsx:7 ~ Profile ~ username:", username);
+  const { comments, setComments, postId, setPostId } = useContext(UserActionContext);
 
   useEffect(() => {
     getProfileData();
@@ -22,6 +22,11 @@ function Profile() {
     );
     setProfile(response.data.profile[0]);
     setPosts(response.data.post);
+  };
+
+  const handleViewComments = (postId) => {
+    setComments(true);
+    setPostId(postId);
   };
 
   return (
@@ -140,9 +145,16 @@ function Profile() {
                     className="h-72 w-72 py-[1px] aspect-video"
                     src={post.media_url}
                     alt=""
+                    onClick={() => {
+                      handleViewComments(post._id);
+                    }}
                   />
                 ) : (
-                  <div className="relative">
+                  <div
+                    className="relative"
+                    onClick={() => {
+                      handleViewComments(post._id);
+                    }}>
                     <div className="absolute right-3 top-2 ">
                       <ReelIcon />
                     </div>
@@ -152,8 +164,6 @@ function Profile() {
                   </div>
                 )
               )}
-
-             
             </div>
           </div>
         </div>
@@ -189,6 +199,11 @@ function Profile() {
           </div>
         </div> */}
       </div>
+      <Comments
+        postId={postId}
+        show={comments}
+        closeModal={() => setComments(false)}
+      />
     </div>
   );
 }

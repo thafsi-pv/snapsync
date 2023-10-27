@@ -11,10 +11,6 @@ import Comment from "../components/Comment";
 
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
-  console.log(
-    "🚀 ~ file: Comments.jsx:11 ~ Comments ~ postDetails:",
-    postDetails
-  );
 
   useEffect(() => {
     if (show) {

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import CreatePost from "../../../assets/svg/createPost";
 import { AiOutlineClose } from "react-icons/ai";
 import PortalModal from "../../../components/modal/PortalModal";
-import { UserContext } from "../../../context/UserContext";
+import { UserActionContext } from "../../../context/UserActionContext";
 import TextField from "../../../components/fields/TextField";
 import InputField from "../../../components/fields/InputField";
 import { motion } from "framer-motion";
@@ -16,7 +16,7 @@ import { FileUploadContext } from "../../../context/FileUploadContext";
 
 function AddPost({ show, closeModal }) {
   const { setUploadProgress } = useContext(FileUploadContext);
-  const { userData, addPost, setAddPost } = useContext(UserContext);
+  const { userData, addPost, setAddPost } = useContext(UserActionContext);
   const { uploadFileToCloudinary, uploadProgress } = useUploadMedia();
 
   const [media, setMedia] = useState();

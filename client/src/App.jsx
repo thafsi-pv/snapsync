@@ -16,10 +16,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
-import UserContextProvider from "./context/UserContext";
 import FileUploadContextProvider from "./context/FileUploadContext";
 import Profile from "./pages/profile/Profile";
 import HomeLayout from "./layout/HomeLayout";
+import UserActionContextProvider from "./context/UserActionContext";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -27,9 +27,9 @@ function App() {
       path: "/",
       element: (
         <FileUploadContextProvider>
-          <UserContextProvider>
+          <UserActionContextProvider>
             <HomeLayout />
-          </UserContextProvider>
+          </UserActionContextProvider>
         </FileUploadContextProvider>
       ),
       children: [

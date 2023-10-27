@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { UserContext } from "../../../context/UserContext";
+import { UserActionContext } from "../../../context/UserActionContext";
 
 function User() {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserActionContext);
   console.log("🚀 ~ file: User.jsx:6 ~ User ~ userData:", userData);
 
   return (
