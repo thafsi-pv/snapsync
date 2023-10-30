@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useContext, useState } from "react";
 import CreatePost from "../../../assets/svg/createPost";
 import { AiOutlineClose } from "react-icons/ai";
 import PortalModal from "../../../components/modal/PortalModal";
@@ -7,14 +6,13 @@ import { UserActionContext } from "../../../context/UserActionContext";
 import TextField from "../../../components/fields/TextField";
 import InputField from "../../../components/fields/InputField";
 import { motion } from "framer-motion";
-import handleUploadMedia from "../../../utils/uploasMedia";
 import { useFormik } from "formik";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { POST_API } from "../../../axios/const";
 import useUploadMedia from "../../../hooks/useUploadMedia";
 import { FileUploadContext } from "../../../context/FileUploadContext";
 
-function AddPost({ show, closeModal }) {
+function AddPost() {
   const { setUploadProgress } = useContext(FileUploadContext);
   const { userData, addPost, setAddPost } = useContext(UserActionContext);
   const { uploadFileToCloudinary, uploadProgress } = useUploadMedia();
