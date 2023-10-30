@@ -9,8 +9,16 @@ const userRouter = require("./router/userRouter");
 const postRouter = require("./router/postRouter");
 const likeRouter = require("./router/likeRouter");
 const commentRouter = require("./router/commentRouter");
-
 const app = express();
+
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+    methords: ["GET", "POST"],
+  },
+});
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
@@ -27,5 +35,10 @@ app.use("/api/post", postRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/comment", commentRouter);
 
+//socket
+io.on("connection", (socket) => {
+  console.log("🚀 ~ file: index.js:41 ~ io.on ~ socket:", socket.id);
+});
+
 const PORT = process.env.PORT || 3457;
-app.listen(PORT, () => console.log("server started at " + PORT));
+server.listen(PORT, () => console.log("server started at " + PORT));

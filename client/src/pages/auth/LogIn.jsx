@@ -11,8 +11,12 @@ import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { LOGIN_API } from "../../axios/const";
+import useChat from "../../hooks/useChat";
 
 function LogIn() {
+  const { socket, connectSocket } = useChat(); // Connect to the socket only on successful login;
+  console.log("🚀 ~ file: LogIn.jsx:18 ~ LogIn ~ socket:", socket)
+
   const navigate = useNavigate();
   const logInFormik = useFormik({
     initialValues: {
@@ -34,6 +38,7 @@ function LogIn() {
     if (result.status === 200) {
       localStorage.setItem("ssaccestoken", result.data.accesstoken);
       navigate("/home");
+      connectSocket();
     }
   };
 
