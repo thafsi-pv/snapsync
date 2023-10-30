@@ -20,6 +20,7 @@ import FileUploadContextProvider from "./context/FileUploadContext";
 import Profile from "./pages/profile/Profile";
 import HomeLayout from "./layout/HomeLayout";
 import UserActionContextProvider from "./context/UserActionContext";
+import Messages from "./pages/messages/Messages";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -40,6 +41,10 @@ function App() {
         {
           path: "/profile/:username",
           element: <Profile />,
+        },
+        {
+          path: "/inbox",
+          element: <Messages />,
         },
       ],
     },

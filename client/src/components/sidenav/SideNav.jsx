@@ -34,11 +34,11 @@ function SideNav() {
   };
 
   return (
-    <div className="flex relative w-[21%] border-r">
+    <div className="flex relative  w-[21%]">
       <div
         className={`relative self-stretch ${
           navbar == "hidden" ? "w-[7%]" : "w-[21%]"
-        }  flex flex-row  items-start min-h-screen bg-white dark:bg-black  z-10 mr-10`}>
+        }  flex flex-row  items-start min-h-screen bg-white dark:bg-black  z-10`}>
         <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
           <div className="h-10">
             {navbar == "block" && (
@@ -73,14 +73,16 @@ function SideNav() {
               <BiSolidMoviePlay className="h-7 w-7" />
               <p className={`font-normal ${navbar}`}>Reels</p>
             </div>
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-              {/* <BsChatQuote className="h-7 w-7" /> */}
-              <img
-                src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
-                className="w-6 shrink-0"
-              />
-              <p className={`font-normal ${navbar}`}>Messages</p>
-            </div>
+            <Link to='/inbox'>
+              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                {/* <BsChatQuote className="h-7 w-7" /> */}
+                <img
+                  src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
+                  className="w-6 shrink-0"
+                />
+                <p className={`font-normal ${navbar}`}>Messages</p>
+              </div>
+            </Link>
             <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
               {/* <AiOutlineHeart className="h-7 w-7" /> */}
               <img
