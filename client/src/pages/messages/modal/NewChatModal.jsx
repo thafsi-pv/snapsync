@@ -9,13 +9,12 @@ import { SEARCH_USER_API } from "../../../axios/const";
 function NewChatModal({ newChat, setNewChat }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
-  console.log(
-    "🚀 ~ file: NewChatModal.jsx:10 ~ NewChatModal ~ debouncedSearchTerm:",
-    debouncedSearchTerm
-  );
+  const [usersList, setUsersList] = useState(null);
 
   useEffect(() => {
-    searchUser();
+    if (debouncedSearchTerm != "") {
+      searchUser();
+    }
   }, [debouncedSearchTerm]);
 
   const searchUser = async () => {
@@ -27,6 +26,7 @@ function NewChatModal({ newChat, setNewChat }) {
       "🚀 ~ file: NewChatModal.jsx:24 ~ handleSearch ~ result:",
       result
     );
+    setUsersList(result.data);
   };
 
   if (!newChat) return null;
@@ -53,42 +53,28 @@ function NewChatModal({ newChat, setNewChat }) {
           />
         </div>
         <div className="max-h-80 h-80 overflow-y-scroll ">
-          <div className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-              className="w-10 h-10 rounded-full
+          {usersList ? (
+            usersList?.map((user) => (
+              <div
+                key={user._id}
+                className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
+                <img
+                  src={user.imageUrl}
+                  className="w-10 h-10 rounded-full
               "
-              alt=""
-            />
-            <div className="leading-3">
-              <p>Full Name</p>
-              <p className="text-sm text-gray-400">username</p>
+                  alt=""
+                />
+                <div className="leading-3">
+                  <p>{user.fullName}</p>
+                  <p className="text-sm text-gray-400">{user.userName}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="px-5 py-5">
+              <p className="text-sm text-gray-400">No account found.</p>
             </div>
-          </div>
-          <div className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-              className="w-10 h-10 rounded-full
-              "
-              alt=""
-            />
-            <div className="leading-3">
-              <p>Full Name</p>
-              <p className="text-sm text-gray-400">username</p>
-            </div>
-          </div>
-          <div className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-              className="w-10 h-10 rounded-full
-              "
-              alt=""
-            />
-            <div className="leading-3">
-              <p>Full Name</p>
-              <p className="text-sm text-gray-400">username</p>
-            </div>
-          </div>
+          )}
         </div>
         <div className="p-2 rounded-lg">
           <button className="p-2 w-full bg-blue-500 rounded-lg text-white font-semibold">
