@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PortalModal from "../../../components/modal/PortalModal";
 import InputField from "../../../components/fields/InputField";
 import { AiOutlineClose } from "react-icons/ai";
+import useDebounce from "../../../hooks/useDebounce";
+import { axiosInstance } from "../../../axios/axiosInterceptor";
+import { SEARCH_USER_API } from "../../../axios/const";
 
 function NewChatModal({ newChat, setNewChat }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  console.log(
+    "🚀 ~ file: NewChatModal.jsx:10 ~ NewChatModal ~ debouncedSearchTerm:",
+    debouncedSearchTerm
+  );
+
+  useEffect(() => {
+    searchUser();
+  }, [debouncedSearchTerm]);
+
+  const searchUser = async () => {
+    console.log("search for inside if", debouncedSearchTerm);
+    const result = await axiosInstance.get(
+      `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
+    );
+    console.log(
+      "🚀 ~ file: NewChatModal.jsx:24 ~ handleSearch ~ result:",
+      result
+    );
+  };
+
   if (!newChat) return null;
   return (
     <PortalModal>
@@ -20,7 +45,12 @@ function NewChatModal({ newChat, setNewChat }) {
         <div className="border-b flex gap-3 px-4 items-center">
           <p className="font-semibold">To:</p>
           {/* <input type="text" placeholder="Search" className="w-full" /> */}
-          <InputField placeholder="Search.." extra="border-0 bg-white" />
+          <InputField
+            placeholder="Search.."
+            extra="border-0 bg-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
         <div className="max-h-80 h-80 overflow-y-scroll ">
           <div className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">

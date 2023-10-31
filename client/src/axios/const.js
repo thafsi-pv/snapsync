@@ -19,6 +19,7 @@ export const GET_USER_DATA = "/user/details";
 export const GET_SUGGESTION_LIST = "/user/suggestion";
 export const FOLLOW_USER = "/user/follow";
 export const PROFILE_API = "/user/profile";
+export const SEARCH_USER_API = "/user/searchUsers";
 
 export const POST_API = "/post/";
 export const LIKE_API = "/like/";
