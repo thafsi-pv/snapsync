@@ -1,6 +1,7 @@
 import React from "react";
 import PortalModal from "../../../components/modal/PortalModal";
 import InputField from "../../../components/fields/InputField";
+import { AiOutlineClose } from "react-icons/ai";
 
 function NewChatModal({ newChat, setNewChat }) {
   if (!newChat) return null;
@@ -12,7 +13,9 @@ function NewChatModal({ newChat, setNewChat }) {
       <div className="bg-white w-1/3 shadow-2xl rounded-lg z-20">
         <div className="flex px-2 border-b p-2">
           <div className="flex-1 text-center font-semibold">New Message</div>
-          <div>close</div>
+          <div className="cursor-pointer" onClick={() => setNewChat(false)}>
+            <AiOutlineClose className="w-5 h-5" />
+          </div>
         </div>
         <div className="border-b flex gap-3 px-4 items-center">
           <p className="font-semibold">To:</p>

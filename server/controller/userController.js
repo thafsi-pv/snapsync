@@ -46,11 +46,6 @@ const getSuggestionUsers = async (req, res) => {
 
 const getProfileData = async (req, res) => {
   const username = req.query.username;
-  console.log(
-    "🚀 ~ file: userController.js:48 ~ getProfileData ~ username:",
-    username
-  );
-
   const profile = await userModal.aggregate([
     {
       $match: { userName: { $eq: username } },
@@ -115,10 +110,34 @@ const getProfileData = async (req, res) => {
     ]);
 
     profile.posts = posts;
-    res.status(200).json({ profile:profile, post:posts });
+    res.status(200).json({ profile: profile, post: posts });
   } else {
     // Handle the case where no user with the specified username is found.
   }
 };
 
-module.exports = { getUserData, getSuggestionUsers, getProfileData };
+const searchUsers = async (req, res) => {
+  try {
+    const searchTerm = req.query.param;
+    console.log("🚀 ~ file: userController.js:122 ~ searchUsers ~ searchTerm:", searchTerm)
+    const users = await userModal.find({
+      $or: [
+        { userName: { $regex: searchTerm, $options: "i" } },
+        { fullName: { $regex: searchTerm, $options: "i" } },
+      ],
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: userController.js:129 ~ searchUsers ~ error:",
+      error
+    );
+  }
+};
+
+module.exports = {
+  getUserData,
+  getSuggestionUsers,
+  getProfileData,
+  searchUsers,
+};
