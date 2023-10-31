@@ -125,7 +125,7 @@ const searchUsers = async (req, res) => {
         { userName: { $regex: searchTerm, $options: "i" } },
         { fullName: { $regex: searchTerm, $options: "i" } },
       ],
-    });
+    }).select('-password','-isVerified');
     res.status(200).json(users);
   } catch (error) {
     console.log(
