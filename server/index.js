@@ -36,8 +36,11 @@ app.use("/api/like", likeRouter);
 app.use("/api/comment", commentRouter);
 
 //socket
+const connectedUsers = [];
 io.on("connection", (socket) => {
   console.log("🚀 ~ file: index.js:41 ~ io.on ~ socket:", socket.id);
+  const token = socket.handshake.query.token;
+  console.log("🚀 ~ file: index.js:43 ~ io.on ~ token:", token)
 });
 
 const PORT = process.env.PORT || 3457;

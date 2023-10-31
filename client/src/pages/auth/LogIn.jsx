@@ -12,10 +12,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { LOGIN_API } from "../../axios/const";
 import useChat from "../../hooks/useChat";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { tokenName } from "../../utils/const";
 
 function LogIn() {
+  const { setStorage } = useLocalStorage();
   const { socket, connectSocket } = useChat(); // Connect to the socket only on successful login;
-  console.log("🚀 ~ file: LogIn.jsx:18 ~ LogIn ~ socket:", socket)
 
   const navigate = useNavigate();
   const logInFormik = useFormik({
@@ -31,14 +33,13 @@ function LogIn() {
   });
 
   const handleLogIn = async (values) => {
-    console.log("🚀 ~ file: LogIn.jsx:29 ~ handleLogIn ~ values:", values);
     const result = await axiosInstance.post(LOGIN_API, values);
-    console.log("🚀 ~ file: LogIn.jsx:30 ~ handleLogIn ~ result:", result);
 
     if (result.status === 200) {
-      localStorage.setItem("ssaccestoken", result.data.accesstoken);
-      navigate("/home");
-      connectSocket();
+      //localStorage.setItem("ssaccestoken", result.data.accesstoken);
+      setStorage(tokenName, result.data.accesstoken);
+      navigate("/");
+      connectSocket(result.data.accesstoken);
     }
   };
 
