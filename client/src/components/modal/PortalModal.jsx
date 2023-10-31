@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
-function PortalModal({ children, show }) {
+function PortalModal({ children, show, close }) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {

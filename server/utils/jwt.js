@@ -25,9 +25,14 @@ const verifyRefreshToken = (refreshToken) => {
   return tokenValid._id;
 };
 
+const verifyToken = (token) => {
+  return jwt.verify(token, process.env.JWT_SECRET_KEY);
+};
+
 module.exports = {
   generateAccessToken,
   generateEmailVerifyToken,
   generateRefreshToken,
   verifyRefreshToken,
+  verifyToken,
 };
