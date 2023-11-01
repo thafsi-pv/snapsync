@@ -59,15 +59,19 @@ io.on("connection", (socket) => {
     connectedUsers
   );
 
-  //handle disconnecion
-  socket.on("disconnect", () => {
-    if (
-      connectedUsers.has(userId) &&
-      connectedUsers.get(userId) === socket.id
-    ) {
-      connectedUsers.delete(userId);
-    }
-  });
+  socket.on("newChat", (userid) => {
+    console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userid);
+    return;
+  }),
+    //handle disconnecion
+    socket.on("disconnect", () => {
+      if (
+        connectedUsers.has(userId) &&
+        connectedUsers.get(userId) === socket.id
+      ) {
+        connectedUsers.delete(userId);
+      }
+    });
 });
 
 const PORT = process.env.PORT || 3457;

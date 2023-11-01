@@ -28,9 +28,7 @@ function App() {
       path: "/",
       element: (
         <FileUploadContextProvider>
-          <UserActionContextProvider>
-            <HomeLayout />
-          </UserActionContextProvider>
+          <HomeLayout />
         </FileUploadContextProvider>
       ),
       children: [

@@ -7,6 +7,7 @@ function UserActionContextProvider({ children }) {
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);
   const [postId, setPostId] = useState(null);
+  const [socket, setSocket] = useState();
 
   return (
     <UserActionContext.Provider
@@ -19,6 +20,8 @@ function UserActionContextProvider({ children }) {
         setComments,
         postId,
         setPostId,
+        socket,
+        setSocket,
       }}>
       {children}
     </UserActionContext.Provider>

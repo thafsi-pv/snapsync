@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PortalModal from "../../../components/modal/PortalModal";
 import InputField from "../../../components/fields/InputField";
 import { AiOutlineClose } from "react-icons/ai";
 import useDebounce from "../../../hooks/useDebounce";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { SEARCH_USER_API } from "../../../axios/const";
+import useChat from "../../../hooks/useChat";
+import { UserActionContext } from "../../../context/UserActionContext";
 
 function NewChatModal({ newChat, setNewChat }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [usersList, setUsersList] = useState(null);
+  // const { socket } = useChat();
+  const { socket } = useContext(UserActionContext);
+
+  console.log(
+    "🚀 ~ file: NewChatModal.jsx:15 ~ NewChatModal ~ socket:",
+    socket
+  );
 
   useEffect(() => {
     if (debouncedSearchTerm != "") {
@@ -29,6 +38,10 @@ function NewChatModal({ newChat, setNewChat }) {
     setUsersList(result.data);
   };
 
+  const handleNewChat = () => {
+    socket.emit("newChat", "123");
+  };
+
   if (!newChat) return null;
   return (
     <PortalModal>
@@ -42,7 +55,7 @@ function NewChatModal({ newChat, setNewChat }) {
             <AiOutlineClose className="w-5 h-5" />
           </div>
         </div>
-        <div className="border-b flex gap-3 px-4 items-center">
+        <div className="border-b flex gap-3 px-4 items-center py-1">
           <p className="font-semibold">To:</p>
           {/* <input type="text" placeholder="Search" className="w-full" /> */}
           <InputField
@@ -53,10 +66,11 @@ function NewChatModal({ newChat, setNewChat }) {
           />
         </div>
         <div className="max-h-80 h-80 overflow-y-scroll ">
-          {usersList ? (
+          {usersList?.length > 0 ? (
             usersList?.map((user) => (
               <div
                 key={user._id}
+                onClick={handleNewChat}
                 className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
                 <img
                   src={user.imageUrl}

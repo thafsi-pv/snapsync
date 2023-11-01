@@ -119,13 +119,12 @@ const getProfileData = async (req, res) => {
 const searchUsers = async (req, res) => {
   try {
     const searchTerm = req.query.param;
-    console.log("🚀 ~ file: userController.js:122 ~ searchUsers ~ searchTerm:", searchTerm)
     const users = await userModal.find({
       $or: [
         { userName: { $regex: searchTerm, $options: "i" } },
         { fullName: { $regex: searchTerm, $options: "i" } },
       ],
-    }).select('-password','-isVerified');
+    }).select('-password -isVerified');
     res.status(200).json(users);
   } catch (error) {
     console.log(

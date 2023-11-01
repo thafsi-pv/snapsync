@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { socketBaseUrl } from "../axios/const";
 import { useNavigate } from "react-router-dom";
+import { UserActionContext } from "../context/UserActionContext";
 
 function useChat(shouldConnect = false) {
   const navigate = useNavigate(null);
-  const [socket, setSocket] = useState(null);
+  // const [socket, setSocket] = useState(null);
+  const { socket, setSocket } = useContext(UserActionContext);
 
   useEffect(() => {
     if (socket) {
@@ -24,20 +26,13 @@ function useChat(shouldConnect = false) {
       };
     }
   }, [socket]);
-  //   useEffect(() => {
-  //     if (shouldConnect) {
-  //       const newSoket = io(socketBaseUrl);
-  //       setSocket(newSoket);
-  //       return () => {
-  //         newSoket.disconnect();
-  //       };
-  //     }
-  //   }, [shouldConnect]);
+ 
 
   const connectSocket = (token) => {
     console.log("🚀 ~ file: useChat.jsx:19 ~ connectSocket ~ token:", token);
     const newSocket = io(`${socketBaseUrl}?token=${token}`);
     setSocket(newSocket);
+    console.log("🚀 ~ file: useChat.jsx:35 ~ connectSocket ~ newSocket:", newSocket)
   };
 
   return { socket, connectSocket };

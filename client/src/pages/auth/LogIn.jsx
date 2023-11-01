@@ -17,7 +17,7 @@ import { tokenName } from "../../utils/const";
 
 function LogIn() {
   const { setStorage } = useLocalStorage();
-  const { socket, connectSocket } = useChat(); // Connect to the socket only on successful login;
+  const {connectSocket } = useChat(); // Connect to the socket only on successful login;
 
   const navigate = useNavigate();
   const logInFormik = useFormik({
