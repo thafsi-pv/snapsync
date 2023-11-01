@@ -24,3 +24,6 @@ export const SEARCH_USER_API = "/user/searchUsers";
 export const POST_API = "/post/";
 export const LIKE_API = "/like/";
 export const COMMENT_API = "/comment/";
+
+
+export const GET_CHATS_API = "chat/getChats/";

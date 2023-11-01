@@ -9,7 +9,7 @@ import useChat from "../../../hooks/useChat";
 import { UserActionContext } from "../../../context/UserActionContext";
 import { SocketContext } from "../../../context/SocketContext";
 
-function NewChatModal({ newChat, setNewChat }) {
+function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [usersList, setUsersList] = useState(null);
@@ -27,10 +27,7 @@ function NewChatModal({ newChat, setNewChat }) {
     const result = await axiosInstance.get(
       `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
     );
-    console.log(
-      "🚀 ~ file: NewChatModal.jsx:24 ~ handleSearch ~ result:",
-      result
-    );
+
     setUsersList(result.data);
   };
 
@@ -38,6 +35,14 @@ function NewChatModal({ newChat, setNewChat }) {
     socket.emit("newChat", userId);
     socket.on("usersocketId", (socketId) => {
       console.log("🚀 ~ file: NewChatModal.jsx:40 ~ socket.on ~ id:", socketId);
+
+      const user = usersList.find((user) => {
+        return (user._id = userId);
+      });
+      console.log("🚀 ~ file: NewChatModal.jsx:43 ~ socket.on ~ user:", user);
+      user.socketId = socketId;
+      setChatUser(user);
+      setNewChat(false);
     });
   };
 

@@ -39,16 +39,12 @@ function App() {
           element: <HomePage />,
         },
         {
-          path: "/profile/:username",
+          path: "/:username",
           element: <Profile />,
         },
         {
           path: "/inbox",
-          element: (
-            <UserActionContextProvider>
-              <Messages />
-            </UserActionContextProvider>
-          ),
+          element: <Messages />,
         },
       ],
     },

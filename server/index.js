@@ -9,11 +9,13 @@ const userRouter = require("./router/userRouter");
 const postRouter = require("./router/postRouter");
 const likeRouter = require("./router/likeRouter");
 const commentRouter = require("./router/commentRouter");
+const chatModal = require("./model/chatModel");
 const app = express();
 
 const http = require("http");
 const { verifyToken } = require("./utils/jwt");
 const { connection } = require("mongoose");
+const chatRouter = require("./router/chatRouter");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -36,6 +38,7 @@ app.use("/api/post", postRouter);
 
 app.use("/api/like", likeRouter);
 app.use("/api/comment", commentRouter);
+app.use("/api/chat", chatRouter);
 
 //socket
 const connectedUsers = new Map();
@@ -53,34 +56,39 @@ io.on("connection", (socket) => {
       );
       connectedUsers.delete(userId);
     }
-
     connectedUsers.set(userId, socket.id);
-    console.log(
-      "🚀 ~ file: index.js:48 ~ io.on ~ connectedUsers:",
-      connectedUsers
-    );
-
     socket.on("newChat", (userId) => {
-      console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userId);
-
       if (connectedUsers.has(userId)) {
         const existingSocket = connectedUsers.get(userId);
         io.to(socket.id).emit("usersocketId", existingSocket);
       } else {
         io.to(socket.id).emit("usersocketId", 0);
       }
-
       return;
     }),
-      //handle disconnecion
-      socket.on("disconnect", () => {
-        if (
-          connectedUsers.has(userId) &&
-          connectedUsers.get(userId) === socket.id
-        ) {
-          connectedUsers.delete(userId);
+      socket.on(
+        "private message",
+        async ({ sender, recipient, recipientSocketId, message }) => {
+          if (recipientSocketId) {
+            const data = { sender, recipient, message };
+            const newChat = await chatModal.create(data);
+            socket.to(recipientSocketId).emit("private message", {
+              //sender: socket.id,
+              sender,
+              message,
+            });
+          }
         }
-      });
+      );
+    //handle disconnecion
+    socket.on("disconnect", () => {
+      if (
+        connectedUsers.has(userId) &&
+        connectedUsers.get(userId) === socket.id
+      ) {
+        connectedUsers.delete(userId);
+      }
+    });
   } catch (error) {
     console.log("🚀 ~ file: index.js:85 ~ io.on ~ error:", error);
   }
