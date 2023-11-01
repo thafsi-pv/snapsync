@@ -28,7 +28,9 @@ function App() {
       path: "/",
       element: (
         <FileUploadContextProvider>
-          <HomeLayout />
+          <UserActionContextProvider>
+            <HomeLayout />
+          </UserActionContextProvider>
         </FileUploadContextProvider>
       ),
       children: [
@@ -42,7 +44,11 @@ function App() {
         },
         {
           path: "/inbox",
-          element: <Messages />,
+          element: (
+            <UserActionContextProvider>
+              <Messages />
+            </UserActionContextProvider>
+          ),
         },
       ],
     },

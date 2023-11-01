@@ -13,13 +13,8 @@ function UserActionContextProvider({ children }) {
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);
   const [postId, setPostId] = useState(null);
-  const [socket, setSocket] = useState(null);
 
-  if (socket == null && userData != null) {
-    const token = getStorage(tokenName);
-    const newSocket = io(`${socketBaseUrl}?token=${token}`);
-    setSocket(newSocket);
-  }
+  
   return (
     <UserActionContext.Provider
       value={{
@@ -31,8 +26,6 @@ function UserActionContextProvider({ children }) {
         setComments,
         postId,
         setPostId,
-        socket,
-        setSocket,
       }}>
       {children}
     </UserActionContext.Provider>

@@ -5,7 +5,8 @@ function useLocalStorage() {
     localStorage.setItem(key, value);
   };
   const getStorage = (key) => {
-    localStorage.getItem(key);
+    const token = localStorage.getItem(key);
+    return token;
   };
   return { setStorage, getStorage };
 }

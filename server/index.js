@@ -40,46 +40,50 @@ app.use("/api/comment", commentRouter);
 //socket
 const connectedUsers = new Map();
 io.on("connection", (socket) => {
-  const token = socket.handshake.query.token;
-  const verifyT = verifyToken(token);
-  const userId = verifyT._id;
-
-  if (connectedUsers.has(userId)) {
-    const existingSocket = connectedUsers.get(userId);
-    io.to(existingSocket).emit(
-      "forceDisconnect",
-      "You've logged in from another device."
-    );
-    connectedUsers.delete(userId);
-  }
-
-  connectedUsers.set(userId, socket.id);
-  console.log(
-    "🚀 ~ file: index.js:48 ~ io.on ~ connectedUsers:",
-    connectedUsers
-  );
-
-  socket.on("newChat", (userId) => {
-    console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userId);
+  try {
+    const token = socket.handshake.query.token;
+    const verifyT = verifyToken(token);
+    const userId = verifyT._id;
 
     if (connectedUsers.has(userId)) {
       const existingSocket = connectedUsers.get(userId);
-      io.to(socket.id).emit("usersocketId", existingSocket);
-    } else {
-      io.to(socket.id).emit("usersocketId", 0);
+      io.to(existingSocket).emit(
+        "forceDisconnect",
+        "You've logged in from another device."
+      );
+      connectedUsers.delete(userId);
     }
 
-    return;
-  }),
-    //handle disconnecion
-    socket.on("disconnect", () => {
-      if (
-        connectedUsers.has(userId) &&
-        connectedUsers.get(userId) === socket.id
-      ) {
-        connectedUsers.delete(userId);
+    connectedUsers.set(userId, socket.id);
+    console.log(
+      "🚀 ~ file: index.js:48 ~ io.on ~ connectedUsers:",
+      connectedUsers
+    );
+
+    socket.on("newChat", (userId) => {
+      console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userId);
+
+      if (connectedUsers.has(userId)) {
+        const existingSocket = connectedUsers.get(userId);
+        io.to(socket.id).emit("usersocketId", existingSocket);
+      } else {
+        io.to(socket.id).emit("usersocketId", 0);
       }
-    });
+
+      return;
+    }),
+      //handle disconnecion
+      socket.on("disconnect", () => {
+        if (
+          connectedUsers.has(userId) &&
+          connectedUsers.get(userId) === socket.id
+        ) {
+          connectedUsers.delete(userId);
+        }
+      });
+  } catch (error) {
+    console.log("🚀 ~ file: index.js:85 ~ io.on ~ error:", error);
+  }
 });
 
 const PORT = process.env.PORT || 3457;

@@ -7,13 +7,14 @@ import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { SEARCH_USER_API } from "../../../axios/const";
 import useChat from "../../../hooks/useChat";
 import { UserActionContext } from "../../../context/UserActionContext";
+import { SocketContext } from "../../../context/SocketContext";
 
 function NewChatModal({ newChat, setNewChat }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [usersList, setUsersList] = useState(null);
   // const { socket } = useChat();
-  const { socket } = useContext(UserActionContext);
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     if (debouncedSearchTerm != "") {

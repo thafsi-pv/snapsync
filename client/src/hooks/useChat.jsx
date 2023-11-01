@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { socketBaseUrl } from "../axios/const";
 import { useNavigate } from "react-router-dom";
-import { UserActionContext } from "../context/UserActionContext";
+import { SocketContext } from "../context/SocketContext";
 
 function useChat(shouldConnect = false) {
   // const navigate = useNavigate(null);
   // const [socket, setSocket] = useState(null);
-  const { socket, setSocket } = useContext(UserActionContext);
+  const { socket, setSocket } = useContext(SocketContext);
 
   useEffect(() => {
     if (socket) {
@@ -26,7 +26,6 @@ function useChat(shouldConnect = false) {
       };
     }
   }, [socket]);
- 
 
   const connectSocket = (token) => {
     const newSocket = io(`${socketBaseUrl}?token=${token}`);

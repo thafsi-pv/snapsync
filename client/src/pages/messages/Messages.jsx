@@ -6,6 +6,7 @@ import { IoCreateOutline } from "react-icons/io5";
 import NewChatModal from "./modal/NewChatModal";
 
 function Messages() {
+  const [chatUser, setChatUser] = useState();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [showEmoji, setshowEmoji] = useState(false);
@@ -62,7 +63,10 @@ function Messages() {
                 Next_new_idea
               </div>
               <div>
-                <IoCreateOutline className="w-6 h-6 cursor-pointer" onClick={handleNewChat} />
+                <IoCreateOutline
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={handleNewChat}
+                />
               </div>
             </div>
 
