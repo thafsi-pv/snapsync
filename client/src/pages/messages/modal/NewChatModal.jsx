@@ -15,11 +15,6 @@ function NewChatModal({ newChat, setNewChat }) {
   // const { socket } = useChat();
   const { socket } = useContext(UserActionContext);
 
-  console.log(
-    "🚀 ~ file: NewChatModal.jsx:15 ~ NewChatModal ~ socket:",
-    socket
-  );
-
   useEffect(() => {
     if (debouncedSearchTerm != "") {
       searchUser();
@@ -38,8 +33,11 @@ function NewChatModal({ newChat, setNewChat }) {
     setUsersList(result.data);
   };
 
-  const handleNewChat = () => {
-    socket.emit("newChat", "123");
+  const handleNewChat = (userId) => {
+    socket.emit("newChat", userId);
+    socket.on("usersocketId", (socketId) => {
+      console.log("🚀 ~ file: NewChatModal.jsx:40 ~ socket.on ~ id:", socketId);
+    });
   };
 
   if (!newChat) return null;
@@ -70,7 +68,7 @@ function NewChatModal({ newChat, setNewChat }) {
             usersList?.map((user) => (
               <div
                 key={user._id}
-                onClick={handleNewChat}
+                onClick={() => handleNewChat(user._id)}
                 className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
                 <img
                   src={user.imageUrl}

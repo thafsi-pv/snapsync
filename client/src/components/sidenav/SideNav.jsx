@@ -101,10 +101,10 @@ function SideNav() {
               />
               <p className={`font-normal ${navbar}`}>Create</p>
             </div>
-            <Link to={`/profile/${userData.userName}`}>
+            <Link to={`/profile/${userData?.userName}`}>
               <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
                 <img
-                  src={userData.imageUrl}
+                  src={userData?.imageUrl}
                   alt=""
                   className="w-7 h-7 rounded-full"
                 />
@@ -137,7 +137,7 @@ function SideNav() {
             </div>
             <div className="">
               <div>
-                <img className="h5 w-5" src={userData.imageUrl} alt="" />
+                <img className="h5 w-5" src={userData?.imageUrl} alt="" />
                 <p>Name</p>
               </div>
             </div>

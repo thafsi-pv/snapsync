@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { UserActionContext } from "../context/UserActionContext";
 
 function useChat(shouldConnect = false) {
-  const navigate = useNavigate(null);
+  // const navigate = useNavigate(null);
   // const [socket, setSocket] = useState(null);
   const { socket, setSocket } = useContext(UserActionContext);
 
@@ -17,7 +17,7 @@ function useChat(shouldConnect = false) {
         // You can also redirect the user or show a message
         // For example, you can use React Router to navigate to a different page
         // history.push('/login');
-        navigate("/auth/login");
+        // navigate("/auth/login");
       });
 
       // Clean up the event listener when the component unmounts
@@ -29,10 +29,8 @@ function useChat(shouldConnect = false) {
  
 
   const connectSocket = (token) => {
-    console.log("🚀 ~ file: useChat.jsx:19 ~ connectSocket ~ token:", token);
     const newSocket = io(`${socketBaseUrl}?token=${token}`);
     setSocket(newSocket);
-    console.log("🚀 ~ file: useChat.jsx:35 ~ connectSocket ~ newSocket:", newSocket)
   };
 
   return { socket, connectSocket };

@@ -59,8 +59,16 @@ io.on("connection", (socket) => {
     connectedUsers
   );
 
-  socket.on("newChat", (userid) => {
-    console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userid);
+  socket.on("newChat", (userId) => {
+    console.log("🚀 ~ file: index.js:63 ~ socket.on ~ userid:", userId);
+
+    if (connectedUsers.has(userId)) {
+      const existingSocket = connectedUsers.get(userId);
+      io.to(socket.id).emit("usersocketId", existingSocket);
+    } else {
+      io.to(socket.id).emit("usersocketId", 0);
+    }
+
     return;
   }),
     //handle disconnecion
