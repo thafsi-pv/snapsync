@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReelIcon from "../../assets/svg/ReelIcon";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { PROFILE_API } from "../../axios/const";
 import { UserActionContext } from "../../context/UserActionContext";
@@ -47,7 +47,7 @@ function Profile() {
                 <div className="text-xl">pv.thafsi</div>
                 <div className="flex flex-row gap-2 w-1/2 items-center">
                   <div className="bg-[rgba(217,_217,_217,_0.4)] flex flex-col justify-center w-1/2 p-2 items-center rounded-lg">
-                    <div className="text-xs ">Edit profile</div>
+                   <Link to='/accounts/edit'> <div className="text-xs ">Edit profile</div></Link>
                   </div>
                   <div className="bg-[rgba(217,_217,_217,_0.4)] flex flex-col justify-center w-1/2 p-2 items-center rounded-lg">
                     <div className="text-xs ">View archive</div>

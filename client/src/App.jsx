@@ -21,6 +21,7 @@ import Profile from "./pages/profile/Profile";
 import HomeLayout from "./layout/HomeLayout";
 import UserActionContextProvider from "./context/UserActionContext";
 import Messages from "./pages/messages/Messages";
+import EditProfile from "./pages/profile/components/EditProfile";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -41,6 +42,10 @@ function App() {
         {
           path: "/:username",
           element: <Profile />,
+        },
+        {
+          path: "accounts/edit",
+          element: <EditProfile />,
         },
         {
           path: "/inbox",
