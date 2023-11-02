@@ -2,17 +2,34 @@ import React, { useContext, useState } from "react";
 import { UserActionContext } from "../../../context/UserActionContext";
 import InputField from "../../../components/fields/InputField";
 import TextField from "../../../components/fields/TextField";
+import useUploadMedia from "../../../hooks/useUploadMedia";
+import { axiosInstance } from "../../../axios/axiosInterceptor";
+import { PROFILE_API } from "../../../axios/const";
 
 function EditProfile() {
   const { userData } = useContext(UserActionContext);
   const [bio, setBio] = useState();
   const [profileImg, setProfileImg] = useState(null);
+  const { uploadFileToCloudinary } = useUploadMedia();
 
   const handleProfileImage = (e) => {
     const selectedImage = e.target.files[0];
     if (selectedImage) {
       setProfileImg(selectedImage);
     }
+  };
+
+  const handleSubmitProfile = async () => {
+    let imageUrl = null;
+    if (profileImg) {
+      imageUrl = await uploadFileToCloudinary(profileImg);
+    }
+    const data = { bio, imageUrl };
+    const response = await axiosInstance.put(PROFILE_API, data);
+    console.log(
+      "🚀 ~ file: EditProfile.jsx:29 ~ handleSubmitProfile ~ response:",
+      response
+    );
   };
 
   return (
@@ -65,7 +82,12 @@ function EditProfile() {
           <div className="flex gap-10 items-baseline">
             <p className="w-20 font-semibold">Bio</p>
             <div className="">
-              <TextField placeholder="Bio" extra="rounded-md" value={bio} />
+              <TextField
+                placeholder="Bio"
+                extra="rounded-md"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+              />
               <p className="text-xs text-gray-400">
                 Can include link to personal website or another webpage, as well
                 as links to other Instagram profiles,
@@ -75,6 +97,7 @@ function EditProfile() {
           <div>
             <div className="ml-24">
               <button
+                onClick={handleSubmitProfile}
                 type="button"
                 className=" p-2 px-3 bg-blue-500 rounded-md text-white text-sm">
                 Submit

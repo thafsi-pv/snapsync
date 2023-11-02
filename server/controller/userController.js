@@ -139,7 +139,9 @@ const searchUsers = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const _id = req.userId;
+    console.log("🚀 ~ file: userController.js:142 ~ updateProfile ~ _id:", _id)
     const { bio, imageUrl } = req.body;
+    console.log("🚀 ~ file: userController.js:144 ~ updateProfile ~ req.body:", req.body)
     if (typeof bio !== "string" || typeof imageUrl !== "string") {
       return res.status(400).json({ error: "Invalid input data" });
     }

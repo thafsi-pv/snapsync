@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
         "https://res.cloudinary.com/dm4djc1b1/image/upload/v1696873271/ymkpg1ig0htdxdi96aey.png",
     },
     isVerified: { type: Boolean, default: false },
-    bio: { type: string },
+    bio: { type: String },
   },
   { timestamps: true }
 );

@@ -16,6 +16,6 @@ userRouter.get("/suggestion", checkAuth, getSuggestionUsers);
 userRouter.post("/follow", checkAuth, followUser);
 userRouter.get("/profile", getProfileData);
 userRouter.get("/searchUsers", searchUsers);
-userRouter.put("/", updateProfile);
+userRouter.put("/profile", checkAuth, updateProfile);
 
 module.exports = userRouter;

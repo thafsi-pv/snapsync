@@ -1,9 +1,10 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import useChat from "../hooks/useChat";
-import { socketBaseUrl } from "../axios/const";
+import { GET_USER_DATA, socketBaseUrl } from "../axios/const";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { tokenName } from "../utils/const";
 import io from "socket.io-client";
+import { axiosInstance } from "../axios/axiosInterceptor";
 
 export const UserActionContext = createContext(null);
 
@@ -14,7 +15,16 @@ function UserActionContextProvider({ children }) {
   const [comments, setComments] = useState(false);
   const [postId, setPostId] = useState(null);
 
-  
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const response = await axiosInstance.get(GET_USER_DATA);
+    setUserData(response?.data);
+  };
+
   return (
     <UserActionContext.Provider
       value={{
