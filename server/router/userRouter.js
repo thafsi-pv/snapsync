@@ -4,6 +4,7 @@ const {
   getSuggestionUsers,
   getProfileData,
   searchUsers,
+  updateProfile,
 } = require("../controller/userController");
 const { checkAuth } = require("../middleware/checkAuth");
 const { followUser } = require("../controller/followsController");
@@ -15,5 +16,6 @@ userRouter.get("/suggestion", checkAuth, getSuggestionUsers);
 userRouter.post("/follow", checkAuth, followUser);
 userRouter.get("/profile", getProfileData);
 userRouter.get("/searchUsers", searchUsers);
+userRouter.put("/", updateProfile);
 
 module.exports = userRouter;

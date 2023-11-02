@@ -119,12 +119,14 @@ const getProfileData = async (req, res) => {
 const searchUsers = async (req, res) => {
   try {
     const searchTerm = req.query.param;
-    const users = await userModal.find({
-      $or: [
-        { userName: { $regex: searchTerm, $options: "i" } },
-        { fullName: { $regex: searchTerm, $options: "i" } },
-      ],
-    }).select('-password -isVerified');
+    const users = await userModal
+      .find({
+        $or: [
+          { userName: { $regex: searchTerm, $options: "i" } },
+          { fullName: { $regex: searchTerm, $options: "i" } },
+        ],
+      })
+      .select("-password -isVerified");
     res.status(200).json(users);
   } catch (error) {
     console.log(
@@ -134,9 +136,28 @@ const searchUsers = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const _id = req.userId;
+    const { bio, imageUrl } = req.body;
+    if (typeof bio !== "string" || typeof imageUrl !== "string") {
+      return res.status(400).json({ error: "Invalid input data" });
+    }
+    const updated = await userModal.findByIdAndUpdate(_id, { bio, imageUrl });
+    if (!updated) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error("Error in updateProfile:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getUserData,
   getSuggestionUsers,
   getProfileData,
   searchUsers,
+  updateProfile,
 };
