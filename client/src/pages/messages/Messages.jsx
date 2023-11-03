@@ -15,11 +15,11 @@ import { SocketContext } from "../../context/SocketContext";
 import { axiosInstance } from "../../axios/axiosInterceptor";
 import { GET_CHATS_API, GET_RECENT_CHATS_API } from "../../axios/const";
 import { genericError } from "../../axios/genericError";
+import { timeAgo } from "../../utils/timeAgo";
 
 function Messages() {
   const chatListRef = useRef(null);
   const { userData } = useContext(UserActionContext);
-  console.log("🚀 ~ file: Messages.jsx:12 ~ Messages ~ userData:", userData);
   const [chatUser, setChatUser] = useState(null);
   const { socket } = useContext(SocketContext);
 
@@ -27,6 +27,7 @@ function Messages() {
   const [messages, setMessages] = useState([]);
   const [showEmoji, setshowEmoji] = useState(false);
   const [newChat, setNewChat] = useState(false);
+  const [recentChatList, setRecentChatList] = useState();
 
   useEffect(() => {
     // socket.emit("login", myUserName);
@@ -121,9 +122,10 @@ function Messages() {
     try {
       const response = await axiosInstance.get(GET_RECENT_CHATS_API);
       console.log(
-        "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ response:",
+        "🚀 ~ file: Messages.jsx:123 ~ getRecentChats ~ response:",
         response
       );
+      setRecentChatList(response.data);
     } catch (error) {
       console.log(
         "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ error:",
@@ -155,57 +157,32 @@ function Messages() {
             </div>
 
             <div className="flex flex-col gap-3 h-full overflow-y-scroll">
-              <div className="relative flex flex-col justify-end items-start mb-px  px-3">
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="relative">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                      className="w-16 shrink-0 rounded-full"
-                    />
-                    <span
-                      className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  bg-green-500 border-2 border-white `}></span>
-                  </div>
+              {recentChatList?.map((recent) => (
+                <div
+                  key={recent._id}
+                  className="relative flex flex-col justify-end items-start mb-px  px-3">
+                  <div className="flex flex-row gap-4 items-center">
+                    <div className="relative">
+                      <img
+                        src={recent.senderInfo._id == userData._id?recent.recipientInfo.imageUrl:recent.senderInfo.imageUrl}
+                        className="w-16 h-16 shrink-0 rounded-full object-cover"
+                      />
+                      <span
+                        className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  bg-green-500 border-2 border-white `}></span>
+                    </div>
 
-                  <div className="text-sm   ">
-                    <p>Next_new_idea</p>
-                    <p> You: Hey . 4h</p>
+                    <div className="text-sm   ">
+                      <p>{recent.senderInfo._id == userData._id?recent.recipientInfo.fullName:recent.senderInfo.fullName}</p>
+                      <p className="text-xs text-gray-500">
+                        {recent.senderInfo._id == userData._id
+                          ? "You: "
+                          : ''}
+                        {recent.message} . {timeAgo(recent.createdAt)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="relative flex flex-col justify-end items-start mb-px  px-3">
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="relative">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                      className="w-16 shrink-0 rounded-full"
-                    />
-                    <span
-                      className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  bg-green-500 border-2 border-white `}></span>
-                  </div>
-
-                  <div className="text-sm   ">
-                    <p>Next_new_idea</p>
-                    <p> You: Hey . 4h</p>
-                  </div>
-                </div>
-              </div>
-              <div className="relative flex flex-col justify-end items-start mb-px  px-3">
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="relative">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                      className="w-16 shrink-0 rounded-full"
-                    />
-                    <span
-                      className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  bg-green-500 border-2 border-white `}></span>
-                  </div>
-
-                  <div className="text-sm   ">
-                    <p>Next_new_idea</p>
-                    <p> You: Hey . 4h</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

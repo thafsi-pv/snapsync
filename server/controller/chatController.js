@@ -62,7 +62,7 @@ const getRecentChats = async (req, res) => {
       },
       {
         $lookup: {
-          from: "users", // The name of the users collection
+          from: "users",
           localField: "sender",
           foreignField: "_id",
           as: "senderInfo",
@@ -70,7 +70,7 @@ const getRecentChats = async (req, res) => {
       },
       {
         $lookup: {
-          from: "users", // The name of the users collection
+          from: "users",
           localField: "recipient",
           foreignField: "_id",
           as: "recipientInfo",
@@ -80,7 +80,11 @@ const getRecentChats = async (req, res) => {
         $unwind: "$senderInfo",
       },
       {
+        $unwind: "$recipientInfo",
+      },
+      {
         $project: {
+          _id: 1,
           message: 1,
           createdAt: 1,
           senderInfo: 1,
