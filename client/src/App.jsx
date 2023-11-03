@@ -48,7 +48,11 @@ function App() {
           element: <EditProfile />,
         },
         {
-          path: "/inbox",
+          path: "direct/inbox",
+          element: <Messages />,
+        },
+        {
+          path: "direct/inbox/:id",
           element: <Messages />,
         },
       ],
