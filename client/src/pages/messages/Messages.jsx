@@ -19,7 +19,7 @@ import { timeAgo } from "../../utils/timeAgo";
 
 function Messages() {
   const chatListRef = useRef(null);
-  const { userData } = useContext(UserActionContext);
+  const { userData, setNavbar } = useContext(UserActionContext);
   const [chatUser, setChatUser] = useState(null);
   const { socket } = useContext(SocketContext);
 
@@ -43,6 +43,7 @@ function Messages() {
       });
     }
     getRecentChats();
+    setNavbar("hidden");
   }, []);
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {
@@ -121,10 +122,6 @@ function Messages() {
   const getRecentChats = async () => {
     try {
       const response = await axiosInstance.get(GET_RECENT_CHATS_API);
-      console.log(
-        "🚀 ~ file: Messages.jsx:123 ~ getRecentChats ~ response:",
-        response
-      );
       setRecentChatList(response.data);
     } catch (error) {
       console.log(
@@ -136,15 +133,11 @@ function Messages() {
   };
 
   return (
-    <div className="overflow-hidden bg-white flex flex-row w-full h-screen items-center  max-h-screen ">
+    <div className="overflow-hidden flex flex-row w-full h-screen items-center  max-h-screen">
       <div className="self-end flex flex-row justify-between items-start h-screen overflow-y-auto border-r">
         <div className="flex flex-row gap-6 w-full items-start ">
-          <div className="relative flex flex-col gap-8 w-72 pt-12 pb-16">
-            <div
-              id="Line"
-              className="border-solid border-[#9b9b9b] w-px h-[1040px] absolute top-0 left-0 border-r border-l-0 border-y-0"
-            />
-            <div className="relative flex flex-row gap-12 items-center ml-6 mr-5 border-b pb-3">
+          <div className="relative flex flex-col gap-8 w-80 pt-12 pb-16">
+            <div className="relative flex flex-row gap-12 items-centermr-5 border-b pb-3 mx-4">
               <div className="text-base  font-semibold self-start flex-1">
                 {userData?.fullName}
               </div>
@@ -164,7 +157,11 @@ function Messages() {
                   <div className="flex flex-row gap-4 items-center">
                     <div className="relative">
                       <img
-                        src={recent.senderInfo._id == userData._id?recent.recipientInfo.imageUrl:recent.senderInfo.imageUrl}
+                        src={
+                          recent.senderInfo._id == userData._id
+                            ? recent.recipientInfo.imageUrl
+                            : recent.senderInfo.imageUrl
+                        }
                         className="w-16 h-16 shrink-0 rounded-full object-cover"
                       />
                       <span
@@ -172,11 +169,13 @@ function Messages() {
                     </div>
 
                     <div className="text-sm   ">
-                      <p>{recent.senderInfo._id == userData._id?recent.recipientInfo.fullName:recent.senderInfo.fullName}</p>
-                      <p className="text-xs text-gray-500">
+                      <p>
                         {recent.senderInfo._id == userData._id
-                          ? "You: "
-                          : ''}
+                          ? recent.recipientInfo.fullName
+                          : recent.senderInfo.fullName}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {recent.senderInfo._id == userData._id ? "You: " : ""}
                         {recent.message} . {timeAgo(recent.createdAt)}
                       </p>
                     </div>
@@ -206,9 +205,6 @@ function Messages() {
               </div>
             </div>
             <div className="p-2 flex-1 overflow-scroll" ref={chatListRef}>
-              {/* <ChatMessage isMine={true} message="Hello 👋🏻,Whats up.." />
-
-              <ChatMessage isMine={false} message="Hi😃 fine im ok.." /> */}
               {messages.map((msg) => (
                 <ChatMessage
                   message={msg.message}

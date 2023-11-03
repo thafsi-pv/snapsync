@@ -70,14 +70,15 @@ io.on("connection", (socket) => {
         "private message",
         async ({ sender, recipient, recipientSocketId, message }) => {
           if (recipientSocketId) {
-            const data = { sender, recipient, message };
-            const newChat = await chatModal.create(data);
             socket.to(recipientSocketId).emit("private message", {
               //sender: socket.id,
               sender,
               message,
             });
           }
+          const data = { sender, recipient, message };
+          const newChat = await chatModal.create(data);
+          console.log("🚀 ~ file: index.js:81 ~ newChat:", newChat);
         }
       );
     //handle disconnecion

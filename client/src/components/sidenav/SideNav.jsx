@@ -1,13 +1,6 @@
 import React, { useContext, useState } from "react";
-import {
-  AiFillHome,
-  AiOutlineSearch,
-  AiOutlineCompass,
-  AiOutlineHeart,
-} from "react-icons/ai";
+import { AiFillHome, AiOutlineSearch, AiOutlineCompass } from "react-icons/ai";
 import { BiSolidMoviePlay } from "react-icons/bi";
-import { BsChatQuote } from "react-icons/bs";
-import { MdOutlineAddBox } from "react-icons/md";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
@@ -16,29 +9,34 @@ import { Link } from "react-router-dom";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
 import InputField from "../fields/InputField";
 
-let navbar = "block";
+// let navbar = "block";
 function SideNav() {
-  const { userData, setAddPost } = useContext(UserActionContext);
+  const { userData, setAddPost, navbar, setNavbar } =
+    useContext(UserActionContext);
   // const { navbar, setNavbar } = useState('hidden');
-  const [search, setSearch] = useState(true);
+  const [search, setSearch] = useState(false);
   console.log("🚀 ~ file: SideNav.jsx:23 ~ SideNav ~ search:", search);
 
   const handleSearch = () => {
-    setSearch((prev) => !prev);
     if (search) {
-      navbar = "hidden";
+      setSearch(true);
+      setNavbar("hidden");
     } else {
-      navbar = "block";
+      setSearch(false);
+      setNavbar("block");
     }
     // const navbar = "hidden";
   };
 
   return (
-    <div className="flex relative  w-[21%]">
+    <div
+      className={`flex relative  ${
+        navbar == "hidden" ? "w-[7%]" : "w-[21%]"
+      } border-r `}>
       <div
         className={`relative self-stretch ${
           navbar == "hidden" ? "w-[7%]" : "w-[21%]"
-        }  flex flex-row  items-start min-h-screen bg-white dark:bg-black  z-10`}>
+        }  flex flex-row  items-start min-h-screen  dark:bg-black  z-10`}>
         <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
           <div className="h-10">
             {navbar == "block" && (
@@ -124,7 +122,7 @@ function SideNav() {
           </div>
         </div>
       </div>
-      {navbar == "hidden" && (
+      {navbar == "hidden" && search && (
         <div className="fixed z-10 left-24 h-screen bg-white  w-96 rounded-r-2xl drop-shadow-xl">
           <div className="flex flex-col gap-5 p-3">
             <p className="text-2xl">Search</p>
