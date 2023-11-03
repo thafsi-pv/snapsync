@@ -5,6 +5,7 @@ import { tokenName } from "../utils/const";
 import { socketBaseUrl } from "../axios/const";
 import { io } from "socket.io-client";
 import { genericError } from "../axios/genericError";
+import { getIdFromUrl } from "../utils/getIdFromUrl";
 
 export const SocketContext = createContext(null);
 
@@ -31,7 +32,27 @@ function SocketContextProvider({ children }) {
 
   useEffect(() => {
     if (socket) {
-      socket.on("private message", ({ sender, message }) => {
+      socket.on("private message", ({ _id, sender, message }) => {
+        
+        console.log(
+          "🚀 ~ file: SocketContext.jsx:36 ~ socket.on ~ sender:",
+          sender
+        );
+
+        const currentURL = window.location.href;
+        console.log("🚀 ~ file: SocketContext.jsx:43 ~ socket.on ~ currentURL:", currentURL)
+        const id = getIdFromUrl(currentURL);
+
+        console.log("🚀 ~ file: SocketContext.jsx:42 ~ socket.on ~ id:", id);
+
+        if (id != sender) {
+          console.log(
+            "🚀 ~ file: SocketContext.jsx:41 ~ socket.on ~ _id:",
+            _id
+          );
+
+          socket.emit("isReadUpdata", { _id, flag: false });
+        }
         setMessages((prevMessages) => [
           ...prevMessages,
           { sender: sender, message: message },

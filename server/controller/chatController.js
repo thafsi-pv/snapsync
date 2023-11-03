@@ -100,4 +100,28 @@ const getRecentChats = async (req, res) => {
   }
 };
 
-module.exports = { createChat, getChats, getRecentChats };
+const readAllMessage = async (req, res) => {
+  try {
+    const { sender, recipient } = req.body;
+    const result = await chatModel.updateMany(
+      { sender, recipient },
+      { $set: { isRead: true } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+const isReadUpdate = async (_id, flag) => {
+  const update = await chatModel.findByIdAndUpdate(_id, { isRead: flag });
+  return update;
+};
+
+module.exports = {
+  createChat,
+  getChats,
+  getRecentChats,
+  isReadUpdate,
+  readAllMessage,
+};

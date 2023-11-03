@@ -16,6 +16,7 @@ const http = require("http");
 const { verifyToken } = require("./utils/jwt");
 const { connection } = require("mongoose");
 const chatRouter = require("./router/chatRouter");
+const { isReadUpdate } = require("./controller/chatController");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -69,18 +70,30 @@ io.on("connection", (socket) => {
       socket.on(
         "private message",
         async ({ sender, recipient, recipientSocketId, message }) => {
+          const data = { sender, recipient, message };
           if (recipientSocketId) {
+            data.isRead = true;
+            const newChat = await chatModal.create(data);
+            console.log("🚀 ~ file: index.js:76 ~ newChat:", newChat);
             socket.to(recipientSocketId).emit("private message", {
               //sender: socket.id,
+              _id: newChat._id,
               sender,
               message,
             });
+          } else {
+            data.isRead = false;
+            const newChat = await chatModal.create(data);
           }
-          const data = { sender, recipient, message };
-          const newChat = await chatModal.create(data);
-          console.log("🚀 ~ file: index.js:81 ~ newChat:", newChat);
         }
       );
+    socket.on("isReadUpdata", async ({ _id, flag }) => {
+      console.log("🚀 ~ file: index.js:88 ~ io.on ~ flag:", flag);
+      console.log("🚀 ~ file: index.js:88 ~ io.on ~ id:", _id);
+      const update = await isReadUpdate(_id, flag);
+      console.log("🚀 ~ file: index.js:94 ~ socket.on ~ update:", update)
+    });
+
     //handle disconnecion
     socket.on("disconnect", () => {
       if (
