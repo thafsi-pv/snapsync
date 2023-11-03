@@ -21,27 +21,15 @@ function Messages() {
   const chatListRef = useRef(null);
   const { userData, setNavbar } = useContext(UserActionContext);
   const [chatUser, setChatUser] = useState(null);
-  const { socket } = useContext(SocketContext);
+  const { socket, messages, setMessages } = useContext(SocketContext);
 
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const [showEmoji, setshowEmoji] = useState(false);
   const [newChat, setNewChat] = useState(false);
   const [recentChatList, setRecentChatList] = useState();
 
   useEffect(() => {
-    // socket.emit("login", myUserName);
-    // socket.on("userList", (list) => {
-    //   setUserList(list);
-    // });
-    if (socket) {
-      socket.on("private message", ({ sender, message }) => {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { sender: sender, message: message },
-        ]);
-      });
-    }
     getRecentChats();
     setNavbar("hidden");
   }, []);
@@ -268,7 +256,11 @@ function Messages() {
                 </div>
               </div>
               <div className="bg-[#0095f6] self-center flex flex-col justify-center p-3 shrink-0 items-start rounded-lg">
-                <div className="text-sm  text-white">Send message</div>
+                <div
+                  className="text-sm  text-white cursor-pointer"
+                  onClick={handleNewChat}>
+                  Send message
+                </div>
               </div>
             </div>
           </div>

@@ -10,6 +10,8 @@ export const SocketContext = createContext(null);
 
 function SocketContextProvider({ children }) {
   const [socket, setSocket] = useState();
+  const [messages, setMessages] = useState([]);
+
   //const { connectSocket } = useChat();
   const { getStorage } = useLocalStorage();
 
@@ -27,8 +29,20 @@ function SocketContextProvider({ children }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (socket) {
+      socket.on("private message", ({ sender, message }) => {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: sender, message: message },
+        ]);
+      });
+    }
+  }, [socket]);
+
   return (
-    <SocketContext.Provider value={{ socket, setSocket }}>
+    <SocketContext.Provider
+      value={{ socket, setSocket, messages, setMessages }}>
       {children}
     </SocketContext.Provider>
   );

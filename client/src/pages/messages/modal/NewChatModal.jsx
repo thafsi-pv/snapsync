@@ -8,6 +8,7 @@ import { SEARCH_USER_API } from "../../../axios/const";
 import useChat from "../../../hooks/useChat";
 import { UserActionContext } from "../../../context/UserActionContext";
 import { SocketContext } from "../../../context/SocketContext";
+import { useNavigate } from "react-router-dom";
 
 function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,6 +16,7 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [usersList, setUsersList] = useState(null);
   // const { socket } = useChat();
   const { socket } = useContext(SocketContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (debouncedSearchTerm != "") {
@@ -43,6 +45,8 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
       user.socketId = socketId;
       setChatUser(user);
       setNewChat(false);
+      const newURL = `/direct/inbox/${userId}`;
+      navigate(newURL);
     });
   };
 

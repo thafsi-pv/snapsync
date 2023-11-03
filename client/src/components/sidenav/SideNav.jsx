@@ -72,12 +72,17 @@ function SideNav() {
               <p className={`font-normal ${navbar}`}>Reels</p>
             </div>
             <Link to={`direct/inbox`}>
-              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+              <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
                 {/* <BsChatQuote className="h-7 w-7" /> */}
-                <img
-                  src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
-                  className="w-6 shrink-0"
-                />
+                <div className="relative">
+                  <img
+                    src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
+                    className="w-6 shrink-0"
+                  />
+                  <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
+                    3
+                  </p>
+                </div>
                 <p className={`font-normal ${navbar}`}>Messages</p>
               </div>
             </Link>

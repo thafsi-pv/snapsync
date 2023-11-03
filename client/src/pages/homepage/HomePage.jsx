@@ -8,9 +8,12 @@ import AddPost from "./modal/AddPost";
 import UploadProgress from "./modal/UploadProgress";
 
 function HomePage() {
+  const { setNavbar } = useContext(UserActionContext);
+  useEffect(() => {
+    setNavbar("block");
+  }, []);
   return (
-    <div
-      className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
+    <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
       <Container />
       {/* <AddPost show={addPost} closeModal={() => setAddPost(false)} />
       <UploadProgress /> */}
