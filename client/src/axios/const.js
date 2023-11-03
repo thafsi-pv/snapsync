@@ -3,7 +3,6 @@ export const baseUrl = "http://localhost:8090/api";
 export const socketBaseUrl = "http://localhost:8090/";
 // export const socketBaseUrl = "https://dine-ease-api.onrender.com/";
 
-
 export const CLOUDINARY_IMAGE_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dm4djc1b1/image/upload";
 export const CLOUDINARY_VIDEO_UPLOAD_URL =
@@ -25,5 +24,5 @@ export const POST_API = "/post/";
 export const LIKE_API = "/like/";
 export const COMMENT_API = "/comment/";
 
-
 export const GET_CHATS_API = "chat/getChats/";
+export const GET_RECENT_CHATS_API = "chat/getRecentChats";

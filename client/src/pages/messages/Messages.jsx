@@ -13,7 +13,8 @@ import NewChatModal from "./modal/NewChatModal";
 import { UserActionContext } from "../../context/UserActionContext";
 import { SocketContext } from "../../context/SocketContext";
 import { axiosInstance } from "../../axios/axiosInterceptor";
-import { GET_CHATS_API } from "../../axios/const";
+import { GET_CHATS_API, GET_RECENT_CHATS_API } from "../../axios/const";
+import { genericError } from "../../axios/genericError";
 
 function Messages() {
   const chatListRef = useRef(null);
@@ -40,6 +41,7 @@ function Messages() {
         ]);
       });
     }
+    getRecentChats();
   }, []);
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {
@@ -114,6 +116,23 @@ function Messages() {
     setMessage((prev) => prev + event.emoji);
     setshowEmoji(false);
   };
+
+  const getRecentChats = async () => {
+    try {
+      const response = await axiosInstance.get(GET_RECENT_CHATS_API);
+      console.log(
+        "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ response:",
+        response
+      );
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ error:",
+        error
+      );
+      genericError(error);
+    }
+  };
+
   return (
     <div className="overflow-hidden bg-white flex flex-row w-full h-screen items-center  max-h-screen ">
       <div className="self-end flex flex-row justify-between items-start h-screen overflow-y-auto border-r">
@@ -187,7 +206,6 @@ function Messages() {
                   </div>
                 </div>
               </div>
-             
             </div>
           </div>
         </div>

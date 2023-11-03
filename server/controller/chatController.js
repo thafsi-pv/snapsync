@@ -35,14 +35,15 @@ const getChats = async (req, res) => {
 
 const getRecentChats = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    console.log(
+      "🚀 ~ file: chatController.js:39 ~ getRecentChats ~ userId:",
+      userId
+    );
     const recentChats = await chatModel.aggregate([
       {
         $match: {
-          $or: [
-            { sender: mongoose.Types.ObjectId(userId) },
-            { recipient: mongoose.Types.ObjectId(userId) },
-          ],
+          $or: [{ sender: userId }, { recipient: userId }],
         },
       },
       {
@@ -51,11 +52,7 @@ const getRecentChats = async (req, res) => {
       {
         $group: {
           _id: {
-            $cond: [
-              { $eq: ["$sender", mongoose.Types.ObjectId(userId)] },
-              "$recipient",
-              "$sender",
-            ],
+            $cond: [{ $eq: ["$sender", userId] }, "$recipient", "$sender"],
           },
           latestMessage: { $first: "$$ROOT" }, // Get the most recent message
         },
@@ -66,13 +63,29 @@ const getRecentChats = async (req, res) => {
       {
         $lookup: {
           from: "users", // The name of the users collection
-          localField: "_id",
+          localField: "sender",
           foreignField: "_id",
           as: "senderInfo",
         },
       },
       {
+        $lookup: {
+          from: "users", // The name of the users collection
+          localField: "recipient",
+          foreignField: "_id",
+          as: "recipientInfo",
+        },
+      },
+      {
         $unwind: "$senderInfo",
+      },
+      {
+        $project: {
+          message: 1,
+          createdAt: 1,
+          senderInfo: 1,
+          recipientInfo: 1,
+        },
       },
     ]);
 
