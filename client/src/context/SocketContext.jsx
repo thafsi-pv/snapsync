@@ -33,24 +33,9 @@ function SocketContextProvider({ children }) {
   useEffect(() => {
     if (socket) {
       socket.on("private message", ({ _id, sender, message }) => {
-        
-        console.log(
-          "🚀 ~ file: SocketContext.jsx:36 ~ socket.on ~ sender:",
-          sender
-        );
-
         const currentURL = window.location.href;
-        console.log("🚀 ~ file: SocketContext.jsx:43 ~ socket.on ~ currentURL:", currentURL)
         const id = getIdFromUrl(currentURL);
-
-        console.log("🚀 ~ file: SocketContext.jsx:42 ~ socket.on ~ id:", id);
-
         if (id != sender) {
-          console.log(
-            "🚀 ~ file: SocketContext.jsx:41 ~ socket.on ~ _id:",
-            _id
-          );
-
           socket.emit("isReadUpdata", { _id, flag: false });
         }
         setMessages((prevMessages) => [

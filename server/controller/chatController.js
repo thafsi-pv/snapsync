@@ -33,64 +33,70 @@ const getChats = async (req, res) => {
 const getRecentChats = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.userId);
-    const recentChats = await chatModel.aggregate([
-      {
-        $match: {
-          $or: [{ sender: userId }, { recipient: userId }],
-        },
-      },
-      {
-        $sort: { createdAt: -1 }, // Sort by the most recent messages
-      },
-      {
-        $group: {
-          _id: {
-            $cond: [{ $eq: ["$sender", userId] }, "$recipient", "$sender"],
-          },
-          latestMessage: { $first: "$$ROOT" }, // Get the most recent message
-        },
-      },
-      {
-        $replaceRoot: { newRoot: "$latestMessage" }, // Replace root with the most recent message
-      },
-      {
-        $lookup: {
-          from: "users",
-          localField: "sender",
-          foreignField: "_id",
-          as: "senderInfo",
-        },
-      },
-      {
-        $lookup: {
-          from: "users",
-          localField: "recipient",
-          foreignField: "_id",
-          as: "recipientInfo",
-        },
-      },
-      {
-        $unwind: "$senderInfo",
-      },
-      {
-        $unwind: "$recipientInfo",
-      },
-      {
-        $project: {
-          _id: 1,
-          message: 1,
-          createdAt: 1,
-          senderInfo: 1,
-          recipientInfo: 1,
-        },
-      },
-    ]);
+    const recentChats = await getRecentChatsList(userId);
 
     res.status(200).json(recentChats);
   } catch (error) {
     console.error("Error getting recent chats:", error);
     throw error;
   }
+};
+
+const getRecentChatsList = async (Id) => {
+  const userId = new mongoose.Types.ObjectId(Id);
+  const recentChats = await chatModel.aggregate([
+    {
+      $match: {
+        $or: [{ sender: userId }, { recipient: userId }],
+      },
+    },
+    {
+      $sort: { createdAt: -1 }, // Sort by the most recent messages
+    },
+    {
+      $group: {
+        _id: {
+          $cond: [{ $eq: ["$sender", userId] }, "$recipient", "$sender"],
+        },
+        latestMessage: { $first: "$$ROOT" }, // Get the most recent message
+      },
+    },
+    {
+      $replaceRoot: { newRoot: "$latestMessage" }, // Replace root with the most recent message
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "sender",
+        foreignField: "_id",
+        as: "senderInfo",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "recipient",
+        foreignField: "_id",
+        as: "recipientInfo",
+      },
+    },
+    {
+      $unwind: "$senderInfo",
+    },
+    {
+      $unwind: "$recipientInfo",
+    },
+    {
+      $project: {
+        _id: 1,
+        message: 1,
+        createdAt: 1,
+        senderInfo: 1,
+        recipientInfo: 1,
+      },
+    },
+  ]);
+  return recentChats;
 };
 
 const readAllMessage = async (req, res) => {
@@ -119,6 +125,7 @@ module.exports = {
   createChat,
   getChats,
   getRecentChats,
+  getRecentChatsList,
   isReadUpdate,
   readAllMessage,
 };

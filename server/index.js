@@ -16,7 +16,11 @@ const http = require("http");
 const { verifyToken } = require("./utils/jwt");
 const { connection } = require("mongoose");
 const chatRouter = require("./router/chatRouter");
-const { isReadUpdate } = require("./controller/chatController");
+const {
+  isReadUpdate,
+  getRecentChats,
+  getRecentChatsList,
+} = require("./controller/chatController");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -71,6 +75,8 @@ io.on("connection", (socket) => {
         "private message",
         async ({ sender, recipient, recipientSocketId, message }) => {
           const data = { sender, recipient, message };
+          console.log("🚀 ~ file: index.js:91 ~ data:", data);
+
           if (recipientSocketId) {
             data.isRead = true;
             const newChat = await chatModal.create(data);
@@ -88,6 +94,30 @@ io.on("connection", (socket) => {
       );
     socket.on("isReadUpdata", async ({ _id, flag }) => {
       const update = await isReadUpdate(_id, flag);
+    });
+
+    socket.on("recentChatList", async (_id) => {
+      try {
+        const recentChats = await getRecentChatsList(_id);
+        const updatedList = recentChats.map((chats) => {
+          const checkuserid =
+            chats.senderInfo._id == _id
+              ? chats.recipientInfo._id.toString()
+              : chats.senderInfo._id.toString();
+          if (connectedUsers.has(checkuserid)) {
+            const socketId = connectedUsers.get(checkuserid);
+            chats.socketId = socketId;
+          } else {
+            chats.socketId = 0;
+          }
+          return chats;
+        });
+
+        socket.emit("recentChatList", updatedList);
+      } catch (error) {
+        console.error("Error:", error);
+        // Handle errors as needed
+      }
     });
 
     //handle disconnecion

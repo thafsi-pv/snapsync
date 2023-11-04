@@ -24,6 +24,7 @@ import { timeAgo } from "../../utils/timeAgo";
 function Messages() {
   const chatListRef = useRef(null);
   const { userData, setNavbar } = useContext(UserActionContext);
+  console.log("🚀 ~ file: Messages.jsx:27 ~ Messages ~ userData:", userData);
   const [chatUser, setChatUser] = useState(null);
   const { socket, messages, setMessages } = useContext(SocketContext);
 
@@ -37,6 +38,7 @@ function Messages() {
     getRecentChats();
     setNavbar("hidden");
   }, []);
+
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {
       chatListRef.current.scrollTo({
@@ -45,6 +47,7 @@ function Messages() {
       });
     }
   }, []);
+
   useEffect(() => {
     if (chatUser) {
       getChats();
@@ -116,8 +119,10 @@ function Messages() {
 
   const getRecentChats = async () => {
     try {
-      const response = await axiosInstance.get(GET_RECENT_CHATS_API);
-      setRecentChatList(response.data);
+      socket.emit("recentChatList", userData._id);
+      socket.on("recentChatList", (recentList) => {
+        setRecentChatList(recentList);
+      });
     } catch (error) {
       console.log(
         "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ error:",
@@ -129,9 +134,9 @@ function Messages() {
 
   return (
     <div className="overflow-hidden flex flex-row w-full h-screen items-center  max-h-screen">
-      <div className="self-end flex flex-row justify-between items-start h-screen overflow-y-auto border-r">
+      <div className="self-end flex flex-row justify-between items-start h-screen  border-r w-2/5">
         <div className="flex flex-row gap-6 w-full items-start ">
-          <div className="relative flex flex-col gap-8 w-80 pt-12 pb-16">
+          <div className="relative flex flex-col gap-8  pt-12 pb-16 w-full">
             <div className="relative flex flex-row gap-12 items-centermr-5 border-b pb-3 mx-4">
               <div className="text-base  font-semibold self-start flex-1">
                 {userData?.fullName}
@@ -144,11 +149,11 @@ function Messages() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 h-full overflow-y-scroll">
+            <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll">
               {recentChatList?.map((recent) => (
                 <div
                   key={recent._id}
-                  className="relative flex flex-col justify-end items-start mb-px  px-3">
+                  className="relative flex flex-col justify-end items-start mb-px px-3 cursor-pointer hover:bg-gray-100 m-2 rounded-md">
                   <div className="flex flex-row gap-4 items-center">
                     <div className="relative">
                       <img
@@ -157,13 +162,14 @@ function Messages() {
                             ? recent.recipientInfo.imageUrl
                             : recent.senderInfo.imageUrl
                         }
-                        className="w-16 h-16 shrink-0 rounded-full object-cover"
+                        className="w-16 h-16 rounded-full object-cover"
                       />
                       <span
-                        className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  bg-green-500 border-2 border-white `}></span>
+                        className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  ${
+                          recent.socketId != 0 ? "bg-green-500" : "bg-red-500"
+                        } border-2 border-white `}></span>
                     </div>
-
-                    <div className="text-sm   ">
+                    <div className="text-sm">
                       <p>
                         {recent.senderInfo._id == userData._id
                           ? recent.recipientInfo.fullName
@@ -181,7 +187,7 @@ function Messages() {
           </div>
         </div>
       </div>
-      <div className="mx-auto w-full p-5 h-full ">
+      <div className="mx-auto w-full p-2 h-full ">
         {chatUser != null ? (
           <div className="relative  h-full w-full flex flex-col justify-between ">
             <div className="flex gap-3 w-full flex-0 border-b p-1">
@@ -203,7 +209,7 @@ function Messages() {
               {messages.map((msg) => (
                 <ChatMessage
                   message={msg.message}
-                  isMine={msg.sender == userData._id ? true : false}
+                  isMine={msg.sender._id == userData._id ? true : false}
                 />
               ))}
             </div>
