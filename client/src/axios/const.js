@@ -21,6 +21,7 @@ export const PROFILE_API = "/user/profile";
 export const SEARCH_USER_API = "/user/searchUsers";
 
 export const POST_API = "/post/";
+export const ENTIRE_API = "/post/entirePosts";
 export const LIKE_API = "/like/";
 export const COMMENT_API = "/comment/";
 

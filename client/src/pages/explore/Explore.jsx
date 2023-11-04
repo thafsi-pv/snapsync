@@ -1,94 +1,58 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PostFile from "../../components/post/PostFile";
 import Contents from "./components/Contents";
+import { axiosInstance } from "../../axios/axiosInterceptor";
+import { ENTIRE_API } from "../../axios/const";
+import Comments from "../homepage/modal/Comments";
+import { UserActionContext } from "../../context/UserActionContext";
 
 function Explore() {
-  // Sample data for posts
-  const posts = [
-    {
-      id: 1,
-      image: "path-to-image-1.jpg",
-      likes: 1234,
-      comments: 56,
-      media_type: "image/",
-      url: "https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg",
-    },
-    {
-      id: 2,
-      video: "path-to-video-1.mp4",
-      likes: 789,
-      comments: 34,
-      media_type: "video/",
-      url: "https://res.cloudinary.com/dm4djc1b1/video/upload/v1698316669/tmvzigjdimwyzgpdqd5p.mp4",
-    },
-    {
-      id: 3,
-      image: "path-to-image-1.jpg",
-      likes: 1234,
-      comments: 56,
-      media_type: "image/",
-      url: "https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg",
-    },
-    {
-      id: 3,
-      image: "path-to-image-1.jpg",
-      likes: 1234,
-      comments: 56,
-      media_type: "image/",
-      url: "https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg",
-    },
-    {
-      id: 4,
-      video: "path-to-video-1.mp4",
-      likes: 789,
-      comments: 34,
-      media_type: "video/",
-      url: "https://res.cloudinary.com/dm4djc1b1/video/upload/v1698316669/tmvzigjdimwyzgpdqd5p.mp4",
-    },
-    {
-      id: 5,
-      video: "path-to-video-1.mp4",
-      likes: 789,
-      comments: 34,
-      media_type: "video/",
-      url: "https://res.cloudinary.com/dm4djc1b1/video/upload/v1698316669/tmvzigjdimwyzgpdqd5p.mp4",
-    },
-    {
-      id: 6,
-      video: "path-to-video-1.mp4",
-      likes: 789,
-      comments: 34,
-      media_type: "video/",
-      url: "https://res.cloudinary.com/dm4djc1b1/video/upload/v1698316669/tmvzigjdimwyzgpdqd5p.mp4",
-    },
-    {
-        id: 3,
-        image: "path-to-image-1.jpg",
-        likes: 1234,
-        comments: 56,
-        media_type: "image/",
-        url: "https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg",
-      },
-    // Add more posts here
-  ];
+  const [exploreList, setExploreList] = useState();
+  const { comments, setComments, postId, setPostId } =
+    useContext(UserActionContext);
+  console.log("🚀 ~ file: Explore.jsx:9 ~ Explore ~ exploreList:", exploreList);
+
+  useEffect(() => {
+    getEntirePost();
+  }, []);
+
+  const getEntirePost = async () => {
+    const postList = await axiosInstance.get(ENTIRE_API);
+    console.log(
+      "🚀 ~ file: Explore.jsx:17 ~ getEntirePost ~ postList:",
+      postList
+    );
+    setExploreList(postList.data);
+  };
+  const handleViewComments = (postId) => {
+    setComments(true);
+    setPostId(postId);
+  };
 
   return (
     <div className="container mx-auto py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 grid-flow-row-dense">
-        {posts.map((post) => (
-          <div className={post.media_type != "image/" ? "row-span-2" : ""}>
-            {post.image && (
+      <div className=" mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-1 grid-flow-row-dense max-w-4xl">
+        {exploreList?.map((post) => (
+          <div
+            key={post._id}
+            onClick={() => {
+              handleViewComments(post._id);
+            }}
+            className={`
+              ${post.media_type.startsWith("image/") ? "" : "row-span-2" } cursor-pointer`
+            }>
+            {post.media_type.startsWith("image/") && (
               <img
-                src={post.url}
+                src={post.media_url}
                 alt="Post"
-                className="w-full h-fit object-cover rounded-t-md hover:bg-gray-500"
+                className="w-full h-full object-cover hover:bg-gray-500"
               />
             )}
-            {post.video && (
+            {post.media_type.startsWith("video/") && (
               <video
                 controls={false}
-                className="w-full h-fit object-cover rounded-t-md hover:bg-gray-500 row-span-2">
-                <source src={post.url} type="video/mp4" />
+                className="w-full h-full object-cover hover:bg-gray-500 row-span-2">
+                <source src={post.media_url} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
@@ -127,6 +91,11 @@ function Explore() {
           //   </div>
         ))}
       </div>
+      <Comments
+        postId={postId}
+        show={comments}
+        closeModal={() => setComments(false)}
+      />
     </div>
   );
 }

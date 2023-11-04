@@ -21,7 +21,6 @@ const createPost = async (req, res) => {
 const getAllPosts = async (req, res) => {
   try {
     const user_id = req.userId;
-
     const followingUsers = await followsModel
       .find({
         following_user_id: user_id,
@@ -87,7 +86,6 @@ const getAllPosts = async (req, res) => {
         },
       },
     ]);
-
     if (!postsWithLikes)
       return res.status(404).json({ message: "No post found!" });
     return res.status(200).json(postsWithLikes);
@@ -97,4 +95,14 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts };
+const getEntiryPost = async (req, res) => {
+  try {
+    const entirePost = await postModal.find({});
+    console.log("🚀 ~ file: postController.js:101 ~ getEntiryPost ~ entirePost:", entirePost)
+    res.status(200).json(entirePost);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+module.exports = { createPost, getAllPosts, getEntiryPost };
