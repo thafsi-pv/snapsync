@@ -12,6 +12,7 @@ export const SocketContext = createContext(null);
 function SocketContextProvider({ children }) {
   const [socket, setSocket] = useState();
   const [messages, setMessages] = useState([]);
+  const [notification, setNotification] = useState([]);
 
   //const { connectSocket } = useChat();
   const { getStorage } = useLocalStorage();
@@ -37,6 +38,7 @@ function SocketContextProvider({ children }) {
         const id = getIdFromUrl(currentURL);
         if (id != sender) {
           socket.emit("isReadUpdata", { _id, flag: false });
+          setNotification((prev) => [...prev, _id]);
         }
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -48,7 +50,7 @@ function SocketContextProvider({ children }) {
 
   return (
     <SocketContext.Provider
-      value={{ socket, setSocket, messages, setMessages }}>
+      value={{ socket, setSocket, messages, setMessages, notification }}>
       {children}
     </SocketContext.Provider>
   );

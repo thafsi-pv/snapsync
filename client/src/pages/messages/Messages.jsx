@@ -39,7 +39,7 @@ function Messages() {
   useEffect(() => {
     getRecentChats();
     setNavbar("hidden");
-  }, []);
+  }, [userData]);
 
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {

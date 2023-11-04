@@ -22,6 +22,7 @@ import HomeLayout from "./layout/HomeLayout";
 import UserActionContextProvider from "./context/UserActionContext";
 import Messages from "./pages/messages/Messages";
 import EditProfile from "./pages/profile/components/EditProfile";
+import Explore from "./pages/explore/Explore";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -38,6 +39,10 @@ function App() {
         {
           path: "/",
           element: <HomePage />,
+        },
+        {
+          path: "/explore",
+          element: <Explore />,
         },
         {
           path: "/:username",

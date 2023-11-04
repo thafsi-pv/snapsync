@@ -8,11 +8,13 @@ import { UserActionContext } from "../../context/UserActionContext";
 import { Link } from "react-router-dom";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
 import InputField from "../fields/InputField";
+import { SocketContext } from "../../context/SocketContext";
 
 let search = false;
 function SideNav() {
   const { userData, setAddPost, navbar, setNavbar } =
     useContext(UserActionContext);
+  const { notification } = useContext(SocketContext);
   // const { navbar, setNavbar } = useState('hidden');
   // const [search, setSearch] = useState(false);
   console.log("🚀 ~ file: SideNav.jsx:23 ~ SideNav ~ search:", search);
@@ -63,10 +65,12 @@ function SideNav() {
               <AiOutlineSearch className="h-7 w-7" />
               <p className={`font-normal ${navbar}`}>Search</p>
             </div>
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-              <AiOutlineCompass className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>Explore</p>
-            </div>
+            <Link to='/explore'>
+              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                <AiOutlineCompass className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>Explore</p>
+              </div>
+            </Link>
             <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
               <BiSolidMoviePlay className="h-7 w-7" />
               <p className={`font-normal ${navbar}`}>Reels</p>
@@ -79,19 +83,29 @@ function SideNav() {
                     src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
                     className="w-6 shrink-0"
                   />
-                  <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                    3
-                  </p>
+                  {notification.length > 0 && (
+                    <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
+                      {notification.length}
+                    </p>
+                  )}
                 </div>
                 <p className={`font-normal ${navbar}`}>Messages</p>
               </div>
             </Link>
             <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
               {/* <AiOutlineHeart className="h-7 w-7" /> */}
-              <img
-                src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
-                className="w-6 shrink-0"
-              />
+
+              <div className="relative">
+                <img
+                  src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
+                  className="w-6 shrink-0"
+                />
+                {
+                  <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
+                    2
+                  </p>
+                }
+              </div>
               <p className={`font-normal ${navbar}`}>Notification</p>
             </div>
             <div
