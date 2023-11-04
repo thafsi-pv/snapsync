@@ -74,7 +74,6 @@ io.on("connection", (socket) => {
           if (recipientSocketId) {
             data.isRead = true;
             const newChat = await chatModal.create(data);
-            console.log("🚀 ~ file: index.js:76 ~ newChat:", newChat);
             socket.to(recipientSocketId).emit("private message", {
               //sender: socket.id,
               _id: newChat._id,
@@ -88,10 +87,7 @@ io.on("connection", (socket) => {
         }
       );
     socket.on("isReadUpdata", async ({ _id, flag }) => {
-      console.log("🚀 ~ file: index.js:88 ~ io.on ~ flag:", flag);
-      console.log("🚀 ~ file: index.js:88 ~ io.on ~ id:", _id);
       const update = await isReadUpdate(_id, flag);
-      console.log("🚀 ~ file: index.js:94 ~ socket.on ~ update:", update)
     });
 
     //handle disconnecion

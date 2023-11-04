@@ -12,6 +12,6 @@ const chatRouter = express.Router();
 chatRouter.post("/create", createChat);
 chatRouter.post("/getChats", getChats);
 chatRouter.get("/getRecentChats", checkAuth, getRecentChats);
-chatRouter.get("/readAllMessages", checkAuth, readAllMessage);
+chatRouter.post("/readAllMessages", checkAuth, readAllMessage);
 
 module.exports = chatRouter;

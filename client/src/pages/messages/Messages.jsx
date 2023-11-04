@@ -13,7 +13,11 @@ import NewChatModal from "./modal/NewChatModal";
 import { UserActionContext } from "../../context/UserActionContext";
 import { SocketContext } from "../../context/SocketContext";
 import { axiosInstance } from "../../axios/axiosInterceptor";
-import { GET_CHATS_API, GET_RECENT_CHATS_API } from "../../axios/const";
+import {
+  GET_CHATS_API,
+  GET_RECENT_CHATS_API,
+  READALL_CHATS_API,
+} from "../../axios/const";
 import { genericError } from "../../axios/genericError";
 import { timeAgo } from "../../utils/timeAgo";
 
@@ -52,13 +56,16 @@ function Messages() {
       const dt = { sender: userData._id, recipient: chatUser._id };
       const data = await axiosInstance.post(GET_CHATS_API, dt);
 
-      const chats = data?.data.map((chat) => ({
-        ...chat,
-        sender: chat.sender.email,
-        recipient: chat.recipient.email,
-      }));
-      console.log("🚀 ~ file: Messages.jsx:63 ~ chats ~ chats:", chats);
-      setMessages(chats);
+      if (data.status == 200) {
+        const chats = data?.data.map((chat) => ({
+          ...chat,
+          sender: chat.sender,
+          recipient: chat.recipient,
+        }));
+        setMessages(chats);
+        console.log("🚀 ~ file: Messages.jsx:63 ~ chats ~ chats:", chats);
+        const response = await axiosInstance.post(READALL_CHATS_API, dt);
+      }
     } catch (error) {
       console.log("🚀 ~ file: Chat.jsx:89 ~ getChats ~ error:", error);
     }
