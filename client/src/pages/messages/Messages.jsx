@@ -20,8 +20,10 @@ import {
 } from "../../axios/const";
 import { genericError } from "../../axios/genericError";
 import { timeAgo } from "../../utils/timeAgo";
+import { useNavigate } from "react-router-dom";
 
 function Messages() {
+  const navigate = useNavigate();
   const chatListRef = useRef(null);
   const { userData, setNavbar } = useContext(UserActionContext);
   console.log("🚀 ~ file: Messages.jsx:27 ~ Messages ~ userData:", userData);
@@ -43,16 +45,37 @@ function Messages() {
     if (chatListRef && chatListRef.current) {
       chatListRef.current.scrollTo({
         top: chatListRef.current.scrollHeight,
-        behavior: "",
+        behavior: "smooth",
       });
     }
-  }, []);
+  }, [messages]);
 
   useEffect(() => {
     if (chatUser) {
       getChats();
     }
   }, [chatUser]);
+
+  const handleRecentChatClick = (recent) => {
+    console.log(
+      "🚀 ~ file: Messages.jsx:58 ~ handleRecentChatClick ~ recent:",
+      recent
+    );
+
+    const chatUser =
+      recent.senderInfo._id == userData._id
+        ? recent.recipientInfo
+        : recent.senderInfo;
+
+    chatUser.socketId = recent.socketId;
+    console.log(
+      "🚀 ~ file: Messages.jsx:69 ~ handleRecentChatClick ~ chatUser:",
+      chatUser
+    );
+    setChatUser(chatUser);
+    const newURL = `/direct/inbox/${chatUser._id}`;
+    navigate(newURL);
+  };
 
   const getChats = async () => {
     try {
@@ -89,21 +112,12 @@ function Messages() {
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          sender: userData._id,
+          // sender: userData._id,
+          sender: { _id: userData._id },
           recipient: chatUser._id,
           message: message,
         },
       ]);
-      // const senderData = userList.find((user) => user.username == myUserName);
-      // const recipientData = userList.find(
-      //   (user) => user.username == selectedRecipient?.userName
-      // );
-      // const newChat = {
-      //   sender: senderData.userId,
-      //   recipient: recipientData.userId,
-      //   message,
-      // };
-      // createChat(newChat);
       setMessage("");
     }
   };
@@ -152,32 +166,36 @@ function Messages() {
             <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll">
               {recentChatList?.map((recent) => (
                 <div
+                  onClick={() => handleRecentChatClick(recent)}
                   key={recent._id}
                   className="relative flex flex-col justify-end items-start mb-px px-3 cursor-pointer hover:bg-gray-100 m-2 rounded-md">
                   <div className="flex flex-row gap-4 items-center">
-                    <div className="relative">
+                    <div className="relative w-16 h-16 shrink-0">
                       <img
                         src={
                           recent.senderInfo._id == userData._id
                             ? recent.recipientInfo.imageUrl
                             : recent.senderInfo.imageUrl
                         }
-                        className="w-16 h-16 rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover"
                       />
                       <span
                         className={`absolute bottom-1 right-0 w-4 h-4 rounded-full  ${
                           recent.socketId != 0 ? "bg-green-500" : "bg-red-500"
                         } border-2 border-white `}></span>
                     </div>
-                    <div className="text-sm">
+                    <div className="text-sm ">
                       <p>
                         {recent.senderInfo._id == userData._id
                           ? recent.recipientInfo.fullName
                           : recent.senderInfo.fullName}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {recent.senderInfo._id == userData._id ? "You: " : ""}
-                        {recent.message} . {timeAgo(recent.createdAt)}
+                        <span className="line-clamp-1">
+                          {recent.senderInfo._id == userData._id ? "You: " : ""}
+                          {recent.message}
+                        </span>
+                        . {timeAgo(recent.createdAt)}
                       </p>
                     </div>
                   </div>
@@ -194,7 +212,7 @@ function Messages() {
               <div>
                 <img
                   src={chatUser?.imageUrl}
-                  className="w-14 h-14 rounded-full"
+                  className="w-14 h-14 rounded-full object-cover"
                   alt=""
                 />
               </div>
@@ -205,7 +223,10 @@ function Messages() {
                 </p>
               </div>
             </div>
-            <div className="p-2 flex-1 overflow-scroll" ref={chatListRef}>
+            <div
+              className="p-2 flex-1 overflow-y-scroll"
+              h-full
+              ref={chatListRef}>
               {messages.map((msg) => (
                 <ChatMessage
                   message={msg.message}
@@ -297,8 +318,8 @@ const ChatMessage = ({ message, isMine }) => {
       <div
         className={`max-w-xs p-3  whitespace-normal break-all ${
           isMine
-            ? "bg-blue-500 text-white rounded-l-lg rounded-tr-lg"
-            : "bg-gray-300 rounded-r-lg rounded-tl-lg"
+            ? "bg-blue-500 text-white rounded-l-2xl rounded-tr-2xl"
+            : "bg-gray-300 rounded-r-2xl rounded-tl-2xl"
         }`}>
         {message}
       </div>
