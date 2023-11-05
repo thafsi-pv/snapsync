@@ -21,6 +21,7 @@ const {
   getRecentChats,
   getRecentChatsList,
 } = require("./controller/chatController");
+const { storyRouter } = require("./router/storyRouter");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -44,6 +45,8 @@ app.use("/api/post", postRouter);
 app.use("/api/like", likeRouter);
 app.use("/api/comment", commentRouter);
 app.use("/api/chat", chatRouter);
+
+app.use("/api/story", storyRouter);
 
 //socket
 const connectedUsers = new Map();
