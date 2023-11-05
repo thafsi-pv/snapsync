@@ -23,6 +23,7 @@ import UserActionContextProvider from "./context/UserActionContext";
 import Messages from "./pages/messages/Messages";
 import EditProfile from "./pages/profile/components/EditProfile";
 import Explore from "./pages/explore/Explore";
+import Story from "./pages/story/Story";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -60,7 +61,12 @@ function App() {
           path: "direct/inbox/:id",
           element: <Messages />,
         },
+       
       ],
+    },
+    {
+      path: "/story",
+      element: <Story />,
     },
     {
       path: "/auth/login",

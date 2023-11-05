@@ -8,7 +8,7 @@ function PostFile({ media_type, media_url }) {
         <img
           src={media_url}
           id="Element3"
-          className="relative  object-cover  rounded-l-md h-full  w-fit max-h-fit"
+          className="relative  object-fit max-w-3xl rounded-l-md h-full  w-fit max-h-fit"
         />
       ) : (
         <video

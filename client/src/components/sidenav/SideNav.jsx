@@ -65,16 +65,18 @@ function SideNav() {
               <AiOutlineSearch className="h-7 w-7" />
               <p className={`font-normal ${navbar}`}>Search</p>
             </div>
-            <Link to='/explore'>
+            <Link to="/explore">
               <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
                 <AiOutlineCompass className="h-7 w-7" />
                 <p className={`font-normal ${navbar}`}>Explore</p>
               </div>
             </Link>
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-              <BiSolidMoviePlay className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>Reels</p>
-            </div>
+            <Link to='/story'>
+              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                <BiSolidMoviePlay className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>Reels</p>
+              </div>
+            </Link>
             <Link to={`direct/inbox`}>
               <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
                 {/* <BsChatQuote className="h-7 w-7" /> */}

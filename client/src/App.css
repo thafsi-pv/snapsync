@@ -26,3 +26,31 @@
 .ping-animation {
   animation: ping 50s;
 }
+
+
+/* Tailwind CSS classes or your custom styles can be added here */
+
+.instagram-story-carousel {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling for more stories */
+  max-width: 100%; /* Make sure it's responsive */
+  scrollbar-width: thin; /* Add scrollbar for browsers that support it */
+  white-space: nowrap;
+  padding: 0.5rem;
+}
+
+.story {
+  width: 100px;
+  height: 100px;
+  margin-right: 0.5rem; /* Adjust the spacing between stories */
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease-in-out;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.story.active {
+  transform: scale(1.1);
+  border-color: #0095f6; /* Highlight the active story */
+}
