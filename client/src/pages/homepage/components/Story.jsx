@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import UserStory from "../../../components/user/UserStory";
+import StoryLoader from "../../../components/loader/StoryLoader";
 
 function Story() {
   const containerRef = useRef(null);
@@ -27,102 +29,8 @@ function Story() {
           />
           <p className="text-xs"> Zia_queen</p>
         </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
-        <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px] h-[70px] m-2 p-[2px] ">
-          <img
-            className="rounded-full object-cover w-full h-full p-[2px] bg-white"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"
-            alt=""
-          />
-          <p className="text-xs"> Zia_queen</p>
-        </div>
+        <UserStory imgUrl='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s' />
+       <StoryLoader/>
         <div
           className="sticky top-9 right-5 bg-white p-1 rounded-full shadow-xl cursor-pointer hover:bg-gray-200"
           onClick={() => handleScroll(400)}>

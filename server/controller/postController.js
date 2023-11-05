@@ -70,6 +70,7 @@ const getAllPosts = async (req, res) => {
           "user.emailPhone": 1,
           "user.fullName": 1,
           "user.imageUrl": 1,
+          "user.userName": 1,
           media_url: 1,
           media_type: 1,
           caption: 1,
@@ -98,7 +99,10 @@ const getAllPosts = async (req, res) => {
 const getEntiryPost = async (req, res) => {
   try {
     const entirePost = await postModal.find({});
-    console.log("🚀 ~ file: postController.js:101 ~ getEntiryPost ~ entirePost:", entirePost)
+    console.log(
+      "🚀 ~ file: postController.js:101 ~ getEntiryPost ~ entirePost:",
+      entirePost
+    );
     res.status(200).json(entirePost);
   } catch (error) {
     res.status(400).json(error);

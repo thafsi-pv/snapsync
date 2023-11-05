@@ -9,6 +9,7 @@ import { COMMENT_API, LIKE_API, POST_API } from "../../../axios/const";
 import InputField from "../../../components/fields/InputField";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comment from "./Comment";
+import UserImgName from "../../../components/user/UserImgName";
 
 function Post({ setComments, setPostId }) {
   const [posts, setPosts] = useState();
@@ -57,15 +58,27 @@ function Post({ setComments, setPostId }) {
       {posts?.map((post, index) => {
         return (
           <div className="mb-px ml-4 mr-5 max-w-[500px]" key={index}>
-            <div className="flex flex-row justify-between items-center mb-2 ml-4 mr-5">
-              <div className="flex flex-row gap-3 items-start">
-                <div className="rounded-full bg-cover bg-blend-normal bg-no-repeat relative flex flex-col w-10 shrink-0 items-start pt-1 pb-px px-px">
-                  <img
+            <div className="flex flex-row justify-between items-center mb-2 ">
+              <div className="flex flex-row gap-3 items-start w-full">
+                <div className="flex gap-3 w-full items-center">
+                  {/* <img
                     src={post.user[0].imageUrl}
                     className="w-8 h-8 absolute left-1 rounded-full"
-                  />
+                  /> */}
+                  <UserImgName fullName={post.user[0].fullName} desc= {post.location} extra='w-8 h-8' id={post.user[0]._id} username={post.user[0].userName} imgUrl={post.user[0].imageUrl} />
+                  <div className="flex items-center text-xs text-gray-400 gap-1">
+                      <div className="flex justify-center items-center font-bold">
+                        •
+                      </div>
+                      <div className=" text-xs font-normal ">
+                        {timeAgo(post.createdAt)}
+                      </div>
+                    </div>
                 </div>
-                <div className="relative flex flex-col mb-px w-full shrink-0 items-start">
+
+
+
+                {/* <div className="relative flex flex-col mb-px w-full shrink-0 items-start">
                   <div className="flex text-sm font-semibold w-full gap-2 items-center">
                     <div>{post?.user[0]?.fullName}</div>
                     <div className="flex items-center text-xs text-gray-400 gap-1">
@@ -83,7 +96,7 @@ function Post({ setComments, setPostId }) {
                       {post.location}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div>
                 <IoIosMore className="font-bold text-xl" />
