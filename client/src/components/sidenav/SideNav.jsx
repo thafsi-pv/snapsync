@@ -12,7 +12,7 @@ import { SocketContext } from "../../context/SocketContext";
 
 let search = false;
 function SideNav() {
-  const { userData, setAddPost, navbar, setNavbar } =
+  const { userData, setAddPost, navbar, setNavbar, setAddStory } =
     useContext(UserActionContext);
   const { notification } = useContext(SocketContext);
   // const { navbar, setNavbar } = useState('hidden');
@@ -71,12 +71,14 @@ function SideNav() {
                 <p className={`font-normal ${navbar}`}>Explore</p>
               </div>
             </Link>
-            <Link to='/story'>
-              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                <BiSolidMoviePlay className="h-7 w-7" />
-                <p className={`font-normal ${navbar}`}>Reels</p>
-              </div>
-            </Link>
+
+            <div
+              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+              onClick={() => setAddStory(true)}>
+              <BiSolidMoviePlay className="h-7 w-7" />
+              <p className={`font-normal ${navbar}`}>Story</p>
+            </div>
+
             <Link to={`direct/inbox`}>
               <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
                 {/* <BsChatQuote className="h-7 w-7" /> */}

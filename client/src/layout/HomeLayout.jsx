@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { UserActionContext } from "../context/UserActionContext";
 import AddPost from "../pages/homepage/modal/AddPost";
 import UploadProgress from "../pages/homepage/modal/UploadProgress";
+import AddStory from "../pages/story/modal/AddStory";
 
 function HomeLayout() {
   const { addPost, setAddPost } = useContext(UserActionContext);
@@ -14,6 +15,7 @@ function HomeLayout() {
       <SideNav />
       <Outlet />
       <AddPost show={addPost} closeModal={() => setAddPost(false)} />
+      <AddStory/>
       <UploadProgress />
     </div>
   );

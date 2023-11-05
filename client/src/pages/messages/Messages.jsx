@@ -21,6 +21,7 @@ import {
 import { genericError } from "../../axios/genericError";
 import { timeAgo } from "../../utils/timeAgo";
 import { useNavigate } from "react-router-dom";
+import { containsOnlyEmojis } from "../../utils/containsOnlyEmojis";
 
 function Messages() {
   const navigate = useNavigate();
@@ -320,7 +321,7 @@ const ChatMessage = ({ message, isMine }) => {
           isMine
             ? "bg-blue-500 text-white rounded-l-2xl rounded-tr-2xl"
             : "bg-gray-300 rounded-r-2xl rounded-tl-2xl"
-        }`}>
+        }  ${containsOnlyEmojis(message) == true ? "text-5xl" : ""}`}>
         {message}
       </div>
     </div>
