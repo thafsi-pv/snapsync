@@ -8,8 +8,10 @@ import {
 const useUploadMedia = () => {
   const [uploadedUrl, setUploadedUrl] = useState();
   const [uploadProgress, setUploadProgress] = useState();
+  const [fileSize, setFileSize] = useState(0);
 
   const uploadFileToCloudinary = async (file) => {
+    setFileSize(file.size / (1024 * 1024));
     const formData = new FormData();
     formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
     formData.append("file", file);
@@ -49,7 +51,7 @@ const useUploadMedia = () => {
     };
   }, []);
 
-  return { uploadFileToCloudinary, uploadedUrl, uploadProgress };
+  return { uploadFileToCloudinary, uploadedUrl, uploadProgress, fileSize };
 };
 
 export default useUploadMedia;

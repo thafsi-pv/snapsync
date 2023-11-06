@@ -1,10 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserActionContext } from "../../../context/UserActionContext";
 import useUploadMedia from "../../../hooks/useUploadMedia";
-import { FileUploadContext } from "../../../context/FileUploadContext";
+import FileUploadContextProvider, {
+  FileUploadContext,
+} from "../../../context/FileUploadContext";
 import PortalModal from "../../../components/modal/PortalModal";
 import { AiOutlineClose } from "react-icons/ai";
 import CreatePost from "../../../assets/svg/createPost";
+import { CREATE_STORY_API } from "../../../axios/const";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
@@ -15,7 +18,9 @@ function AddStory() {
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
 
-  setUploadProgress(uploadProgress);
+  useEffect(() => {
+    setUploadProgress(uploadProgress);
+  }, [uploadProgress]);
 
   const handleMedia = (e) => {
     const selectedMedia = e.target.files[0];
@@ -46,7 +51,7 @@ function AddStory() {
 
   const handleSharPost = async (values) => {
     // const mediaUrl = await handleUploadMedia(file);
-    setAddPost(false);
+    setAddStory(false);
     let fileUrl = null;
     if (file) {
       fileUrl = await uploadFileToCloudinary(file);
@@ -64,9 +69,9 @@ function AddStory() {
       media_type: file.type,
     };
 
-    const createdPost = await axiosInstance.post(POST_API, post);
+    const createdPost = await axiosInstance.post(CREATE_STORY_API, post);
     if (createdPost.status === 200) {
-      setUploadProgress(0);
+      // setUploadProgress(0);
       setMedia(null);
       setFile(null);
     }

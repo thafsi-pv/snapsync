@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CreatePost from "../../../assets/svg/createPost";
 import { AiOutlineClose } from "react-icons/ai";
 import PortalModal from "../../../components/modal/PortalModal";
@@ -13,14 +13,17 @@ import useUploadMedia from "../../../hooks/useUploadMedia";
 import { FileUploadContext } from "../../../context/FileUploadContext";
 
 function AddPost() {
-  const { setUploadProgress } = useContext(FileUploadContext);
+  const { setUploadProgress, setFileSize } = useContext(FileUploadContext);
   const { userData, addPost, setAddPost } = useContext(UserActionContext);
-  const { uploadFileToCloudinary, uploadProgress } = useUploadMedia();
+  const { uploadFileToCloudinary, uploadProgress, fileSize } = useUploadMedia();
 
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
 
-  setUploadProgress(uploadProgress);
+  useEffect(() => {
+    setUploadProgress(uploadProgress);
+    setFileSize(fileSize);
+  }, [uploadProgress, fileSize]);
 
   const handleMedia = (e) => {
     const selectedMedia = e.target.files[0];
@@ -173,11 +176,11 @@ function AddPost() {
                     className=" w-2/4">
                     <div className="p-4 flex gap-2">
                       <img
-                        src={userData.imageUrl}
+                        src={userData?.imageUrl}
                         className="w-7 h-7 rounded-full"
                         alt=""
                       />
-                      <p>{userData.userName}</p>
+                      <p>{userData?.userName}</p>
                     </div>
                     <TextField
                       rows={8}

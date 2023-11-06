@@ -146,7 +146,7 @@ function SideNav() {
         </div>
       </div>
       {navbar == "hidden" && search == true && (
-        <div className="fixed z-10 left-24 h-screen bg-white  w-96 rounded-r-2xl drop-shadow-xl">
+        <div className="fixed z-10 left-24 h-screen bg-white  w-96 rounded-r-2xl drop-shadow-xl ">
           <div className="flex flex-col gap-5 p-3">
             <p className="text-2xl">Search</p>
             <div className="p-4">
