@@ -8,6 +8,7 @@ import PortalModal from "../../../components/modal/PortalModal";
 import { AiOutlineClose } from "react-icons/ai";
 import CreatePost from "../../../assets/svg/createPost";
 import { CREATE_STORY_API } from "../../../axios/const";
+import { axiosInstance } from "../../../axios/axiosInterceptor";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
@@ -63,9 +64,7 @@ function AddStory() {
 
   const handleSavePost = async (values, fileUrl) => {
     const post = {
-      media_url: fileUrl,
-      location: values.location,
-      caption: values.caption,
+      mediaUrl: fileUrl,
       media_type: file.type,
     };
 

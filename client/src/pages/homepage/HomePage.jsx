@@ -1,11 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import SideNav from "../../components/sidenav/SideNav";
-import Container from "./components/Container";
+import React, { useContext, useEffect } from "react";
 import { UserActionContext } from "../../context/UserActionContext";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import { GET_USER_DATA } from "../../axios/const";
-import AddPost from "./modal/AddPost";
-import UploadProgress from "./modal/UploadProgress";
+import Container from "./components/Container";
 
 function HomePage() {
   const { setNavbar } = useContext(UserActionContext);

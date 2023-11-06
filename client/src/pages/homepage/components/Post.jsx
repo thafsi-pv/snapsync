@@ -1,15 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { BsChat } from "react-icons/bs";
+import React, { useEffect, useState } from "react";
+import { AiFillHeart } from "react-icons/ai";
 import { HiOutlineBookmark } from "react-icons/hi";
 import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
-import { AiFillHeart } from "react-icons/ai";
-import { LuSend } from "react-icons/lu";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
 import { COMMENT_API, LIKE_API, POST_API } from "../../../axios/const";
-import InputField from "../../../components/fields/InputField";
+import UserImgName from "../../../components/user/UserImgName";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comment from "./Comment";
-import UserImgName from "../../../components/user/UserImgName";
 
 function Post({ setComments, setPostId }) {
   const [posts, setPosts] = useState();
