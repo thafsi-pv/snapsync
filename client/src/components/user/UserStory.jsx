@@ -2,15 +2,24 @@ import React from "react";
 import UserImage from "./UserImage";
 import { Link } from "react-router-dom";
 
-function UserStory({ imgUrl, extra }) {
+function UserStory({ imgUrl, userName, extra }) {
   return (
-    <Link to='/story'>
-      <div className="text-sm bg-red-500 rounded-full bg-gradient-to-r from-yellow-400 to-red-400 w-[70px] min-w-[70px]  h-[70px] m-2 p-[2px] ">
-        <UserImage
-          imgUrl={imgUrl}
-          extra="rounded-full object-cover w-full h-full p-[1px] bg-white"
-        />
-        <p className="text-xs"> Zia_queen</p>
+    <Link to="/story">
+      <div className="text-sm ">
+        <div className="circle">
+          <UserImage
+            imgUrl={imgUrl}
+            extra="rounded-full object-cover w-full h-full  bg-white"
+          />
+          <svg
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{ enableBackground: "new -580 439 577.9 194" }}
+            xml:space="preserve">
+            <circle cx="50" cy="50" r="40" />
+          </svg>
+        </div>
+        <p className="text-xs  text-center mt-1">{userName}</p>
       </div>
     </Link>
   );

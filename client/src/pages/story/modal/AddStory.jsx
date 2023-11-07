@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserActionContext } from "../../../context/UserActionContext";
-import useUploadMedia from "../../../hooks/useUploadMedia";
-import FileUploadContextProvider, {
-  FileUploadContext,
-} from "../../../context/FileUploadContext";
-import PortalModal from "../../../components/modal/PortalModal";
 import { AiOutlineClose } from "react-icons/ai";
 import CreatePost from "../../../assets/svg/createPost";
-import { CREATE_STORY_API } from "../../../axios/const";
 import { axiosInstance } from "../../../axios/axiosInterceptor";
+import { STORY_API } from "../../../axios/const";
+import PortalModal from "../../../components/modal/PortalModal";
+import {
+  FileUploadContext,
+} from "../../../context/FileUploadContext";
+import { UserActionContext } from "../../../context/UserActionContext";
+import useUploadMedia from "../../../hooks/useUploadMedia";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
@@ -68,7 +68,7 @@ function AddStory() {
       media_type: file.type,
     };
 
-    const createdPost = await axiosInstance.post(CREATE_STORY_API, post);
+    const createdPost = await axiosInstance.post(STORY_API, post);
     if (createdPost.status === 200) {
       // setUploadProgress(0);
       setMedia(null);

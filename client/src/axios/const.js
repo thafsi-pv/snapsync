@@ -29,4 +29,4 @@ export const GET_CHATS_API = "chat/getChats/";
 export const GET_RECENT_CHATS_API = "chat/getRecentChats";
 export const READALL_CHATS_API = "chat/readAllMessages";
 
-export const CREATE_STORY_API = "story/";
+export const STORY_API = "story/";

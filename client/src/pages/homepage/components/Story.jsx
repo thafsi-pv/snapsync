@@ -1,14 +1,29 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { axiosInstance } from "../../../axios/axiosInterceptor";
+import { STORY_API } from "../../../axios/const";
 import UserStory from "../../../components/user/UserStory";
-import StoryLoader from "../../../components/loader/StoryLoader";
 
 function Story() {
+  const [storyList, setStoryList] = useState();
   const containerRef = useRef(null);
 
   const handleScroll = (scrollOffset) => {
     const container = containerRef.current;
     container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    getAllStories();
+  }, []);
+
+  const getAllStories = async () => {
+    const storyList = await axiosInstance.get(STORY_API);
+    console.log(
+      "🚀 ~ file: Story.jsx:18 ~ getAllStories ~ storyList:",
+      storyList
+    );
+    setStoryList(storyList.data);
   };
 
   return (
@@ -29,8 +44,11 @@ function Story() {
           />
           <p className="text-xs"> Zia_queen</p>
         </div>
-        <UserStory imgUrl='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s' />
-       <StoryLoader/>
+
+        {storyList?.map((story) => (
+          <UserStory userName={story.userName} imgUrl={story.imageUrl} />
+        ))}
+
         <div
           className="sticky top-9 right-5 bg-white p-1 rounded-full shadow-xl cursor-pointer hover:bg-gray-200"
           onClick={() => handleScroll(400)}>
