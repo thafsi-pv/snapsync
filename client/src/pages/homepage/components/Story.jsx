@@ -46,7 +46,7 @@ function Story() {
         </div>
 
         {storyList?.map((story) => (
-          <UserStory userName={story.userName} imgUrl={story.imageUrl} />
+          <UserStory id={story._id} userName={story.userName} imgUrl={story.imageUrl} />
         ))}
 
         <div

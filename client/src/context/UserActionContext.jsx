@@ -16,6 +16,7 @@ function UserActionContextProvider({ children }) {
   const [postId, setPostId] = useState(null);
   const [navbar, setNavbar] = useState("block");
   const [addStory, setAddStory] = useState(false);
+  const [loadStory, setLoadStory] = useState({ loading: false, id: "" });
 
   useEffect(() => {
     getUserData();
@@ -41,6 +42,8 @@ function UserActionContextProvider({ children }) {
         setNavbar,
         addStory,
         setAddStory,
+        loadStory,
+        setLoadStory,
       }}>
       {children}
     </UserActionContext.Provider>

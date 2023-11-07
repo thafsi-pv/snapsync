@@ -71,6 +71,7 @@ const getAllPosts = async (req, res) => {
           "user.fullName": 1,
           "user.imageUrl": 1,
           "user.userName": 1,
+          "user._id": 1,
           media_url: 1,
           media_type: 1,
           caption: 1,

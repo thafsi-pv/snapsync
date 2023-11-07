@@ -1,27 +1,30 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import UserImage from "./UserImage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserActionContext } from "../../context/UserActionContext";
 
-function UserStory({ imgUrl, userName, extra }) {
+function UserStory({ id, imgUrl, userName, extra }) {
+  const { loadStory, setLoadStory } = useContext(UserActionContext);
+
+  const navigate = useNavigate();
+  const handleLoadStory = () => {
+    setLoadStory({ loading: true, id });
+    const timeOut = setTimeout(() => {
+      // navigate("/story");
+    }, 3000);
+    return () => clearTimeout(timeoutId);
+  };
+
   return (
-    <Link to="/story">
-      <div className="text-sm ">
-        <div className="circle">
-          <UserImage
-            imgUrl={imgUrl}
-            extra="rounded-full object-cover w-full h-full  bg-white"
-          />
-          <svg
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{ enableBackground: "new -580 439 577.9 194" }}
-            xml:space="preserve">
-            <circle cx="50" cy="50" r="40" />
-          </svg>
-        </div>
-        <p className="text-xs  text-center mt-1">{userName}</p>
-      </div>
-    </Link>
+    <div className="text-sm cursor-pointer" onClick={handleLoadStory}>
+      <UserImage
+        imgUrl={imgUrl}
+        extra="w-20 h-20"
+        loading={loadStory}
+        id={id}
+      />
+      <p className="text-xs text-center">{userName}</p>
+    </div>
   );
 }
 
