@@ -10,7 +10,7 @@ function UserStory({ id, imgUrl, userName, extra }) {
   const handleLoadStory = () => {
     setLoadStory({ loading: true, id });
     const timeOut = setTimeout(() => {
-      // navigate("/story");
+       navigate("/story");
     }, 3000);
     return () => clearTimeout(timeoutId);
   };

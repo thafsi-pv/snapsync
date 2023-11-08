@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/img/snapsync_logo.png";
+import logo6 from "../assets/img/snapsync_logo5.png";
 import { Link } from "react-router-dom";
 
 function StoryLayout({ children }) {
@@ -7,7 +7,7 @@ function StoryLayout({ children }) {
     <div className="relative w-screen h-screen bg-black ">
       <Link to='/'>
         <div className="fixed top-5 left-5 w-32 cursor-pointer">
-          <img src={logo} alt="snapsync" />
+          <img src={logo6} alt="snapsync" />
         </div>
       </Link>
       {children}

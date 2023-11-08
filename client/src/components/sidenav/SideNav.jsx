@@ -43,7 +43,7 @@ function SideNav() {
           <div className="h-10">
             {navbar == "block" && (
               <div className="items-center hidden lg:block">
-                <img src={logo} alt="" className="w-[140px]" />
+                <img src={logo} alt="" className="w-[110px]" />
               </div>
             )}
             {navbar == "hidden" && (

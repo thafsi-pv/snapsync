@@ -83,30 +83,3 @@ function App() {
 
 export default App;
 
-// <>
-// <Routes>
-//   <Route path="/" element={<Navigate to="/auth/login" replace />} />
-//   <Route path="/auth/login" element={<LogIn />} />
-//   <Route path="/auth/signup" element={<SignUp />} />
-
-//   <Route
-//     path="/home"
-//     element={
-//       <FileUploadContextProvider>
-//         <UserContextProvider>
-//           <HomeLayout />
-//         </UserContextProvider>
-//       </FileUploadContextProvider>
-//     }
-//   />
-//   <Route
-//     path="/auth/verifyemail"
-//     element={
-//       <UserContextProvider>
-//         <EmailVerification />
-//       </UserContextProvider>
-//     }
-//   />
-//   <Route path="/profile" element={<Profile />} />
-// </Routes>
-// </>

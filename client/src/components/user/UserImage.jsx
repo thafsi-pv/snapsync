@@ -5,6 +5,9 @@ const animation = "stroke-draw 6s ease-out infinite alternate";
 function UserImage({ id, imgUrl, extra }) {
   const { loadStory } = useContext(UserActionContext);
   const gradientId = "myGradient";
+
+
+  
   return (
     <div className={`circle ${extra}`}>
       <img src={imgUrl} alt="" className={` ${extra}  `} />
