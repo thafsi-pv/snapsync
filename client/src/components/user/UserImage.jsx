@@ -1,17 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserActionContext } from "../../context/UserActionContext";
+import { HAVING_STORY_API } from "../../axios/const";
+import { axiosInstance } from "../../axios/axiosInterceptor";
 
 const animation = "stroke-draw 6s ease-out infinite alternate";
 function UserImage({ id, imgUrl, extra }) {
+  const [haveStory, setHaveStory] = useState();
+  console.log("🚀 ~ file: UserImage.jsx:9 ~ UserImage ~ haveStory:", haveStory);
   const { loadStory } = useContext(UserActionContext);
   const gradientId = "myGradient";
 
+  useEffect(() => {
+    checkUserHaveStory();
+  }, []);
 
-  
+  const checkUserHaveStory = async () => {
+    const response = await axiosInstance.get(
+      `${HAVING_STORY_API}?userId=${id}`
+    );
+    console.log("🚀 ~ file: UserImage.jsx:21 ~ checkUserHaveStory ~ response:", response)
+    setHaveStory(response.data.length != 0 ? true : false);
+  };
+
   return (
     <div className={`circle ${extra}`}>
       <img src={imgUrl} alt="" className={` ${extra}  `} />
-      {loadStory.loading != null && (
+      {loadStory.loading != null && haveStory && (
         <svg
           viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"

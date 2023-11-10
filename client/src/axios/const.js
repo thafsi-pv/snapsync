@@ -30,3 +30,4 @@ export const GET_RECENT_CHATS_API = "chat/getRecentChats";
 export const READALL_CHATS_API = "chat/readAllMessages";
 
 export const STORY_API = "story/";
+export const HAVING_STORY_API = "story/havigstory";
