@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const followsModel = require("../model/followsModel");
 const storyModel = require("../model/storyModel");
+const userModel = require("../model/userModel");
 
 const createStory = async (req, res) => {
   try {
@@ -29,6 +30,7 @@ const createStory = async (req, res) => {
 const getStoriesOfFollowers = async (req, res) => {
   try {
     const userId = new mongoose.Types.ObjectId(req.userId);
+
     const storiesOfFollowers = await followsModel.aggregate([
       {
         $match: {
@@ -81,7 +83,35 @@ const getStoriesOfFollowers = async (req, res) => {
       },
     ]);
 
-    res.status(200).json(storiesOfFollowers);
+    const ownStories = await storyModel.find({
+      user_id: userId,
+      expireAt: { $gte: new Date() },
+    });
+    let storyList = "";
+
+    if (ownStories.length > 0) {
+      const myDetails = await userModel
+        .find({ _id: userId })
+        .select("-password")
+        .lean();
+
+      myDetails.push(ownStories);
+      const userObject = myDetails[0];
+
+      if (userObject) {
+        userObject.stories = ownStories;
+      }
+      storyList = [userObject, ...storiesOfFollowers];
+    } else {
+      storyList = storiesOfFollowers;
+    }
+
+    console.log(
+      "🚀 ~ file: storyController.js:123 ~ getStoriesOfFollowers ~ storyList:",
+      storyList
+    );
+
+    res.status(200).json(storyList);
   } catch (error) {
     console.error("Error:", error);
     // throw error;
@@ -99,22 +129,10 @@ const checkUserHavingStory = async (req, res) => {
         .status(400)
         .json({ error: "User ID is required in the query parameters." });
     }
-
-    console.log(
-      "🚀 ~ file: storyController.js:95 ~ checkUserHavingStory ~ userId:",
-      userId
-    );
-
     const data = await storyModel.find({
       user_id: userId,
       expireAt: { $gte: new Date() },
     });
-
-    console.log(
-      "🚀 ~ file: storyController.js:100 ~ checkUserHavingStory ~ data:",
-      data
-    );
-
     res.status(200).json(data);
   } catch (error) {
     // Log the error for debugging purposes
