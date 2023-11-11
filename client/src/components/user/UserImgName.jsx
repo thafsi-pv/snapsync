@@ -18,7 +18,7 @@ function UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
     <div className=" flex gap-2 items-center">
       <div className={extra} onClick={handleLoadStory}>
         {/* <Link to={`/${username}`}> */}
-        <UserImage imgUrl={imgUrl} extra={extra} id={id} username={username} />
+        <UserImage imgUrl={imgUrl} extra={extra} id={id} username={username} imgStyle='!p-0.5'/>
         {/* </Link> */}
       </div>
 

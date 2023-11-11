@@ -5,12 +5,15 @@ import { axiosInstance } from "../../axios/axiosInterceptor";
 import { PROFILE_API } from "../../axios/const";
 import { UserActionContext } from "../../context/UserActionContext";
 import Comments from "../homepage/modal/Comments";
+import UserImage from "../../components/user/UserImage";
 
 function Profile() {
   const [profile, setProfile] = useState();
+  console.log("🚀 ~ file: Profile.jsx:12 ~ Profile ~ profile:", profile);
   const [posts, setPosts] = useState();
   const { username } = useParams();
-  const { comments, setComments, postId, setPostId } = useContext(UserActionContext);
+  const { comments, setComments, postId, setPostId } =
+    useContext(UserActionContext);
 
   useEffect(() => {
     getProfileData();
@@ -35,11 +38,20 @@ function Profile() {
       className="overflow-hidden  items-center relative flex flex-row justify-center w-full pl-8 py-10">
       <div className="items-center justify-center relative flex flex-col mb-5 gap-16 w-4/5 p-5">
         <div className="flex flex-row justify-between items-start ml-20 w-full ">
-          <div className="w-1/3 m-6">
-            <img
+          <div className=" m-6 ">
+            {/* <img
               src={profile?.imageUrl}
               className="ml-px w-44 h-38 rounded-full"
-            />
+            /> */}
+            {profile && (
+              <UserImage
+                id={profile?._id}
+                imgUrl={profile?.imageUrl}
+                extra="w-44 h-44"
+                imgStyle='!p-4'
+                username={profile?.userName}
+              />
+            )}
           </div>
           <div className="flex flex-col gap-8 w-2/3 items-start text-sm">
             <div className="self-stretch flex flex-row ml-px gap-2 items-start">
@@ -47,7 +59,10 @@ function Profile() {
                 <div className="text-xl">pv.thafsi</div>
                 <div className="flex flex-row gap-2 w-1/2 items-center">
                   <div className="bg-[rgba(217,_217,_217,_0.4)] flex flex-col justify-center w-1/2 p-2 items-center rounded-lg">
-                   <Link to='/accounts/edit'> <div className="text-xs ">Edit profile</div></Link>
+                    <Link to="/accounts/edit">
+                      {" "}
+                      <div className="text-xs ">Edit profile</div>
+                    </Link>
                   </div>
                   <div className="bg-[rgba(217,_217,_217,_0.4)] flex flex-col justify-center w-1/2 p-2 items-center rounded-lg">
                     <div className="text-xs ">View archive</div>

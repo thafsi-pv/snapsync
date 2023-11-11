@@ -5,7 +5,7 @@ import { axiosInstance } from "../../axios/axiosInterceptor";
 import StoryLoader from "../../assets/svg/StoryLoader";
 import { useNavigate } from "react-router-dom";
 
-function UserImage({ id, imgUrl, extra,username }) {
+function UserImage({ id, imgUrl, extra,username,imgStyle }) {
   const navigate = useNavigate();
   const [haveStory, setHaveStory] = useState();
   const { loadStory } = useContext(UserActionContext);
@@ -32,7 +32,7 @@ function UserImage({ id, imgUrl, extra,username }) {
 
   return (
     <div className={`circle cursor-pointer ${extra}`} onClick={handleStoryClick}>
-      <img src={imgUrl} alt="" className={` ${extra}  `} />
+      <img src={imgUrl} alt="" className={` ${imgStyle}  `} />
       {loadStory.loading != null && haveStory && (
         <StoryLoader loadStory={loadStory} id={id} />
       )}

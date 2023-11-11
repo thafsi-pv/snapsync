@@ -62,18 +62,23 @@ function Post({ setComments, setPostId }) {
                     src={post.user[0].imageUrl}
                     className="w-8 h-8 absolute left-1 rounded-full"
                   /> */}
-                  <UserImgName fullName={post.user[0].fullName} desc= {post.location} extra='w-12 h-12' id={post.user[0]._id} username={post.user[0].userName} imgUrl={post.user[0].imageUrl} />
+                  <UserImgName
+                    fullName={post.user[0].fullName}
+                    desc={post.location}
+                    extra="w-12 h-12"
+                    id={post.user[0]._id}
+                    username={post.user[0].userName}
+                    imgUrl={post.user[0].imageUrl}
+                  />
                   <div className="flex items-center text-xs text-gray-400 gap-1">
-                      <div className="flex justify-center items-center font-bold">
-                        •
-                      </div>
-                      <div className=" text-xs font-normal ">
-                        {timeAgo(post.createdAt)}
-                      </div>
+                    <div className="flex justify-center items-center font-bold">
+                      •
                     </div>
+                    <div className=" text-xs font-normal ">
+                      {timeAgo(post.createdAt)}
+                    </div>
+                  </div>
                 </div>
-
-
 
                 {/* <div className="relative flex flex-col mb-px w-full shrink-0 items-start">
                   <div className="flex text-sm font-semibold w-full gap-2 items-center">
