@@ -10,8 +10,6 @@ function HomePage() {
   return (
     <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
       <Container />
-      {/* <AddPost show={addPost} closeModal={() => setAddPost(false)} />
-      <UploadProgress /> */}
     </div>
   );
 }

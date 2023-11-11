@@ -57,7 +57,7 @@ function Story() {
             <BiChevronLeft />
           </div>
         )}
-        <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] ">
+        <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] flex ">
           {/* <img
             className="rounded-full object-cover w-full h-full p-[2px] bg-white"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7xoV9KUFt2JC8fWh_LSYV75lFJHOVqNk-ZohGF5yoYQ&s"

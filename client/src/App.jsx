@@ -69,6 +69,10 @@ function App() {
       element: <Story />,
     },
     {
+      path: "/story/:id",
+      element: <Story />,
+    },
+    {
       path: "/auth/login",
       element: <LogIn />,
     },
