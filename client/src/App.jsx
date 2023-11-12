@@ -1,29 +1,20 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import {
+  RouterProvider,
+  createBrowserRouter
+} from "react-router-dom";
 import "./App.css";
+
+import HomeLayout from "./layout/HomeLayout";
 import LogIn from "./pages/auth/LogIn";
 import SignUp from "./pages/auth/SignUp";
-import ChangePassword from "./pages/auth/ChangePassword";
-import OTP from "./pages/auth/OTP";
-import ResetPassword from "./pages/auth/ResetPassword";
-import EmailVerification from "./pages/auth/EmailVerification";
-import {
-  Routes,
-  Route,
-  Navigate,
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import HomePage from "./pages/homepage/HomePage";
-import FileUploadContextProvider from "./context/FileUploadContext";
-import Profile from "./pages/profile/Profile";
-import HomeLayout from "./layout/HomeLayout";
-import UserActionContextProvider from "./context/UserActionContext";
-import Messages from "./pages/messages/Messages";
-import EditProfile from "./pages/profile/components/EditProfile";
 import Explore from "./pages/explore/Explore";
+import HomePage from "./pages/homepage/HomePage";
+import Messages from "./pages/messages/Messages";
+import Profile from "./pages/profile/Profile";
+import EditProfile from "./pages/profile/components/EditProfile";
 import Story from "./pages/story/Story";
+import FileUploadContextProvider from "./services/providers/FileUploadContext";
+import UserActionContextProvider from "./services/providers/UserActionContext";
 
 function App() {
   const appRouter = createBrowserRouter([
