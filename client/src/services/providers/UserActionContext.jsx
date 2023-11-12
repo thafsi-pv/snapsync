@@ -1,10 +1,10 @@
 import React, { createContext, useEffect, useState } from "react";
-import useChat from "../hooks/useChat";
-import { GET_USER_DATA, socketBaseUrl } from "../axios/const";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { tokenName } from "../utils/const";
+import useChat from "../../hooks/useChat";
+import { GET_USER_DATA, socketBaseUrl } from "../api/const";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { tokenName } from "../../utils/const";
 import io from "socket.io-client";
-import { axiosInstance } from "../axios/axiosInterceptor";
+import { axiosInstance } from "../api/axiosInterceptor";
 
 export const UserActionContext = createContext(null);
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserActionContext } from "../../context/UserActionContext";
-import { HAVING_STORY_API } from "../../axios/const";
-import { axiosInstance } from "../../axios/axiosInterceptor";
+import { UserActionContext } from "../../services/providers/UserActionContext";
+import { HAVING_STORY_API } from "../../services/api/const";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
 import StoryLoader from "../../assets/svg/StoryLoader";
 import { useNavigate } from "react-router-dom";
 

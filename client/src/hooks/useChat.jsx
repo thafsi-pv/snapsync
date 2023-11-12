@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
-import { socketBaseUrl } from "../axios/const";
+import { socketBaseUrl } from "../services/api/const";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from "../context/SocketContext";
+import { SocketContext } from "../services/providers/SocketContext";
 
 function useChat(shouldConnect = false) {
   // const navigate = useNavigate(null);

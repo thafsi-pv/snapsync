@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
-import useChat from "../hooks/useChat";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { tokenName } from "../utils/const";
-import { socketBaseUrl } from "../axios/const";
+import useChat from "../../hooks/useChat";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { tokenName } from "../../utils/const";
+import { socketBaseUrl } from "../api/const";
 import { io } from "socket.io-client";
-import { genericError } from "../axios/genericError";
-import { getIdFromUrl } from "../utils/getIdFromUrl";
+import { genericError } from "../api/genericError";
+import { getIdFromUrl } from "../../utils/getIdFromUrl";
 
 export const SocketContext = createContext(null);
 

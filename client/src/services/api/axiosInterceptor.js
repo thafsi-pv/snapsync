@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl } from "../axios/const";
+import { baseUrl } from "./const";
 import { genericError } from "./genericError";
 
 axios.defaults.withCredentials = true;

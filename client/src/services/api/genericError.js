@@ -1,4 +1,4 @@
-import useChat from "../hooks/useChat";
+import useChat from "../../hooks/useChat";
 import { axiosInstance } from "./axiosInterceptor";
 import { ROTATE_REFRESH_TOKEN_API } from "./const";
 
