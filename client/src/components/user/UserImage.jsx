@@ -22,6 +22,7 @@ function UserImage({ id, imgUrl, extra,username,imgStyle }) {
   };
 
   const handleStoryClick = () => {
+    
     if (haveStory) {
       const timeOut = setTimeout(() => {
         navigate("/story");
@@ -32,7 +33,7 @@ function UserImage({ id, imgUrl, extra,username,imgStyle }) {
 
   return (
     <div className={`circle cursor-pointer ${extra}`} onClick={handleStoryClick}>
-      <img src={imgUrl} alt="" className={` ${imgStyle}  `} />
+      <img src={imgUrl} alt="" className={` ${imgStyle} w-full h-full object-cover `} />
       {loadStory.loading != null && haveStory && (
         <StoryLoader loadStory={loadStory} id={id} />
       )}
