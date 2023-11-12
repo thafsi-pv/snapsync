@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React from "react";
-import InputField from "../../../components/fields/InputField";
+import InputField from "../../../components/uiPrimitives/fields/InputField";
 
 function Comment({ postId, callBack }) {
   const commentFormik = useFormik({

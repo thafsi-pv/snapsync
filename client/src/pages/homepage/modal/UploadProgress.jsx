@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import ReactDOM from "react-dom";
-import { FileUploadContext } from "../../../context/FileUploadContext";
+import { FileUploadContext } from "../../../services/providers/FileUploadContext";
 
 function UploadProgress() {
   const { uploadProgress, fileSize } = useContext(FileUploadContext);

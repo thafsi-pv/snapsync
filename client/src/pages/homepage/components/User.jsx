@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserActionContext } from "../../../context/UserActionContext";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function User() {
   const { userData, setUserData } = useContext(UserActionContext);

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserImage from "./UserImage";
 import { Link, useNavigate } from "react-router-dom";
-import { UserActionContext } from "../../context/UserActionContext";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function UserStory({ id, imgUrl, userName, extra }) {
   const { loadStory, setLoadStory } = useContext(UserActionContext);
