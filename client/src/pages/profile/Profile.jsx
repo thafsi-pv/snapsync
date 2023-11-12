@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReelIcon from "../../assets/svg/ReelIcon";
 import { Link, useParams } from "react-router-dom";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import { PROFILE_API } from "../../axios/const";
-import { UserActionContext } from "../../context/UserActionContext";
 import Comments from "../homepage/modal/Comments";
 import UserImage from "../../components/user/UserImage";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { PROFILE_API } from "../../services/api/const";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function Profile() {
   const [profile, setProfile] = useState();
-  console.log("🚀 ~ file: Profile.jsx:12 ~ Profile ~ profile:", profile);
   const [posts, setPosts] = useState();
   const { username } = useParams();
   const { comments, setComments, postId, setPostId } =

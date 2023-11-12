@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { STORY_API } from "../../../axios/const";
 import UserStory from "../../../components/user/UserStory";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { STORY_API } from "../../../services/api/const";
 
 function Story() {
   const [storyList, setStoryList] = useState();

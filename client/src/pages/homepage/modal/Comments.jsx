@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PortalModal from "../../../components/modal/PortalModal";
-import InputField from "../../../components/fields/InputField";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { useFormik } from "formik";
-import { COMMENT_API } from "../../../axios/const";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
 import PostFile from "../../../components/post/PostFile";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { COMMENT_API } from "../../../services/api/const";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comment from "../components/Comment";
+import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
 
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();

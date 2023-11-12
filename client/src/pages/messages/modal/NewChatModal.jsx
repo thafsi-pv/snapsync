@@ -1,20 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import PortalModal from "../../../components/modal/PortalModal";
-import InputField from "../../../components/fields/InputField";
 import { AiOutlineClose } from "react-icons/ai";
-import useDebounce from "../../../hooks/useDebounce";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { SEARCH_USER_API } from "../../../axios/const";
-import useChat from "../../../hooks/useChat";
-import { UserActionContext } from "../../../context/UserActionContext";
-import { SocketContext } from "../../../context/SocketContext";
 import { useNavigate } from "react-router-dom";
-
+import useDebounce from "../../../hooks/useDebounce";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { SEARCH_USER_API } from "../../../services/api/const";
+import InputField from "../../../components/uiPrimitives/fields/InputField";
 function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [usersList, setUsersList] = useState(null);
-  // const { socket } = useChat();
   const { socket } = useContext(SocketContext);
   const navigate = useNavigate();
 

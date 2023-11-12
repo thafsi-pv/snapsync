@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import User from "./User";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { FOLLOW_USER, GET_SUGGESTION_LIST } from "../../../axios/const";
+import { GET_SUGGESTION_LIST } from "../../../services/api/const";
 
 function Suggestions() {
   const [suggestionList, setSuggestionList] = useState();

@@ -1,3 +1,4 @@
+import EmojiPicker from "emoji-picker-react";
 import React, {
   useContext,
   useEffect,
@@ -5,23 +6,16 @@ import React, {
   useRef,
   useState,
 } from "react";
-import EmojiPicker from "emoji-picker-react";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
-import { RiSendPlaneFill } from "react-icons/ri";
 import { IoCreateOutline } from "react-icons/io5";
+import { RiSendPlaneFill } from "react-icons/ri";
 import NewChatModal from "./modal/NewChatModal";
-import { UserActionContext } from "../../context/UserActionContext";
-import { SocketContext } from "../../context/SocketContext";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import {
-  GET_CHATS_API,
-  GET_RECENT_CHATS_API,
-  READALL_CHATS_API,
-} from "../../axios/const";
-import { genericError } from "../../axios/genericError";
-import { timeAgo } from "../../utils/timeAgo";
 import { useNavigate } from "react-router-dom";
+import { SocketContext } from "../../services/providers/SocketContext";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 import { containsOnlyEmojis } from "../../utils/containsOnlyEmojis";
+import { timeAgo } from "../../utils/timeAgo";
+import { genericError } from "../../services/api/genericError";
 
 function Messages() {
   const navigate = useNavigate();
@@ -32,7 +26,6 @@ function Messages() {
   const { socket, messages, setMessages } = useContext(SocketContext);
 
   const [message, setMessage] = useState("");
-  // const [messages, setMessages] = useState([]);
   const [showEmoji, setshowEmoji] = useState(false);
   const [newChat, setNewChat] = useState(false);
   const [recentChatList, setRecentChatList] = useState();
@@ -58,21 +51,11 @@ function Messages() {
   }, [chatUser]);
 
   const handleRecentChatClick = (recent) => {
-    console.log(
-      "🚀 ~ file: Messages.jsx:58 ~ handleRecentChatClick ~ recent:",
-      recent
-    );
-
     const chatUser =
       recent.senderInfo._id == userData._id
         ? recent.recipientInfo
         : recent.senderInfo;
-
     chatUser.socketId = recent.socketId;
-    console.log(
-      "🚀 ~ file: Messages.jsx:69 ~ handleRecentChatClick ~ chatUser:",
-      chatUser
-    );
     setChatUser(chatUser);
     const newURL = `/direct/inbox/${chatUser._id}`;
     navigate(newURL);
@@ -139,10 +122,6 @@ function Messages() {
         setRecentChatList(recentList);
       });
     } catch (error) {
-      console.log(
-        "🚀 ~ file: Messages.jsx:122 ~ getRecentChats ~ error:",
-        error
-      );
       genericError(error);
     }
   };

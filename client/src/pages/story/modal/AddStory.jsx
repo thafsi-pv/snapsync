@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import CreatePost from "../../../assets/svg/createPost";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { STORY_API } from "../../../axios/const";
-import PortalModal from "../../../components/modal/PortalModal";
-import {
-  FileUploadContext,
-} from "../../../context/FileUploadContext";
-import { UserActionContext } from "../../../context/UserActionContext";
 import useUploadMedia from "../../../hooks/useUploadMedia";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
+import { FileUploadContext } from "../../../services/providers/FileUploadContext";
+import { STORY_API } from "../../../services/api/const";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);

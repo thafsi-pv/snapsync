@@ -3,7 +3,7 @@ import Story from "./Story";
 import Suggestions from "./Suggestions";
 import Post from "./Post";
 import Comments from "../modal/Comments";
-import { UserActionContext } from "../../../context/UserActionContext";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function Container() {
   const { comments, setComments, postId, setPostId } = useContext(UserActionContext);

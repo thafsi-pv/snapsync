@@ -1,19 +1,17 @@
-import React from "react";
-import logo from "../../assets/img/snapsync_logo.png";
-import InputField from "../../components/fields/InputField";
-import AuthLayout from "../../layout/AuthLayout";
-import Button from "../../components/button";
-import snlogo from "../../assets/img/snapsync_logo.png";
-import Logo from "../../components/logo/Logo";
 import { useFormik } from "formik";
-import { logInValidationSchema } from "../../utils/validation";
+import React from "react";
 import { AiFillFacebook } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import { LOGIN_API } from "../../axios/const";
 import useChat from "../../hooks/useChat";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import AuthLayout from "../../layout/AuthLayout";
 import { tokenName } from "../../utils/const";
+import { logInValidationSchema } from "../../utils/validation";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { LOGIN_API } from "../../services/api/const";
+import Logo from "../../components/uiPrimitives/logo/Logo";
+import InputField from "../../components/uiPrimitives/fields/InputField";
+import Button from "../../components/uiPrimitives/button";
 
 function LogIn() {
   const { setStorage } = useLocalStorage();

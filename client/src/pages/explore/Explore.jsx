@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import PostFile from "../../components/post/PostFile";
-import Contents from "./components/Contents";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import { ENTIRE_API } from "../../axios/const";
 import Comments from "../homepage/modal/Comments";
-import { UserActionContext } from "../../context/UserActionContext";
+import { ENTIRE_API } from "../../services/api/const";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function Explore() {
   const [exploreList, setExploreList] = useState();
   const { comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
-  console.log("🚀 ~ file: Explore.jsx:9 ~ Explore ~ exploreList:", exploreList);
 
   useEffect(() => {
     getEntirePost();
@@ -18,10 +15,6 @@ function Explore() {
 
   const getEntirePost = async () => {
     const postList = await axiosInstance.get(ENTIRE_API);
-    console.log(
-      "🚀 ~ file: Explore.jsx:17 ~ getEntirePost ~ postList:",
-      postList
-    );
     setExploreList(postList.data);
   };
   const handleViewComments = (postId) => {
@@ -39,8 +32,9 @@ function Explore() {
               handleViewComments(post._id);
             }}
             className={`
-              ${post.media_type.startsWith("image/") ? "" : "row-span-2" } cursor-pointer`
-            }>
+              ${
+                post.media_type.startsWith("image/") ? "" : "row-span-2"
+              } cursor-pointer`}>
             {post.media_type.startsWith("image/") && (
               <img
                 src={post.media_url}

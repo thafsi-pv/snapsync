@@ -3,8 +3,8 @@ import StoryLayout from "../../layout/StoryLayout";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { timeAgo } from "../../utils/timeAgo";
 import { AiOutlineHeart } from "react-icons/ai";
-import { axiosInstance } from "../../axios/axiosInterceptor";
-import { STORY_API } from "../../axios/const";
+import { STORY_API } from "../../services/api/const";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
 
 // const stories = [
 //   {

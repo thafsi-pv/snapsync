@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import { UserActionContext } from "../../../context/UserActionContext";
-import InputField from "../../../components/fields/InputField";
-import TextField from "../../../components/fields/TextField";
 import useUploadMedia from "../../../hooks/useUploadMedia";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { PROFILE_API } from "../../../axios/const";
+import { PROFILE_API } from "../../../services/api/const";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
+import TextField from "../../../components/uiPrimitives/fields/TextField";
 
 function EditProfile() {
   const { userData } = useContext(UserActionContext);

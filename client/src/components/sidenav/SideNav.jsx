@@ -4,11 +4,10 @@ import { BiSolidMoviePlay } from "react-icons/bi";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
-import { UserActionContext } from "../../context/UserActionContext";
 import { Link } from "react-router-dom";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
-import InputField from "../fields/InputField";
-import { SocketContext } from "../../context/SocketContext";
+import { SocketContext } from "../../services/providers/SocketContext";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 
 let search = false;
 function SideNav() {

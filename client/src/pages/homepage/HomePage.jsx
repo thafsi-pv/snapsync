@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
-import { UserActionContext } from "../../context/UserActionContext";
 import Container from "./components/Container";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function HomePage() {
   const { setNavbar } = useContext(UserActionContext);

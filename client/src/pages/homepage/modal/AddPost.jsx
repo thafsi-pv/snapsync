@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import CreatePost from "../../../assets/svg/createPost";
 import { AiOutlineClose } from "react-icons/ai";
-import PortalModal from "../../../components/modal/PortalModal";
-import { UserActionContext } from "../../../context/UserActionContext";
-import TextField from "../../../components/fields/TextField";
-import InputField from "../../../components/fields/InputField";
 import { motion } from "framer-motion";
 import { useFormik } from "formik";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { POST_API } from "../../../axios/const";
 import useUploadMedia from "../../../hooks/useUploadMedia";
-import { FileUploadContext } from "../../../context/FileUploadContext";
+import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
+import { FileUploadContext } from "../../../services/providers/FileUploadContext";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { POST_API } from "../../../services/api/const";
+import TextField from "../../../components/uiPrimitives/fields/TextField";
+import InputField from "../../../components/uiPrimitives/fields/InputField";
 
 function AddPost() {
   const { setUploadProgress, setFileSize } = useContext(FileUploadContext);
@@ -53,7 +53,6 @@ function AddPost() {
   };
 
   const handleSharPost = async (values) => {
-    // const mediaUrl = await handleUploadMedia(file);
     setAddPost(false);
     let fileUrl = null;
     if (file) {

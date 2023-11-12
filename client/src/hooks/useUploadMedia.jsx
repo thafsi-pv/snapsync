@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  CLOUDINARY_IMAGE_UPLOAD_URL,
-  CLOUDINARY_VIDEO_UPLOAD_URL,
-} from "../axios/const";
+import { CLOUDINARY_IMAGE_UPLOAD_URL, CLOUDINARY_VIDEO_UPLOAD_URL } from "../services/api/const";
+
 
 const useUploadMedia = () => {
   const [uploadedUrl, setUploadedUrl] = useState();

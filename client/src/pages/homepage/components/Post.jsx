@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { HiOutlineBookmark } from "react-icons/hi";
 import { IoIosHeartEmpty, IoIosMore } from "react-icons/io";
-import { axiosInstance } from "../../../axios/axiosInterceptor";
-import { COMMENT_API, LIKE_API, POST_API } from "../../../axios/const";
 import UserImgName from "../../../components/user/UserImgName";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comment from "./Comment";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { COMMENT_API, LIKE_API, POST_API } from "../../../services/api/const";
 
 function Post({ setComments, setPostId }) {
   const [posts, setPosts] = useState();

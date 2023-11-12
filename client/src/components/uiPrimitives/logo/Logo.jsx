@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../assets/img/snapsync_logo.png";
+import logo from "../../../assets/img/snapsync_logo.png";
 
 function Logo() {
   return (

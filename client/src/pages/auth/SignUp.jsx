@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import InputField from "../../components/fields/InputField";
 import { useFormik } from "formik";
-import { signUpValidationSchema } from "../../utils/validation";
-import { axiosInstance, abortController } from "../../axios/axiosInterceptor";
-import { ISUSERNAME_EXIST_API, SIGNUP_API } from "../../axios/const";
-import Logo from "../../components/logo/Logo";
-import AuthLayout from "../../layout/AuthLayout";
+import React from "react";
 import { Link } from "react-router-dom";
+import InputField from "../../components/uiPrimitives/fields/InputField";
+import AuthLayout from "../../layout/AuthLayout";
+import { SIGNUP_API } from "../../services/api/const";
+import { signUpValidationSchema } from "../../utils/validation";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import Logo from "../../components/uiPrimitives/logo/Logo";
 
 function SignUp() {
   // useEffect(() => {
