@@ -27,7 +27,6 @@
   animation: ping 50s;
 }
 
-
 /* Tailwind CSS classes or your custom styles can be added here */
 
 .instagram-story-carousel {
@@ -55,7 +54,6 @@
   border-color: #0095f6; /* Highlight the active story */
 }
 
-
 .circle {
   position: relative;
   /* width: 100px;
@@ -73,7 +71,7 @@
   stroke-width: 2;
   stroke-dasharray: 1;
   stroke-dashoffset: 0;
-  
+
   /* animation: stroke-draw 6s ease-out infinite alternate; */
 }
 .circle img {
@@ -97,5 +95,3 @@
     stroke-dasharray: 8;
   }
 }
-
-
