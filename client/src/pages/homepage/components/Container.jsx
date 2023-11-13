@@ -6,7 +6,7 @@ import Comments from "../modal/Comments";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function Container() {
-  const { comments, setComments, postId, setPostId } = useContext(UserActionContext);
+  const { comments, setComments, postId } = useContext(UserActionContext);
 
   // const [comments, setComments] = useState(false);
   // const [postId, setPostId] = useState(null);
@@ -15,7 +15,7 @@ function Container() {
     <div className="flex overflow-hidden min-h-full min-w-full justify-evenly ">
       <div className="self-start flex flex-col gap-16 lg:w-8/12 md:w-7/12 sm:w-full max-w-[680px]">
         <Story />
-        <Post setPostId={setPostId} setComments={setComments} />
+        <Post />
       </div>
       <div className="hidden lg:block w-3/12">
         <Suggestions />

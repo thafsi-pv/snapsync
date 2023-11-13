@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import React from "react";
+import React, { memo } from "react";
 import InputField from "../../../components/uiPrimitives/fields/InputField";
 
 function Comment({ postId, callBack }) {
@@ -8,7 +8,6 @@ function Comment({ postId, callBack }) {
       comment: "",
     },
     onSubmit: (values, { resetForm }) => {
-      console.log("🚀 ~ file: AddPost.jsx:62 ~ AddPost ~ values:", values);
       callBack(postId, values);
       resetForm();
     },
@@ -44,4 +43,4 @@ function Comment({ postId, callBack }) {
   );
 }
 
-export default Comment;
+export default memo(Comment);
