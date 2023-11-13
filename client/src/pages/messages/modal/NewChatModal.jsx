@@ -5,6 +5,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { SEARCH_USER_API } from "../../../services/api/const";
 import InputField from "../../../components/uiPrimitives/fields/InputField";
+import { SocketContext } from "../../../services/providers/SocketContext";
 function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);

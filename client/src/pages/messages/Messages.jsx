@@ -16,6 +16,8 @@ import { UserActionContext } from "../../services/providers/UserActionContext";
 import { containsOnlyEmojis } from "../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../utils/timeAgo";
 import { genericError } from "../../services/api/genericError";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { GET_CHATS_API } from "../../services/api/const";
 
 function Messages() {
   const navigate = useNavigate();

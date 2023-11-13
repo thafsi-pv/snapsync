@@ -2,6 +2,9 @@ import React from "react";
 import InputField from "../../../components/uiPrimitives/fields/InputField";
 import Button from "../../../components/uiPrimitives/button"
 
+
+// Login form with formik prop and  shows error 
+
 function LogInForm({ logInFormik }) {
   return (
     <form
