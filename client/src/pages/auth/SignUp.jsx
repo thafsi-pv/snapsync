@@ -10,6 +10,14 @@ import Logo from "../../components/uiPrimitives/logo/Logo";
 import SignUpForm from "./forms/SignUpForm";
 import OrLine from "../../components/uiPrimitives/OrLine";
 
+
+
+/**
+ * SignUpPage Component:
+ * Renders the signup page containing a signup form using Formik.
+ * after register redirect to login 
+ */
+
 function SignUp() {
   const navigate = useNavigate();
   const signUpFormik = useFormik({
