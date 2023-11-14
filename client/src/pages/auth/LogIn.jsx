@@ -62,9 +62,11 @@ function LogIn() {
                   <AiFillFacebook className="w-5 h-5 text-[#385185]" />
                   Log in with Facebook
                 </div>
-                <div className="text-xs  self-center">
-                  Forgotten your password?
-                </div>
+                <Link to="/accounts/password/reset">
+                  <div className="text-xs  self-center">
+                    Forgotten your password?
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

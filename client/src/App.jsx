@@ -1,7 +1,4 @@
-import {
-  RouterProvider,
-  createBrowserRouter
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 
 import HomeLayout from "./layout/HomeLayout";
@@ -15,6 +12,7 @@ import EditProfile from "./pages/profile/components/EditProfile";
 import Story from "./pages/story/Story";
 import FileUploadContextProvider from "./services/providers/FileUploadContext";
 import UserActionContextProvider from "./services/providers/UserActionContext";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -52,7 +50,6 @@ function App() {
           path: "direct/inbox/:id",
           element: <Messages />,
         },
-       
       ],
     },
     {
@@ -71,10 +68,17 @@ function App() {
       path: "/auth/signup",
       element: <SignUp />,
     },
+    {
+      path: "/accounts/password/reset",
+      element: <ResetPassword />,
+    },
+    {
+      path: "/accounts/password/reset/confirm",
+      element: <ResetPassword />,
+    },
   ]);
 
   return <RouterProvider router={appRouter} />;
 }
 
 export default App;
-
