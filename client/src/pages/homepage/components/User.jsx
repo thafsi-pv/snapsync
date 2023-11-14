@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { memo, useContext } from "react";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function User() {
-  const { userData, setUserData } = useContext(UserActionContext);
-  console.log("🚀 ~ file: User.jsx:6 ~ User ~ userData:", userData);
+  const { userData } = useContext(UserActionContext);
 
   return (
     <div className="bg-blend-normal bg-no-repeat flex  items-center w-full  gap-3 pt-1 pb-px px-px">
@@ -19,4 +18,4 @@ function User() {
   );
 }
 
-export default User;
+export default memo(User);

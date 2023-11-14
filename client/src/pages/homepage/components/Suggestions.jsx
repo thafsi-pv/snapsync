@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import User from "./User";
 import { GET_SUGGESTION_LIST } from "../../../services/api/const";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import SuggestionUser from "../../../components/user/SuggestionUser";
 
 function Suggestions() {
   const [suggestionList, setSuggestionList] = useState();
-  const [followedUserId, setFollowedUserId] = useState(null);
+
   useEffect(() => {
     suggestionUsers();
   }, []);
@@ -14,17 +15,6 @@ function Suggestions() {
     const response = await axiosInstance.get(GET_SUGGESTION_LIST);
     setSuggestionList(response.data);
   };
-
-  const handleFollowing = async (followedUserId, followStatus) => {
-    const data = { followed_user_id: followedUserId, followStatus };
-    const response = await axiosInstance.post(FOLLOW_USER, data);
-    if (response.status == 200 && followStatus == true) {
-      setFollowedUserId(followedUserId);
-    } else {
-      setFollowedUserId(null);
-    }
-  };
-
   return (
     <div className="relative flex flex-col w-full gap-12 items-start mt-10 mx-8">
       <div className="flex flex-row justify-between ml-px w-full  items-center">
@@ -36,37 +26,7 @@ function Suggestions() {
             </div>
             <div className="self-stretch flex flex-col justify-between ml-1 gap-5">
               {suggestionList?.map((user) => (
-                <div className="flex flex-row gap-4 items-center ml-px">
-                  <img
-                    src={user?.imageUrl}
-                    className="w-11 h-11 shrink-0 rounded-full"
-                  />
-                  <div className="flex flex-col gap-1 w-24 shrink-0 flex-grow items-start">
-                    <p className="text-sm  tracking-[0.42]">{user?.fullName}</p>
-                    <p className="text-xs  tracking-[0.39] text-[#737373]">
-                      Followed by zia
-                    </p>
-                  </div>
-                  <div className="items-end flex-grow-0 p-2">
-                    {user._id != followedUserId ? (
-                      <button
-                        className="text-xs font-semibold text-blue-500 "
-                        onClick={() => {
-                          handleFollowing(user._id, true);
-                        }}>
-                        Follow
-                      </button>
-                    ) : (
-                      <button
-                        className="text-xs font-semibold text-gray-500 "
-                        onClick={() => {
-                          handleFollowing(user._id, false);
-                        }}>
-                        Unfollow
-                      </button>
-                    )}
-                  </div>
-                </div>
+                <SuggestionUser user={user} />
               ))}
             </div>
           </div>
@@ -89,4 +49,4 @@ function Suggestions() {
   );
 }
 
-export default Suggestions;
+export default memo(Suggestions);

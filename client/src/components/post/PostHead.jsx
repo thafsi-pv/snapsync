@@ -4,8 +4,6 @@ import { IoIosMore } from "react-icons/io";
 import { timeAgo } from "../../utils/timeAgo";
 
 function PostHead({ post }) {
-    console.log("🚀 ~ file: PostHead.jsx:7 ~ PostHead ~ post:", post)
-    
   return (
     <div className="flex flex-row justify-between items-center mb-2 ">
       <div className="flex flex-row gap-3 items-start w-full">
