@@ -8,7 +8,7 @@ const {
 } = require("../utils/jwt");
 const { v4: uuidv4 } = require("uuid");
 const userCodeModel = require("../model/userCodeModel");
-const { sendAccountActivationEmail } = require("../utils/nodemailer");
+const { sendAccountActivationEmail, passwordResetEmail } = require("../utils/nodemailer");
 
 const signUp = async (req, res) => {
   try {
@@ -152,19 +152,49 @@ function generateAccessAndRefreshToken(userId, res) {
 }
 
 const resetPassword = async (req, res) => {
-  const emailUsername = req.query.emailUsername;
-  console.log(
-    "🚀 ~ file: auth.js:156 ~ resetPassword ~ emailUsername:",
-    emailUsername
-  );
+  try {
+    const emailUsername = req.query.query;
+    console.log(
+      "🚀 ~ file: auth.js:156 ~ resetPassword ~ emailUsername:",
+      emailUsername
+    );
 
-  const user = await userModal.find({
-    $or: [
-      { email: { $regex: emailUsername, $options: "i" } },
-      { userName: { $regex: emailUsername, $options: "i" } },
-    ],
-  });
-  console.log("🚀 ~ file: auth.js:163 ~ resetPassword ~ user:", user);
+    const user = await userModal.findOne({
+      $or: [
+        { emailPhone: { $regex: emailUsername, $options: "i" } },
+        { userName: { $regex: emailUsername, $options: "i" } },
+      ],
+    });
+    console.log("🚀 ~ file: auth.js:163 ~ resetPassword ~ user:", user);
+
+    const activationCode = uuidv4();
+    const newData = {
+      user_id: user._id,
+      code: activationCode,
+    };
+
+    // Use the findOneAndUpdate method with the upsert option set to true
+    const codeid = await userCodeModel.findOneAndUpdate(
+      { user_id: user._id }, // Search for the document with the specified user ID
+      newData, // Set the new data
+      { new: true, upsert: true, runValidators: true } // Options: return the modified document, create if it doesn't exist, and run validators
+    );
+
+    const activationToken = generateEmailVerifyToken(user._id, activationCode);
+    console.log("🚀 ~ file: auth.js:184 ~ resetPassword ~ activationToken:", activationToken)
+
+    const mailStatus = await passwordResetEmail(
+      user.emailPhone,
+      activationToken,
+      user.fullName
+    );
+
+    res.status(200).json(mailStatus);
+  } catch (error) {
+    res.status(400).json({
+      message: `Error while reset password: ${error.message}`,
+    });
+  }
 };
 
 module.exports = {

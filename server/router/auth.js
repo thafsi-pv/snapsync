@@ -5,6 +5,7 @@ const {
   isUserNameExist,
   emailVerification,
   rotateRefreshToken,
+  resetPassword,
 } = require("../controller/auth");
 const { verifyEmail } = require("../middleware/verifyEmail");
 
@@ -15,5 +16,6 @@ authRouter.get("/isUserName-exist", isUserNameExist);
 authRouter.post("/login", signIn);
 authRouter.post("/verify-email", verifyEmail, emailVerification);
 authRouter.get("/refresh-token", rotateRefreshToken);
+authRouter.get("/reset-password", resetPassword);
 
 module.exports = { authRouter };
