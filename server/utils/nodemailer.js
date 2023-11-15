@@ -3,6 +3,7 @@ const { baseUrl, frondEndBaseUrl } = require("./const");
 const {
   accountVerificatinMailTemplate,
 } = require("../templates/emailVerification");
+const { passwordResetEmailTemp } = require("../templates/passwordReset");
 
 const sendPasswordResetEmail = async (toEmail, verificationCode) => {
   const transporter = nodemailer.createTransport({
@@ -70,4 +71,44 @@ const sendAccountActivationEmail = async (
   return info;
 };
 
-module.exports = { sendPasswordResetEmail, sendAccountActivationEmail };
+const passwordResetEmail = async (toEmail, activationToken, username) => {
+  const activationUrl = `${frondEndBaseUrl}/accounts/password/reset/confirm?code=${activationToken}`;
+  const mailTemplate = passwordResetEmailTemp;
+  const replacedTemplate = mailTemplate
+    .replace(/\[LOGO\]/, `${baseUrl}/img/snapsync_logo.png"`)
+    .replace(/\[ACTIVATION_URL\]/, activationUrl)
+    .replace(/\[ACTIVATION_URL\]/, activationUrl)
+    .replace(/\[USERNAME\]/, username);
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.GMAIL_USERNAME,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: "reset@moviedb.com",
+    to: toEmail,
+    subject: "Snapsync Reset Password",
+    // text: ``, // replace with your message
+    html: replacedTemplate,
+  };
+
+  const info = await transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Email failed to send:", error);
+    } else {
+      console.log("Email sent successfully:", info.response);
+    }
+  });
+  console.log("Email sent: " + info.response);
+  return info;
+};
+
+module.exports = {
+  sendPasswordResetEmail,
+  sendAccountActivationEmail,
+  passwordResetEmail,
+};

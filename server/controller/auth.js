@@ -151,10 +151,27 @@ function generateAccessAndRefreshToken(userId, res) {
     });
 }
 
+const resetPassword = async (req, res) => {
+  const emailUsername = req.query.emailUsername;
+  console.log(
+    "🚀 ~ file: auth.js:156 ~ resetPassword ~ emailUsername:",
+    emailUsername
+  );
+
+  const user = await userModal.find({
+    $or: [
+      { email: { $regex: emailUsername, $options: "i" } },
+      { userName: { $regex: emailUsername, $options: "i" } },
+    ],
+  });
+  console.log("🚀 ~ file: auth.js:163 ~ resetPassword ~ user:", user);
+};
+
 module.exports = {
   signUp,
   signIn,
   isUserNameExist,
   emailVerification,
   rotateRefreshToken,
+  resetPassword,
 };
