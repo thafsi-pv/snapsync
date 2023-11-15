@@ -36,7 +36,7 @@ function ResetPassword() {
 
         <div className=" relative mt-28 border-solid border-[#d7d7d7] flex flex-col gap-1  shrink-0 items-center  border lg:w-1/4 md:w-1/3 sm-w-full p-10">
           <div className="flex flex-col  items-center text-center">
-            <div className="w-40 h-40">
+            <div className="w-24 h-24">
               <PasswordReset />
             </div>
             <p className="text-base font-bold pb-3">

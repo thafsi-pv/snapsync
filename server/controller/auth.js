@@ -8,7 +8,10 @@ const {
 } = require("../utils/jwt");
 const { v4: uuidv4 } = require("uuid");
 const userCodeModel = require("../model/userCodeModel");
-const { sendAccountActivationEmail, passwordResetEmail } = require("../utils/nodemailer");
+const {
+  sendAccountActivationEmail,
+  passwordResetEmail,
+} = require("../utils/nodemailer");
 
 const signUp = async (req, res) => {
   try {
@@ -94,10 +97,6 @@ const emailVerification = async (req, res) => {
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,
     });
-    console.log(
-      "🚀 ~ file: auth.js:103 ~ emailVerification ~ savedActivationCode:",
-      savedActivationCode
-    );
     if (savedActivationCode.code == activationCode) {
       const result = await userModal.updateOne(
         { _id: userId },
@@ -151,7 +150,7 @@ function generateAccessAndRefreshToken(userId, res) {
     });
 }
 
-const resetPassword = async (req, res) => {
+const resetPasswordEmail = async (req, res) => {
   try {
     const emailUsername = req.query.query;
     console.log(
@@ -167,21 +166,23 @@ const resetPassword = async (req, res) => {
     });
     console.log("🚀 ~ file: auth.js:163 ~ resetPassword ~ user:", user);
 
+    if (!user) {
+      return res.status(401).json({ message: "No user found" });
+    }
+
     const activationCode = uuidv4();
     const newData = {
       user_id: user._id,
       code: activationCode,
     };
 
-    // Use the findOneAndUpdate method with the upsert option set to true
     const codeid = await userCodeModel.findOneAndUpdate(
-      { user_id: user._id }, // Search for the document with the specified user ID
-      newData, // Set the new data
-      { new: true, upsert: true, runValidators: true } // Options: return the modified document, create if it doesn't exist, and run validators
+      { user_id: user._id },
+      newData,
+      { new: true, upsert: true, runValidators: true }
     );
 
     const activationToken = generateEmailVerifyToken(user._id, activationCode);
-    console.log("🚀 ~ file: auth.js:184 ~ resetPassword ~ activationToken:", activationToken)
 
     const mailStatus = await passwordResetEmail(
       user.emailPhone,
@@ -197,11 +198,52 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  try {
+    const { userId, activationCode } = req;
+    const { newPassword } = req.body;
+
+    const savedActivationCode = await userCodeModel.findOne({
+      user_id: userId,
+    });
+    if (savedActivationCode.code == activationCode) {
+      const hash = await generatePasswordHash(newPassword);
+      delete data.cpassword;
+      const newUser = await userModal.findOneAndUpdate(
+        { _id: userId },
+        { $set: { password: hash } },
+        { new: true }
+      );
+
+      console.log(
+        "🚀 ~ file: auth.js:109 ~ emailVerification ~ newUser:",
+        newUser
+      );
+      if (newUser.modifiedCount === 1) {
+        console.log(`User with userId ${userId} new password saved.`);
+        res
+          .status(200)
+          .json({ message: `User with userId ${userId} new password saved.` });
+      } else {
+        console.log(`User with userId ${userId} not found.`);
+        res
+          .status(400)
+          .json({ message: `User with userId ${userId} not found.` });
+      }
+    }
+  } catch (error) {
+    res.status(400).json({
+      message: `Error reseting user password: ${error.message}`,
+    });
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
   isUserNameExist,
   emailVerification,
   rotateRefreshToken,
-  resetPassword,
+  resetPasswordEmail,
+  resetPassword
 };
