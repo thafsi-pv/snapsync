@@ -18,6 +18,6 @@ authRouter.post("/login", signIn);
 authRouter.post("/verify-email", verifyEmail, emailVerification);
 authRouter.get("/refresh-token", rotateRefreshToken);
 authRouter.get("/reset-password-mail", resetPasswordEmail);
-authRouter.get("/reset-password", verifyEmail, resetPassword);
+authRouter.post("/reset-password", verifyEmail, resetPassword);
 
 module.exports = { authRouter };

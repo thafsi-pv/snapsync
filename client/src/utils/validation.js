@@ -42,15 +42,28 @@ export const logInValidationSchema = Yup.object({
 });
 
 export const passwordResetValidationSchema = Yup.object({
-  emailPhone: Yup.string().test(
+  emailUsername: Yup.string().test(
     "emailUsername",
     "Invalid email or username",
     (value) => {
       if (!value) return false;
       // Check if it's a valid email
       if (Yup.string().email().isValidSync(value)) return true;
-      if (/^\d{10}$/.test(value)) return true;
       return false;
     }
   ),
+});
+
+export const resetPasswordSchema = Yup.object().shape({
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/,
+      "Password must contain at least one letter, one number, and one special character"
+    ),
+
+  confirmPassword: Yup.string()
+    .required("Confirm password is required")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });

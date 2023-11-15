@@ -10,6 +10,8 @@ export const CLOUDINARY_VIDEO_UPLOAD_URL =
 
 export const LOGIN_API = "/auth/login";
 export const SIGNUP_API = "/auth/signUp";
+export const RESETPASSWORD_API = "/auth/reset-password-mail";
+export const CONFIRM_RESET_PASSWORD_API = "/auth/reset-password";
 export const ISUSERNAME_EXIST_API = "/auth/isUserName-exist";
 export const VERIFY_EMAIL_API = "/auth/verify-email";
 export const ROTATE_REFRESH_TOKEN_API = "/auth/refresh-token";

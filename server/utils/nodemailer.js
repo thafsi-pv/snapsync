@@ -96,15 +96,14 @@ const passwordResetEmail = async (toEmail, activationToken, username) => {
     html: replacedTemplate,
   };
 
-  const info = await transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Email failed to send:", error);
-    } else {
-      console.log("Email sent successfully:", info.response);
-    }
-  });
-  console.log("Email sent: " + info.response);
-  return info;
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", info);
+    return info;
+  } catch (error) {
+    console.error("Email failed to send:", error);
+    throw error; // Re-throw the error to be caught by the calling code
+  }
 };
 
 module.exports = {

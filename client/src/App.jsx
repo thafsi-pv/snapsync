@@ -13,6 +13,7 @@ import Story from "./pages/story/Story";
 import FileUploadContextProvider from "./services/providers/FileUploadContext";
 import UserActionContextProvider from "./services/providers/UserActionContext";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -74,7 +75,7 @@ function App() {
     },
     {
       path: "/accounts/password/reset/confirm",
-      element: <ResetPassword />,
+      element: <ConfirmResetPassword />,
     },
   ]);
 

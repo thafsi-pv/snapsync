@@ -189,6 +189,7 @@ const resetPasswordEmail = async (req, res) => {
       activationToken,
       user.fullName
     );
+    console.log("🚀 ~ file: auth.js:192 ~ resetPasswordEmail ~ mailStatus:", mailStatus)
 
     res.status(200).json(mailStatus);
   } catch (error) {
@@ -201,7 +202,9 @@ const resetPasswordEmail = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { userId, activationCode } = req;
+    console.log("🚀 ~ file: auth.js:205 ~ resetPassword ~ req:", req)
     const { newPassword } = req.body;
+    console.log("🚀 ~ file: auth.js:207 ~ resetPassword ~ req.body:", req.body)
 
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,

@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 exports.verifyEmail = (req, res, next) => {
   try {
     const token = req.query.code;
+    console.log("🚀 ~ file: verifyEmail.js:6 ~ token:", token)
     if (!token) {
       return res.status(401).json({ message: "Access Denied" });
     }
