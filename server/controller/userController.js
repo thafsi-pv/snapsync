@@ -45,7 +45,11 @@ const getSuggestionUsers = async (req, res) => {
 };
 
 const getProfileData = async (req, res) => {
-  const username = req.query.username;
+  const { username, type } = req.query;
+  console.log(
+    "🚀 ~ file: userController.js:49 ~ getProfileData ~ req.query:",
+    req.query
+  );
   const profile = await userModal.aggregate([
     {
       $match: { userName: { $eq: username } },
@@ -94,9 +98,21 @@ const getProfileData = async (req, res) => {
 
   if (profile.length > 0) {
     const userProfile = profile[0];
+    console.log("🚀 ~ file: userController.js:101 ~ getProfileData ~ userProfile:", userProfile)
+    const matchStage =
+      type == 1
+        ? { media_type: /^video/}
+        : type == 2
+        ? { media_type: /^image/ }
+        : {};
+
+    console.log(
+      "🚀 ~ file: userController.js:102 ~ getProfileData ~ matchStage:",
+      matchStage
+    );
     const posts = await postModal.aggregate([
       {
-        $match: { user_id: userProfile._id },
+        $match: { user_id: userProfile._id, ...matchStage },
       },
       {
         $project: {
@@ -108,6 +124,7 @@ const getProfileData = async (req, res) => {
         },
       },
     ]);
+    console.log("🚀 ~ file: userController.js:126 ~ getProfileData ~ posts:", posts)
 
     profile.posts = posts;
     res.status(200).json({ profile: profile, post: posts });
@@ -139,9 +156,12 @@ const searchUsers = async (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const _id = req.userId;
-    console.log("🚀 ~ file: userController.js:142 ~ updateProfile ~ _id:", _id)
+    console.log("🚀 ~ file: userController.js:142 ~ updateProfile ~ _id:", _id);
     const { bio, imageUrl } = req.body;
-    console.log("🚀 ~ file: userController.js:144 ~ updateProfile ~ req.body:", req.body)
+    console.log(
+      "🚀 ~ file: userController.js:144 ~ updateProfile ~ req.body:",
+      req.body
+    );
     if (typeof bio !== "string" || typeof imageUrl !== "string") {
       return res.status(400).json({ error: "Invalid input data" });
     }
