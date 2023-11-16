@@ -3,6 +3,8 @@ import React from "react";
 const animation = "stroke-draw 6s ease-out infinite alternate";
 const gradientId = "myGradient";
 function StoryLoader({ loadStory, id }) {
+  console.log("🚀 ~ file: StoryLoader.jsx:6 ~ StoryLoader ~ id:", id)
+  console.log("🚀 ~ file: StoryLoader.jsx:6 ~ StoryLoader ~ loadStory:", loadStory)
   return (
     <svg
       viewBox="0 0 100 100"
