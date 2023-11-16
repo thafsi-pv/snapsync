@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordReset from "../../assets/svg/PasswordReset";
 import OrLine from "../../components/uiPrimitives/OrLine";
 import Button from "../../components/uiPrimitives/button";
@@ -12,9 +12,12 @@ import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { RESETPASSWORD_API } from "../../services/api/const";
 import CreateNewAccount from "../../components/uiPrimitives/button/CreateNewAccount";
 import { maskEmailAddress } from "../../utils/maskEmail";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const [mailSent, setMailSent] = useState([]);
+  const [loding, setLoading] = useState(false);
   const passwordResetFormik = useFormik({
     initialValues: {
       emailUsername: "",
@@ -25,16 +28,17 @@ function ResetPassword() {
     },
   });
   const handlePasswordReset = async (mail) => {
+    setLoading(true);
     const response = await axiosInstance.get(
       `${RESETPASSWORD_API}?query=${mail.emailUsername}`
-    );
-    console.log(
-      "🚀 ~ file: ResetPassword.jsx:33 ~ handlePasswordReset ~ response:",
-      response
     );
     if (response.status == 200) {
       setMailSent((prev) => [...prev, response.data.accepted]);
     }
+  };
+
+  const handleOkButton = () => {
+    navigate("/auth/login");
   };
 
   return (
@@ -99,6 +103,8 @@ function ResetPassword() {
                   <Button
                     type="submit"
                     label="submit"
+                    icon={loding && <Loading />}
+                    disabled={loding ? true : false}
                     extraClass="!w-full !bg-[#0095f6] !p-2"
                   />
                 </div>
@@ -113,15 +119,22 @@ function ResetPassword() {
         </AuthLayout>
       ) : (
         <div className="w-screen h-screen flex justify-center items-center">
-          <div className="relative mt-28 border-solid border-[#d7d7d7] flex flex-col gap-1 shrink-0 items-center  border lg:w-1/4 md:w-1/3 sm-w-full p-10">
+          <div className="relative mt-28 border-solid border-[#d7d7d7] flex flex-col gap-3 shrink-0 items-center  border lg:w-1/4 md:w-1/3 sm-w-full p-10">
             <p className="text-xl font-semibold">Email sent</p>
-            <p>
-              We sent an email to{" "}
+            <p className="text-center mb-4">
+              We've sent an email to{" "}
               <span className="font-semibold">
                 {maskEmailAddress(mailSent[0])}
               </span>{" "}
               with a link to get back into your account.
             </p>
+            <div className="absolute bottom-0 w-full bg-gray-100 flex justify-center p-2 ">
+              <Button
+                label="OK"
+                extraClass="!bg-transparent !text-black"
+                onClick={handleOkButton}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -130,3 +143,7 @@ function ResetPassword() {
 }
 
 export default ResetPassword;
+
+const Loading = () => (
+  <AiOutlineLoading3Quarters class="animate-spin h-5 w-5 mr-3" />
+);

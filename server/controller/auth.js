@@ -189,7 +189,10 @@ const resetPasswordEmail = async (req, res) => {
       activationToken,
       user.fullName
     );
-    console.log("🚀 ~ file: auth.js:192 ~ resetPasswordEmail ~ mailStatus:", mailStatus)
+    console.log(
+      "🚀 ~ file: auth.js:192 ~ resetPasswordEmail ~ mailStatus:",
+      mailStatus
+    );
 
     res.status(200).json(mailStatus);
   } catch (error) {
@@ -202,17 +205,20 @@ const resetPasswordEmail = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { userId, activationCode } = req;
-    console.log("🚀 ~ file: auth.js:205 ~ resetPassword ~ req:", req)
-    const { newPassword } = req.body;
-    console.log("🚀 ~ file: auth.js:207 ~ resetPassword ~ req.body:", req.body)
+    console.log(
+      "🚀 ~ file: auth.js:205 ~ resetPassword ~ activationCode:",
+      activationCode
+    );
+    console.log("🚀 ~ file: auth.js:205 ~ resetPassword ~ userId:", userId);
+    const { password } = req.body;
+    console.log("🚀 ~ file: auth.js:207 ~ resetPassword ~ req.body:", req.body);
 
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,
     });
     if (savedActivationCode.code == activationCode) {
-      const hash = await generatePasswordHash(newPassword);
-      delete data.cpassword;
-      const newUser = await userModal.findOneAndUpdate(
+      const hash = await generatePasswordHash(password);
+      const newUser = await userModal.updateOne(
         { _id: userId },
         { $set: { password: hash } },
         { new: true }
@@ -248,5 +254,5 @@ module.exports = {
   emailVerification,
   rotateRefreshToken,
   resetPasswordEmail,
-  resetPassword
+  resetPassword,
 };

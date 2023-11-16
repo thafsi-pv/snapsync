@@ -6,10 +6,13 @@ import Logo from "../../components/uiPrimitives/logo/Logo";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { CONFIRM_RESET_PASSWORD_API } from "../../services/api/const";
 import { resetPasswordSchema } from "../../utils/validation";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function ConfirmResetPassword() {
   const queryParams = new URLSearchParams(location.search);
   const code = queryParams.get("code");
+  const navigate = useNavigate();
   const [mailSent, setMailSent] = useState([]);
   const passwordResetConfirmFormik = useFormik({
     initialValues: {
@@ -25,19 +28,14 @@ function ConfirmResetPassword() {
       handlePasswordResetConfirm(values);
     },
   });
-  const handlePasswordResetConfirm = async (data) => {
-   
+  const handlePasswordResetConfirm = async (values) => {
     const response = await axiosInstance.post(
       `${CONFIRM_RESET_PASSWORD_API}?code=${code}`,
-      data
+      values
     );
-    console.log(
-      "🚀 ~ file: ConfirmResetPassword.jsx:28 ~ handlePasswordResetConfirm ~ response:",
-      response
-    );
-    // if (response.status == 200) {
-    //   setMailSent((prev) => [...prev, response.data.accepted]);
-    // }
+    if (response.status == 200) {
+      navigate("/auth/login");
+    }
   };
 
   return (
@@ -98,7 +96,7 @@ function ConfirmResetPassword() {
           <div className="w-full flex flex-col items-center  rounded-lg">
             <Button
               type="submit"
-              label="submit"
+              label="Submit"
               extraClass="!w-full !bg-[#0095f6] !p-2"
             />
           </div>
@@ -123,3 +121,4 @@ function ConfirmResetPassword() {
 }
 
 export default ConfirmResetPassword;
+
