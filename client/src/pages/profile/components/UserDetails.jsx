@@ -45,7 +45,9 @@ function UserDetails({ profile, postCount }) {
         <div className="flex flex-col gap-6 w-full">
           <div className="flex flex-row gap-10 items-start">
             <div className="text-sm font-semibold">{postCount} posts</div>
-            <div className="text-sm font-semibold">
+            <div
+              className="text-sm font-semibold cursor-pointer"
+              onClick={() => setShowModal(true)}>
               {profile?.followedCount} followers
             </div>
             <div className="text-sm font-semibold">
@@ -61,7 +63,9 @@ function UserDetails({ profile, postCount }) {
           </div>
         </div>
       </div>
-      <Followers showModal={showModal} />
+      {showModal && (
+        <Followers showModal={showModal} setShowModal={setShowModal} />
+      )}
     </div>
   );
 }
