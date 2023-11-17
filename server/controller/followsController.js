@@ -30,13 +30,17 @@ const followUser = async (req, res) => {
 
 const getFollowersList = async (req, res) => {
   try {
-    const userId = new mongoose.Types.ObjectId(req.userId);
+    const userDetails = req.userDetails;
+    console.log(
+      "🚀 ~ file: followsController.js:35 ~ getFollowersList ~ userDetails:",
+      userDetails
+    );
     const listType = req.query.type;
     let matchStage = {};
     if (listType == "following") {
-      matchStage = { following_user_id: { $eq: userId } };
+      matchStage = { following_user_id: { $eq: userDetails._id } };
     } else if (listType == "followed") {
-      matchStage = { followed_user_id: { $eq: userId } };
+      matchStage = { followed_user_id: { $eq: userDetails._id } };
     } else {
       throw new Error("Invalid listType parameter");
     }
@@ -47,7 +51,8 @@ const getFollowersList = async (req, res) => {
       {
         $lookup: {
           from: "users",
-          localField: "followed_user_id",
+          localField:
+            listType === "following" ? "followed_user_id" : "following_user_id",
           foreignField: "_id",
           as: "followedUserInfo",
         },
@@ -56,9 +61,10 @@ const getFollowersList = async (req, res) => {
       {
         $project: {
           "followedUserInfo.fullName": 1,
+          "followedUserInfo._id": 1,
           "followedUserInfo.userName": 1,
           "followedUserInfo.imageUrl": 1,
-          _id:1
+          _id: 1,
         },
       },
     ]);

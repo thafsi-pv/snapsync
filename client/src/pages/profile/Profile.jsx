@@ -15,7 +15,7 @@ function Profile() {
 
   useEffect(() => {
     getProfileData();
-  }, [type]);
+  }, [type,username]);
 
   const getProfileData = async () => {
     const response = await axiosInstance.get(

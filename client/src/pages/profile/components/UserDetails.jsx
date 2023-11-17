@@ -64,7 +64,11 @@ function UserDetails({ profile, postCount }) {
         </div>
       </div>
       {showModal && (
-        <Followers showModal={showModal} setShowModal={setShowModal} />
+        <Followers
+          userName={profile?.userName}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
       )}
     </div>
   );

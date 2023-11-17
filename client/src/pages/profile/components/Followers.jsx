@@ -4,10 +4,11 @@ import Button from "../../../components/uiPrimitives/button";
 import { AiOutlineClose } from "react-icons/ai";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { FOLLOWERS_USER_API } from "../../../services/api/const";
+import UserImage from "../../../components/user/UserImage";
+import { useNavigate } from "react-router-dom";
 
-function Followers({ showModal, setShowModal }) {
-  // if (!showModal) return null;
-
+function Followers({ userName, showModal, setShowModal }) {
+  const navigate = useNavigate();
   const [userList, setUserList] = useState();
 
   useEffect(() => {
@@ -16,13 +17,16 @@ function Followers({ showModal, setShowModal }) {
 
   const getUserList = async () => {
     const response = await axiosInstance.get(
-      `${FOLLOWERS_USER_API}?type=following`
+      `${FOLLOWERS_USER_API}?type=followed&userName=${userName}`
     );
-    console.log(
-      "🚀 ~ file: Followers.jsx:19 ~ getUserList ~ response:",
-      response
-    );
+    setUserList(response.data);
   };
+
+  const handleProfileClick = (userName) => {
+    navigate(`/${userName}`, { replace: true });
+    setShowModal(false);
+  };
+
   return (
     <PortalModal show={showModal}>
       <div
@@ -46,26 +50,43 @@ function Followers({ showModal, setShowModal }) {
 
             <div className="relative h-full w-full">
               <div className="absolute overflow-y-scroll w-full h-full top-0 left-0 p-5 flex flex-col gap-3 ">
-                <div className="flex flex-row gap-4 items-center">
-                  <div className="relative flex gap-3 items-center justify-between w-full">
-                    <img
-                      src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698830173/e1vczozfwj9ay6ktyoky.jpg"
-                      className="relative w-12 rounded-full"
-                    />
-                    <div className="flex flex-col items-start  flex-1">
-                      <p className="text-sm font-semibold mb-[-4px]">
-                        UserName
-                      </p>
-                      <p className="text-xs text-gray-500">FullName</p>
-                    </div>
-                    <div>
-                      <Button
-                        label="Remove"
-                        extraClass="!bg-gray-200 !text-black !p-1 w-24"
+                {userList?.map((user) => (
+                  <div
+                    key={user._id}
+                    className="flex flex-row gap-4 items-center">
+                    <div className="relative flex gap-3 items-center justify-between w-full">
+                      {/* <img
+                        src={user.followedUserInfo.imageUrl}
+                        className="relative w-12 h-12 object-cover rounded-full"
+                      /> */}
+                      <UserImage
+                        id={user.followedUserInfo._id}
+                        imgUrl={user.followedUserInfo.imageUrl}
+                        extra="w-12 h-12"
+                        imgStyle="!p-0.5"
+                        username={user.followedUserInfo.userName}
                       />
+                      <div
+                        className="flex flex-col items-start  flex-1"
+                        onClick={() =>
+                          handleProfileClick(user.followedUserInfo.userName)
+                        }>
+                        <p className="text-sm font-semibold mb-[-4px]">
+                          {user.followedUserInfo.userName}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {user.followedUserInfo.fullName}
+                        </p>
+                      </div>
+                      <div>
+                        <Button
+                          label="Remove"
+                          extraClass="!bg-gray-200 !text-black !p-1 w-24"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

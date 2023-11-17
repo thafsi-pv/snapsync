@@ -11,6 +11,9 @@ const {
   followUser,
   getFollowersList,
 } = require("../controller/followsController");
+const {
+  getUserDetailsWithUserName,
+} = require("../middleware/getUserDetailsWithUserName");
 
 const userRouter = express.Router();
 
@@ -20,6 +23,11 @@ userRouter.post("/follow", checkAuth, followUser);
 userRouter.get("/profile", getProfileData);
 userRouter.get("/searchUsers", searchUsers);
 userRouter.put("/profile", checkAuth, updateProfile);
-userRouter.get("/follower-users", checkAuth, getFollowersList);
+userRouter.get(
+  "/follower-users",
+  checkAuth,
+  getUserDetailsWithUserName,
+  getFollowersList
+);
 
 module.exports = userRouter;
