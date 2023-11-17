@@ -1,15 +1,13 @@
-import React from "react";
+import React, { memo, useState } from "react";
 import UserImage from "../../../components/user/UserImage";
 import { Link } from "react-router-dom";
+import Followers from "./Followers";
 
-function UserDetails({profile ,postCount}) {
+function UserDetails({ profile, postCount }) {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="flex flex-row justify-between items-start ml-20 w-full ">
       <div className=" m-6 ">
-        {/* <img
-              src={profile?.imageUrl}
-              className="ml-px w-44 h-38 rounded-full"
-            /> */}
         {profile && (
           <UserImage
             id={profile?._id}
@@ -63,8 +61,9 @@ function UserDetails({profile ,postCount}) {
           </div>
         </div>
       </div>
+      <Followers showModal={showModal} />
     </div>
   );
 }
 
-export default UserDetails;
+export default memo(UserDetails);

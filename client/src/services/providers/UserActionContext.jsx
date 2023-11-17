@@ -9,7 +9,7 @@ import { axiosInstance } from "../api/axiosInterceptor";
 export const UserActionContext = createContext(null);
 
 function UserActionContextProvider({ children }) {
-  const { getStorage } = useLocalStorage();
+  // const { getStorage } = useLocalStorage();
   const [userData, setUserData] = useState(null);
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);

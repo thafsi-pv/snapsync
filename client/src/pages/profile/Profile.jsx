@@ -10,7 +10,6 @@ let postCount = "";
 function Profile() {
   const [profile, setProfile] = useState();
   const [posts, setPosts] = useState([]);
-  console.log("🚀 ~ file: Profile.jsx:12 ~ Profile ~ posts:", posts);
   const [type, setType] = useState(0);
   const { username } = useParams();
 
@@ -23,7 +22,6 @@ function Profile() {
       `${PROFILE_API}?type=${type}&username=${username}`
     );
     if (type == 0) {
-      console.log("🚀 ~ file: Profile.jsx:25 ~ getProfileData ~ type:", type);
       setProfile(response.data.profile[0]);
       postCount = response.data.post.length;
     }

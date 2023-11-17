@@ -14,8 +14,6 @@ function UserPosts({ posts, type, setType }) {
     setPostId(postId);
   };
 
-  if (posts.length == 0) return <Loading />;
-
   return (
     <div className="w-full text-sm font-medium text-center text-gray-500 border-t border-gray-200 dark:text-gray-400 dark:border-gray-700">
       <ul className="flex flex-wrap -mt-px justify-center gap-6">
@@ -57,33 +55,37 @@ function UserPosts({ posts, type, setType }) {
         </li>
       </ul>
       <div className="flex justify-center items-center mt-4">
-        <div className=" columns-3 gap-1 grid grid-cols-3">
-          {posts?.map((post) =>
-            post.media_type.startsWith("image/") ? (
-              <img
-                className="h-72 w-72 py-[1px] aspect-video"
-                src={post.media_url}
-                alt=""
-                onClick={() => {
-                  handleViewComments(post._id);
-                }}
-              />
-            ) : (
-              <div
-                className="relative"
-                onClick={() => {
-                  handleViewComments(post._id);
-                }}>
-                <div className="absolute right-3 top-2 ">
-                  <ReelIcon color="#ffffff" />
+        {posts.length > 0 ? (
+          <div className=" columns-3 gap-1 grid grid-cols-3">
+            {posts?.map((post) =>
+              post.media_type.startsWith("image/") ? (
+                <img
+                  className="h-72 w-72 py-[1px] aspect-video"
+                  src={post.media_url}
+                  alt=""
+                  onClick={() => {
+                    handleViewComments(post._id);
+                  }}
+                />
+              ) : (
+                <div
+                  className="relative"
+                  onClick={() => {
+                    handleViewComments(post._id);
+                  }}>
+                  <div className="absolute right-3 top-2 ">
+                    <ReelIcon color="#ffffff" />
+                  </div>
+                  <video
+                    className="h-72 w-72 py-[1px] object-cover"
+                    src={post.media_url}></video>
                 </div>
-                <video
-                  className="h-72 w-72 py-[1px] object-cover"
-                  src={post.media_url}></video>
-              </div>
-            )
-          )}
-        </div>
+              )
+            )}
+          </div>
+        ) : (
+          <Loading />
+        )}
       </div>
       <Comments
         postId={postId}
