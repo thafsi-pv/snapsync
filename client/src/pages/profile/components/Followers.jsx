@@ -7,7 +7,7 @@ import { FOLLOWERS_USER_API } from "../../../services/api/const";
 import UserImage from "../../../components/user/UserImage";
 import { useNavigate } from "react-router-dom";
 
-function Followers({ userName, showModal, setShowModal }) {
+function Followers({ userName, showModal, setShowModal, listType }) {
   const navigate = useNavigate();
   const [userList, setUserList] = useState();
 
@@ -17,7 +17,7 @@ function Followers({ userName, showModal, setShowModal }) {
 
   const getUserList = async () => {
     const response = await axiosInstance.get(
-      `${FOLLOWERS_USER_API}?type=followed&userName=${userName}`
+      `${FOLLOWERS_USER_API}?type=${listType}&userName=${userName}`
     );
     setUserList(response.data);
   };
@@ -39,7 +39,7 @@ function Followers({ userName, showModal, setShowModal }) {
           <div className="relative flex flex-col h-full ">
             <div className="text-center border-b w-full p-2 flex items-center">
               <div className="text-center flex-1">
-                <p className="text-base font-semibold">Followers</p>
+                <p className="text-base font-semibold">{listType}</p>
               </div>
               <div
                 className="cursor-pointer"
@@ -55,10 +55,6 @@ function Followers({ userName, showModal, setShowModal }) {
                     key={user._id}
                     className="flex flex-row gap-4 items-center">
                     <div className="relative flex gap-3 items-center justify-between w-full">
-                      {/* <img
-                        src={user.followedUserInfo.imageUrl}
-                        className="relative w-12 h-12 object-cover rounded-full"
-                      /> */}
                       <UserImage
                         id={user.followedUserInfo._id}
                         imgUrl={user.followedUserInfo.imageUrl}

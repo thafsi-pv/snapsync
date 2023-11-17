@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { LIKE_API } from "../../services/api/const";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { IoIosHeartEmpty } from "react-icons/io";
 import { AiFillHeart } from "react-icons/ai";
+import { IoIosHeartEmpty } from "react-icons/io";
+import BookmarkIcon from "../../assets/svg/BookmarkIcon";
 import CommentIcon from "../../assets/svg/CommentIcon";
-import { HiOutlineBookmark } from "react-icons/hi";
+import MessageIcon from "../../assets/svg/MessageIcon";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { LIKE_API } from "../../services/api/const";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function PostBottom({ post, posts, setPosts, index }) {
@@ -26,8 +27,8 @@ function PostBottom({ post, posts, setPosts, index }) {
   };
 
   return (
-    <div className="flex flex-row justify-between items-center mr-4">
-      <div className="flex flex-row gap-6 items-start">
+    <div className="flex flex-row justify-between items-center mr-1">
+      <div className="flex flex-row gap-4 items-start">
         <div onClick={() => handleLikePost(index, post._id)}>
           {post.liked ? (
             <AiFillHeart
@@ -41,17 +42,20 @@ function PostBottom({ post, posts, setPosts, index }) {
             />
           )}
         </div>
-        <CommentIcon
-          onClick={() => {
-            handleViewComments(post._id);
-          }}
-        />
-        <img
-          src="https://file.rendit.io/n/5qjbxZc2qX75hQkoeJkP.svg"
-          className="mt-px w-6 shrink-0 cursor-pointer"
-        />
+        <div className="cursor-pointer">
+          <CommentIcon
+            onClick={() => {
+              handleViewComments(post._id);
+            }}
+          />
+        </div>
+        <div className="cursor-pointer">
+          <MessageIcon />
+        </div>
       </div>
-      <HiOutlineBookmark className="h-7 w-7" />
+      <div className="cursor-pointer">
+        <BookmarkIcon />
+      </div>
     </div>
   );
 }

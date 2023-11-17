@@ -3,8 +3,15 @@ import UserImage from "../../../components/user/UserImage";
 import { Link } from "react-router-dom";
 import Followers from "./Followers";
 
+let listType = "";
 function UserDetails({ profile, postCount }) {
   const [showModal, setShowModal] = useState(false);
+
+  const handleFollowersOring = (type) => {
+    listType = type;
+    setShowModal(true);
+  };
+
   return (
     <div className="flex flex-row justify-between items-start ml-20 w-full ">
       <div className=" m-6 ">
@@ -47,10 +54,12 @@ function UserDetails({ profile, postCount }) {
             <div className="text-sm font-semibold">{postCount} posts</div>
             <div
               className="text-sm font-semibold cursor-pointer"
-              onClick={() => setShowModal(true)}>
+              onClick={() => handleFollowersOring("followed")}>
               {profile?.followedCount} followers
             </div>
-            <div className="text-sm font-semibold">
+            <div
+              className="text-sm font-semibold"
+              onClick={() => handleFollowersOring("following")}>
               {profile?.followingCount} following
             </div>
           </div>
@@ -65,6 +74,7 @@ function UserDetails({ profile, postCount }) {
       </div>
       {showModal && (
         <Followers
+          listType={listType}
           userName={profile?.userName}
           showModal={showModal}
           setShowModal={setShowModal}
