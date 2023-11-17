@@ -51,16 +51,16 @@ function UserDetails({ profile, postCount }) {
         </div>
         <div className="flex flex-col gap-6 w-full">
           <div className="flex flex-row gap-10 items-start">
-            <div className="text-sm font-semibold">{postCount} posts</div>
+            <div className="text-base font-semibold">{postCount} <span className="font-normal">posts</span></div>
             <div
-              className="text-sm font-semibold cursor-pointer"
+              className="text-base font-semibold cursor-pointer"
               onClick={() => handleFollowersOring("followed")}>
-              {profile?.followedCount} followers
+              {profile?.followedCount} <span className="font-normal">followers</span>
             </div>
             <div
-              className="text-sm font-semibold"
+              className="text-base font-semibold cursor-pointer"
               onClick={() => handleFollowersOring("following")}>
-              {profile?.followingCount} following
+              {profile?.followingCount} <span className="font-normal">following</span>
             </div>
           </div>
           <div className="flex flex-col gap-1 items-start ml-px mr-20">
