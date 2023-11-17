@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
 import Button from "../../../components/uiPrimitives/button";
 import { AiOutlineClose } from "react-icons/ai";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { FOLLOWERS_USER_API } from "../../../services/api/const";
 
 function Followers({ showModal, setShowModal }) {
   // if (!showModal) return null;
+
+  const [userList, setUserList] = useState();
+
+  useEffect(() => {
+    getUserList();
+  }, []);
+
+  const getUserList = async () => {
+    const response = await axiosInstance.get(
+      `${FOLLOWERS_USER_API}?type=following`
+    );
+    console.log(
+      "🚀 ~ file: Followers.jsx:19 ~ getUserList ~ response:",
+      response
+    );
+  };
   return (
     <PortalModal show={showModal}>
       <div

@@ -1,4 +1,5 @@
 const followsModel = require("../model/followsModel");
+const { default: mongoose, mongo } = require("mongoose");
 
 const followUser = async (req, res) => {
   try {
@@ -27,4 +28,46 @@ const followUser = async (req, res) => {
   }
 };
 
-module.exports = { followUser };
+const getFollowersList = async (req, res) => {
+  try {
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const listType = req.query.type;
+    let matchStage = {};
+    if (listType == "following") {
+      matchStage = { following_user_id: { $eq: userId } };
+    } else if (listType == "followed") {
+      matchStage = { followed_user_id: { $eq: userId } };
+    } else {
+      throw new Error("Invalid listType parameter");
+    }
+    const result = await followsModel.aggregate([
+      {
+        $match: matchStage,
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "followed_user_id",
+          foreignField: "_id",
+          as: "followedUserInfo",
+        },
+      },
+      { $unwind: "$followedUserInfo" },
+      {
+        $project: {
+          "followedUserInfo.fullName": 1,
+          "followedUserInfo.userName": 1,
+          "followedUserInfo.imageUrl": 1,
+          _id:1
+        },
+      },
+    ]);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in getFollowList:", error);
+    throw error;
+  }
+};
+
+module.exports = { followUser, getFollowersList };

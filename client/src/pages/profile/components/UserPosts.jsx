@@ -24,7 +24,7 @@ function UserPosts({ posts, type, setType }) {
           <a
             href="#"
             className={`inline-block p-2 border-t-2  hover:text-gray-600 text-xs font-semibold ${
-              type == 0 ? " text-blue-600 border-t-2 border-blue-600" : ""
+              type == 0 ? " text-blue-600 border-t-2 border-blue-600" : "border-transparent"
             }`}>
             POSTS
           </a>
@@ -36,7 +36,7 @@ function UserPosts({ posts, type, setType }) {
           <a
             href="#"
             className={`inline-block p-2   hover:text-gray-600 text-xs font-semibold  ${
-              type == 1 ? " text-blue-600 border-t-2 border-blue-600" : ""
+              type == 1 ? " text-blue-600 border-t-2 border-blue-600" : "border-transparent"
             }`}
             aria-current="page">
             REELS

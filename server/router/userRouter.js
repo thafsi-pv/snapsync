@@ -7,7 +7,10 @@ const {
   updateProfile,
 } = require("../controller/userController");
 const { checkAuth } = require("../middleware/checkAuth");
-const { followUser } = require("../controller/followsController");
+const {
+  followUser,
+  getFollowersList,
+} = require("../controller/followsController");
 
 const userRouter = express.Router();
 
@@ -17,5 +20,6 @@ userRouter.post("/follow", checkAuth, followUser);
 userRouter.get("/profile", getProfileData);
 userRouter.get("/searchUsers", searchUsers);
 userRouter.put("/profile", checkAuth, updateProfile);
+userRouter.get("/follower-users", checkAuth, getFollowersList);
 
 module.exports = userRouter;
