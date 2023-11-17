@@ -5,7 +5,7 @@ import BookmarkIcon from "../../assets/svg/BookmarkIcon";
 import CommentIcon from "../../assets/svg/CommentIcon";
 import MessageIcon from "../../assets/svg/MessageIcon";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { LIKE_API } from "../../services/api/const";
+import { LIKE_API, SAVE_POST_API } from "../../services/api/const";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 
 function PostBottom({ post, posts, setPosts, index }) {
@@ -24,6 +24,17 @@ function PostBottom({ post, posts, setPosts, index }) {
   const handleViewComments = (postId) => {
     setComments(true);
     setPostId(postId);
+  };
+
+  const handleSavePost = async (post_id) => {
+    try {
+      const data = { post_id };
+      const response = await axiosInstance.post(SAVE_POST_API, data);
+      console.log(
+        "🚀 ~ file: PostBottom.jsx:33 ~ handleSavePost ~ response:",
+        response
+      );
+    } catch (error) {}
   };
 
   return (
@@ -53,8 +64,8 @@ function PostBottom({ post, posts, setPosts, index }) {
           <MessageIcon />
         </div>
       </div>
-      <div className="cursor-pointer">
-        <BookmarkIcon />
+      <div className="cursor-pointer" onClick={() => handleSavePost(post._id)}>
+        <BookmarkIcon fill={post.saved ? "black" : "none"} />
       </div>
     </div>
   );
