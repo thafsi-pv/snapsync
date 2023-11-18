@@ -7,10 +7,11 @@ import { Loading } from "../../../assets/svg/Loading";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { GET_SAVED_POST_API } from "../../../services/api/const";
 
-function UserPosts({ posts, setPosts, type, setType }) {
-  console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ posts:", posts)
-  const { comments, setComments, postId, setPostId } =
+function UserPosts({ posts, setPosts, type, setType, userId }) {
+  console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ userId:", userId);
+  const { userData, comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
+  console.log("🚀 ~ file: UserPosts.jsx:13 ~ UserPosts ~ userData:", userData);
 
   const handleViewComments = (postId) => {
     setComments(true);
@@ -19,7 +20,6 @@ function UserPosts({ posts, setPosts, type, setType }) {
 
   const handleSavedPost = async () => {
     setType(3);
-    
   };
 
   return (
@@ -54,21 +54,23 @@ function UserPosts({ posts, setPosts, type, setType }) {
             REELS
           </a>
         </li>
-        <li className="flex " onClick={handleSavedPost}>
-          <img
-            src="https://file.rendit.io/n/LDe6sBzq16q9E7Pc61H1.svg"
-            className="w-4 shrink-0"
-          />
-          <a
-            href="#"
-            className={`inline-block p-2 border-t-2 hover:text-gray-600 text-xs font-semibold ${
-              type == 3
-                ? " text-blue-600 border-t-2 border-blue-600"
-                : "border-transparent"
-            }`}>
-            SAVED
-          </a>
-        </li>
+        {userData._id == userId && (
+          <li className="flex " onClick={handleSavedPost}>
+            <img
+              src="https://file.rendit.io/n/LDe6sBzq16q9E7Pc61H1.svg"
+              className="w-4 shrink-0"
+            />
+            <a
+              href="#"
+              className={`inline-block p-2 border-t-2 hover:text-gray-600 text-xs font-semibold ${
+                type == 3
+                  ? " text-blue-600 border-t-2 border-blue-600"
+                  : "border-transparent"
+              }`}>
+              SAVED
+            </a>
+          </li>
+        )}
       </ul>
       <div className="flex justify-center items-center mt-4">
         {posts?.length > 0 ? (
