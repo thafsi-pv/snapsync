@@ -169,4 +169,43 @@ const savePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getAllPosts, getEntiryPost, savePost };
+const getSavedPosts = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const savedPosts = await savedPostModel.aggregate([
+      {
+        $match: { user_id: new mongoose.Types.ObjectId(userId) },
+      },
+      {
+        $lookup: {
+          from: "posts",
+          localField: "post_id",
+          foreignField: "_id",
+          as: "posts",
+        },
+      },
+      { $unwind: "$posts" },
+      {
+        $project: {
+          caption: "$posts.caption",
+          location: "$posts.location",
+          media_type: "$posts.media_type",
+          media_url: "$posts.media_url",
+          user_id: "$posts.user_id",
+          _id: "$posts._id",
+        },
+      },
+    ]);
+    res.status(200).json(savedPosts);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+module.exports = {
+  createPost,
+  getAllPosts,
+  getEntiryPost,
+  savePost,
+  getSavedPosts,
+};

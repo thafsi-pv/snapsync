@@ -6,6 +6,7 @@ const {
   getAllPosts,
   getEntiryPost,
   savePost,
+  getSavedPosts,
 } = require("../controller/postController");
 
 const postRouter = express.Router();
@@ -14,5 +15,6 @@ postRouter.post("/", checkAuth, createPost);
 postRouter.get("/", checkAuth, getAllPosts);
 postRouter.get("/entirePosts", checkAuth, getEntiryPost);
 postRouter.post("/save-post", checkAuth, savePost);
+postRouter.get("/saved-post", checkAuth, getSavedPosts);
 
 module.exports = postRouter;

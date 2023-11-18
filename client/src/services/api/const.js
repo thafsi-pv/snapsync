@@ -28,6 +28,7 @@ export const ENTIRE_API = "/post/entirePosts";
 export const LIKE_API = "/like/";
 export const COMMENT_API = "/comment/";
 export const SAVE_POST_API = "post/save-post/";
+export const GET_SAVED_POST_API = "post/saved-post/";
 
 export const GET_CHATS_API = "chat/getChats/";
 export const GET_RECENT_CHATS_API = "chat/getRecentChats";

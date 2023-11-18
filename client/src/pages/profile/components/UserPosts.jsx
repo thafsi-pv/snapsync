@@ -4,14 +4,22 @@ import { UserActionContext } from "../../../services/providers/UserActionContext
 import Comments from "../../homepage/modal/Comments";
 import { BsGrid3X3 } from "react-icons/bs";
 import { Loading } from "../../../assets/svg/Loading";
+import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import { GET_SAVED_POST_API } from "../../../services/api/const";
 
-function UserPosts({ posts, type, setType }) {
+function UserPosts({ posts, setPosts, type, setType }) {
+  console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ posts:", posts)
   const { comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
 
   const handleViewComments = (postId) => {
     setComments(true);
     setPostId(postId);
+  };
+
+  const handleSavedPost = async () => {
+    setType(3);
+    
   };
 
   return (
@@ -24,7 +32,9 @@ function UserPosts({ posts, type, setType }) {
           <a
             href="#"
             className={`inline-block p-2 border-t-2  hover:text-gray-600 text-xs font-semibold ${
-              type == 0 ? " text-blue-600 border-t-2 border-blue-600" : "border-transparent"
+              type == 0
+                ? " text-blue-600 border-t-2 border-blue-600"
+                : "border-transparent"
             }`}>
             POSTS
           </a>
@@ -36,26 +46,32 @@ function UserPosts({ posts, type, setType }) {
           <a
             href="#"
             className={`inline-block p-2   hover:text-gray-600 text-xs font-semibold  ${
-              type == 1 ? " text-blue-600 border-t-2 border-blue-600" : "border-transparent"
+              type == 1
+                ? " text-blue-600 border-t-2 border-blue-600"
+                : "border-transparent"
             }`}
             aria-current="page">
             REELS
           </a>
         </li>
-        <li className="flex ">
+        <li className="flex " onClick={handleSavedPost}>
           <img
             src="https://file.rendit.io/n/LDe6sBzq16q9E7Pc61H1.svg"
             className="w-4 shrink-0"
           />
           <a
             href="#"
-            className="inline-block p-2 border-t-2 border-transparent hover:text-gray-600 text-xs font-semibold">
+            className={`inline-block p-2 border-t-2 hover:text-gray-600 text-xs font-semibold ${
+              type == 3
+                ? " text-blue-600 border-t-2 border-blue-600"
+                : "border-transparent"
+            }`}>
             SAVED
           </a>
         </li>
       </ul>
       <div className="flex justify-center items-center mt-4">
-        {posts.length > 0 ? (
+        {posts?.length > 0 ? (
           <div className=" columns-3 gap-1 grid grid-cols-3">
             {posts?.map((post) =>
               post.media_type.startsWith("image/") ? (

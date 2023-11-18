@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { PROFILE_API } from "../../services/api/const";
+import { GET_SAVED_POST_API, PROFILE_API } from "../../services/api/const";
 import SavedStory from "./components/SavedStory";
 import UserDetails from "./components/UserDetails";
 import UserPosts from "./components/UserPosts";
@@ -15,17 +15,27 @@ function Profile() {
 
   useEffect(() => {
     getProfileData();
-  }, [type,username]);
+  }, [type, username]);
 
   const getProfileData = async () => {
-    const response = await axiosInstance.get(
-      `${PROFILE_API}?type=${type}&username=${username}`
+    const apiUrl =
+      type === 3
+        ? GET_SAVED_POST_API
+        : `${PROFILE_API}?type=${type}&username=${username}`;
+
+    const response = await axiosInstance.get(apiUrl);
+    console.log(
+      "🚀 ~ file: Profile.jsx:27 ~ getProfileData ~ response:",
+      response
     );
     if (type == 0) {
       setProfile(response.data.profile[0]);
       postCount = response.data.post.length;
+    } else if (type == 3) {
+      setPosts(response.data);
+    } else {
+      setPosts(response.data.post);
     }
-    setPosts(response.data.post);
   };
 
   return (
@@ -35,7 +45,12 @@ function Profile() {
       <div className="items-center justify-center relative flex flex-col mb-5 gap-4 w-4/5 p-5">
         <UserDetails profile={profile} postCount={postCount} />
         <SavedStory />
-        <UserPosts posts={posts} type={type} setType={setType} />
+        <UserPosts
+          posts={posts}
+          setPosts={setPosts}
+          type={type}
+          setType={setType}
+        />
       </div>
     </div>
   );
