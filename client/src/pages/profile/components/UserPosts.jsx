@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
+import { BsGrid3X3 } from "react-icons/bs";
+import { Loading } from "../../../assets/svg/Loading";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import Comments from "../../homepage/modal/Comments";
-import { BsGrid3X3 } from "react-icons/bs";
-import { Loading } from "../../../assets/svg/Loading";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
-import { GET_SAVED_POST_API } from "../../../services/api/const";
 
 function UserPosts({ posts, setPosts, type, setType, userId }) {
   console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ userId:", userId);
@@ -16,10 +14,6 @@ function UserPosts({ posts, setPosts, type, setType, userId }) {
   const handleViewComments = (postId) => {
     setComments(true);
     setPostId(postId);
-  };
-
-  const handleSavedPost = async () => {
-    setType(3);
   };
 
   return (
@@ -55,7 +49,7 @@ function UserPosts({ posts, setPosts, type, setType, userId }) {
           </a>
         </li>
         {userData._id == userId && (
-          <li className="flex " onClick={handleSavedPost}>
+          <li className="flex " onClick={() => setType(3)}>
             <img
               src="https://file.rendit.io/n/LDe6sBzq16q9E7Pc61H1.svg"
               className="w-4 shrink-0"
