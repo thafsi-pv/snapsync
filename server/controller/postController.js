@@ -153,11 +153,15 @@ const savePost = async (req, res) => {
         user_id: userId,
         post_id: post_id,
       });
-      res.status(200).json({ message: "Post removed from saved posts" });
+      res
+        .status(200)
+        .json({ message: "Post removed from saved posts", flag: false });
     } else {
       const savePostInstance = new savedPostModel({ user_id: userId, post_id });
       const savedPost = await savePostInstance.save();
-      res.status(201).json({ message: "Post saved successfully", savedPost });
+      res
+        .status(201)
+        .json({ message: "Post saved successfully", savedPost, flag: true });
     }
   } catch (error) {
     console.error("Error saving/removing post:", error);
