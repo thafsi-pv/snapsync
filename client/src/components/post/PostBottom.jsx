@@ -52,8 +52,9 @@ function PostBottom({ post, posts, setPosts, index }) {
       <div className="flex flex-row gap-4 items-start">
         <div onClick={() => handleLikePost(index, post._id)}>
           {post.liked ? (
-            <AiFillHeart
-              className={`h-7 w-7 cursor-pointer hover:text-red-500 text-red-600`}
+            <AiFillHeart 
+              key={post._id}
+              className={`h-7 w-7 cursor-pointer hover:text-red-500 text-red-600 ping-animation`}
               id={`like-button-${post._id}`}
             />
           ) : (
