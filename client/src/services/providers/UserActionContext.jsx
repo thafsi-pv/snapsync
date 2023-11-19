@@ -17,6 +17,8 @@ function UserActionContextProvider({ children }) {
   const [navbar, setNavbar] = useState("block");
   const [addStory, setAddStory] = useState(false);
   const [loadStory, setLoadStory] = useState({ loading: false, id: "" });
+  const [searchBar, setSearchBar] = useState(false);
+  const [notificationBar, setNotificationBar] = useState(false);
 
   useEffect(() => {
     getUserData();
@@ -44,6 +46,10 @@ function UserActionContextProvider({ children }) {
         setAddStory,
         loadStory,
         setLoadStory,
+        searchBar,
+        setSearchBar,
+        notificationBar,
+        setNotificationBar,
       }}>
       {children}
     </UserActionContext.Provider>

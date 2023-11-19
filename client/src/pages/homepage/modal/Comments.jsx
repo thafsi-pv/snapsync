@@ -19,10 +19,6 @@ import UserImage from "../../../components/user/UserImage";
 
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
-  console.log(
-    "🚀 ~ file: Comments.jsx:22 ~ Comments ~ postDetails:",
-    postDetails
-  );
   useEffect(() => {
     if (show) {
       getCommentsByPostId();

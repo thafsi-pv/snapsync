@@ -6,8 +6,6 @@ import StoryLoader from "../../assets/svg/StoryLoader";
 import { useNavigate } from "react-router-dom";
 
 function UserImage({ id, imgUrl, extra, username, imgStyle }) {
-  console.log("🚀 ~ file: UserImage.jsx:9 ~ UserImage ~ props:", id, imgUrl, extra, username, imgStyle )
-  
   const navigate = useNavigate();
   const [haveStory, setHaveStory] = useState(false);
   const { loadStory, setLoadStory } = useContext(UserActionContext);

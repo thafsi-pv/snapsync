@@ -27,6 +27,9 @@
   animation: ping 0.5s 1;
 }
 
+.shadow-right {
+  box-shadow: 15px 10px 10px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
+}
 
 
 /* Tailwind CSS classes or your custom styles can be added here */

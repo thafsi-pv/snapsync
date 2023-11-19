@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import UserImage from "./UserImage";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 
-function UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
+function 
+UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
   const { setLoadStory } = useContext(UserActionContext);
   const navigate = useNavigate();
   const handleLoadStory = () => {

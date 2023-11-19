@@ -8,10 +8,15 @@ import { Link } from "react-router-dom";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
 import { SocketContext } from "../../services/providers/SocketContext";
 import { UserActionContext } from "../../services/providers/UserActionContext";
+import InputField from "../uiPrimitives/fields/InputField";
+import { motion } from "framer-motion";
+import UserImage from "../user/UserImage";
+import { IoIosClose } from "react-icons/io";
 
 let search = false;
+let noti = false;
 function SideNav() {
-  const { userData, setAddPost, navbar, setNavbar, setAddStory } =
+  const { userData, setAddPost, navbar, setNavbar, setAddStory, } =
     useContext(UserActionContext);
   const { notification } = useContext(SocketContext);
   // const { navbar, setNavbar } = useState('hidden');
@@ -28,16 +33,23 @@ function SideNav() {
     }
     // const navbar = "hidden";
   };
+  const handleNoti = () => {
+    if (noti == false) {
+      noti = true;
+      setNavbar("hidden");
+    } else {
+      noti = false;
+      setNavbar("block");
+    }
+    // const navbar = "hidden";
+  };
 
   return (
     <div
-      className={`flex relative  ${
-        navbar == "hidden" ? "w-[7%]" : "w-[21%]"
-      } border-r `}>
+      className={`flex relative  border-r w-[21%]
+       ${navbar == "hidden" ? "w-[7%]" : "w-[21%]"}`}>
       <div
-        className={`relative self-stretch ${
-          navbar == "hidden" ? "w-[7%]" : "w-[21%]"
-        }  flex flex-row  items-start min-h-screen  dark:bg-black  z-10`}>
+        className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
         <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
           <div className="h-10">
             {navbar == "block" && (
@@ -95,7 +107,9 @@ function SideNav() {
                 <p className={`font-normal ${navbar}`}>Messages</p>
               </div>
             </Link>
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+            <div
+              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+              onClick={handleNoti}>
               {/* <AiOutlineHeart className="h-7 w-7" /> */}
 
               <div className="relative">
@@ -144,28 +158,150 @@ function SideNav() {
           </div>
         </div>
       </div>
-      {navbar == "hidden" && search == true && (
-        <div className="fixed z-10 left-24 h-screen bg-white  w-96 rounded-r-2xl drop-shadow-xl ">
-          <div className="flex flex-col gap-5 p-3">
-            <p className="text-2xl">Search</p>
-            <div className="p-4">
-              <InputField
-                inputClass="p-2"
-                extra="rounded-lg"
-                placeholder="Search"
-              />
-            </div>
-            <div className="">
-              <div>
-                <img className="h5 w-5" src={userData?.imageUrl} alt="" />
-                <p>Name</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      {navbar == "hidden" && search && (
+        <SearchComp
+          navbar={navbar}
+          setNavbar={setNavbar}
+          userData={userData}
+          search={search}
+        />
+      )}
+      {navbar == "hidden" && noti && (
+        <NotificationComp
+          navbar={navbar}
+          setNavbar={setNavbar}
+          userData={userData}
+          noti={noti}
+        />
       )}
     </div>
   );
 }
 
 export default SideNav;
+
+const SearchComp = ({ navbar, setNavbar, userData, search }) => {
+  const handleSearchBar = () => {
+    setNavbar("block");
+    search = false;
+  };
+
+  return (
+    <motion.div
+      className={`z-[9] fixed left-12 w-full`}
+      initial={{ x: navbar != "hidden" && !search ? "-10%" : "-100%" }}
+      exit={{ x: "0%" }}
+      animate={{ x: "2%" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}>
+      <div
+        className="absolute w-full h-full -z-10"
+        onClick={handleSearchBar}></div>
+      <div className=" z-10 left-5 h-screen bg-white  w-96 rounded-r-2xl  shadow-right border">
+        <div className="flex flex-col gap-5 p-3">
+          <p className="text-2xl font-semibold">Search</p>
+          <div className="border-b flex-0 h-fit">
+            <div className="p-4 ">
+              <InputField
+                inputClass="p-2 "
+                extra="rounded-lg border-none"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+          <div className="relative  h-screen">
+            <div className="absolute top-0 left-0 h-full w-full flex flex-col overflow-y-scroll">
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+              <SearchUserList userData={userData} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const SearchUserList = ({ userData }) => {
+  return (
+    <div className="flex justify-center items-center gap-2 hover:bg-gray-100 p-2 rounded-md cursor-pointer">
+      {/* <img className="h5 w-5" src={userData?.imageUrl} alt="" /> */}
+      <UserImage
+        id={userData?._id}
+        imgUrl={userData?.imageUrl}
+        extra="w-12"
+        username={userData?.userName}
+        imgStyle=""
+      />
+      <div className="flex-1 ">
+        <p>Full Name</p>
+        <p className="text-xs -mt-[5px]">user Name</p>
+      </div>
+      <div>
+        <IoIosClose className="w-5 h-5" />
+      </div>
+    </div>
+  );
+};
+
+const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
+  const handleNotiBar = () => {
+    setNavbar("block");
+    noti = false;
+  };
+
+  return (
+    <motion.div
+      className={`z-[9] fixed left-12 w-full`}
+      initial={{ x: navbar != "hidden" && !search ? "-10%" : "-100%" }}
+      exit={{ x: "0%" }}
+      animate={{ x: "2%" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}>
+      <div className="absolute w-screen h-screen" onClick={handleNotiBar}></div>
+      <div className=" z-10 left-5 h-screen bg-white  w-96 rounded-r-2xl shadow-right border ">
+        <div className="flex flex-col gap-5 p-3">
+          <p className="text-2xl">Notification</p>
+          <div className="p-4 border-b">
+            <InputField
+              inputClass="p-2"
+              extra="rounded-lg"
+              placeholder="Search"
+            />
+          </div>
+          <div className="">
+            <div>
+              <img className="h5 w-5" src={userData?.imageUrl} alt="" />
+              <p>Name</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
