@@ -6,13 +6,15 @@ import StoryLoader from "../../assets/svg/StoryLoader";
 import { useNavigate } from "react-router-dom";
 
 function UserImage({ id, imgUrl, extra, username, imgStyle }) {
+  console.log("🚀 ~ file: UserImage.jsx:9 ~ UserImage ~ props:", id, imgUrl, extra, username, imgStyle )
+  
   const navigate = useNavigate();
-  const [haveStory, setHaveStory] = useState();
+  const [haveStory, setHaveStory] = useState(false);
   const { loadStory, setLoadStory } = useContext(UserActionContext);
 
   useEffect(() => {
     checkUserHaveStory();
-  }, []);
+  }, [id]);
 
   const checkUserHaveStory = async () => {
     const response = await axiosInstance.get(
@@ -47,4 +49,4 @@ function UserImage({ id, imgUrl, extra, username, imgStyle }) {
   );
 }
 
-export default React.memo(UserImage);
+export default UserImage;

@@ -5,7 +5,7 @@ import ReelIcon from "../../../assets/svg/ReelIcon";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import Comments from "../../homepage/modal/Comments";
 
-function UserPosts({ posts, setPosts, type, setType, userId }) {
+function UserPosts({ posts, type, setType, userId }) {
   console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ userId:", userId);
   const { userData, comments, setComments, postId, setPostId } =
     useContext(UserActionContext);

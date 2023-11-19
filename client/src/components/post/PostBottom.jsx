@@ -34,9 +34,7 @@ function PostBottom({ post, posts, setPosts, index }) {
         "🚀 ~ file: PostBottom.jsx:33 ~ handleSavePost ~ response:",
         response
       );
-
       const postIndex = posts.findIndex((item) => item._id === post_id);
-
       if (postIndex !== -1) {
         const updatedPosts = [...posts];
         updatedPosts[postIndex].saved = response.data.flag;

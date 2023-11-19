@@ -59,6 +59,14 @@ const getCommentsByPostId = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "savedposts",
+          localField: "_id",
+          foreignField: "post_id",
+          as: "savedposts",
+        },
+      },
+      {
         $project: {
           user: 1,
           media_url: 1,
@@ -91,6 +99,25 @@ const getCommentsByPostId = async (req, res) => {
               },
             },
           },
+          liked: {
+            $in: [
+              new mongoose.Types.ObjectId(user_id),
+              { $map: { input: "$likes", as: "like", in: "$$like.user_id" } },
+            ],
+          },
+          // savedposts: 1,
+          saved: {
+            $in: [
+              new mongoose.Types.ObjectId(user_id),
+              {
+                $map: {
+                  input: "$savedposts",
+                  as: "saved",
+                  in: "$$saved.user_id",
+                },
+              },
+            ],
+          },
         },
       },
     ]);
@@ -101,8 +128,10 @@ const getCommentsByPostId = async (req, res) => {
         if (commentDetail.user) {
           // Modify the user object to exclude the 'password' field
           commentDetail.user = {
+            _id: commentDetail.user._id,
             emailPhone: commentDetail.user.emailPhone,
             fullName: commentDetail.user.fullName,
+            userName: commentDetail.user.userName,
             imageUrl: commentDetail.user.imageUrl,
             isVerified: commentDetail.user.isVerified,
           };
@@ -111,8 +140,10 @@ const getCommentsByPostId = async (req, res) => {
 
       // Remove 'password' field from user details in the post
       comment.user = comment.user.map((userDetail) => ({
+        _id: userDetail._id,
         emailPhone: userDetail.emailPhone,
         fullName: userDetail.fullName,
+        userName: userDetail.userName,
         imageUrl: userDetail.imageUrl,
         isVerified: userDetail.isVerified,
       }));

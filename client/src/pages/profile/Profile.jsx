@@ -46,7 +46,6 @@ function Profile() {
           <UserPosts
             userId={profile._id}
             posts={posts}
-            setPosts={setPosts}
             type={type}
             setType={setType}
           />
