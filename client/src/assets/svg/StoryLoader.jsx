@@ -11,7 +11,7 @@ function StoryLoader({ loadStory, id }) {
         // enableBackground: "new -580 439 577.9 194",
         animation: loadStory?.id == id ? animation : "",
       }}
-      xml:space="preserve">
+      xmlSpace="preserve">
       <defs>
         {/* Define a linear gradient */}
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">

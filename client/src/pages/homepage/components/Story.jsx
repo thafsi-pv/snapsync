@@ -4,7 +4,6 @@ import UserStory from "../../../components/user/UserStory";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { STORY_API } from "../../../services/api/const";
 
-
 /**
  * Story Component:
  * Renders a list of user stories with navigation buttons.
@@ -59,6 +58,7 @@ function Story() {
         <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] flex ">
           {storyList?.map((story) => (
             <UserStory
+              key={story._id}
               id={story._id}
               userName={story.userName}
               imgUrl={story.imageUrl}

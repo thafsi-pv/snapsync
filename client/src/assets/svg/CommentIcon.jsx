@@ -18,7 +18,7 @@ function CommentIcon({ onClick }) {
       </svg> */}
       <svg
         aria-label="Comment"
-        class="x1lliihq x1n2onr6 x5n08af"
+        className=""
         fill="currentColor"
         height="24"
         role="img"
@@ -29,8 +29,8 @@ function CommentIcon({ onClick }) {
           d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"
           fill="none"
           stroke="currentColor"
-          stroke-linejoin="round"
-          stroke-width="2"></path>
+          strokeLinejoin="round"
+          strokeWidth="2"></path>
       </svg>
     </div>
   );

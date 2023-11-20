@@ -1,17 +1,27 @@
-// Assuming you're using Express and Mongoose
-
 const Notification = require("../model/notification");
 
 const saveNotification = async (req, res) => {
-  const { userId, postId, type } = req.params;
-  const followerId = req.userId;
+  const { recipient_Id, postId, type } = req.params;
+  const sender_Id = req.userId;
 
-  await Notification.create({
+  const existingNotification = await Notification.findOne({
     type,
-    sender_Id: followerId,
-    recipient_Id: userId,
+    sender_Id,
+    recipient_Id,
     post_Id: postId,
   });
+
+  if (existingNotification) {
+    existingNotification.updatedAt = new Date();
+    await existingNotification.save();
+  } else {
+    await Notification.create({
+      type,
+      sender_Id,
+      recipient_Id,
+      post_Id: postId,
+    });
+  }
 
   res.json({ success: true });
 };

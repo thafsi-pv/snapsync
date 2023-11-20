@@ -6,86 +6,6 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { STORY_API } from "../../services/api/const";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 
-// const stories = [
-//   {
-//     _id: "6533522dfc5e363414909ec5",
-//     user_id: "6533522dfc5e363414909ec5",
-//     userName: "thafsi.pv",
-//     fullName: "thafseer",
-//     imageUrl:
-//       "https://res.cloudinary.com/dm4djc1b1/image/upload/v1699352711/bgmdaxlskosdggtestd9.jpg",
-//     stories: [
-//       {
-//         _id: "654a37904b229207d2749664",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://res.cloudinary.com/dm4djc1b1/image/upload/v1699362703/nlxatvfi5mmoty8epgsk.webp",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-//       {
-//         _id: "654a37904b229207d2749664s",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLmH6VhjVLzPn1QprRYIMCdTKR4FC_5Osu4Q&usqp=CAU",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-//       {
-//         _id: "654a37904b229207d2749664sa",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH63geeKnqesT4QCheaoc0ntWfJTed1WwGrQXdCszOS1Itbh24AOGVbxBnQR4WZ___CZg&usqp=CAU",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-//       {
-//         _id: "654a37904b229207d2749664a",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUpG2btfMcn5U_uq2uItstSs2kJcNvkzXd3gSpi3VYb954FUuBIzYIqM1DOivWV0mmLg&usqp=CAU",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-//       {
-//         _id: "654a37904b229207d2749664a",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUpG2btfMcn5U_uq2uItstSs2kJcNvkzXd3gSpi3VYb954FUuBIzYIqM1DOivWV0mmLg&usqp=CAU",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-
-//       {
-//         _id: "654a37904b229207d2749664a",
-//         user_id: "6533522dfc5e363414909ec5",
-//         mediaUrl:
-//           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUpG2btfMcn5U_uq2uItstSs2kJcNvkzXd3gSpi3VYb954FUuBIzYIqM1DOivWV0mmLg&usqp=CAU",
-//         media_type: "image/jpeg",
-//         expireAt: "2023-11-08T13:11:44.330Z",
-//         createdAt: "2023-11-07T13:11:44.333Z",
-//         updatedAt: "2023-11-07T13:11:44.333Z",
-//         __v: 0,
-//       },
-//     ],
-//   },
-// ];
-
 const Story = () => {
   const [stories, setStories] = useState();
   const [currentStory, setCurrentStory] = useState(0);
@@ -132,7 +52,7 @@ const Story = () => {
         </div>
         <div className="relative w-[33%] h-screen p-2 transition-transform">
           {stories?.map((user) => (
-            <>
+            <div key={user._id}>
               <img
                 className="h-full w-full object-cover rounded-md"
                 src={user.stories[currentStory].mediaUrl}
@@ -144,7 +64,9 @@ const Story = () => {
                   gridTemplateColumns: `repeat(${user.stories.length}, minmax(0, 1fr))`,
                 }}>
                 {user.stories.map((storie) => (
-                  <div className="overflow-hidden h-0.5 mt-5 text-xs flex rounded bg-gray-400">
+                  <div
+                    key={storie._id}
+                    className="overflow-hidden h-0.5 mt-5 text-xs flex rounded bg-gray-400">
                     <div
                       style={{
                         width: `${
@@ -176,7 +98,7 @@ const Story = () => {
                 />
                 <AiOutlineHeart className="h-10 w-10 text-white mr-3" />
               </div>
-            </>
+            </div>
           ))}
         </div>
         <div className="text-white">
@@ -188,50 +110,3 @@ const Story = () => {
 };
 
 export default Story;
-
-// import React, { useState, useEffect } from 'react';
-
-// const stories = [
-//   // An array of story objects with image URLs
-//   { id: 1, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLmH6VhjVLzPn1QprRYIMCdTKR4FC_5Osu4Q&usqp=CAU' },
-//   { id: 2, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH63geeKnqesT4QCheaoc0ntWfJTed1WwGrQXdCszOS1Itbh24AOGVbxBnQR4WZ___CZg&usqp=CAU' },
-//   { id: 3, imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVUpG2btfMcn5U_uq2uItstSs2kJcNvkzXd3gSpi3VYb954FUuBIzYIqM1DOivWV0mmLg&usqp=CAU' },
-//   // Add more story objects
-// ];
-
-// const Story = () => {
-//   const [currentSlide, setCurrentSlide] = useState(0);
-
-//   useEffect(() => {
-//     const interval = setInterval(() => {
-//       setCurrentSlide((prevSlide) =>
-//         prevSlide === stories.length - 1 ? 0 : prevSlide + 1
-//       );
-//     }, 5000); // Change slides every 5 seconds
-
-//     return () => clearInterval(interval);
-//   }, []);
-
-//   return (
-//     <div className=" max-w-screen-sm mx-auto">
-//       <div className=" aspect-w-16 aspect-h-9">
-//         {stories.map((story, index) => (
-//           <div
-//             key={story.id}
-//             className={`absolute top-0 transition-transform ${
-//               index === currentSlide ? 'scale-100' : 'scale-0'
-//             } transform-gpu`}
-//           >
-//             <img
-//               src={story.imageUrl}
-//               alt={`Story ${story.id}`}
-//               className="object-cover w-full h-full"
-//             />
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Story;

@@ -37,4 +37,4 @@ export const READALL_CHATS_API = "chat/readAllMessages";
 export const STORY_API = "story/";
 export const HAVING_STORY_API = "story/havigstory";
 
-export const SAVE_NOTIFICATION = "/notification";
+export const CREATE_NOTIFICATION = "/notification";

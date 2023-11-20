@@ -13,7 +13,7 @@ function SuggestionUser({ user }) {
     }
   };
   return (
-    <div className="flex flex-row gap-4 items-center ml-px" key={user._id}>
+    <div className="flex flex-row gap-4 items-center ml-px" >
       <img src={user?.imageUrl} className="w-11 h-11 shrink-0 rounded-full" />
       <div className="flex flex-col gap-1 w-24 shrink-0 flex-grow items-start">
         <p className="text-sm  tracking-[0.42]">{user?.fullName}</p>

@@ -26,7 +26,7 @@ function Suggestions() {
             </div>
             <div className="self-stretch flex flex-col justify-between ml-1 gap-5">
               {suggestionList?.map((user) => (
-                <SuggestionUser user={user} />
+                <SuggestionUser user={user} key={user._id} />
               ))}
             </div>
           </div>
