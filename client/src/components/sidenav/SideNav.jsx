@@ -18,7 +18,7 @@ let noti = false;
 function SideNav() {
   const { userData, setAddPost, navbar, setNavbar, setAddStory, } =
     useContext(UserActionContext);
-  const { notification } = useContext(SocketContext);
+  const { newMessageNotif } = useContext(SocketContext);
   // const { navbar, setNavbar } = useState('hidden');
   // const [search, setSearch] = useState(false);
   console.log("🚀 ~ file: SideNav.jsx:23 ~ SideNav ~ search:", search);
@@ -47,7 +47,7 @@ function SideNav() {
   return (
     <div
       className={`flex relative  border-r w-[21%]
-       ${navbar == "hidden" ? "w-[7%]" : "w-[21%]"}`}>
+       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}>
       <div
         className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
         <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
@@ -98,9 +98,9 @@ function SideNav() {
                     src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
                     className="w-6 shrink-0"
                   />
-                  {notification.length > 0 && (
+                  {newMessageNotif.length > 0 && (
                     <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                      {notification.length}
+                      {newMessageNotif.length}
                     </p>
                   )}
                 </div>

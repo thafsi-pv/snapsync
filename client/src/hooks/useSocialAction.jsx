@@ -21,7 +21,7 @@ function useSocialAction() {
   const { comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
 
-  const { createNotification } = useNotification();//notification hook
+  const { createNotification } = useNotification(); //notification hook
 
   useEffect(() => {
     getAllPosts();
@@ -35,10 +35,6 @@ function useSocialAction() {
   const likePost = async (index, post_id, postss) => {
     try {
       const data = [...postss];
-      console.log(
-        "🚀 ~ file: useSocialAction.jsx:38 ~ likePost@@@@ ~ data:",
-        data
-      );
       const postData = { liked: !data[index].liked, post_id };
       const response = await axiosInstance.post(LIKE_API, postData);
       if (response.status === 200) {
@@ -57,10 +53,6 @@ function useSocialAction() {
             "like",
             updatedData[index].user[0]._id,
             updatedData[index]._id
-          );
-          console.log(
-            "🚀 ~ file: useSocialAction.jsx:58 ~ likePost ~ noti:",
-            noti
           );
         }
       }
@@ -98,10 +90,6 @@ function useSocialAction() {
   const getCommentsByPostId = async (postId) => {
     const comments = await axiosInstance.get(
       `${COMMENT_API}?post_id=${postId}`
-    );
-    console.log(
-      "🚀 ~ file: useSocialAction.jsx:65 ~ getCommentsByPostId ~ comments:",
-      comments
     );
     return comments.data[0];
   };

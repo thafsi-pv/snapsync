@@ -68,6 +68,7 @@ io.on("connection", (socket) => {
       connectedUsers.delete(userId);
     }
     connectedUsers.set(userId, socket.id);
+
     socket.on("newChat", (userId) => {
       if (connectedUsers.has(userId)) {
         const existingSocket = connectedUsers.get(userId);
@@ -124,6 +125,17 @@ io.on("connection", (socket) => {
         console.error("Error:", error);
         // Handle errors as needed
       }
+    });
+
+    socket.on("notification", (data) => {
+      console.log("🚀 ~ file: index.js:129 ~ socket.on ~ data:", data);
+      // const { type, recipient_Id, post_Id } = data;
+      // console.log("🚀 ~ file: index.js:129 ~ socket.on ~ post_Id:", post_Id);
+      // console.log(
+      //   "🚀 ~ file: index.js:129 ~ socket.on ~ recipient_Id:",
+      //   recipient_Id
+      // );
+      // console.log("🚀 ~ file: index.js:129 ~ socket.on ~ type:", type);
     });
 
     //handle disconnecion
