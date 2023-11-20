@@ -14,7 +14,7 @@ const app = express();
 
 const http = require("http");
 const { verifyToken } = require("./utils/jwt");
-const { connection } = require("mongoose");
+// const { connection } = require("mongoose");
 const chatRouter = require("./router/chatRouter");
 const {
   isReadUpdate,
@@ -23,6 +23,7 @@ const {
 } = require("./controller/chatController");
 const { storyRouter } = require("./router/storyRouter");
 const NotificationRouter = require("./router/notificationRouter");
+const postModel = require("./model/postModel");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -69,6 +70,14 @@ io.on("connection", (socket) => {
     }
     connectedUsers.set(userId, socket.id);
 
+    const getSocketId = (userId) => {
+      if (connectedUsers.has(userId)) {
+        const existingSocket = connectedUsers.get(userId);
+        return existingSocket;
+      }
+      return null;
+    };
+
     socket.on("newChat", (userId) => {
       if (connectedUsers.has(userId)) {
         const existingSocket = connectedUsers.get(userId);
@@ -77,28 +86,27 @@ io.on("connection", (socket) => {
         io.to(socket.id).emit("usersocketId", 0);
       }
       return;
-    }),
-      socket.on(
-        "private message",
-        async ({ sender, recipient, recipientSocketId, message }) => {
-          const data = { sender, recipient, message };
-          console.log("🚀 ~ file: index.js:91 ~ data:", data);
-
-          if (recipientSocketId) {
-            data.isRead = true;
-            const newChat = await chatModal.create(data);
-            socket.to(recipientSocketId).emit("private message", {
-              //sender: socket.id,
-              _id: newChat._id,
-              sender,
-              message,
-            });
-          } else {
-            data.isRead = false;
-            const newChat = await chatModal.create(data);
-          }
+    });
+    socket.on(
+      "private message",
+      async ({ sender, recipient, recipientSocketId, message }) => {
+        const data = { sender, recipient, message };
+        const sockeid = getSocketId(recipient);
+        if (sockeid) {
+          data.isRead = true;
+          const newChat = await chatModal.create(data);
+          socket.to(sockeid).emit("private message", {
+            //sender: socket.id,
+            _id: newChat._id,
+            sender,
+            message,
+          });
+        } else {
+          data.isRead = false;
+          const newChat = await chatModal.create(data);
         }
-      );
+      }
+    );
     socket.on("isReadUpdata", async ({ _id, flag }) => {
       const update = await isReadUpdate(_id, flag);
     });
@@ -127,15 +135,20 @@ io.on("connection", (socket) => {
       }
     });
 
-    socket.on("notification", (data) => {
+    socket.on("notification", async (data) => {
       console.log("🚀 ~ file: index.js:129 ~ socket.on ~ data:", data);
-      // const { type, recipient_Id, post_Id } = data;
-      // console.log("🚀 ~ file: index.js:129 ~ socket.on ~ post_Id:", post_Id);
-      // console.log(
-      //   "🚀 ~ file: index.js:129 ~ socket.on ~ recipient_Id:",
-      //   recipient_Id
-      // );
-      // console.log("🚀 ~ file: index.js:129 ~ socket.on ~ type:", type);
+      const { type, recipient_Id, post_Id } = data;
+
+      const sockeid = getSocketId(recipient_Id);
+      console.log("🚀 ~ file: index.js:143 ~ socket.on ~ sockeid:", sockeid);
+      if (sockeid) {
+        const postdetails = await postModel.findOne({ _id: post_Id });
+        console.log(
+          "🚀 ~ file: index.js:146 ~ socket.on ~ postdetails:",
+          postdetails
+        );
+        socket.to(sockeid).emit("notification", postdetails);
+      }
     });
 
     //handle disconnecion

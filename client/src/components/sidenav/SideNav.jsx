@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { AiFillHome, AiOutlineSearch, AiOutlineCompass } from "react-icons/ai";
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { FaThreads } from "react-icons/fa6";
@@ -12,16 +12,21 @@ import InputField from "../uiPrimitives/fields/InputField";
 import { motion } from "framer-motion";
 import UserImage from "../user/UserImage";
 import { IoIosClose } from "react-icons/io";
+import useNotification from "../../hooks/useNotification";
 
 let search = false;
 let noti = false;
 function SideNav() {
-  const { userData, setAddPost, navbar, setNavbar, setAddStory, } =
+  const { userData, setAddPost, navbar, setNavbar, setAddStory } =
     useContext(UserActionContext);
   const { newMessageNotif } = useContext(SocketContext);
+  const { notification } = useNotification();
+  console.log(
+    "🚀 ~ file: SideNav.jsx:24 ~ SideNav ~ notification:",
+    notification
+  );
   // const { navbar, setNavbar } = useState('hidden');
   // const [search, setSearch] = useState(false);
-  console.log("🚀 ~ file: SideNav.jsx:23 ~ SideNav ~ search:", search);
 
   const handleSearch = () => {
     if (search == false) {
@@ -117,11 +122,11 @@ function SideNav() {
                   src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
                   className="w-6 shrink-0"
                 />
-                {
+                {notification?.length > 0 && (
                   <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                    2
+                    {notification?.length}
                   </p>
-                }
+                )}
               </div>
               <p className={`font-normal ${navbar}`}>Notification</p>
             </div>
