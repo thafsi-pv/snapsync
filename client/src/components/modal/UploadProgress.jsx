@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import ReactDOM from "react-dom";
-import { FileUploadContext } from "../../../services/providers/FileUploadContext";
+import { FileUploadContext } from "../../services/providers/FileUploadContext";
 
 function UploadProgress() {
   const { uploadProgress, fileSize } = useContext(FileUploadContext);
-
 
   if (uploadProgress == 0 || uploadProgress == undefined) return null;
   return ReactDOM.createPortal(

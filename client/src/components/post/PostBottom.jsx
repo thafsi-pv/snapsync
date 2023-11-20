@@ -7,33 +7,51 @@ import MessageIcon from "../../assets/svg/MessageIcon";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { LIKE_API, SAVE_POST_API } from "../../services/api/const";
 import { UserActionContext } from "../../services/providers/UserActionContext";
+import useSocialAction from "../../hooks/useSocialAction";
+import { genericError } from "../../services/api/genericError";
 
-function PostBottom({ post, posts, setPosts, index }) {
+function PostBottom({
+  post,
+  posts,
+  setPosts,
+  index,
+  likePost,
+  viewComments,
+  savePost,
+}) {
   const { comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
 
-  const handleLikePost = async (index, post_id) => {
-    const data = [...posts];
-    const postData = { liked: !data[index].liked, post_id };
-    const response = await axiosInstance.post(LIKE_API, postData);
-    data[index].liked = !data[index].liked;
-    data[index].likeCount =
-      parseInt(data[index].likeCount) + (data[index].liked ? 1 : -1);
-    setPosts(data);
-  };
-  const handleViewComments = (postId) => {
-    setComments(true);
-    setPostId(postId);
-  };
+  // const { likePost, viewComments } = useSocialAction();
+
+  // const handleLikePost = async (index, post_id) => {
+  //   likePost(index, post_id, posts);
+
+  // try {
+  //   const data = [...posts];
+  //   // const postData = { liked: !data[index].liked, post_id };
+  //   // const response = await axiosInstance.post(LIKE_API, postData);
+
+  //   const likepost = await likePost(!data[index].liked, post_id);
+  //   if (likepost.status == 200) {
+  //     data[index].liked = !data[index].liked;
+  //     data[index].likeCount =
+  //       parseInt(data[index].likeCount) + (data[index].liked ? 1 : -1);
+  //     setPosts(data);
+  //   }
+  // } catch (error) {
+  //   genericError(error);
+  // }
+  // };
+  // const handleViewComments = (postId) => {
+  //   setComments(true);
+  //   setPostId(postId);
+  // };
 
   const handleSavePost = async (post_id) => {
     try {
       const data = { post_id };
       const response = await axiosInstance.post(SAVE_POST_API, data);
-      console.log(
-        "🚀 ~ file: PostBottom.jsx:33 ~ handleSavePost ~ response:",
-        response
-      );
       const postIndex = posts.findIndex((item) => item._id === post_id);
       if (postIndex !== -1) {
         const updatedPosts = [...posts];
@@ -48,9 +66,9 @@ function PostBottom({ post, posts, setPosts, index }) {
   return (
     <div className="flex flex-row justify-between items-center mr-1">
       <div className="flex flex-row gap-4 items-start">
-        <div onClick={() => handleLikePost(index, post._id)}>
+        <div onClick={() => likePost(index, post._id, posts)}>
           {post.liked ? (
-            <AiFillHeart 
+            <AiFillHeart
               key={post._id}
               className={`h-7 w-7 cursor-pointer hover:text-red-500 text-red-600 ping-animation`}
               id={`like-button-${post._id}`}
@@ -65,7 +83,8 @@ function PostBottom({ post, posts, setPosts, index }) {
         <div className="cursor-pointer">
           <CommentIcon
             onClick={() => {
-              handleViewComments(post._id);
+              // handleViewComments(post._id);
+              viewComments(post._id);
             }}
           />
         </div>
@@ -73,7 +92,7 @@ function PostBottom({ post, posts, setPosts, index }) {
           <MessageIcon />
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => handleSavePost(post._id)}>
+      <div className="cursor-pointer" onClick={() => savePost(post._id)}>
         <BookmarkIcon fill={post.saved ? "black" : "none"} />
       </div>
     </div>

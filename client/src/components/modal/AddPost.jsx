@@ -1,16 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
-import CreatePost from "../../../assets/svg/createPost";
-import { AiOutlineClose } from "react-icons/ai";
-import { motion } from "framer-motion";
+// import React, { useContext, useEffect, useState } from "react";
+// import CreatePost from "../../assets/svg/createPost";
+// import { AiOutlineClose } from "react-icons/ai";
+// import { motion } from "framer-motion";
+// import { useFormik } from "formik";
+// import useUploadMedia from "../../hooks/useUploadMedia";
+// import PortalModal from "../uiPrimitives/modal/PortalModal";
+// import { FileUploadContext } from "../../services/providers/FileUploadContext";
+// import { UserActionContext } from "../../services/providers/UserActionContext";
+// import { axiosInstance } from "../../services/api/axiosInterceptor";
+// import { POST_API } from "../../services/api/const";
+// import TextField from "../uiPrimitives/fields/TextField";
+// import InputField from "../uiPrimitives/fields/InputField";
+
+import { useContext, useEffect, useState } from "react";
+import { FileUploadContext } from "../../services/providers/FileUploadContext";
+import { UserActionContext } from "../../services/providers/UserActionContext";
+import useUploadMedia from "../../hooks/useUploadMedia";
 import { useFormik } from "formik";
-import useUploadMedia from "../../../hooks/useUploadMedia";
-import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
-import { FileUploadContext } from "../../../services/providers/FileUploadContext";
-import { UserActionContext } from "../../../services/providers/UserActionContext";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
-import { POST_API } from "../../../services/api/const";
-import TextField from "../../../components/uiPrimitives/fields/TextField";
-import InputField from "../../../components/uiPrimitives/fields/InputField";
+import { AiOutlineClose } from "react-icons/ai";
+import PortalModal from "../uiPrimitives/modal/PortalModal";
+import CreatePost from "../../assets/svg/createPost";
+import { motion } from "framer-motion";
+import TextField from "../uiPrimitives/fields/TextField";
+import InputField from "../uiPrimitives/fields/InputField";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { POST_API } from "../../services/api/const";
 
 function AddPost() {
   const { setUploadProgress, setFileSize } = useContext(FileUploadContext);

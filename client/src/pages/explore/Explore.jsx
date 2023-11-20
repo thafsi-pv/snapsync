@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import Comments from "../homepage/modal/Comments";
 import { ENTIRE_API } from "../../services/api/const";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { UserActionContext } from "../../services/providers/UserActionContext";
+import Comments from "../../components/modal/Comments";
 
 function Explore() {
   const [exploreList, setExploreList] = useState();
@@ -51,38 +51,6 @@ function Explore() {
               </video>
             )}
           </div>
-          //   <div key={post.id} className="bg-white rounded-md shadow-md hover:bg-gray-500">
-          //     {post.image && (
-          //       <img
-          //         src={post.url}
-          //         alt="Post"
-          //         className="w-full h-fit object-cover rounded-t-md hover:bg-gray-500"
-          //       />
-          //     )}
-          //     {post.video && (
-          //       <video
-          //         controls={false}
-          //         className="w-full h-fit object-cover rounded-t-md hover:bg-gray-500">
-          //         <source src={post.url} type="video/mp4" />
-          //         Your browser does not support the video tag.
-          //       </video>
-          //     )}
-          //     {/* <Contents media_type={post.media_type} media_url={post.url}/> */}
-          //     {/* <div className="p-4">
-          //       <div className="flex items-center justify-between">
-          //         <div>
-          //           <span className="text-lg font-semibold">
-          //             Likes: {post.likes}
-          //           </span>
-          //         </div>
-          //         <div>
-          //           <span className="text-lg font-semibold">
-          //             Comments: {post.comments}
-          //           </span>
-          //         </div>
-          //       </div>
-          //     </div> */}
-          //   </div>
         ))}
       </div>
       <Comments

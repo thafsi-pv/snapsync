@@ -2,60 +2,80 @@ import React, { useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosHeartEmpty } from "react-icons/io";
-import BookmarkIcon from "../../../assets/svg/BookmarkIcon";
-import CommentIcon from "../../../assets/svg/CommentIcon";
-import MessageIcon from "../../../assets/svg/MessageIcon";
-import PostFile from "../../../components/post/PostFile";
-import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import BookmarkIcon from "../../assets/svg/BookmarkIcon";
+import CommentIcon from "../../assets/svg/CommentIcon";
+import MessageIcon from "../../assets/svg/MessageIcon";
+import PostFile from "../post/PostFile";
+import PortalModal from "../uiPrimitives/modal/PortalModal";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
 import {
   COMMENT_API,
   LIKE_API,
   SAVE_POST_API,
-} from "../../../services/api/const";
-import { timeAgo } from "../../../utils/timeAgo";
-import Comment from "../components/Comment";
-import UserImage from "../../../components/user/UserImage";
+} from "../../services/api/const";
+import { timeAgo } from "../../utils/timeAgo";
+import Comment from "../../pages/homepage/components/Comment";
+import UserImage from "../user/UserImage";
+import useSocialAction from "../../hooks/useSocialAction";
+import UserImgName from "../user/UserImgName";
 
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
+  const {
+    getCommentsByPostId,
+    likePostInCommentModal,
+    savePostInCommentModal,
+    addComment,
+  } = useSocialAction();
+
   useEffect(() => {
-    if (show) {
-      getCommentsByPostId();
-    }
+    getdetails();
   }, [show]);
 
-  const getCommentsByPostId = async () => {
-    const comments = await axiosInstance.get(
-      `${COMMENT_API}?post_id=${postId}`
-    );
-    setPostDetails(comments.data[0]);
-  };
+  async function getdetails() {
+    const data = await getCommentsByPostId(postId);
+    setPostDetails(data);
+  }
+
+  // const getCommentsByPostId = async () => {
+  //   const comments = await axiosInstance.get(
+  //     `${COMMENT_API}?post_id=${postId}`
+  //   );
+  //   setPostDetails(comments.data[0]);
+  // };
 
   const handleAddComment = async (postId, values) => {
-    const data = { post_id: postId, comment: values.comment };
-    const createdPost = await axiosInstance.post(COMMENT_API, data);
-    if (createdPost.status == 200) {
-      getCommentsByPostId();
+    // const data = { post_id: postId, comment: values.comment };
+    // const createdPost = await axiosInstance.post(COMMENT_API, data);
+    const data = await addComment(postId, values);
+    if (data.status == 200) {
+      getdetails();
     }
   };
 
   const handleLikePost = async () => {
-    const data = { ...postDetails };
-    const postData = { liked: !postDetails.liked, post_id: data._id };
-    const response = await axiosInstance.post(LIKE_API, postData);
-    data.liked = !data.liked;
-    data.likeCount = parseInt(data.likeCount) + (data.liked ? 1 : -1);
+    // const data = { ...postDetails };
+    // const postData = { liked: !postDetails.liked, post_id: data._id };
+    // const response = await axiosInstance.post(LIKE_API, postData);
+    // data.liked = !data.liked;
+    // data.likeCount = parseInt(data.likeCount) + (data.liked ? 1 : -1);
+    // setPostDetails(data);
+    const data = await likePostInCommentModal(postDetails);
     setPostDetails(data);
   };
 
   const handleSavePost = async (post_id) => {
     try {
-      const data = { post_id };
-      const response = await axiosInstance.post(SAVE_POST_API, data);
-      const postdata = { ...postDetails };
-      postdata.saved = !postdata.saved;
-      setPostDetails(postdata);
+      // const data = { post_id };
+      // const response = await axiosInstance.post(SAVE_POST_API, data);
+      // const postdata = { ...postDetails };
+      // postdata.saved = !postdata.saved;
+      // setPostDetails(postdata);
+
+      const data = await savePostInCommentModal(post_id);
+      if (data.status == 201) {
+        getdetails();
+      }
     } catch (error) {
       console.error("Error handling save post:", error);
     }
@@ -80,28 +100,16 @@ function Comments({ show, closeModal, postId }) {
             </div>
             <div className="p-4 flex-1 h-full flex flex-col justify-between ">
               <div className="flex flex-col h-full justify-between items-start ">
-                {/* <div className="flex flex-col gap-4 w-full items-start"> */}
                 <div className="relative flex w-full items-center p-1 gap-3 border-b">
-                  {/* <img
-                  src={postDetails?.user[0].imageUrl}
-                  className="w-10 rounded-full"
-                /> */}
-                  <UserImage
-                    id={postDetails?.user[0]._id}
-                    imgUrl={postDetails?.user[0].imageUrl}
-                    username={postDetails?.user[0].userName}
-                    imgStyle="w-14 object-cover"
-                    extra="w-14"
-                  />
                   <div className="flex-1">
-                    <div className="text-sm font-semibold">
-                      {postDetails?.user[0].fullName}
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">
-                        {postDetails?.location}
-                      </p>
-                    </div>
+                    <UserImgName
+                      id={postDetails?.user[0]?._id}
+                      username={postDetails?.user[0]?.userName}
+                      fullName={postDetails?.user[0]?.userName}
+                      desc={postDetails?.location}
+                      imgUrl={postDetails?.user[0]?.imageUrl}
+                      extra="w-12"
+                    />
                   </div>
                   <div className="flex flex-row justify-between  w-5 shrink-0 items-start">
                     <FiMoreHorizontal className="w-8 h-8" />
@@ -109,15 +117,11 @@ function Comments({ show, closeModal, postId }) {
                 </div>
                 <div className=" flex flex-col gap-4 flex-1 items-start overflow-y-auto w-full h-72">
                   <div className="bg-cover flex w-full items-start p-1 gap-3">
-                    {/* <img
-                    src={postDetails?.user[0].imageUrl}
-                    className="w-10 rounded-full"
-                  /> */}
                     <div className="flex-0">
                       <UserImage
-                        id={postDetails?.user[0]._id}
-                        imgUrl={postDetails?.user[0].imageUrl}
-                        username={postDetails?.user[0].userName}
+                        id={postDetails?.user[0]?._id}
+                        imgUrl={postDetails?.user[0]?.imageUrl}
+                        username={postDetails?.user[0]?.userName}
                         extra="w-14 "
                         imgStyle=""
                       />
@@ -125,7 +129,7 @@ function Comments({ show, closeModal, postId }) {
                     <div className="flex-1">
                       <div className=" flex flex-wrap  items-start  text-sm gap-2">
                         <span className=" font-semibold text-[#262626]">
-                          {postDetails?.user[0].fullName}
+                          {postDetails?.user[0]?.fullName}
                         </span>
                         {postDetails?.caption}
                       </div>
@@ -138,10 +142,6 @@ function Comments({ show, closeModal, postId }) {
                     <div
                       key={cmt._id}
                       className="bg-cover flex w-full items-start p-1 gap-3">
-                      {/* <img
-                      src={cmt.user.imageUrl}
-                      className="w-10 rounded-full"
-                    /> */}
                       <div className="flex-0">
                         <UserImage
                           id={cmt.user._id}

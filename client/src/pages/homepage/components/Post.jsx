@@ -6,18 +6,21 @@ import PostHead from "../../../components/post/PostHead";
 import PostLikeAndCaption from "../../../components/post/PostLikeAndCaption";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { POST_API } from "../../../services/api/const";
+import useSocialAction from "../../../hooks/useSocialAction";
 
 function Post() {
-  const [posts, setPosts] = useState();
-  useEffect(() => {
-    getAllPosts();
-  }, []);
+  // const [posts, setPosts] = useState();
+  // useEffect(() => {
+  //   getAllPosts();
+  // }, []);
 
-  const getAllPosts = async () => {
-    const post = await axiosInstance.get(POST_API);
-    setPosts(post.data);
-  };
+  // const getAllPosts = async () => {
+  //   const post = await axiosInstance.get(POST_API);
+  //   setPosts(post.data);
+  // };
 
+  const { posts, setPosts, likePost, viewComments, savePost } =
+    useSocialAction();
   return (
     <div className="flex flex-col gap-4 mx-20">
       {posts?.map((post, index) => {
@@ -39,6 +42,9 @@ function Post() {
                     posts={posts}
                     setPosts={setPosts}
                     index={index}
+                    likePost={likePost}
+                    viewComments={viewComments}
+                    savePost={savePost}
                   />
                 </div>
                 <div className="flex flex-row justify-between items-start mr-8">

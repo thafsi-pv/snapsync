@@ -3,13 +3,11 @@ import { BsGrid3X3 } from "react-icons/bs";
 import { Loading } from "../../../assets/svg/Loading";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
-import Comments from "../../homepage/modal/Comments";
+import Comments from "../../../components/modal/Comments";
 
 function UserPosts({ posts, type, setType, userId }) {
-  console.log("🚀 ~ file: UserPosts.jsx:11 ~ UserPosts ~ userId:", userId);
   const { userData, comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
-  console.log("🚀 ~ file: UserPosts.jsx:13 ~ UserPosts ~ userData:", userData);
 
   const handleViewComments = (postId) => {
     setComments(true);

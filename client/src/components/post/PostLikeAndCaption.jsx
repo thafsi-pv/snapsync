@@ -1,6 +1,6 @@
 import React from "react";
 
-function PostLikeAndCaption({ post, posts, setPosts,index }) {
+function PostLikeAndCaption({ post, posts, setPosts, index }) {
   const handleMoreCaption = (index) => {
     const data = [...posts];
     data[index].showFullCaption = true;

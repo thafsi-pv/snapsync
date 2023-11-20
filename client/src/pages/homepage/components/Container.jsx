@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Story from "./Story";
 import Suggestions from "./Suggestions";
 import Post from "./Post";
-import Comments from "../modal/Comments";
+import Comments from "../../../components/modal/Comments";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function Container() {
