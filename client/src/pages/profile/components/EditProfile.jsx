@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
-import useUploadMedia from "../../../hooks/useUploadMedia";
 import { PROFILE_API } from "../../../services/api/const";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import TextField from "../../../components/uiPrimitives/fields/TextField";
+import useUploadToCloudinary from "../../../hooks/useUploadToCloudinary";
 
 function EditProfile() {
   const { userData } = useContext(UserActionContext);
   const [bio, setBio] = useState();
   const [profileImg, setProfileImg] = useState(null);
-  const { uploadFileToCloudinary } = useUploadMedia();
+  const { uploadFileToCloudinary } = useUploadToCloudinary();
 
   const handleProfileImage = (e) => {
     const selectedImage = e.target.files[0];

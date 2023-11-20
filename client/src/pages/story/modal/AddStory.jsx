@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import CreatePost from "../../../assets/svg/createPost";
-import useUploadMedia from "../../../hooks/useUploadMedia";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import { FileUploadContext } from "../../../services/providers/FileUploadContext";
 import { STORY_API } from "../../../services/api/const";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
+import useUploadToCloudinary from "../../../hooks/useUploadToCloudinary";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
 
   const { setUploadProgress } = useContext(FileUploadContext);
-  const { uploadFileToCloudinary, uploadProgress } = useUploadMedia();
+  const { uploadFileToCloudinary, uploadProgress } = useUploadToCloudinary();
 
   const [media, setMedia] = useState();
   const [file, setFile] = useState();

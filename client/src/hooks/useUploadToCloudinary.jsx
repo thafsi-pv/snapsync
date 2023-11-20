@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { CLOUDINARY_IMAGE_UPLOAD_URL, CLOUDINARY_VIDEO_UPLOAD_URL } from "../services/api/const";
 
 
-const useUploadMedia = () => {
+const useUploadToCloudinary = () => {
   const [uploadedUrl, setUploadedUrl] = useState();
   const [uploadProgress, setUploadProgress] = useState();
   const [fileSize, setFileSize] = useState(0);
@@ -52,4 +52,4 @@ const useUploadMedia = () => {
   return { uploadFileToCloudinary, uploadedUrl, uploadProgress, fileSize };
 };
 
-export default useUploadMedia;
+export default useUploadToCloudinary;

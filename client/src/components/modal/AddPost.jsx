@@ -1,120 +1,28 @@
-// import React, { useContext, useEffect, useState } from "react";
-// import CreatePost from "../../assets/svg/createPost";
-// import { AiOutlineClose } from "react-icons/ai";
-// import { motion } from "framer-motion";
-// import { useFormik } from "formik";
-// import useUploadMedia from "../../hooks/useUploadMedia";
-// import PortalModal from "../uiPrimitives/modal/PortalModal";
-// import { FileUploadContext } from "../../services/providers/FileUploadContext";
-// import { UserActionContext } from "../../services/providers/UserActionContext";
-// import { axiosInstance } from "../../services/api/axiosInterceptor";
-// import { POST_API } from "../../services/api/const";
-// import TextField from "../uiPrimitives/fields/TextField";
-// import InputField from "../uiPrimitives/fields/InputField";
-
-import { useContext, useEffect, useState } from "react";
-import { FileUploadContext } from "../../services/providers/FileUploadContext";
-import { UserActionContext } from "../../services/providers/UserActionContext";
-import useUploadMedia from "../../hooks/useUploadMedia";
 import { useFormik } from "formik";
-import { AiOutlineClose } from "react-icons/ai";
-import PortalModal from "../uiPrimitives/modal/PortalModal";
-import CreatePost from "../../assets/svg/createPost";
 import { motion } from "framer-motion";
-import TextField from "../uiPrimitives/fields/TextField";
+import { useContext } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import CreatePost from "../../assets/svg/createPost";
+import useHandleMedia from "../../hooks/useHandleMedia";
+import { UserActionContext } from "../../services/providers/UserActionContext";
+import { animationTransition, animationVariants } from "../../utils/const";
 import InputField from "../uiPrimitives/fields/InputField";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { POST_API } from "../../services/api/const";
+import TextField from "../uiPrimitives/fields/TextField";
+import PortalModal from "../uiPrimitives/modal/PortalModal";
 
 function AddPost() {
-  const { setUploadProgress, setFileSize } = useContext(FileUploadContext);
   const { userData, addPost, setAddPost } = useContext(UserActionContext);
-  const { uploadFileToCloudinary, uploadProgress, fileSize } = useUploadMedia();
-
-  const [media, setMedia] = useState();
-  const [file, setFile] = useState();
-
-  useEffect(() => {
-    setUploadProgress(uploadProgress);
-    setFileSize(fileSize);
-  }, [uploadProgress, fileSize]);
-
-  const handleMedia = (e) => {
-    const selectedMedia = e.target.files[0];
-    if (selectedMedia) {
-      const mediaType = selectedMedia.type;
-      setFile(selectedMedia);
-      if (mediaType.startsWith("image/")) {
-        const imageURL = URL.createObjectURL(selectedMedia);
-        setMedia(
-          <img
-            src={imageURL}
-            alt="Selected Image"
-            className="object-fit w-full h-full"
-          />
-        );
-      } else if (mediaType.startsWith("video/")) {
-        const videoURL = URL.createObjectURL(selectedMedia);
-        setMedia(
-          <video src={videoURL} controls className="object-fit w-full h-full" />
-        );
-      }
-    }
-  };
-
-  const handleImageRemove = () => {
-    setMedia(null);
-  };
-
-  const handleSharPost = async (values) => {
-    setAddPost(false);
-    let fileUrl = null;
-    if (file) {
-      fileUrl = await uploadFileToCloudinary(file);
-    }
-    if (fileUrl) {
-      handleSavePost(values, fileUrl);
-    }
-  };
-
-  const handleSavePost = async (values, fileUrl) => {
-    const post = {
-      media_url: fileUrl,
-      location: values.location,
-      caption: values.caption,
-      media_type: file.type,
-    };
-
-    const createdPost = await axiosInstance.post(POST_API, post);
-    if (createdPost.status === 200) {
-      setUploadProgress(0);
-      setMedia(null);
-      setFile(null);
-    }
-  };
-
+  const { media, setMedia, handleMedia, handleUploadPost, handleImageRemove } =
+    useHandleMedia();
   const postFormik = useFormik({
     initialValues: {
       caption: "",
       location: "",
     },
-    //validationSchema: signUpValidationSchema,
     onSubmit: (values) => {
-      console.log("🚀 ~ file: AddPost.jsx:62 ~ AddPost ~ values:", values);
-
-      handleSharPost(values);
+      handleUploadPost(values);
     },
   });
-
-  const animationVariants = {
-    hidden: { x: "100%" },
-    visible: { x: 0 },
-  };
-
-  const animationTransition = {
-    type: "smooth",
-    duration: 0.4,
-  };
 
   if (!addPost) return null;
   return (
