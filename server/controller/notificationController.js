@@ -1,4 +1,4 @@
-const Notification = require("../model/notification");
+const Notification = require("../model/notificationModel");
 
 const saveNotification = async (req, res) => {
   const { recipient_Id, postId, type } = req.params;
@@ -10,7 +10,6 @@ const saveNotification = async (req, res) => {
     recipient_Id,
     post_Id: postId,
   });
-
   if (existingNotification) {
     existingNotification.updatedAt = new Date();
     await existingNotification.save();
@@ -22,19 +21,23 @@ const saveNotification = async (req, res) => {
       post_Id: postId,
     });
   }
-
   res.json({ success: true });
 };
 
 const getNotification = async (req, res) => {
-  const userId = req.user._id; // Assuming user is authenticated
-
-  const notifications = await Notification.find({
-    recipientId: userId,
-    read: false,
-  }).populate("senderId postId");
-
-  res.json({ notifications });
+  try {
+    const userId = req.userId; // Assuming user is authenticated
+    const notifications = await Notification.find({
+      recipient_Id: userId,
+      // read: false,
+    }).populate("sender_Id post_Id");
+    res.json({ notifications });
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: notificationController.js:40 ~ getNotification ~ error:",
+      error
+    );
+  }
 };
 
 const markAsRead = async (req, res) => {

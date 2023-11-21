@@ -122,11 +122,14 @@ function SideNav() {
                   src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
                   className="w-6 shrink-0"
                 />
-                {notification?.length > 0 && (
-                  <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                    {notification?.length}
-                  </p>
-                )}
+                {notification?.length > 0 &&
+                  notification.map(() => (
+                    <p
+                      key={notification[0]._id}
+                      className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white ping-animation">
+                      {notification?.length}
+                    </p>
+                  ))}
               </div>
               <p className={`font-normal ${navbar}`}>Notification</p>
             </div>
