@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AiFillHome, AiOutlineSearch, AiOutlineCompass } from "react-icons/ai";
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { FaThreads } from "react-icons/fa6";
@@ -13,6 +13,8 @@ import { motion } from "framer-motion";
 import UserImage from "../user/UserImage";
 import { IoIosClose } from "react-icons/io";
 import useNotification from "../../hooks/useNotification";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { NOTIFICATION } from "../../services/api/const";
 
 let search = false;
 let noti = false;
@@ -283,6 +285,24 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
     setNavbar("block");
     noti = false;
   };
+  const [notificationList, setNotificationList] = useState([]);
+  console.log(
+    "🚀 ~ file: SideNav.jsx:289 ~ NotificationComp ~ notification:",
+    notificationList
+  );
+
+  useEffect(() => {
+    getNotification();
+  }, []);
+
+  const getNotification = async () => {
+    const response = await axiosInstance.get(NOTIFICATION);
+    console.log(
+      "🚀 ~ file: SideNav.jsx:297 ~ getNotification ~ response:",
+      response
+    );
+    setNotificationList(response.data);
+  };
 
   return (
     <motion.div
@@ -303,9 +323,45 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
             />
           </div>
           <div className="">
-            <div>
-              <img className="h5 w-5" src={userData?.imageUrl} alt="" />
-              <p>Name</p>
+            {notificationList?.map((noti) => (
+              <div>
+                <img className="h5 w-5" src={userData?.imageUrl} alt="" />
+                <p>Name</p>
+              </div>
+            ))}
+
+            <div className="flex items-center space-x-4">
+              <div className="">
+                <div className="relative">
+                  <img
+                    src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg"
+                    className="w-8 shrink-0 rounded-full border-2 border-white"
+                  />
+                  <img
+                    src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg"
+                    alt=""
+                    className="absolute -right-2 -bottom-2 bg-red-500 rounded-full w-8 h-8 text-white text-xs text-center border-2 border-white"
+                  />
+                </div>
+              </div>
+              <div className="flex-1 flex items-center space-x-4 flex-wrap">
+                <div className="flex-wrap">
+                  <span className="text-sm font-semibold">firs user name</span>{" "}
+                  and
+                  <span className="text-sm font-semibold">
+                    second user name
+                  </span>
+                  liked your story.
+                  <span className="text-xs text-gray-500">4 d</span>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                <img
+                  src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg"
+                  alt="Media thumbnail"
+                  className="object-cover w-10 h-10"
+                />
+              </div>
             </div>
           </div>
         </div>

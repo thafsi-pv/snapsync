@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { axiosInstance } from "../services/api/axiosInterceptor";
-import { CREATE_NOTIFICATION } from "../services/api/const";
+import { NOTIFICATION } from "../services/api/const";
 import { SocketContext } from "../services/providers/SocketContext";
 
 function useNotification() {
@@ -26,7 +26,7 @@ function useNotification() {
 
   const createNotification = async (type, recipient_Id, post_Id) => {
     const data = { type, recipient_Id, post_Id };
-    const response = await axiosInstance.post(CREATE_NOTIFICATION, data);
+    const response = await axiosInstance.post(NOTIFICATION, data);
     console.log("notification-------");
     socket.emit("notification", data);
 

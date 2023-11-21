@@ -136,17 +136,11 @@ io.on("connection", (socket) => {
     });
 
     socket.on("notification", async (data) => {
-      console.log("🚀 ~ file: index.js:129 ~ socket.on ~ data:", data);
       const { type, recipient_Id, post_Id } = data;
 
       const sockeid = getSocketId(recipient_Id);
-      console.log("🚀 ~ file: index.js:143 ~ socket.on ~ sockeid:", sockeid);
       if (sockeid) {
         const postdetails = await postModel.findOne({ _id: post_Id });
-        console.log(
-          "🚀 ~ file: index.js:146 ~ socket.on ~ postdetails:",
-          postdetails
-        );
         socket.to(sockeid).emit("notification", postdetails);
       }
     });

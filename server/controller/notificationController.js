@@ -1,14 +1,15 @@
+const { default: mongoose } = require("mongoose");
 const Notification = require("../model/notificationModel");
 
 const saveNotification = async (req, res) => {
-  const { recipient_Id, postId, type } = req.params;
+  const { recipient_Id, post_Id, type } = req.body;
   const sender_Id = req.userId;
 
   const existingNotification = await Notification.findOne({
     type,
     sender_Id,
     recipient_Id,
-    post_Id: postId,
+    post_Id,
   });
   if (existingNotification) {
     existingNotification.updatedAt = new Date();
@@ -18,7 +19,7 @@ const saveNotification = async (req, res) => {
       type,
       sender_Id,
       recipient_Id,
-      post_Id: postId,
+      post_Id,
     });
   }
   res.json({ success: true });
@@ -26,17 +27,14 @@ const saveNotification = async (req, res) => {
 
 const getNotification = async (req, res) => {
   try {
-    const userId = req.userId; // Assuming user is authenticated
+    const userId = new mongoose.Types.ObjectId(req.userId);
     const notifications = await Notification.find({
       recipient_Id: userId,
-      // read: false,
-    }).populate("sender_Id post_Id");
-    res.json({ notifications });
+    }).populate(["sender_Id", "post_Id"]);
+    res.json(notifications);
   } catch (error) {
-    console.log(
-      "🚀 ~ file: notificationController.js:40 ~ getNotification ~ error:",
-      error
-    );
+    console.error("Error fetching notifications:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
