@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { FOLLOW_USER } from "../../services/api/const";
 
 function SuggestionUser({ user }) {
   const [followedUserId, setFollowedUserId] = useState(null);
