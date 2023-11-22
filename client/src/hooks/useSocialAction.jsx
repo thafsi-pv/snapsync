@@ -50,7 +50,7 @@ function useSocialAction() {
         //notification only when like not for unlike
         if (updatedData[index].liked) {
           const noti = await createNotification(
-            "like",
+            "liked",
             updatedData[index].user[0]._id,
             updatedData[index]._id
           );
