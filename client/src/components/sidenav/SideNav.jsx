@@ -15,6 +15,7 @@ import { IoIosClose } from "react-icons/io";
 import useNotification from "../../hooks/useNotification";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { NOTIFICATION } from "../../services/api/const";
+import { timeAgo } from "../../utils/timeAgo";
 
 let search = false;
 let noti = false;
@@ -327,7 +328,9 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
           </div>
           {notificationList?.map((facet) =>
             facet?.value.length > 0 ? (
-              <div className="flex flex-col gap-4 border-b pb-2" key={facet.key}>
+              <div
+                className="flex flex-col gap-4 border-b pb-2"
+                key={facet.key}>
                 <p className="text-base font-semibold">
                   {facet?.value[0]?.facetName}
                 </p>
@@ -355,7 +358,9 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
                     </div>
                     <div className="flex-1 flex items-center space-x-4 flex-wrap">
                       {noti.notifications.length >= 2 ? (
-                        <div className="flex flex-wrap gap-2 line-clamp-2">
+                        <div
+                          className="flex flex-wrap gap-x-1 line-clamp-2 leading-3 items-center"
+                          style={{ lineHeight: "1.2" }}>
                           <span className="text-sm font-semibold">
                             {noti.notifications[0].sender.username[0]}
                           </span>
@@ -364,14 +369,32 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
                             {noti.notifications[1].sender.username[0]}
                           </span>
                           <span className="text-sm ">
+                            {noti.notifications.length > 2 &&
+                              `and ${
+                                noti.notifications.length - 2
+                              } others`}{" "}
                             {noti.notifications[0].type} your post.
                           </span>
-                          <span className="text-xs text-gray-500">4 d</span>
+                          <span className="text-xs text-gray-500">
+                            {timeAgo(
+                              noti.notifications[noti.notifications.length - 1]
+                                .createdAt
+                            )}
+                          </span>
                         </div>
                       ) : (
-                        <span className="text-sm font-semibold">
-                          {noti.notifications[0].sender.username[0]}{" "}
+                        <span className="text-sm flex gap-1 items-center">
+                          <span className="font-semibold">
+                            {" "}
+                            {noti.notifications[0].sender.username[0]}
+                          </span>
                           {noti.notifications[0].type} your post.
+                          <span className="text-xs text-gray-500">
+                            {timeAgo(
+                              noti.notifications[noti.notifications.length - 1]
+                                .createdAt
+                            )}
+                          </span>
                         </span>
                       )}
                     </div>
@@ -382,7 +405,7 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
                           ".jpg"
                         )}
                         alt="Media thumbnail"
-                        className="object-cover w-10 h-10"
+                        className="object-cover w-10 h-10 rounded-sm"
                       />
                     </div>
                   </div>
