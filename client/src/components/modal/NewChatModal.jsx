@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import useDebounce from "../../../hooks/useDebounce";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
-import { SEARCH_USER_API } from "../../../services/api/const";
-import InputField from "../../../components/uiPrimitives/fields/InputField";
-import { SocketContext } from "../../../services/providers/SocketContext";
-import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
+import useDebounce from "../../hooks/useDebounce";
+import { SocketContext } from "../../services/providers/SocketContext";
+import { SEARCH_USER_API } from "../../services/api/const";
+import { axiosInstance } from "../../services/api/axiosInterceptor";
+import PortalModal from "../uiPrimitives/modal/PortalModal";
+import InputField from "../uiPrimitives/fields/InputField";
+import SearchUser from "./components/SearchUser";
+
 function NewChatModal({ newChat, setNewChat, setChatUser }) {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -59,9 +61,8 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
             <AiOutlineClose className="w-5 h-5" />
           </div>
         </div>
-        <div className="border-b flex gap-3 px-4 items-center py-1">
+        {/* <div className="border-b flex gap-3 px-4 items-center py-1">
           <p className="font-semibold">To:</p>
-          {/* <input type="text" placeholder="Search" className="w-full" /> */}
           <InputField
             placeholder="Search.."
             extra="border-0 bg-white"
@@ -93,7 +94,14 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
               <p className="text-sm text-gray-400">No account found.</p>
             </div>
           )}
-        </div>
+        </div> */}
+
+        <SearchUser
+          searchTerm={searchTerm}
+          usersList={usersList}
+          setSearchTerm={setSearchTerm}
+          handleNewChat={handleNewChat}
+        />
         <div className="p-2 rounded-lg">
           <button className="p-2 w-full bg-blue-500 rounded-lg text-white font-semibold">
             Chat
