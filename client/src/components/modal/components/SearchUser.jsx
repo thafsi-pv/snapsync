@@ -1,7 +1,7 @@
 import React from "react";
 import InputField from "../../uiPrimitives/fields/InputField";
 
-function SearchUser({searchTerm,usersList,setSearchTerm,handleNewChat}) {
+function SearchUser({searchTerm,usersList,setSearchTerm,onClick}) {
   return (
     <>
       <div className="border-b flex gap-3 px-4 items-center py-1">
@@ -19,7 +19,7 @@ function SearchUser({searchTerm,usersList,setSearchTerm,handleNewChat}) {
           usersList?.map((user) => (
             <div
               key={user._id}
-              onClick={() => handleNewChat(user._id)}
+              onClick={() => onClick(user._id)}
               className="p-3 flex gap-3 items-center hover:bg-gray-100 cursor-pointer">
               <img
                 src={user.imageUrl}

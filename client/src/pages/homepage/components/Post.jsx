@@ -19,7 +19,7 @@ function Post() {
   //   setPosts(post.data);
   // };
 
-  const { posts, setPosts, likePost, viewComments, savePost } =
+  const { posts, setPosts, likePost, viewComments, savePost,sharePost } =
     useSocialAction();
   return (
     <div className="flex flex-col gap-4 mx-20">
@@ -45,6 +45,7 @@ function Post() {
                     likePost={likePost}
                     viewComments={viewComments}
                     savePost={savePost}
+                    sharePost={sharePost}
                   />
                 </div>
                 <div className="flex flex-row justify-between items-start mr-8">

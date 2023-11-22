@@ -16,14 +16,15 @@ import { GET_CHATS_API } from "../../services/api/const";
 import { genericError } from "../../services/api/genericError";
 import { SocketContext } from "../../services/providers/SocketContext";
 import { UserActionContext } from "../../services/providers/UserActionContext";
+import useChat from "../../hooks/useChat";
 
 function Messages() {
   const navigate = useNavigate();
   const chatListRef = useRef(null);
-  const { userData, setNavbar } = useContext(UserActionContext);
-  console.log("🚀 ~ file: Messages.jsx:27 ~ Messages ~ userData:", userData);
   const [chatUser, setChatUser] = useState(null);
+  const { userData, setNavbar } = useContext(UserActionContext);
   const { socket, messages, setMessages } = useContext(SocketContext);
+  const { sendMessage } = useChat();
 
   const [message, setMessage] = useState("");
   const [showEmoji, setshowEmoji] = useState(false);
@@ -87,23 +88,24 @@ function Messages() {
 
   const handleSendMessage = () => {
     if (chatUser && message) {
-      socket.emit("private message", {
-        sender: userData._id,
-        recipient: chatUser._id,
-        messageType: "TextMessage",
-        recipientSocketId: chatUser.socketId,
-        message,
-      });
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          // sender: userData._id,
-          sender: { _id: userData._id },
-          recipient: chatUser._id,
-          message: message,
-        },
-      ]);
-      setMessage("");
+      // socket.emit("private message", {
+      //   sender: userData._id,
+      //   recipient: chatUser._id,
+      //   messageType: "TextMessage",
+      //   // recipientSocketId: chatUser.socketId,
+      //   message,
+      // });
+      sendMessage(chatUser._id, message, "TextMessage");
+      // setMessages((prevMessages) => [
+      //   ...prevMessages,
+      //   {
+      //     // sender: userData._id,
+      //     sender: { _id: userData._id },
+      //     recipient: chatUser._id,
+      //     message: message,
+      //   },
+      // ]);
+      // setMessage("");
     }
   };
 

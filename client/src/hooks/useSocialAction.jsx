@@ -18,7 +18,7 @@ import useNotification from "./useNotification";
 function useSocialAction() {
   const [posts, setPosts] = useState([]);
 
-  const { comments, setComments, postId, setPostId } =
+  const { comments, setComments, postId, setPostId, setShare } =
     useContext(UserActionContext);
 
   const { createNotification } = useNotification(); //notification hook
@@ -94,6 +94,11 @@ function useSocialAction() {
     return comments.data[0];
   };
 
+  const sharePost = (postId) => {
+    setShare(true);
+    setPostId(postId);
+  };
+
   //post likes from comment modal update db and return current post details
   const likePostInCommentModal = async (postDetails) => {
     try {
@@ -128,6 +133,7 @@ function useSocialAction() {
     getCommentsByPostId,
     likePostInCommentModal,
     savePostInCommentModal,
+    sharePost,
   };
 }
 

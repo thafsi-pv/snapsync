@@ -19,6 +19,7 @@ function UserActionContextProvider({ children }) {
   const [loadStory, setLoadStory] = useState({ loading: false, id: "" });
   const [searchBar, setSearchBar] = useState(false);
   const [notificationBar, setNotificationBar] = useState(false);
+  const [share, setShare] = useState(false);
 
   useEffect(() => {
     getUserData();
@@ -50,6 +51,8 @@ function UserActionContextProvider({ children }) {
         setSearchBar,
         notificationBar,
         setNotificationBar,
+        share,
+        setShare,
       }}>
       {children}
     </UserActionContext.Provider>

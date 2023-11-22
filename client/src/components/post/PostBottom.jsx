@@ -18,6 +18,7 @@ function PostBottom({
   likePost,
   viewComments,
   savePost,
+  sharePost,
 }) {
   const { comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
@@ -48,20 +49,20 @@ function PostBottom({
   //   setPostId(postId);
   // };
 
-  const handleSavePost = async (post_id) => {
-    try {
-      const data = { post_id };
-      const response = await axiosInstance.post(SAVE_POST_API, data);
-      const postIndex = posts.findIndex((item) => item._id === post_id);
-      if (postIndex !== -1) {
-        const updatedPosts = [...posts];
-        updatedPosts[postIndex].saved = response.data.flag;
-        setPosts(updatedPosts);
-      }
-    } catch (error) {
-      console.error("Error handling save post:", error);
-    }
-  };
+  // const handleSavePost = async (post_id) => {
+  //   try {
+  //     const data = { post_id };
+  //     const response = await axiosInstance.post(SAVE_POST_API, data);
+  //     const postIndex = posts.findIndex((item) => item._id === post_id);
+  //     if (postIndex !== -1) {
+  //       const updatedPosts = [...posts];
+  //       updatedPosts[postIndex].saved = response.data.flag;
+  //       setPosts(updatedPosts);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error handling save post:", error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-row justify-between items-center mr-1">
@@ -88,8 +89,13 @@ function PostBottom({
             }}
           />
         </div>
-        <div className="cursor-pointer">
-          <MessageIcon />
+        <div className="cursor-pointer" onClick={() => {
+              console.log('dfdsf')
+              sharePost(post._id);
+            }}>
+          <MessageIcon
+            
+          />
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => savePost(post._id)}>

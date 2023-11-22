@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import useChat from "../../hooks/useChat";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { tokenName } from "../../utils/const";
@@ -6,6 +6,7 @@ import { socketBaseUrl } from "../api/const";
 import { io } from "socket.io-client";
 import { genericError } from "../api/genericError";
 import { getIdFromUrl } from "../../utils/getIdFromUrl";
+import { UserActionContext } from "./UserActionContext";
 
 export const SocketContext = createContext(null);
 
@@ -48,9 +49,17 @@ function SocketContextProvider({ children }) {
     }
   }, [socket]);
 
+ 
+
   return (
     <SocketContext.Provider
-      value={{ socket, setSocket, messages, setMessages, newMessageNotif }}>
+      value={{
+        socket,
+        setSocket,
+        messages,
+        setMessages,
+        newMessageNotif,
+      }}>
       {children}
     </SocketContext.Provider>
   );
