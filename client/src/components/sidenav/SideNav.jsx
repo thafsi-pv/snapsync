@@ -318,14 +318,8 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
       <div className="absolute w-screen h-screen" onClick={handleNotiBar}></div>
       <div className=" z-10 left-5 h-screen bg-white  w-96 rounded-r-2xl shadow-right border ">
         <div className="flex flex-col gap-5 p-3">
-          <p className="text-2xl">Notification</p>
-          <div className="p-4 border-b">
-            <InputField
-              inputClass="p-2"
-              extra="rounded-lg"
-              placeholder="Search"
-            />
-          </div>
+          <p className="text-2xl font-semibold">Notification</p>
+          
           {notificationList?.map((facet) =>
             facet?.value.length > 0 ? (
               <div

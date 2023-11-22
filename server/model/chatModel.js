@@ -4,7 +4,12 @@ const chatSchema = mongoose.Schema(
   {
     sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     recipient: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    message: { type: String },
+    messageType: {
+      type: String,
+      enum: ["text", "post", "profile"],
+      required: true,
+    },
+    message: { type: mongoose.Schema.Types.ObjectId, required: true },
     isRead: { type: Boolean },
   },
   { timestamps: true, strict: false }
