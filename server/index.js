@@ -20,6 +20,7 @@ const {
   isReadUpdate,
   getRecentChats,
   getRecentChatsList,
+  createChatFn,
 } = require("./controller/chatController");
 const { storyRouter } = require("./router/storyRouter");
 const NotificationRouter = require("./router/notificationRouter");
@@ -89,24 +90,32 @@ io.on("connection", (socket) => {
     });
     socket.on(
       "private message",
-      async ({ sender, recipient, recipientSocketId, message }) => {
-        const data = { sender, recipient, message };
+      async ({
+        sender,
+        recipient,
+        recipientSocketId,
+        messageType,
+        message,
+      }) => {
+        const data = { sender, recipient, messageType, message };
         const sockeid = getSocketId(recipient);
         if (sockeid) {
           data.isRead = true;
-          const newChat = await chatModal.create(data);
+          const newChat = await createChatFn(data);
           socket.to(sockeid).emit("private message", {
             //sender: socket.id,
             _id: newChat._id,
             sender,
             message,
+            messageType,
           });
         } else {
           data.isRead = false;
-          const newChat = await chatModal.create(data);
+          const newChat = await createChatFn(data);
         }
       }
     );
+
     socket.on("isReadUpdata", async ({ _id, flag }) => {
       const update = await isReadUpdate(_id, flag);
     });

@@ -6,10 +6,14 @@ const chatSchema = mongoose.Schema(
     recipient: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     messageType: {
       type: String,
-      enum: ["text", "post", "profile"],
+      enum: ["TextMessage", "PostMessage", "ProfileMessage"],
       required: true,
     },
-    message: { type: mongoose.Schema.Types.ObjectId, required: true },
+    message: {
+      type: mongoose.Schema.Types.ObjectId,
+      refPath: "messageType",
+      required: true,
+    },
     isRead: { type: Boolean },
   },
   { timestamps: true, strict: false }

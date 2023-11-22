@@ -92,6 +92,7 @@ function Messages() {
       socket.emit("private message", {
         sender: userData._id,
         recipient: chatUser._id,
+        messageType: "TextMessage",
         recipientSocketId: chatUser.socketId,
         message,
       });
