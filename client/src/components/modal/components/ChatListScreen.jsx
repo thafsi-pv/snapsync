@@ -3,6 +3,7 @@ import React from "react";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
+import { timeAgo } from "../../../utils/timeAgo";
 
 function ChatListScreen({
   message,
@@ -117,7 +118,7 @@ const ChatMessage = ({ message, isMine, messageType }) => {
               />
               <div className="flex flex-col">
                 <span className="text-sm font-semibold">g</span>
-                <span className="text-xs text-gray-500">4d</span>
+                <span className="text-xs text-gray-500">{timeAgo(message.postId.createdAt)}</span>
               </div>
             </div>
             <div className="max-w-xs">
@@ -125,23 +126,12 @@ const ChatMessage = ({ message, isMine, messageType }) => {
                 alt="Collage"
                 className="w-full"
                 referrerpolicy="origin-when-cross-origin"
-                src="https://scontent.cdninstagram.com/v/t51.29350-15/396546931_871734677915879_7755603533089303028_n.webp?stp=dst-jpg&amp;_nc_cat=102&amp;ccb=1-7&amp;_nc_sid=c4dd86&amp;_nc_ohc=xos5T_SQNJ8AX9SwhfQ&amp;_nc_ht=scontent.cdninstagram.com&amp;oh=00_AfBbwZIL99JkeCrSOC7bIDCMMIINKPEQ1X-P5VJQxkJc5g&amp;oe=6561E08D"
+                src={message.postId.media_url}
               />
             </div>
             <div className="p-4">
               <p className="text-sm text-gray-700 line-clamp-3">
-                👋 Hey Developers | ⚠️ Save It For Later Post by: @codebustler
-                👉 Regular Expression | RegEx | JavaScript | In Detail 🔔 Follow
-                me @codebustler for more content like this. Don't Forget To Like
-                ♥️ | Share 📲 | Save 📥
-                ----------------------------------------- #regex #webdevelopment
-                #computerscience #html #css #javascript #coders #fullstack
-                #codingisfun #codingbootcamp #codingchallenge #learncode
-                #reactjs #vscode #programmerslife #100daysofcode #csstricks
-                #100daysofcodechallenge #frontenddev #codebustler
-                #frontenddeveloper #frontendengineer #html5 #htmlcoding
-                #htmltutorial #html5website #htmlcode #html_css #codebustler
-                #javascript #react
+                {message.postId.caption}
               </p>
             </div>
           </div>
