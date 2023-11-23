@@ -100,7 +100,7 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
           searchTerm={searchTerm}
           usersList={usersList}
           setSearchTerm={setSearchTerm}
-          handleNewChat={handleNewChat}
+          onClick={handleNewChat}
         />
         <div className="p-2 rounded-lg">
           <button className="p-2 w-full bg-blue-500 rounded-lg text-white font-semibold">

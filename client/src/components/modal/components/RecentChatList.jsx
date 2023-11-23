@@ -2,6 +2,10 @@ import React from "react";
 import { timeAgo } from "../../../utils/timeAgo";
 
 function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
+  console.log(
+    "🚀 ~ file: RecentChatList.jsx:5 ~ RecentChatList ~ recentChatList:",
+    recentChatList
+  );
   return (
     <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll">
       {recentChatList?.map((recent) => (
@@ -30,12 +34,14 @@ function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
                   ? recent.recipientInfo.fullName
                   : recent.senderInfo.fullName}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="flex gap-3 text-xs text-gray-500">
                 <span className="line-clamp-1">
                   {recent.senderInfo._id == userData?._id ? "You: " : ""}
-                  {recent.message}
+                  {recent.messageType != "TextMessage"
+                    ? "sent an attachment."
+                    : recent.messageTypeDetails.text}
                 </span>
-                . {timeAgo(recent.createdAt)}
+                · {timeAgo(recent.createdAt)}
               </p>
             </div>
           </div>

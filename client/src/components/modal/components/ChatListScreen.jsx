@@ -1,6 +1,6 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { useCallback, useContext } from "react";
-import { BsFillEmojiSmileFill } from "react-icons/bs";
+import { BsEmojiSmile, BsFillEmojiSmileFill, BsFillEmojiSmileUpsideDownFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
@@ -65,7 +65,7 @@ function ChatListScreen({
             />
           </div>
         )}
-        <BsFillEmojiSmileFill
+        <BsEmojiSmile
           className="h-7 w-7 txtGreenColor cursor-pointer"
           onClick={() => setshowEmoji((prev) => !prev)}
         />
@@ -119,7 +119,7 @@ const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
           isMine ? "justify-end" : "justify-start"
         } items-end `}>
         <div
-          className={`max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl`}>
+          className={`max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl `}>
           <div className="flex flex-col items-start max-w-xs mx-auto mb-4  bg-gray-100 rounded-lg">
             <div
               className="flex items-center space-x-2 px-4 py-3"
@@ -149,7 +149,7 @@ const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
             </div> */}
 
             <div
-              className="relative max-w-xs"
+              className="relative max-w-xs "
               onClick={() => {
                 handleViewComments(message.postId._id);
               }}>
@@ -160,7 +160,7 @@ const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
               )}
               <img
                 alt="Collage"
-                className="w-full object-cover"
+                className=" w-[350px] h-[350px] object-cover"
                 src={message.postId.media_url.replace(/\.mp4$/, ".jpg")}
               />
             </div>

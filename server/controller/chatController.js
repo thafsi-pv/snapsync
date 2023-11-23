@@ -138,6 +138,70 @@ const getRecentChats = async (req, res) => {
   }
 };
 
+// const getRecentChatsList = async (Id) => {
+//   const userId = new mongoose.Types.ObjectId(Id);
+//   const recentChats = await chatModel.aggregate([
+//     {
+//       $match: {
+//         $or: [{ sender: userId }, { recipient: userId }],
+//       },
+//     },
+//     {
+//       $sort: { createdAt: -1 }, // Sort by the most recent messages
+//     },
+//     {
+//       $group: {
+//         _id: {
+//           $cond: [{ $eq: ["$sender", userId] }, "$recipient", "$sender"],
+//         },
+//         latestMessage: { $first: "$$ROOT" }, // Get the most recent message
+//       },
+//     },
+//     {
+//       $replaceRoot: { newRoot: "$latestMessage" }, // Replace root with the most recent message
+//     },
+//     {
+//       $lookup: {
+//         from: "users",
+//         localField: "sender",
+//         foreignField: "_id",
+//         as: "senderInfo",
+//       },
+//     },
+//     {
+//       $lookup: {
+//         from: "users",
+//         localField: "recipient",
+//         foreignField: "_id",
+//         as: "recipientInfo",
+//       },
+//     },
+    
+//     {
+//       $unwind: "$senderInfo",
+//     },
+//     {
+//       $unwind: "$recipientInfo",
+//     },
+//     {
+//       $project: {
+//         _id: 1,
+//         message: 1,
+//         createdAt: 1,
+//         senderInfo: 1,
+//         recipientInfo: 1,
+//         messageType: 1,
+//         messageData:1
+//       },
+//     },
+//   ]);
+//   console.log(
+//     "🚀 ~ file: chatController.js:195 ~ getRecentChatsList ~ recentChats:",
+//     recentChats
+//   );
+//   return recentChats;
+// };
+
 const getRecentChatsList = async (Id) => {
   const userId = new mongoose.Types.ObjectId(Id);
   const recentChats = await chatModel.aggregate([
@@ -147,18 +211,18 @@ const getRecentChatsList = async (Id) => {
       },
     },
     {
-      $sort: { createdAt: -1 }, // Sort by the most recent messages
+      $sort: { createdAt: -1 },
     },
     {
       $group: {
         _id: {
           $cond: [{ $eq: ["$sender", userId] }, "$recipient", "$sender"],
         },
-        latestMessage: { $first: "$$ROOT" }, // Get the most recent message
+        latestMessage: { $first: "$$ROOT" },
       },
     },
     {
-      $replaceRoot: { newRoot: "$latestMessage" }, // Replace root with the most recent message
+      $replaceRoot: { newRoot: "$latestMessage" },
     },
     {
       $lookup: {
@@ -183,17 +247,72 @@ const getRecentChatsList = async (Id) => {
       $unwind: "$recipientInfo",
     },
     {
+      $lookup: {
+        from: "textmessages", // Adjust based on your model names
+        localField: "message",
+        foreignField: "_id",
+        as: "textMessage",
+      },
+    },
+    {
+      $lookup: {
+        from: "postmessages", // Adjust based on your model names
+        localField: "message",
+        foreignField: "_id",
+        as: "postMessage",
+      },
+    },
+    {
+      $lookup: {
+        from: "profilemessages", // Adjust based on your model names
+        localField: "message",
+        foreignField: "_id",
+        as: "profileMessage",
+      },
+    },
+    {
+      $addFields: {
+        messageTypeDetails: {
+          $switch: {
+            branches: [
+              {
+                case: { $eq: ["$messageType", "TextMessage"] },
+                then: { $arrayElemAt: ["$textMessage", 0] },
+              },
+              {
+                case: { $eq: ["$messageType", "PostMessage"] },
+                then: { $arrayElemAt: ["$postMessage", 0] },
+              },
+              {
+                case: { $eq: ["$messageType", "ProfileMessage"] },
+                then: { $arrayElemAt: ["$profileMessage", 0] },
+              },
+            ],
+            default: null,
+          },
+        },
+      },
+    },
+    {
       $project: {
         _id: 1,
         message: 1,
         createdAt: 1,
         senderInfo: 1,
         recipientInfo: 1,
+        messageType: 1,
+        messageTypeDetails: 1,
       },
     },
   ]);
+
+  console.log(
+    "🚀 ~ file: chatController.js:195 ~ getRecentChatsList ~ recentChats:",
+    recentChats
+  );
   return recentChats;
 };
+
 
 const readAllMessage = async (req, res) => {
   try {
