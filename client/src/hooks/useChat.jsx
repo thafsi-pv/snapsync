@@ -43,7 +43,8 @@ function useChat(shouldConnect = false) {
             // sender: userData._id,
             sender: { _id: userData._id },
             recipient: recipientId,
-            message: message,
+            message: { text: message },
+            messageType,
           },
         ]);
       }

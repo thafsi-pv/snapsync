@@ -5,14 +5,12 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import BookmarkIcon from "../../assets/svg/BookmarkIcon";
 import CommentIcon from "../../assets/svg/CommentIcon";
 import MessageIcon from "../../assets/svg/MessageIcon";
+import useSocialAction from "../../hooks/useSocialAction";
+import Comment from "../../pages/homepage/components/Comment";
+import { timeAgo } from "../../utils/timeAgo";
 import PostFile from "../post/PostFile";
 import PortalModal from "../uiPrimitives/modal/PortalModal";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { COMMENT_API, LIKE_API, SAVE_POST_API } from "../../services/api/const";
-import { timeAgo } from "../../utils/timeAgo";
-import Comment from "../../pages/homepage/components/Comment";
 import UserImage from "../user/UserImage";
-import useSocialAction from "../../hooks/useSocialAction";
 import UserImgName from "../user/UserImgName";
 
 function Comments({ show, closeModal, postId }) {

@@ -90,7 +90,7 @@ const getChats = async (req, res) => {
       .populate("sender", "email")
       .populate("recipient", "email");
 
-      // Populate details based on messageType
+    // Populate details based on messageType
     for (const chat of chatMessages) {
       try {
         switch (chat.messageType) {
@@ -102,6 +102,7 @@ const getChats = async (req, res) => {
               path: "message",
               populate: {
                 path: "postId",
+                populate: { path: "user_id" },
               },
             });
             break;
@@ -117,10 +118,6 @@ const getChats = async (req, res) => {
         console.error("Error populating message:", error);
       }
     }
-    console.log(
-      "🚀 ~ file: chatController.js:106 ~ getChats ~ chatMessages####:",
-      chatMessages
-    );
 
     res.status(200).json(chatMessages);
   } catch (error) {

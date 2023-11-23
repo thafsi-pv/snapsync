@@ -1,9 +1,12 @@
 import EmojiPicker from "emoji-picker-react";
-import React from "react";
+import React, { useCallback, useContext } from "react";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
+import ReelIcon from "../../../assets/svg/ReelIcon";
+import Comments from "../Comments";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function ChatListScreen({
   message,
@@ -17,6 +20,12 @@ function ChatListScreen({
   onEmojiClick,
   setshowEmoji,
 }) {
+  const { comments, setComments, setPostId, postId } =
+    useContext(UserActionContext);
+  const handleViewComments = useCallback((postId) => {
+    setComments(true);
+    setPostId(postId);
+  }, []);
   return (
     <div className="relative  h-full w-full flex flex-col justify-between ">
       <div className="flex gap-3 w-full flex-0 border-b p-1">
@@ -39,6 +48,7 @@ function ChatListScreen({
           <ChatMessage
             message={msg.message}
             messageType={msg.messageType}
+            handleViewComments={handleViewComments}
             isMine={msg.sender._id == userData?._id ? true : false}
           />
         ))}
@@ -73,17 +83,18 @@ function ChatListScreen({
           <RiSendPlaneFill className="h-7 w-7 txtGreenColor" />
         </button>
       </div>
+      <Comments
+        postId={postId}
+        show={comments}
+        closeModal={() => setComments(false)}
+      />
     </div>
   );
 }
 
 export default ChatListScreen;
 
-const ChatMessage = ({ message, isMine, messageType }) => {
-  console.log(
-    "🚀 ~ file: ChatListScreen.jsx:79 ~ ChatMessage ~ isMine:",
-    isMine
-  );
+const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
   if (messageType === "TextMessage") {
     return (
       <div
@@ -103,7 +114,10 @@ const ChatMessage = ({ message, isMine, messageType }) => {
   }
   if (messageType === "PostMessage") {
     return (
-      <div className={`flex justify-end mb-4 items-end `}>
+      <div
+        className={`flex ${
+          isMine ? "justify-end" : "justify-start"
+        } items-end `}>
         <div
           className={`max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl`}>
           <div className="flex flex-col items-start max-w-xs mx-auto mb-4  bg-gray-100 rounded-lg">
@@ -114,21 +128,43 @@ const ChatMessage = ({ message, isMine, messageType }) => {
               <img
                 alt="Preview"
                 className="w-10 h-10 rounded-full"
-                src="https://scontent.cdninstagram.com/v/t51.2885-19/292444789_186040730434478_2118414605648019121_n.jpg?stp=dst-jpg_s50x50&amp;_nc_cat=108&amp;ccb=1-7&amp;_nc_sid=c4dd86&amp;_nc_ohc=tThTUxmtQboAX8wCuGE&amp;_nc_ht=scontent.cdninstagram.com&amp;oh=00_AfA6udp30_h8r6_8pU1uubi7Wk9uzM2FLFfzWh4mGhAZ4Q&amp;oe=65622847&amp;ig_cache_key=MzkyMjEwNTQzMTU%3D.2-ccb7-5"
+                src={message.postId.user_id.imageUrl}
               />
               <div className="flex flex-col">
-                <span className="text-sm font-semibold">g</span>
-                <span className="text-xs text-gray-500">{timeAgo(message.postId.createdAt)}</span>
+                <span className="text-sm font-semibold">
+                  {message.postId.user_id.fullName}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {timeAgo(message.postId.createdAt)}
+                </span>
               </div>
             </div>
-            <div className="max-w-xs">
+            {/* <div className="max-w-xs h-full">
               <img
                 alt="Collage"
-                className="w-full"
+                className="w-full object-cover"
                 referrerpolicy="origin-when-cross-origin"
-                src={message.postId.media_url}
+                src={message.postId.media_url.replace(/\.mp4$/, ".jpg")}
+              />
+            </div> */}
+
+            <div
+              className="relative max-w-xs"
+              onClick={() => {
+                handleViewComments(message.postId._id);
+              }}>
+              {message.postId.media_type.startsWith("video/") && (
+                <div className="absolute right-3 top-2 ">
+                  <ReelIcon color="#ffffff" />
+                </div>
+              )}
+              <img
+                alt="Collage"
+                className="w-full object-cover"
+                src={message.postId.media_url.replace(/\.mp4$/, ".jpg")}
               />
             </div>
+
             <div className="p-4">
               <p className="text-sm text-gray-700 line-clamp-3">
                 {message.postId.caption}
