@@ -79,10 +79,6 @@ async function createChatFn(chat) {
 const getChats = async (req, res) => {
   try {
     const { sender, recipient } = req.body;
-    console.log(
-      "🚀 ~ file: chatController.js:84 ~ getChats ~ req.body:",
-      req.body
-    );
     const chatMessages = await chatModel
       .find({
         $or: [
@@ -93,12 +89,8 @@ const getChats = async (req, res) => {
       .sort({ createdAt: 1 })
       .populate("sender", "email")
       .populate("recipient", "email");
-    console.log(
-      "🚀 ~ file: chatController.js:97 ~ getChats ~ chatMessages:",
-      chatMessages
-    );
 
-    // Populate details based on messageType
+      // Populate details based on messageType
     for (const chat of chatMessages) {
       try {
         switch (chat.messageType) {

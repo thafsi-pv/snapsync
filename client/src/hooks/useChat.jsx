@@ -46,7 +46,6 @@ function useChat(shouldConnect = false) {
             message: message,
           },
         ]);
-        setMessage("");
       }
     }
   }

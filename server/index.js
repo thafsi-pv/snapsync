@@ -102,6 +102,9 @@ io.on("connection", (socket) => {
         if (sockeid) {
           data.isRead = true;
           const newChat = await createChatFn(data);
+          console.log("🚀 ~ file: index.js:105 ~ io.on ~ newChat@#@#:", newChat)
+
+          
           socket.to(sockeid).emit("private message", {
             //sender: socket.id,
             _id: newChat._id,

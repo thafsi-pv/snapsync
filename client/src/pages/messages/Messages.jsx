@@ -105,7 +105,7 @@ function Messages() {
       //     message: message,
       //   },
       // ]);
-      // setMessage("");
+      setMessage("");
     }
   };
 

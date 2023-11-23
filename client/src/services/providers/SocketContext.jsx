@@ -13,7 +13,10 @@ export const SocketContext = createContext(null);
 function SocketContextProvider({ children }) {
   const [socket, setSocket] = useState();
   const [messages, setMessages] = useState([]);
-  console.log("🚀 ~ file: SocketContext.jsx:16 ~ SocketContextProvider ~ messages:", messages)
+  console.log(
+    "🚀 ~ file: SocketContext.jsx:16 ~ SocketContextProvider ~ messages:",
+    messages
+  );
   const [newMessageNotif, setNewMessageNotif] = useState([]);
 
   //const { connectSocket } = useChat();
@@ -35,22 +38,27 @@ function SocketContextProvider({ children }) {
 
   useEffect(() => {
     if (socket) {
-      socket.on("private message", ({ _id, sender, message }) => {
+      socket.on("private message", ({ _id, sender, message, messageType }) => {
         const currentURL = window.location.href;
         const id = getIdFromUrl(currentURL);
         if (id != sender) {
           socket.emit("isReadUpdata", { _id, flag: false });
           setNewMessageNotif((prev) => [...prev, _id]);
         }
+        let text = {};
+        if (messageType == "TextMessage") {
+          text = { text: message };
+        } else {
+          text = message;
+        }
+
         setMessages((prevMessages) => [
           ...prevMessages,
-          { sender: sender, message: message },
+          { sender: sender, message: text, messageType },
         ]);
       });
     }
   }, [socket]);
-
- 
 
   return (
     <SocketContext.Provider
