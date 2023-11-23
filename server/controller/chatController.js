@@ -106,9 +106,12 @@ const getChats = async (req, res) => {
             await chat.populate("message");
             break;
           case "PostMessage":
-            await chat
-              .populate("message")
-              .execPopulate({ path: "message.postId" });
+            await chat.populate({
+              path: "message",
+              populate: {
+                path: "postId",
+              },
+            });
             break;
           case "ProfileMessage":
             await chat
@@ -122,7 +125,10 @@ const getChats = async (req, res) => {
         console.error("Error populating message:", error);
       }
     }
-    console.log("🚀 ~ file: chatController.js:106 ~ getChats ~ chatMessages####:", chatMessages)
+    console.log(
+      "🚀 ~ file: chatController.js:106 ~ getChats ~ chatMessages####:",
+      chatMessages
+    );
 
     res.status(200).json(chatMessages);
   } catch (error) {

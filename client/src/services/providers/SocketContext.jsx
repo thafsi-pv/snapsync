@@ -13,6 +13,7 @@ export const SocketContext = createContext(null);
 function SocketContextProvider({ children }) {
   const [socket, setSocket] = useState();
   const [messages, setMessages] = useState([]);
+  console.log("🚀 ~ file: SocketContext.jsx:16 ~ SocketContextProvider ~ messages:", messages)
   const [newMessageNotif, setNewMessageNotif] = useState([]);
 
   //const { connectSocket } = useChat();

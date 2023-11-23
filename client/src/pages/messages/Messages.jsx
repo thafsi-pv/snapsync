@@ -163,6 +163,9 @@ function Messages() {
             showEmoji={showEmoji}
             handleSendMessage={handleSendMessage}
             userData={userData}
+            setMessage={setMessage}
+            onEmojiClick={onEmojiClick}
+            setshowEmoji={setshowEmoji}
           />
         ) : (
           <NoMessage handleNewChat={handleNewChat} />

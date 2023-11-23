@@ -7,7 +7,7 @@ import { UserActionContext } from "../services/providers/UserActionContext";
 
 function useChat(shouldConnect = false) {
   const { userData } = useContext(UserActionContext);
-  const { socket } = useContext(SocketContext);
+  const { socket, setMessages } = useContext(SocketContext);
 
   // useEffect(() => {
   //   if (socket) {
@@ -42,7 +42,7 @@ function useChat(shouldConnect = false) {
           {
             // sender: userData._id,
             sender: { _id: userData._id },
-            recipient: chatUser._id,
+            recipient: recipientId,
             message: message,
           },
         ]);
