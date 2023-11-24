@@ -4,10 +4,12 @@ import { socketBaseUrl } from "../services/api/const";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "../services/providers/SocketContext";
 import { UserActionContext } from "../services/providers/UserActionContext";
+import { useToast } from "./useToast";
 
-function useChat(shouldConnect = false) {
-  const { userData } = useContext(UserActionContext);
+function useChat() {
+  const { userData, setShare } = useContext(UserActionContext);
   const { socket, setMessages } = useContext(SocketContext);
+  const { addToast } = useToast();
 
   // useEffect(() => {
   //   if (socket) {
@@ -47,6 +49,10 @@ function useChat(shouldConnect = false) {
             messageType,
           },
         ]);
+      }
+      if (messageType == "PostMessage") {
+        setShare(false);
+        addToast("Sent");
       }
     }
   }

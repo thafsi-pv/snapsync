@@ -6,19 +6,12 @@ import { useToast } from "../../hooks/useToast";
 function HomePage() {
   const { setNavbar } = useContext(UserActionContext);
 
-  const { addToast } = useToast();
-
-  const showToast = () => {
-    addToast('This is a toast message!');
-  };
-
   useEffect(() => {
     setNavbar("block");
   }, []);
   return (
     <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
       <Container />
-      <button onClick={showToast}>Show Toast</button>
     </div>
   );
 }
