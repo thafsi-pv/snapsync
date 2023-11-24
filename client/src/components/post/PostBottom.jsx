@@ -65,7 +65,7 @@ function PostBottom({
   // };
 
   return (
-    <div className="flex flex-row justify-between items-center mr-1">
+    <div className="flex flex-row justify-between items-center px-4 ">
       <div className="flex flex-row gap-4 items-start">
         <div onClick={() => likePost(index, post._id, posts)}>
           {post.liked ? (

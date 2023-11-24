@@ -15,7 +15,7 @@ function Container() {
 
   return (
     <div className="flex overflow-hidden min-h-full min-w-full max-w-full justify-evenly ">
-      <div className="self-start flex flex-col gap-16 lg:w-8/12 md:w-7/12 sm:w-full max-w-[680px] ">
+      <div className="self-start flex flex-col gap-7 lg:w-8/12 md:w-7/12 sm:w-full max-w-[680px] ">
         <Story />
         <Post />
       </div>

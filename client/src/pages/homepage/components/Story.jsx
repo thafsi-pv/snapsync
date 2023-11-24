@@ -49,13 +49,13 @@ function Story() {
 
   return (
     <div
-      className="relative flex flex-col gap-1 max-w-full  overflow-x-auto mt-10 scrollbar-hide "
+      className="relative flex flex-col gap-1 max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide "
       ref={containerRef}>
-      <div className="flex flex-row gap-1 items-start ml-1 mr-5 my-1 h-24">
+      <div className="flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24">
         {scrollPosition > 0 && (
           <NextPrevButton onClick={handleScroll(-400)} side="left" />
         )}
-        <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] flex ">
+        <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] flex">
           {storyList?.map((story) => (
             <UserStory
               key={story._id}

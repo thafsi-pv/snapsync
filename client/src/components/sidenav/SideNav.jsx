@@ -16,41 +16,12 @@ import useNotification from "../../hooks/useNotification";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { NOTIFICATION } from "../../services/api/const";
 import { timeAgo } from "../../utils/timeAgo";
+import MenuList, { TopSmMenuList } from "./components/MenuList";
 
 let search = false;
 let noti = false;
 function SideNav() {
-  const { userData, setAddPost, navbar, setNavbar, setAddStory } =
-    useContext(UserActionContext);
-  const { newMessageNotif } = useContext(SocketContext);
-  const { notification } = useNotification();
-  console.log(
-    "🚀 ~ file: SideNav.jsx:24 ~ SideNav ~ notification:",
-    notification
-  );
-  // const { navbar, setNavbar } = useState('hidden');
-  // const [search, setSearch] = useState(false);
-
-  const handleSearch = () => {
-    if (search == false) {
-      search = true;
-      setNavbar("hidden");
-    } else {
-      search = false;
-      setNavbar("block");
-    }
-    // const navbar = "hidden";
-  };
-  const handleNoti = () => {
-    if (noti == false) {
-      noti = true;
-      setNavbar("hidden");
-    } else {
-      noti = false;
-      setNavbar("block");
-    }
-    // const navbar = "hidden";
-  };
+  const { userData, navbar, setNavbar } = useContext(UserActionContext);
 
   return (
     <>
@@ -73,90 +44,7 @@ function SideNav() {
               )}
             </div>
             <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full ">
-              <Link to="/">
-                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                  <AiFillHome className="h-7 w-7" />
-                  <p className={`font-semibold ${navbar} `}>Home</p>
-                </div>
-              </Link>
-              <div
-                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-                onClick={handleSearch}>
-                <AiOutlineSearch className="h-7 w-7" />
-                <p className={`font-normal ${navbar}`}>Search</p>
-              </div>
-              <Link to="/explore">
-                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                  <AiOutlineCompass className="h-7 w-7" />
-                  <p className={`font-normal ${navbar}`}>Explore</p>
-                </div>
-              </Link>
-
-              <div
-                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-                onClick={() => setAddStory(true)}>
-                <BiSolidMoviePlay className="h-7 w-7" />
-                <p className={`font-normal ${navbar}`}>Story</p>
-              </div>
-
-              <Link to={`direct/inbox`}>
-                <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                  {/* <BsChatQuote className="h-7 w-7" /> */}
-                  <div className="relative">
-                    <img
-                      src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
-                      className="w-6 shrink-0"
-                    />
-                    {newMessageNotif.length > 0 && (
-                      <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                        {newMessageNotif.length}
-                      </p>
-                    )}
-                  </div>
-                  <p className={`font-normal ${navbar}`}>Messages</p>
-                </div>
-              </Link>
-              <div
-                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-                onClick={handleNoti}>
-                {/* <AiOutlineHeart className="h-7 w-7" /> */}
-
-                <div className="relative">
-                  <img
-                    src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
-                    className="w-6 shrink-0"
-                  />
-                  {notification?.length > 0 &&
-                    notification.map(() => (
-                      <p
-                        key={notification[0]._id}
-                        className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white ping-animation">
-                        {notification?.length}
-                      </p>
-                    ))}
-                </div>
-                <p className={`font-normal ${navbar}`}>Notification</p>
-              </div>
-              <div
-                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-                onClick={() => setAddPost(true)}>
-                {/* <MdOutlineAddBox className="h-7 w-7" /> */}
-                <img
-                  src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
-                  className="mb-1 w-6 shrink-0"
-                />
-                <p className={`font-normal ${navbar}`}>Create</p>
-              </div>
-              <Link to={`/${userData?.userName}`}>
-                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                  <img
-                    src={userData?.imageUrl}
-                    alt=""
-                    className="w-7 h-7 rounded-full"
-                  />
-                  <p className={`font-normal ${navbar}`}>Profile</p>
-                </div>
-              </Link>
+              <MenuList showMenuName={true} />
             </div>
             <div className="absolute left-0.5 bottom-0 flex flex-col gap-3 p-3">
               <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
@@ -188,29 +76,18 @@ function SideNav() {
         )}
       </div>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-blue-500 text-white z-10">
-        <div className="flex items-center justify-between">
-          <a href="#" className="flex items-center space-x-2">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              {/* Your icon component or SVG path here */}
-            </svg>
-          </a>
-          <a href="#" className="flex items-center space-x-2">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              {/* Your icon component or SVG path here */}
-            </svg>
-          </a>
-          {/* Add more bottom navigation items as needed */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white  ">
+        <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
+          <div className="items-center">
+            <img src={logo} alt="" className="w-[110px] " />
+          </div>
+          <TopSmMenuList />
+        </div>
+      </div>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t">
+        <div className="flex items-center justify-evenly">
+          <MenuList showMenuName={false} />
         </div>
       </nav>
     </>

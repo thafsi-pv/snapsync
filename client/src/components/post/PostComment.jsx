@@ -20,10 +20,10 @@ function PostComment({ post }) {
     setPostId(postId);
   };
   return (
-    <div className="flex flex-col   shrink-0">
+    <div className="flex flex-col   shrink-0 w-full">
       {post.commentCount > 0 && (
         <div
-          className="text-sm  leading-[18px] cursor-pointer my-2"
+          className="text-sm  leading-[18px] cursor-pointer my-1"
           onClick={() => {
             handleViewComments(post._id);
           }}>

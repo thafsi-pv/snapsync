@@ -5,7 +5,7 @@ import { timeAgo } from "../../utils/timeAgo";
 
 function PostHead({ post }) {
   return (
-    <div className="flex flex-row justify-between items-center mb-2 ">
+    <div className="flex flex-row justify-between items-center mb-2 px-4">
       <div className="flex flex-row gap-3 items-start w-full">
         <div className="flex gap-3 w-full items-center">
           <UserImgName

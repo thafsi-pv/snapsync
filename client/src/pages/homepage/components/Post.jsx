@@ -19,13 +19,15 @@ function Post() {
   //   setPosts(post.data);
   // };
 
-  const { posts, setPosts, likePost, viewComments, savePost,sharePost } =
+  const { posts, setPosts, likePost, viewComments, savePost, sharePost } =
     useSocialAction();
   return (
     <div className="flex flex-col gap-4 lg:mx-20 w-full">
       {posts?.map((post, index) => {
         return (
-          <div className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[500px] w-full" key={index}>
+          <div
+            className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[500px] w-full"
+            key={index}>
             <PostHead post={post} />
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3">
@@ -34,7 +36,7 @@ function Post() {
                     <PostFile
                       media_url={post.media_url}
                       media_type={post.media_type}
-                      extra="relative object-fit lg:rounded-md !w-full !max-w-[480px] !max-h-[600px] !sm:w-[300px] bg-black"
+                      extra="relative object-fit lg:rounded-md !w-full lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px]  bg-black"
                     />
                   </div>
                   <PostBottom
@@ -48,16 +50,16 @@ function Post() {
                     sharePost={sharePost}
                   />
                 </div>
-                <div className="flex flex-row justify-between items-start mr-8">
+                <div className="flex flex-col justify-between items-start px-4">
                   <PostLikeAndCaption
                     post={post}
                     posts={posts}
                     setPosts={setPosts}
                     index={index}
                   />
+                  <PostComment post={post} />
                 </div>
               </div>
-              <PostComment post={post} />
             </div>
             <div id="Border2" className="bg-[#efefef] h-px shrink-0" />
           </div>
