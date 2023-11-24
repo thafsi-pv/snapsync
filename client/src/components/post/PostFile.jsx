@@ -14,7 +14,7 @@ function PostFile({
         <img
           src={media_url}
           id="Element3"
-          className={`relative  object-fit max-w-3xl rounded-l-md h-full  w-fit max-h-fit ${extra}`}
+          className={`relative  object-fit max-w-3xl lg:rounded-l-md h-full  w-fit max-h-fit ${extra}`}
         />
       ) : (
         <video
@@ -22,7 +22,7 @@ function PostFile({
           controls
           autoPlay={autoplay}
           loop={loop}
-          className={`relative  max-w-xl xl:max-h-full  rounded-l-md   bg-black ${extra}`}
+          className={`relative  max-w-xl xl:max-h-full  lg:rounded-l-md   bg-black ${extra}`}
         />
       )}
     </>

@@ -22,10 +22,10 @@ function Post() {
   const { posts, setPosts, likePost, viewComments, savePost,sharePost } =
     useSocialAction();
   return (
-    <div className="flex flex-col gap-4 mx-20">
+    <div className="flex flex-col gap-4 lg:mx-20 w-full">
       {posts?.map((post, index) => {
         return (
-          <div className="mb-px ml-4 mr-5 max-w-[500px]" key={index}>
+          <div className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[500px] w-full" key={index}>
             <PostHead post={post} />
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3">
@@ -34,7 +34,7 @@ function Post() {
                     <PostFile
                       media_url={post.media_url}
                       media_type={post.media_type}
-                      extra="relative object-fit rounded-md !w-[500px] !max-w-[480px] !max-h-[600px] bg-black"
+                      extra="relative object-fit lg:rounded-md !w-full !max-w-[480px] !max-h-[600px] !sm:w-[300px] bg-black"
                     />
                   </div>
                   <PostBottom

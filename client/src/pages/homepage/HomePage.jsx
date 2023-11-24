@@ -10,7 +10,7 @@ function HomePage() {
     setNavbar("block");
   }, []);
   return (
-    <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start pr-10">
+    <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start">
       <Container />
     </div>
   );

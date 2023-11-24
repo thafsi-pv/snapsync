@@ -53,139 +53,167 @@ function SideNav() {
   };
 
   return (
-    <div
-      className={`flex relative  border-r w-[21%]
-       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}>
+    <>
       <div
-        className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
-        <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
-          <div className="h-10">
-            {navbar == "block" && (
-              <div className="items-center hidden lg:block">
-                <img src={logo} alt="" className="w-[110px]" />
-              </div>
-            )}
-            {navbar == "hidden" && (
-              <div className="">
-                <SnapsyncIcon className="w-10 h-10  " />
-              </div>
-            )}
-          </div>
-          <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full ">
-            <Link to="/">
-              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                <AiFillHome className="h-7 w-7" />
-                <p className={`font-semibold ${navbar} `}>Home</p>
-              </div>
-            </Link>
-            <div
-              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-              onClick={handleSearch}>
-              <AiOutlineSearch className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>Search</p>
+        className={`hidden lg:block md:flex relative  border-r w-[21%]
+       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}>
+        <div
+          className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
+          <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
+            <div className="h-10">
+              {navbar == "block" && (
+                <div className="items-center hidden lg:block">
+                  <img src={logo} alt="" className="w-[110px]" />
+                </div>
+              )}
+              {navbar == "hidden" && (
+                <div className="">
+                  <SnapsyncIcon className="w-10 h-10  " />
+                </div>
+              )}
             </div>
-            <Link to="/explore">
-              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                <AiOutlineCompass className="h-7 w-7" />
-                <p className={`font-normal ${navbar}`}>Explore</p>
+            <div className="relative flex flex-col shrink-0 items-start mb-1 p-3 w-full ">
+              <Link to="/">
+                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                  <AiFillHome className="h-7 w-7" />
+                  <p className={`font-semibold ${navbar} `}>Home</p>
+                </div>
+              </Link>
+              <div
+                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+                onClick={handleSearch}>
+                <AiOutlineSearch className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>Search</p>
               </div>
-            </Link>
+              <Link to="/explore">
+                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                  <AiOutlineCompass className="h-7 w-7" />
+                  <p className={`font-normal ${navbar}`}>Explore</p>
+                </div>
+              </Link>
 
-            <div
-              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-              onClick={() => setAddStory(true)}>
-              <BiSolidMoviePlay className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>Story</p>
-            </div>
+              <div
+                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+                onClick={() => setAddStory(true)}>
+                <BiSolidMoviePlay className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>Story</p>
+              </div>
 
-            <Link to={`direct/inbox`}>
-              <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                {/* <BsChatQuote className="h-7 w-7" /> */}
+              <Link to={`direct/inbox`}>
+                <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                  {/* <BsChatQuote className="h-7 w-7" /> */}
+                  <div className="relative">
+                    <img
+                      src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
+                      className="w-6 shrink-0"
+                    />
+                    {newMessageNotif.length > 0 && (
+                      <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
+                        {newMessageNotif.length}
+                      </p>
+                    )}
+                  </div>
+                  <p className={`font-normal ${navbar}`}>Messages</p>
+                </div>
+              </Link>
+              <div
+                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+                onClick={handleNoti}>
+                {/* <AiOutlineHeart className="h-7 w-7" /> */}
+
                 <div className="relative">
                   <img
-                    src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
+                    src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
                     className="w-6 shrink-0"
                   />
-                  {newMessageNotif.length > 0 && (
-                    <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                      {newMessageNotif.length}
-                    </p>
-                  )}
+                  {notification?.length > 0 &&
+                    notification.map(() => (
+                      <p
+                        key={notification[0]._id}
+                        className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white ping-animation">
+                        {notification?.length}
+                      </p>
+                    ))}
                 </div>
-                <p className={`font-normal ${navbar}`}>Messages</p>
+                <p className={`font-normal ${navbar}`}>Notification</p>
               </div>
-            </Link>
-            <div
-              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-              onClick={handleNoti}>
-              {/* <AiOutlineHeart className="h-7 w-7" /> */}
-
-              <div className="relative">
+              <div
+                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+                onClick={() => setAddPost(true)}>
+                {/* <MdOutlineAddBox className="h-7 w-7" /> */}
                 <img
-                  src="https://file.rendit.io/n/rUqLdTtW8OUyBPEOsSWF.svg"
-                  className="w-6 shrink-0"
+                  src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
+                  className="mb-1 w-6 shrink-0"
                 />
-                {notification?.length > 0 &&
-                  notification.map(() => (
-                    <p
-                      key={notification[0]._id}
-                      className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white ping-animation">
-                      {notification?.length}
-                    </p>
-                  ))}
+                <p className={`font-normal ${navbar}`}>Create</p>
               </div>
-              <p className={`font-normal ${navbar}`}>Notification</p>
+              <Link to={`/${userData?.userName}`}>
+                <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                  <img
+                    src={userData?.imageUrl}
+                    alt=""
+                    className="w-7 h-7 rounded-full"
+                  />
+                  <p className={`font-normal ${navbar}`}>Profile</p>
+                </div>
+              </Link>
             </div>
-            <div
-              className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
-              onClick={() => setAddPost(true)}>
-              {/* <MdOutlineAddBox className="h-7 w-7" /> */}
-              <img
-                src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
-                className="mb-1 w-6 shrink-0"
-              />
-              <p className={`font-normal ${navbar}`}>Create</p>
-            </div>
-            <Link to={`/${userData?.userName}`}>
+            <div className="absolute left-0.5 bottom-0 flex flex-col gap-3 p-3">
               <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-                <img
-                  src={userData?.imageUrl}
-                  alt=""
-                  className="w-7 h-7 rounded-full"
-                />
-                <p className={`font-normal ${navbar}`}>Profile</p>
+                <FaThreads className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>Threads</p>
               </div>
-            </Link>
-          </div>
-          <div className="absolute left-0.5 bottom-0 flex flex-col gap-3 p-3">
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-              <FaThreads className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>Threads</p>
-            </div>
-            <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
-              <RxHamburgerMenu className="h-7 w-7" />
-              <p className={`font-normal ${navbar}`}>More</p>
+              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+                <RxHamburgerMenu className="h-7 w-7" />
+                <p className={`font-normal ${navbar}`}>More</p>
+              </div>
             </div>
           </div>
         </div>
+        {navbar == "hidden" && search && (
+          <SearchComp
+            navbar={navbar}
+            setNavbar={setNavbar}
+            userData={userData}
+            search={search}
+          />
+        )}
+        {navbar == "hidden" && noti && (
+          <NotificationComp
+            navbar={navbar}
+            setNavbar={setNavbar}
+            userData={userData}
+            noti={noti}
+          />
+        )}
       </div>
-      {navbar == "hidden" && search && (
-        <SearchComp
-          navbar={navbar}
-          setNavbar={setNavbar}
-          userData={userData}
-          search={search}
-        />
-      )}
-      {navbar == "hidden" && noti && (
-        <NotificationComp
-          navbar={navbar}
-          setNavbar={setNavbar}
-          userData={userData}
-          noti={noti}
-        />
-      )}
-    </div>
+
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-4 bg-blue-500 text-white z-10">
+        <div className="flex items-center justify-between">
+          <a href="#" className="flex items-center space-x-2">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              {/* Your icon component or SVG path here */}
+            </svg>
+          </a>
+          <a href="#" className="flex items-center space-x-2">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              {/* Your icon component or SVG path here */}
+            </svg>
+          </a>
+          {/* Add more bottom navigation items as needed */}
+        </div>
+      </nav>
+    </>
   );
 }
 
@@ -319,7 +347,7 @@ const NotificationComp = ({ navbar, setNavbar, userData, noti }) => {
       <div className=" z-10 left-5 h-screen bg-white  w-96 rounded-r-2xl shadow-right border ">
         <div className="flex flex-col gap-5 p-3">
           <p className="text-2xl font-semibold">Notification</p>
-          
+
           {notificationList?.map((facet) =>
             facet?.value.length > 0 ? (
               <div
