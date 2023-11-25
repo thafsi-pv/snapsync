@@ -39,9 +39,9 @@ function Share({ share, setShare }) {
   return (
     <PortalModal>
       <div
-        className="fixed inset-0 bg-black opacity-50 "
+        className="fixed inset-0 bg-black opacity-50  "
         onClick={() => setShare(false)}></div>
-      <div className="bg-white w-1/3 shadow-2xl rounded-lg z-20">
+      <div className="bg-white w-[90%] lg:w-1/3 shadow-2xl rounded-lg z-20 max-w-[95%] lg:max-w-[90%]">
         <div className="flex px-2 border-b p-2">
           <div className="flex-1 text-center font-semibold">New Message</div>
           <div className="cursor-pointer" onClick={() => setShare(false)}>

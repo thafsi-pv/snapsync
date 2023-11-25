@@ -36,7 +36,7 @@ function App() {
           element: <Explore />,
         },
         {
-          path: "/:username",
+          path: "/:username/",
           element: <Profile />,
         },
         {
@@ -48,7 +48,7 @@ function App() {
           element: <Messages />,
         },
         {
-          path: "direct/inbox/:id",
+          path: "direct/inbox/:id/",
           element: <Messages />,
         },
       ],

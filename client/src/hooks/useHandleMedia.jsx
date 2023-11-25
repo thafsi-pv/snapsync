@@ -30,13 +30,13 @@ function useHandleMedia() {
           <img
             src={imageURL}
             alt="Selected Image"
-            className="object-fit w-full h-full"
+            className="object-fit lg:w-full lg:h-full w-1/2 h-full "
           />
         );
       } else if (mediaType.startsWith("video/")) {
         const videoURL = URL.createObjectURL(selectedMedia);
         setMedia(
-          <video src={videoURL} controls className="object-fit w-full h-full" />
+          <video src={videoURL} controls className="object-fit lg:w-full lg:h-full  w-1/2 h-full" />
         );
       }
     }

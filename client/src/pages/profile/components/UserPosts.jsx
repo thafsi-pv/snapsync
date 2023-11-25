@@ -66,31 +66,39 @@ function UserPosts({ posts, type, setType, userId }) {
       </ul>
       <div className="flex justify-center items-center mt-4">
         {posts?.length > 0 ? (
-          <div className=" columns-3 gap-1 grid grid-cols-3">
+          <div className=" columns-3 gap-0.5 grid grid-cols-3">
             {posts?.map((post) =>
-              post.media_type.startsWith("image/") ? (
-                <img
-                  className="h-72 w-72 py-[1px] aspect-video"
-                  src={post.media_url}
-                  alt=""
-                  onClick={() => {
-                    handleViewComments(post._id);
-                  }}
-                />
-              ) : (
+              // post.media_type.startsWith("image/") ? (
+              //   <img
+              //     className="h-72 w-72 py-[1px] aspect-video"
+              //     src={post.media_url}
+              //     alt=""
+              //     onClick={() => {
+              //       handleViewComments(post._id);
+              //     }}
+              //   />
+              // ) : (
                 <div
                   className="relative"
                   onClick={() => {
                     handleViewComments(post._id);
                   }}>
-                  <div className="absolute right-3 top-2 ">
+                 { post.media_type.startsWith("video/")&& <div className="absolute right-3 top-2 ">
                     <ReelIcon color="#ffffff" />
-                  </div>
-                  <video
+                  </div>}
+                  {/* <video
                     className="h-72 w-72 py-[1px] object-cover"
-                    src={post.media_url}></video>
+                    src={post.media_url}></video> */}
+                  <img
+                    className="h-36 lg:h-72 lg:w-72 py-[1px] aspect-video object-cover"
+                    src={post.media_url.replace(/\.mp4$/, ".jpg")}
+                    alt=""
+                    onClick={() => {
+                      handleViewComments(post._id);
+                    }}
+                  />
                 </div>
-              )
+              // )
             )}
           </div>
         ) : (

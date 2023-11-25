@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import Container from "./components/Container";
 import { UserActionContext } from "../../services/providers/UserActionContext";
-import { useToast } from "../../hooks/useToast";
+import Container from "./components/Container";
 
 function HomePage() {
   const { setNavbar } = useContext(UserActionContext);
-
+ 
   useEffect(() => {
     setNavbar("block");
   }, []);

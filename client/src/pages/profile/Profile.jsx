@@ -38,9 +38,9 @@ function Profile() {
   return (
     <div
       id="MyProfileRoot"
-      className="overflow-hidden  items-center relative flex flex-row justify-center w-full pl-8 py-10">
+      className="overflow-hidden  items-center relative flex flex-row justify-center w-full lg:pl-8 py-14">
       {profile && (
-        <div className="items-center justify-center relative flex flex-col mb-5 gap-4 w-4/5 p-5">
+        <div className="items-center justify-center relative flex flex-col mb-5 gap-3 w-full lg:w-4/5 lg:p-5">
           <UserDetails profile={profile} postCount={postCount} />
           <SavedStory />
           <UserPosts

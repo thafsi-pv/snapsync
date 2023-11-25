@@ -31,7 +31,7 @@ function AddPost() {
         <div
           className="fixed inset-0 bg-black opacity-50 "
           onClick={() => setAddPost(false)}></div>
-        <div className="flex flex-col items-center justify-center h-[70%] w-[60%] ">
+        <div className="flex flex-col items-center justify-center h-[70%] lg:w-[60%] w-[95%]">
           <div
             className="absolute top-4 right-4 cursor-pointer"
             onClick={() => setAddPost(false)}>
@@ -43,18 +43,20 @@ function AddPost() {
                 <div className="flex-1 text-lg text-center font-semibold">
                   Create new post
                 </div>
-                <button
-                  onClick={() => postFormik.submitForm()}
-                  className="flex-0 self-start mx-3 text-sm font-semibold text-blue-500">
-                  Share
-                </button>
+                {media && (
+                  <button
+                    onClick={() => postFormik.submitForm()}
+                    className="flex-0 self-start mx-3 text-sm font-semibold text-blue-500">
+                    Share
+                  </button>
+                )}
               </div>
               <div
                 id="Line"
                 className="border-solid border-[#f4f4f4] self-stretch h-px shrink-0 border-t border-b-0 border-x-0"
               />
             </div>
-            <div className="flex w-full justify-start h-full relative">
+            <div className="flex flex-col lg:flex-row w-full justify-start h-full relative">
               {!media ? (
                 <div className="relative flex flex-col flex-grow  h-full  gap-8 justify-center items-center border-r">
                   <div>
@@ -79,7 +81,7 @@ function AddPost() {
                   </div>
                 </div>
               ) : (
-                <div className="w-full h-full relative">
+                <div className="lg:w-full lg:h-full relative flex justify-center bg-black">
                   <AiOutlineClose
                     className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
                     onClick={handleImageRemove}
@@ -94,7 +96,7 @@ function AddPost() {
                     animate="visible"
                     variants={animationVariants}
                     transition={animationTransition}
-                    className=" w-2/4">
+                    className=" lg:w-2/4 w-full">
                     <div className="p-4 flex gap-2">
                       <img
                         src={userData?.imageUrl}
