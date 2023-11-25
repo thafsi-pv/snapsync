@@ -7,6 +7,7 @@ function PostFile({
   autoplay = false,
   loop = false,
 }) {
+  console.log("🚀 ~ file: PostFile.jsx:10 ~ autoplay:", autoplay)
   if (!media_type && !media_url) return null;
   return (
     <>

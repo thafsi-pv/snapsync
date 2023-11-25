@@ -13,6 +13,7 @@ import PortalModal from "../uiPrimitives/modal/PortalModal";
 import UserImage from "../user/UserImage";
 import UserImgName from "../user/UserImgName";
 
+const autoplay = window.innerWidth >= 1024
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
   const {
@@ -80,15 +81,15 @@ function Comments({ show, closeModal, postId }) {
   if (!show) return null;
   return (
     <PortalModal show={show}>
-      <div className="fixed  flex items-center justify-center min-w-[70%] max-w-[90%] h-full overflow-hidden ">
+      <div className="fixed  flex items-center justify-center w-full min-w-[70%] max-w-[95%] lg:max-w-[90%] h-full overflow-hidden">
         <div
-          className="fixed inset-0 bg-black opacity-50 "
+          className="fixed inset-0  bg-black opacity-50 "
           onClick={closeModal}></div>
         {postDetails && (
-          <div className="shadow-[0px_0px_15px_0px_rgba(0,_0,_0,_0.25)]  w-4/5 h-[90%] bg-white  flex z-10  rounded-md">
-            <div className=" flex justify-center items-center bg-black rounded-l-md">
+          <div className="shadow-md w-full lg:w-4/5 h-[90%] bg-white  flex z-10  rounded-md">
+            <div className="hidden lg:flex justify-center items-center bg-black rounded-l-md ">
               <PostFile
-                autoplay={true}
+                autoplay={autoplay}
                 loop={true}
                 media_type={postDetails?.media_type}
                 media_url={postDetails?.media_url}
