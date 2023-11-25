@@ -48,7 +48,7 @@ function LogIn() {
     <AuthLayout>
       <div className="flex flex-col items-center">
         <div className="relative flex flex-col w-[360px]">
-          <div className="border-solid border-[#d7d7d7] relative flex flex-col justify-start  pb-5 shrink-0 px-10 border">
+          <div className="border-solid border-[#d7d7d7] relative flex flex-col justify-start  pb-5 shrink-0 px-10 lg:border ">
             <div className="flex flex-col gap-7">
               <div className="self-center flex flex-col w-56  items-center">
                 <Logo />
@@ -71,7 +71,7 @@ function LogIn() {
             </div>
           </div>
         </div>
-        <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center border mt-3">
+        <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center lg:border mt-3">
           <div className="text-sm  tracking-[-0.63]">
             Don’t have an account?
           </div>

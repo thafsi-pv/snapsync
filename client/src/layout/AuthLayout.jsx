@@ -4,7 +4,7 @@ import appstoreImg from "../assets/img/appstore.png";
 
 function AuthLayout({ children }) {
   return (
-    <div className="overflow-hidden bg-white flex flex-col justify-center w-full items-center min-h-screen">
+    <div className="overflow-hidden bg-white flex flex-col justify-center w-full items-center min-h-screen mb-10">
       <div className="flex flex-col gap-3 items-center">
         {children}
         <div className="text-center text-sm font-['Microsoft_Sans_Serif'] tracking-[-0.77] leading-[26.1px] text-[#6e6e6e]">
@@ -97,7 +97,7 @@ function AuthLayout({ children }) {
                   href="/web/lite/"
                   role="link"
                   tabIndex="0">
-                  <span dir="auto">Instagram Lite</span>
+                  <span dir="auto">Snapsync Lite</span>
                 </a>
               </div>
               <div className="">

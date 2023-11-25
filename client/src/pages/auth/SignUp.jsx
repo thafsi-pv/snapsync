@@ -43,14 +43,14 @@ function SignUp() {
   return (
     <AuthLayout>
       <div className="self-start flex flex-col gap-3 w-[360px]">
-        <div className="border-solid border-[#d7d7d7] flex flex-col gap-4 pt-6 pb-12 px-8 border">
-          <div className="self-center flex flex-col   items-center">
+        <div className="border-solid border-[#d7d7d7] flex flex-col gap-4 pt-6 pb-12 px-8 lg:border">
+          <div className="self-center flex flex-col w-56 pb- items-center">
             <Logo />
             <div className="w-full text-center text-sm font-semibold text-gray-500">
               Sign up to see photos and videos from your friends.
             </div>
           </div>
-          <div className="flex flex-col gap-2 shrink-0 mx-3">
+          <div className="flex flex-col gap-4 shrink-0 mx-3">
             <button className="bg-[#0095f6] flex flex-row gap-4 justify-center items-center pt-1 rounded-lg">
               <img
                 src="https://file.rendit.io/n/HBpo3FNIqlYTAz2Oj4ax.svg"
@@ -64,10 +64,10 @@ function SignUp() {
           </div>
           <SignUpForm signUpFormik={signUpFormik} />
         </div>
-        <div className="border-solid border-[#d7d7d7] flex flex-col justify-center h-16 shrink-0 items-center border">
+        <div className="border-solid border-[#d7d7d7] flex flex-col justify-center h-16 shrink-0 items-center lg:border">
           <div
             id="HaveAnAccountLogIn1"
-            className="text-center text-sm text-[#6e6e6e]">
+            className="text-center text-sm text-[#6e6e6e] gap-1 flex">
             Have an account?
             <Link to="/auth/login">
               <span className="text-[#0095f6]">

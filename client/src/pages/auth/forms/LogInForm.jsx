@@ -45,7 +45,7 @@ function LogInForm({ logInFormik }) {
       </div>
 
       <div className="flex flex-col ml-3 gap-3 items-start">
-        <Button type="submit" label="Log In" extraClass="w-full mt-4" />
+        <Button type="submit" label="Log In" extraClass="w-full mt-4 !p-2" />
       </div>
       <div>
         <p className="text-xs text-red-600">
