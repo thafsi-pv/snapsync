@@ -21,7 +21,7 @@ import { tokenName } from "../../utils/const";
 
 function LogIn() {
   const { setStorage } = useLocalStorage();
-  const { connectSocket } = useChat();
+  //  const { connectSocket } = useChat();
 
   const navigate = useNavigate();
   const logInFormik = useFormik({
@@ -40,7 +40,7 @@ function LogIn() {
     if (result.status === 200) {
       setStorage(tokenName, result.data.accesstoken);
       navigate("/");
-      connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
+      // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
     }
   }, []);
 

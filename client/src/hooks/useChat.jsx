@@ -57,12 +57,12 @@ function useChat() {
     }
   }
 
-  // const connectSocket = (token) => {
-  //   const newSocket = io(`${socketBaseUrl}?token=${token}`);
-  //   setSocket(newSocket);
-  // };
+  const connectSocket = (token) => {
+    const newSocket = io(`${socketBaseUrl}?token=${token}`);
+    setSocket(newSocket);
+  };
 
-  return { sendMessage };
+  return { sendMessage, connectSocket };
 }
 
 export default useChat;

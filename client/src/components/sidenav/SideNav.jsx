@@ -1,21 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { AiFillHome, AiOutlineSearch, AiOutlineCompass } from "react-icons/ai";
-import { BiSolidMoviePlay } from "react-icons/bi";
+import { motion } from "framer-motion";
+import React, { useContext, useEffect, useState } from "react";
 import { FaThreads } from "react-icons/fa6";
+import { IoIosClose } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
-import { Link } from "react-router-dom";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
-import { SocketContext } from "../../services/providers/SocketContext";
-import { UserActionContext } from "../../services/providers/UserActionContext";
-import InputField from "../uiPrimitives/fields/InputField";
-import { motion } from "framer-motion";
-import UserImage from "../user/UserImage";
-import { IoIosClose } from "react-icons/io";
-import useNotification from "../../hooks/useNotification";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { NOTIFICATION } from "../../services/api/const";
+import { UserActionContext } from "../../services/providers/UserActionContext";
 import { timeAgo } from "../../utils/timeAgo";
+import InputField from "../uiPrimitives/fields/InputField";
+import UserImage from "../user/UserImage";
 import MenuList, { TopSmMenuList } from "./components/MenuList";
 
 let search = false;
