@@ -7,7 +7,7 @@ function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
     recentChatList
   );
   return (
-    <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll">
+    <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll ">
       {recentChatList?.map((recent) => (
         <div
           onClick={() => handleRecentChatClick(recent)}

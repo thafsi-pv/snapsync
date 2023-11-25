@@ -1,17 +1,19 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { useCallback, useContext } from "react";
-import { BsEmojiSmile, BsFillEmojiSmileFill, BsFillEmojiSmileUpsideDownFill } from "react-icons/bs";
+import { BsEmojiSmile } from "react-icons/bs";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { RiSendPlaneFill } from "react-icons/ri";
+import ReelIcon from "../../../assets/svg/ReelIcon";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
-import ReelIcon from "../../../assets/svg/ReelIcon";
 import Comments from "../Comments";
-import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 function ChatListScreen({
   message,
   chatUser,
   messages,
+  setMessages,
   showEmoji,
   chatListRef,
   handleSendMessage,
@@ -19,20 +21,31 @@ function ChatListScreen({
   setMessage,
   onEmojiClick,
   setshowEmoji,
+  setChatUser,
 }) {
+  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages)
   const { comments, setComments, setPostId, postId } =
     useContext(UserActionContext);
   const handleViewComments = useCallback((postId) => {
     setComments(true);
     setPostId(postId);
   }, []);
+
+  const handleBack = () => {
+    setChatUser(null);
+    setMessages([]);
+  };
   return (
     <div className="relative  h-full w-full flex flex-col justify-between ">
       <div className="flex gap-3 w-full flex-0 border-b p-1">
-        <div>
+        <div className="flex items-center gap-3">
+          <MdOutlineKeyboardBackspace
+            className="h-5 w-5 lg:hidden cursor-pointer"
+            onClick={handleBack}
+          />
           <img
             src={chatUser?.imageUrl}
-            className="w-14 h-14 rounded-full object-cover"
+            className="lg:w-14 lg:h-14 w-7 h-7 rounded-full object-cover"
             alt=""
           />
         </div>
@@ -44,14 +57,15 @@ function ChatListScreen({
         </div>
       </div>
       <div className="p-2 flex-1 overflow-y-scroll" h-full ref={chatListRef}>
-        {messages.map((msg) => (
-          <ChatMessage
-            message={msg.message}
-            messageType={msg.messageType}
-            handleViewComments={handleViewComments}
-            isMine={msg.sender._id == userData?._id ? true : false}
-          />
-        ))}
+        {messages &&
+          messages?.map((msg) => (
+            <ChatMessage
+              message={msg.message}
+              messageType={msg.messageType}
+              handleViewComments={handleViewComments}
+              isMine={msg.sender._id == userData?._id ? true : false}
+            />
+          ))}
       </div>
       <div className=" p-4 border-t flex items-center gap-2">
         {showEmoji && (

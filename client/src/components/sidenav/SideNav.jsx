@@ -71,7 +71,9 @@ function SideNav() {
         )}
       </div>
 
-      <div className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white  ">
+      <div
+        className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white  "
+        id="topNavId">
         <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
           <div className="items-center">
             <img src={logo} alt="" className="w-[110px] " />
@@ -80,7 +82,7 @@ function SideNav() {
         </div>
       </div>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t" id="bottmNavId">
         <div className="flex items-center justify-evenly">
           <MenuList showMenuName={false} />
         </div>

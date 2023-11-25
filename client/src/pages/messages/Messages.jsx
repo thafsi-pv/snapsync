@@ -34,6 +34,21 @@ function Messages() {
   useEffect(() => {
     getRecentChats();
     setNavbar("hidden");
+    const topNav = document.getElementById("topNavId");
+    const bottomNav = document.getElementById("bottmNavId");
+    if (topNav || bottomNav) {
+      topNav.style.display = "none";
+      bottomNav.style.display = "none";
+    }
+
+    return () => {
+      const topNav = document.getElementById("topNavId");
+      const bottomNav = document.getElementById("bottmNavId");
+      if (topNav || bottomNav) {
+        topNav.style.display = "block";
+        bottomNav.style.display = "block";
+      }
+    };
   }, [userData]);
 
   useLayoutEffect(() => {
@@ -130,35 +145,42 @@ function Messages() {
   };
 
   return (
-    <div className="overflow-hidden flex flex-row w-full h-screen items-center  max-h-screen">
-      <div className="self-end flex flex-row justify-between items-start h-screen  border-r w-2/5">
-        <div className="flex flex-row gap-6 w-full items-start ">
-          <div className="relative flex flex-col gap-8  pt-12 pb-16 w-full">
-            <div className="relative flex flex-row gap-12 items-centermr-5 border-b pb-3 mx-4">
-              <div className="text-base  font-semibold self-start flex-1">
-                {userData?.fullName}
-              </div>
-              <div>
-                <IoCreateOutline
-                  className="w-6 h-6 cursor-pointer"
-                  onClick={handleNewChat}
-                />
-              </div>
+    <div className="overflow-hidden flex flex-col lg:flex-row w-full h-screen lg:items-center  max-h-screen">
+      <div
+        className={`lg:self-end flex flex-row justify-between items-start h-screen  border-r lg:w-2/5 ${
+          !chatUser ? "sm:w-full h-full" : "lg:block hidden"
+        }`}>
+        {/* <div className="flex flex-row gap-6 w-full items-start "> */}
+        <div className="relative flex flex-col gap-8  lg:pt-12 lg:pb-16 w-full">
+          <div className="relative flex flex-row gap-12 items-center mr-5 border-b pb-3 mx-4">
+            <div className="text-base  font-semibold lg:self-start flex-1">
+              {userData?.fullName}
             </div>
-            <RecentChatList
-              recentChatList={recentChatList}
-              handleRecentChatClick={handleRecentChatClick}
-              userData={userData}
-            />
+            <div>
+              <IoCreateOutline
+                className="w-6 h-6 cursor-pointer"
+                onClick={handleNewChat}
+              />
+            </div>
           </div>
+          <RecentChatList
+            recentChatList={recentChatList}
+            handleRecentChatClick={handleRecentChatClick}
+            userData={userData}
+          />
         </div>
+        {/* </div> */}
       </div>
-      <div className="mx-auto w-full p-2 h-full ">
+      <div
+        className={`mx-auto w-full p-2 h-full ${
+          !chatUser ? "hidden lg:block" : "block"
+        }`}>
         {chatUser != null ? (
           <ChatListScreen
             chatListRef={chatListRef}
             chatUser={chatUser}
             message={message}
+            setMessages={setMessages}
             messages={messages}
             showEmoji={showEmoji}
             handleSendMessage={handleSendMessage}
@@ -166,6 +188,7 @@ function Messages() {
             setMessage={setMessage}
             onEmojiClick={onEmojiClick}
             setshowEmoji={setshowEmoji}
+            setChatUser={setChatUser}
           />
         ) : (
           <NoMessage handleNewChat={handleNewChat} />

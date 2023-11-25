@@ -9,6 +9,7 @@ import {
 } from "../services/api/const";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import useNotification from "./useNotification";
+import { useToast } from "./useToast";
 
 /**
  * useSocialAction custom hook
@@ -22,6 +23,7 @@ function useSocialAction() {
     useContext(UserActionContext);
 
   const { createNotification } = useNotification(); //notification hook
+  const { addToast } = useToast();
 
   useEffect(() => {
     getAllPosts();
@@ -70,6 +72,7 @@ function useSocialAction() {
         const updatedPosts = [...posts];
         updatedPosts[postIndex].saved = response.data.flag;
         setPosts(updatedPosts);
+        updatedPosts[postIndex].saved && addToast("Post saved");
       }
     } catch (error) {
       console.error("Error handling save post:", error);
