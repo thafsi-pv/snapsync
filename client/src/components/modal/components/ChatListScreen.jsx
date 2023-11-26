@@ -133,7 +133,7 @@ const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
           isMine ? "justify-end" : "justify-start"
         } items-end `}>
         <div
-          className={`max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl `}>
+          className={`max-w-[250px] lg:max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl `}>
           <div className="flex flex-col items-start max-w-xs mx-auto mb-4  bg-gray-100 rounded-lg">
             <div
               className="flex items-center space-x-2 px-4 py-3"
@@ -174,7 +174,7 @@ const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
               )}
               <img
                 alt="Collage"
-                className=" w-[350px] h-[350px] object-cover"
+                className=" w-[250px] h-[250px] lg:w-[350px] lg:h-[350px] object-cover"
                 src={message.postId.media_url.replace(/\.mp4$/, ".jpg")}
               />
             </div>
