@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { IoCreateOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NewChatModal from "../../components/modal/NewChatModal";
 import ChatListScreen from "../../components/modal/components/ChatListScreen";
 import NoMessage from "../../components/modal/components/NoMessage";
@@ -17,6 +17,7 @@ import { genericError } from "../../services/api/genericError";
 import { SocketContext } from "../../services/providers/SocketContext";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 import useChat from "../../hooks/useChat";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 function Messages() {
   const navigate = useNavigate();
@@ -51,12 +52,17 @@ function Messages() {
     };
   }, [userData]);
 
+  // useLayoutEffect(() => {
+  //   if (chatListRef && chatListRef.current) {
+  //     chatListRef.current.scrollTo({
+  //       top: chatListRef.current.scrollHeight,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, []);
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {
-      chatListRef.current.scrollTo({
-        top: chatListRef.current.scrollHeight,
-        behavior: "smooth",
-      });
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -151,9 +157,14 @@ function Messages() {
           !chatUser ? "sm:w-full h-full" : "lg:block hidden"
         }`}>
         {/* <div className="flex flex-row gap-6 w-full items-start "> */}
-        <div className="relative flex flex-col gap-8  lg:pt-12 lg:pb-16 w-full">
-          <div className="relative flex flex-row gap-12 items-center mr-5 border-b pb-3 mx-4">
-            <div className="text-base  font-semibold lg:self-start flex-1">
+        <div className="relative flex flex-col gap-8  lg:pt-6 lg:pb-16 w-full">
+          <div className="relative flex flex-row justify-between lg:gap-12 items-center border-b py-3 mx-4 ">
+            <div>
+              <Link to="/">
+                <MdOutlineKeyboardBackspace className="h-5 w-5 lg:hidden cursor-pointer" />
+              </Link>
+            </div>
+            <div className="text-base  font-semibold lg:self-start flex-1 text-center">
               {userData?.fullName}
             </div>
             <div>

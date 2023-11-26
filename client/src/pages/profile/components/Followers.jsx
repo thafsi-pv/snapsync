@@ -35,7 +35,7 @@ function Followers({ userName, showModal, setShowModal, listType }) {
         <div
           className="fixed inset-0 bg-black opacity-50 "
           onClick={() => setShowModal(false)}></div>
-        <div className="relative flex flex-col  h-[50%] lg:w-[30%] sm:w-[80%] bg-white z-10 rounded-xl">
+        <div className="relative flex flex-col  h-[50%] lg:w-[30%] w-[90%] bg-white z-10 rounded-xl">
           <div className="relative flex flex-col h-full ">
             <div className="text-center border-b w-full p-2 flex items-center">
               <div className="text-center flex-1">

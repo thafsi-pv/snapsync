@@ -72,7 +72,7 @@ function SideNav() {
       </div>
 
       <div
-        className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white  "
+        className="fixed md:hidden lg:hidden  top-0 left-0 right-0 z-10 bg-white  "
         id="topNavId">
         <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
           <div className="items-center">
@@ -82,9 +82,11 @@ function SideNav() {
         </div>
       </div>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t" id="bottmNavId">
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t"
+        id="bottmNavId">
         <div className="flex items-center justify-evenly">
-          <MenuList showMenuName={false} />
+          <MenuList showMenuName={false} setNavbar={setNavbar} />
         </div>
       </nav>
     </>

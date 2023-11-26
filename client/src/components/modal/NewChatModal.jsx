@@ -54,7 +54,7 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
       <div
         className="fixed inset-0 bg-black opacity-50 "
         onClick={() => setNewChat(false)}></div>
-      <div className="bg-white w-1/3 shadow-2xl rounded-lg z-20">
+      <div className="bg-white w-full m-5 lg:w-1/3 shadow-2xl rounded-lg z-20">
         <div className="flex px-2 border-b p-2">
           <div className="flex-1 text-center font-semibold">New Message</div>
           <div className="cursor-pointer" onClick={() => setNewChat(false)}>

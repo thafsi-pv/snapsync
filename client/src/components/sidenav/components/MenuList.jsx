@@ -15,7 +15,7 @@ import SearchIcon from "../../../assets/svg/SearchIcon";
 let search = false;
 let noti = false;
 function MenuList({ showMenuName }) {
-  const { userData, setAddPost, navbar, setAddStory } =
+  const { userData, setAddPost, navbar,setNavbar, setAddStory } =
     useContext(UserActionContext);
   const { newMessageNotif } = useContext(SocketContext);
   const { notification } = useNotification();
