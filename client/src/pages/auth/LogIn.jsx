@@ -38,9 +38,13 @@ function LogIn() {
   const handleLogIn = useCallback(async (values) => {
     const result = await axiosInstance.post(LOGIN_API, values);
     if (result.status === 200) {
+      alert("success");
       setStorage(tokenName, result.data.accesstoken);
       navigate("/");
       // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
+    }
+    else{
+      alert('failed')
     }
   }, []);
 
