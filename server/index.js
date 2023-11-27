@@ -25,6 +25,7 @@ const {
 const { storyRouter } = require("./router/storyRouter");
 const NotificationRouter = require("./router/notificationRouter");
 const postModel = require("./model/postModel");
+const { frondEndBaseUrl } = require("./utils/const");
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -33,7 +34,7 @@ const io = require("socket.io")(server, {
   },
 });
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: frondEndBaseUrl, credentials: true }));
 app.use(express.json());
 // app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "assets")));

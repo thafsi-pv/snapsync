@@ -42,9 +42,8 @@ function LogIn() {
       setStorage(tokenName, result.data.accesstoken);
       navigate("/");
       // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
-    }
-    else{
-      alert('failed')
+    } else {
+      alert(result, "failed");
     }
   }, []);
 
