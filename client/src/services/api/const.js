@@ -2,8 +2,8 @@
 
 // export const socketBaseUrl = "http://localhost:8090/";
 
-export const baseUrl = "https://dine-ease-api.onrender.com/api";
-export const socketBaseUrl = "https://dine-ease-api.onrender.com/";
+export const baseUrl = "https://snapsync-api.onrender.com/api";
+export const socketBaseUrl = "https://snapsync-api.onrender.com/";
 
 export const CLOUDINARY_IMAGE_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dm4djc1b1/image/upload";
