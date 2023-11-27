@@ -12,37 +12,50 @@ import MessengerIcon from "../../../assets/svg/MessengerIcon";
 import HomeIcon from "../../../assets/svg/HomeIcon";
 import SearchIcon from "../../../assets/svg/SearchIcon";
 
-let search = false;
 let noti = false;
 function MenuList({ showMenuName }) {
-  const { userData, setAddPost, navbar,setNavbar, setAddStory } =
-    useContext(UserActionContext);
+  const {
+    userData,
+    setAddPost,
+    navbar,
+    setNavbar,
+    setAddStory,
+    searchBar,
+    setSearchBar,
+    notificationBar,
+    setNotificationBar,
+  } = useContext(UserActionContext);
   const { newMessageNotif } = useContext(SocketContext);
   const { notification } = useNotification();
 
   const handleSearch = () => {
-    if (search == false) {
-      search = true;
+    if (searchBar == false) {
+      setSearchBar(true);
       setNavbar("hidden");
     } else {
-      search = false;
+      setSearchBar(false);
       setNavbar("block");
     }
     // const navbar = "hidden";
   };
   const handleNoti = () => {
-    if (noti == false) {
-      noti = true;
+    if (notificationBar == false) {
+      setNotificationBar(true);
       setNavbar("hidden");
     } else {
-      noti = false;
+      setNotificationBar(false);
       setNavbar("block");
     }
     // const navbar = "hidden";
   };
+
+  const handleOnClick = () => {
+    setSearchBar(false);
+    setNotificationBar(false);
+  };
   return (
     <>
-      <Link to="/">
+      <Link to="/" onClick={handleOnClick}>
         <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
           {/* <AiFillHome className="h-7 w-7" /> */}
           <HomeIcon />
@@ -56,7 +69,10 @@ function MenuList({ showMenuName }) {
         <SearchIcon />
         {showMenuName && <p className={`font-normal ${navbar}`}>Search</p>}
       </div>
-      <Link to="/explore" className="hidden md:block lg:block">
+      <Link
+        to="/explore"
+        className="hidden md:block lg:block"
+        onClick={handleOnClick}>
         <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
           <AiOutlineCompass className="h-7 w-7" />
           {showMenuName && <p className={`font-normal ${navbar}`}>Explore</p>}
@@ -68,7 +84,7 @@ function MenuList({ showMenuName }) {
         <BiSolidMoviePlay className="h-7 w-7" />
         {showMenuName && <p className={`font-normal ${navbar}`}>Story</p>}
       </div>
-      <Link to={`direct/inbox`}>
+      <Link to={`direct/inbox`} onClick={handleOnClick}>
         <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
           <div className="relative">
             {/* <img
@@ -115,7 +131,7 @@ function MenuList({ showMenuName }) {
         />
         {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>}
       </div>
-      <Link to={`/${userData?.userName}`}>
+      <Link to={`/${userData?.userName}`} onClick={handleOnClick}>
         <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
           <img
             src={userData?.imageUrl}
@@ -132,15 +148,16 @@ function MenuList({ showMenuName }) {
 export default MenuList;
 
 export const TopSmMenuList = () => {
-  const { setAddPost } = useContext(UserActionContext);
+  const { setAddPost, notificationBar, setNotificationBar, navbar, setNavbar } =
+    useContext(UserActionContext);
   const { notification } = useNotification();
 
   const handleNoti = () => {
-    if (noti == false) {
-      noti = true;
+    if (notificationBar == false) {
+      setNotificationBar(true);
       setNavbar("hidden");
     } else {
-      noti = false;
+      setNotificationBar(false);
       setNavbar("block");
     }
     // const navbar = "hidden";

@@ -135,7 +135,7 @@ function useSocialAction() {
     }
   };
 
-  //post double tap like
+  //start region post double tap like 
   const lastTapTimeRef = useRef(0);
 
   const handleDoubleClick = (index, id) => {
@@ -190,6 +190,7 @@ function useSocialAction() {
     controls.start({ scale: 1, rotate: 0, y: 0, opacity: 0 });
     setLikedId();
   };
+  //end region post double tap like
 
   return {
     posts,
