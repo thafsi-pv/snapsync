@@ -1,6 +1,6 @@
 import React from "react";
 
-function CreatePost() {
+function CreatePostIcon() {
   return (
     <svg
       aria-label="Icon to represent media such as images or videos"
@@ -23,4 +23,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default CreatePostIcon;

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import CreatePost from "../../../assets/svg/createPost";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import { FileUploadContext } from "../../../services/providers/FileUploadContext";
 import { STORY_API } from "../../../services/api/const";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import PortalModal from "../../../components/uiPrimitives/modal/PortalModal";
 import useUploadToCloudinary from "../../../hooks/useUploadToCloudinary";
+import CreatePostIcon from "../../../assets/svg/CreatePostIcon";
 
 function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
@@ -108,7 +108,7 @@ function AddStory() {
               {!media ? (
                 <div className="relative flex flex-col flex-grow  h-full  gap-8 justify-center items-center border-r ">
                   <div>
-                    <CreatePost />
+                    <CreatePostIcon />
                   </div>
                   <div className="text-xl  text-[#808080] mr-2">
                     Drag photos and videos here

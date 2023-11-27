@@ -2,13 +2,13 @@ import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import CreatePost from "../../assets/svg/createPost";
 import useHandleMedia from "../../hooks/useHandleMedia";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 import { animationTransition, animationVariants } from "../../utils/const";
 import InputField from "../uiPrimitives/fields/InputField";
 import TextField from "../uiPrimitives/fields/TextField";
 import PortalModal from "../uiPrimitives/modal/PortalModal";
+import CreatePostIcon from "../../assets/svg/CreatePostIcon";
 
 function AddPost() {
   const { userData, addPost, setAddPost } = useContext(UserActionContext);
@@ -60,7 +60,7 @@ function AddPost() {
               {!media ? (
                 <div className="relative flex flex-col flex-grow  h-full  gap-8 justify-center items-center border-r">
                   <div>
-                    <CreatePost />
+                    <CreatePostIcon />
                   </div>
                   <div className="text-xl  text-[#808080] mr-2">
                     Drag photos and videos here
