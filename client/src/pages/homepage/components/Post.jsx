@@ -10,10 +10,20 @@ import PostLikeAndCaption from "../../../components/post/PostLikeAndCaption";
 import useSocialAction from "../../../hooks/useSocialAction";
 
 function Post() {
-  const { posts, setPosts, likePost, viewComments, savePost, sharePost } =
-    useSocialAction();
-  const [likedId, setLikedId] = useState();
-  const controls = useAnimation();
+  const {
+    posts,
+    setPosts,
+    likePost,
+    viewComments,
+    savePost,
+    sharePost,
+    handleDoubleClick,
+    handleTouchStart,
+    controls,
+    likedId,
+  } = useSocialAction();
+
+  // const controls = useAnimation();
   // const [posts, setPosts] = useState();
   // useEffect(() => {
   //   getAllPosts();
@@ -23,67 +33,6 @@ function Post() {
   //   const post = await axiosInstance.get(POST_API);
   //   setPosts(post.data);
   // };
-
-  const lastTapTimeRef = useRef(0);
-
-  const handleDoubleClick = (index, id) => {
-    console.log("Double click!");
-    // Your double-click logic here
-    handleClick(index,id);
-  };
-
-  const handleTouchStart = (index, id) => {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTapTimeRef.current;
-
-    if (tapLength < 300) {
-      console.log("Double tap!");
-      // Your double-tap logic here
-      handleClick(index, id);
-    }
-
-    lastTapTimeRef.current = currentTime;
-  };
-
-  const handleClick = async (index, id) => {
-    console.log("double click");
-    setLikedId(id);
-    if (!posts[index].liked) {
-      likePost(index, id, posts);
-    }
-
-    // Pop-up animation
-    await controls.start({
-      opacity: 1,
-      scale: 1.5,
-      transition: { duration: 0.2 },
-    });
-
-    // Shake animation
-    await controls.start({
-      rotate: [10, 10, 10, 10, 0],
-      y: [-10, 10, -10, 10, 0],
-      z: [-10, 10, -10, 10, 0],
-      transition: {
-        duration: 0.3,
-        type: "spring",
-        stiffness: 500,
-        damping: 10,
-      },
-    });
-
-    // Move to the top animation
-    await controls.start({
-      y: -350,
-      rotate: [10, 10, 10, 10, 40],
-      opacity: 0,
-      transition: { duration: 0.4 },
-    });
-
-    // Reset animations
-    controls.start({ scale: 1, rotate: 0, y: 0, opacity: 0 });
-    setLikedId();
-  };
 
   return (
     <div className="flex flex-col gap-4 lg:mx-20 w-full">

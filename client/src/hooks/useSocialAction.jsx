@@ -1,24 +1,33 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { UserActionContext } from "../services/providers/UserActionContext";
-import { genericError } from "../services/api/genericError";
+import { useAnimation } from "framer-motion";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState
+} from "react";
+import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
   COMMENT_API,
   LIKE_API,
   POST_API,
   SAVE_POST_API,
 } from "../services/api/const";
-import { axiosInstance } from "../services/api/axiosInterceptor";
+import { genericError } from "../services/api/genericError";
+import { UserActionContext } from "../services/providers/UserActionContext";
 import useNotification from "./useNotification";
 import { useToast } from "./useToast";
 
 /**
  * useSocialAction custom hook
- * Responsible for like, comment save post from home page and comments popup
+ * Responsible for like, comment save post from home page
+ * Responsible for comments popup
+ * Responsible post double tap like fly heart 
  */
 
 function useSocialAction() {
+  const controls = useAnimation();
   const [posts, setPosts] = useState([]);
-
+  const [likedId, setLikedId] = useState(); //variable for post double tap
   const { comments, setComments, postId, setPostId, setShare } =
     useContext(UserActionContext);
 
@@ -126,6 +135,62 @@ function useSocialAction() {
     }
   };
 
+  //post double tap like
+  const lastTapTimeRef = useRef(0);
+
+  const handleDoubleClick = (index, id) => {
+    handleClick(index, id);
+  };
+
+  const handleTouchStart = (index, id) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTapTimeRef.current;
+    if (tapLength < 300) {
+      console.log("Double tap!");
+      handleClick(index, id);
+    }
+    lastTapTimeRef.current = currentTime;
+  };
+
+  const handleClick = async (index, id) => {
+    setLikedId(id);
+    if (!posts[index].liked) {
+      likePost(index, id, posts);
+    }
+
+    // Pop-up animation
+    await controls.start({
+      opacity: 1,
+      scale: 1.5,
+      transition: { duration: 0.2 },
+    });
+
+    // Shake animation
+    await controls.start({
+      rotate: [10, 10, 10, 10, 0],
+      y: [-10, 10, -10, 10, 0],
+      z: [-10, 10, -10, 10, 0],
+      transition: {
+        duration: 0.3,
+        type: "spring",
+        stiffness: 500,
+        damping: 10,
+      },
+    });
+
+    // Move to the top animation
+    await controls.start({
+      y: -350,
+      rotate: [10, 10, 10, 10, 40],
+      opacity: 0,
+      transition: { duration: 0.4 },
+    });
+
+    // Reset animations
+    controls.start({ scale: 1, rotate: 0, y: 0, opacity: 0 });
+    setLikedId();
+  };
+
   return {
     posts,
     setPosts,
@@ -137,6 +202,10 @@ function useSocialAction() {
     likePostInCommentModal,
     savePostInCommentModal,
     sharePost,
+    handleDoubleClick, //for post double click desktop
+    handleTouchStart, //for post double tap mobile
+    controls,//fley heart animation controls
+    likedId
   };
 }
 
