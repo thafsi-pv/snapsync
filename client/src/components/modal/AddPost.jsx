@@ -56,7 +56,7 @@ function AddPost() {
                 className="border-solid border-[#f4f4f4] self-stretch h-px shrink-0 border-t border-b-0 border-x-0"
               />
             </div>
-            <div className="flex flex-col lg:flex-row w-full justify-start h-full relative">
+            <div className="flex flex-col lg:flex-row w-full justify-start h-full relative overflow-y-scroll">
               {!media ? (
                 <div className="relative flex flex-col flex-grow  h-full  gap-8 justify-center items-center border-r">
                   <div>
@@ -106,7 +106,7 @@ function AddPost() {
                       <p>{userData?.userName}</p>
                     </div>
                     <TextField
-                      rows={8}
+                      rows={5}
                       placeholder="Write a caption"
                       inputClass="border-none"
                       id="caption"
