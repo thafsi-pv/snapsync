@@ -144,6 +144,7 @@ function generateAccessAndRefreshToken(userId, res) {
     .cookie("ssacctoken", refreshToken, {
       httpOnly: true,
       secure: true,
+      domain: "https://snapsync.onrender.com",
     })
     .json({
       accesstoken,
