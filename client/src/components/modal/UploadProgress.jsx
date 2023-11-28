@@ -7,7 +7,7 @@ function UploadProgress() {
 
   if (uploadProgress == 0 || uploadProgress == undefined) return null;
   return ReactDOM.createPortal(
-    <div className="fixed bottom-0 md:w-1/4 lg:w-1/6 sm:w-full right-0 p-4 m-2 ">
+    <div className="fixed bottom-6 lg:bottom-0 md:w-1/4 lg:w-1/6 sm:w-full right-0 p-4 m-2 ">
       <p className="text-xs font-semibold">Uploading Post..</p>
       <div className="flex justify-center items-center gap-1">
         <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 ">

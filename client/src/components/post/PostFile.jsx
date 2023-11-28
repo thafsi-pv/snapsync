@@ -7,7 +7,7 @@ function PostFile({
   autoplay = false,
   loop = false,
 }) {
-  console.log("🚀 ~ file: PostFile.jsx:10 ~ autoplay:", autoplay)
+  console.log("🚀 ~ file: PostFile.jsx:10 ~ autoplay:", autoplay);
   if (!media_type && !media_url) return null;
   return (
     <>
@@ -23,6 +23,7 @@ function PostFile({
           controls
           autoPlay={autoplay}
           loop={loop}
+          playsinline
           className={`relative  max-w-xl xl:max-h-full  lg:rounded-l-md   bg-black ${extra}`}
         />
       )}
