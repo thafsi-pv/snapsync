@@ -5,16 +5,10 @@ function More({ more, setMore }) {
   const handleMoreBtn = () => {
     setMore((prev) => !prev);
   };
-  const handleMoreClose = () => {
-    console.log("dsf");
-    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ before  more:", more);
-    setMore(false);
-    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ afrter  more:", more);
-  };
   return (
     <div className="flex flex-col w-full relative ">
       <div className="fixed top-0 left-0 right-0 w-screen h-screen">
-        <button onClick={handleMoreBtn}></button>
+        <button onClick={() => setMore((prev) => !prev)}></button>
       </div>
       <div className="shadow-2xl bg-white flex flex-col justify-between h-[310px] shrink-0 py-6 rounded-[21px] z-10">
         <div className="flex flex-col gap-8 items-start">
@@ -51,7 +45,9 @@ function More({ more, setMore }) {
         </div>
         <div className="flex flex-col gap-6 h-12 shrink-0 items-start">
           <div className="bg-[#f1f1f1] self-stretch h-1 shrink-0" />
-          <Link to='/auth/login' className="flex flex-row px-2 gap-1 items-center">
+          <Link
+            to="/auth/login"
+            className="flex flex-row px-2 gap-1 items-center">
             <img
               src="https://file.rendit.io/n/dXnHZC1XLgB5QGihZwkb.svg"
               className="w-6 shrink-0"

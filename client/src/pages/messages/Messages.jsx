@@ -38,6 +38,7 @@ function Messages() {
     const topNav = document.getElementById("topNavId");
     const bottomNav = document.getElementById("bottmNavId");
     if (topNav || bottomNav) {
+      console.log("🚀 ~ file: Messages.jsx:41 ~ useEffect ~ topNav:", topNav)
       topNav.style.display = "none";
       bottomNav.style.display = "none";
     }
@@ -46,8 +47,8 @@ function Messages() {
       const topNav = document.getElementById("topNavId");
       const bottomNav = document.getElementById("bottmNavId");
       if (topNav || bottomNav) {
-        topNav.style.display = "block";
-        bottomNav.style.display = "block";
+        topNav.style.display = "";
+        bottomNav.style.display = "";
       }
     };
   }, [userData]);
