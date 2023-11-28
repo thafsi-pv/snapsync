@@ -223,12 +223,20 @@ const MobileSearch = ({ setSearchBar }) => {
                 />
               )}
               {post.media_type.startsWith("video/") && (
-                <video
-                  controls={false}
-                  className="w-full h-full object-cover hover:bg-gray-500 row-span-2">
-                  <source src={post.media_url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                // <video
+                //   controls={false}
+                //   className="w-full h-full object-cover hover:bg-gray-500 row-span-2">
+                //   <source src={post.media_url} type="video/mp4" />
+                //   Your browser does not support the video tag.
+                // </video>
+                <img
+                src={post.media_url.replace(
+                  /\.mp4$/,
+                  ".jpg"
+                )}
+                alt="Media thumbnail"
+                className="object-cover w-10 h-10 rounded-sm  row-span-2"
+              />
               )}
             </div>
           ))}
