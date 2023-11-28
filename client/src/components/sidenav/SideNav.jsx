@@ -1,21 +1,15 @@
-import { motion } from "framer-motion";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { FaThreads } from "react-icons/fa6";
-import { IoIosClose } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { ENTIRE_API, NOTIFICATION } from "../../services/api/const";
 import { UserActionContext } from "../../services/providers/UserActionContext";
-import { timeAgo } from "../../utils/timeAgo";
-import InputField from "../uiPrimitives/fields/InputField";
-import UserImage from "../user/UserImage";
 import MenuList, { TopSmMenuList } from "./components/MenuList";
-import Search from "./components/Search";
+import { MobileNotification } from "./components/MobileNotification";
 import { MobileSearch } from "./components/MobileSearch";
 import { Notification } from "./components/Notification";
-import { MobileNotification } from "./components/MobileNotification";
+import Search from "./components/Search";
+import More from "./components/More";
 
 function SideNav() {
   const {
@@ -26,7 +20,20 @@ function SideNav() {
     setSearchBar,
     notificationBar,
     setNotificationBar,
+    more,
+    setMore,
   } = useContext(UserActionContext);
+  console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ more:", more);
+
+  const handleMoreBtn = () => {
+    setMore((prev) => !prev);
+  };
+  const handleMoreClose = () => {
+    console.log("dsf");
+    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ before  more:", more);
+    setMore(false);
+    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ afrter  more:", more);
+  };
 
   return (
     <>
@@ -56,9 +63,16 @@ function SideNav() {
                 <FaThreads className="h-7 w-7" />
                 <p className={`font-normal ${navbar}`}>Threads</p>
               </div>
-              <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+              <div
+                className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg  cursor-pointer w-44"
+                onClick={handleMoreBtn}>
                 <RxHamburgerMenu className="h-7 w-7" />
                 <p className={`font-normal ${navbar}`}>More</p>
+                {more && (
+                  <div className="absolute top-0 right-0 -mt-[230px] -mr-9 w-full z-[9]">
+                    <More more={more} setMore={setMore} />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -187,10 +201,6 @@ export default SideNav;
 //     </motion.div>
 //   );
 // };
-
-
-
-
 
 // const MobileSearch = ({ setSearchBar }) => {
 //   const [exploreList, setExploreList] = useState();

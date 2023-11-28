@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion";
 import { NOTIFICATION } from '../../../services/api/const';
 import { axiosInstance } from '../../../services/api/axiosInterceptor';
+import { timeAgo } from '../../../utils/timeAgo';
 
 
 /**
