@@ -235,7 +235,7 @@ const MobileSearch = ({ setSearchBar }) => {
                   ".jpg"
                 )}
                 alt="Media thumbnail"
-                className="object-cover w-10 h-10 rounded-sm  row-span-2"
+                className="w-full h-full object-cover hover:bg-gray-500 row-span-2"
               />
               )}
             </div>
