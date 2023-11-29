@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import NextPrevButton from "../../../components/uiPrimitives/button/NextPrevButton";
 import UserStory from "../../../components/user/UserStory";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { STORY_API } from "../../../services/api/const";
+import UserImage from "../../../components/user/UserImage";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
 
 /**
  * Story Component:
@@ -14,10 +16,20 @@ function Story() {
   const [storyList, setStoryList] = useState();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
+  console.log(
+    "🚀 ~ file: Story.jsx:19 ~ Story ~ scrollPosition:",
+    scrollPosition
+  );
+
+  // const { loadStory, setLoadStory } = useContext(UserActionContext);
 
   const handleScroll = (scrollOffset) => {
+    console.log("handle scroll");
+
     const container = containerRef.current;
-    container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+    if (container) {
+      container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -30,32 +42,73 @@ function Story() {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScrolll = () => {
+      console.log("handle scrollzz");
       if (containerRef.current) {
         setScrollPosition(containerRef.current.scrollLeft);
       }
     };
 
     if (containerRef.current) {
-      containerRef.current.addEventListener("scroll", handleScroll);
+      containerRef.current.addEventListener("scroll", handleScrolll);
     }
 
     return () => {
       if (containerRef.current) {
-        containerRef.current.removeEventListener("scroll", handleScroll);
+        containerRef.current.removeEventListener("scroll", handleScrolll);
       }
     };
   }, []);
 
   return (
     <div
-      className="relative flex flex-col gap-1 max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide "
+      className="relative flex flex-col gap-1 max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide w-full"
       ref={containerRef}>
-      <div className="flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24">
+      <div className="flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24 w-full">
         {scrollPosition > 0 && (
-          <NextPrevButton onClick={handleScroll(-400)} side="left" />
+          <NextPrevButton onClick={()=>handleScroll(-400)} side="left" />
         )}
-        <div className="text-sm w-[70px] min-w-[70px]  h-[70px] m p-[2px] flex">
+        <div className="relative text-sm w-[70px] lg:w-auto h-[70px] m p-[2px] flex">
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
           {storyList?.map((story) => (
             <UserStory
               key={story._id}
@@ -77,10 +130,86 @@ function Story() {
         {scrollPosition <
           containerRef.current?.scrollWidth -
             containerRef.current?.clientWidth && (
-          <NextPrevButton onClick={handleScroll(400)} side="right" />
+          <NextPrevButton onClick={()=>handleScroll(400)} side="right" />
         )}
       </div>
     </div>
+    // <div
+    //   className="relative flex flex-col gap-1 w-full max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide "
+    //   ref={containerRef}>
+    //   <div className="relative flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24 w-full ">
+    //     {scrollPosition > 0 && (
+    //       <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
+    //     )}
+    //     <div className="text-sm  h-[70px] m p-[2px] flex">
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       {storyList?.map((story) => (
+    //         <UserStory
+    //           key={story._id}
+    //           id={story._id}
+    //           userName={story.userName}
+    //           imgUrl={story.imageUrl}
+    //         />
+    //       ))}
+    //       <div className="text-sm cursor-pointer">
+    //         <UserImage
+    //           imgUrl="https://res.cloudinary.com/dm4djc1b1/image/upload/v1699721655/rnkq2kj3yzd1yoqfwcuz.jpg"
+    //           extra="w-20 h-20"
+    //           //  loading={loadStory}
+    //           id="654fb1b72e4ccc72bf9522d8"
+    //         />
+    //         <p className="text-xs text-center w-20 truncate ">
+    //           abcsdfdsfdsfsdfsdfsdfsdf
+    //         </p>
+    //       </div>
+    //     </div>
+
+    //     {scrollPosition <
+    //       containerRef.current?.scrollWidth -
+    //         containerRef.current?.clientWidth && (
+    //       <NextPrevButton onClick={() => handleScroll(400)} side="right" />
+    //     )}
+    //   </div>
+    // </div>
   );
 }
 

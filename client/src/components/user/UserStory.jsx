@@ -23,7 +23,7 @@ function UserStory({ id, imgUrl, userName, extra }) {
         loading={loadStory}
         id={id}
       />
-      <p className="text-xs text-center">{userName}</p>
+      <p className="text-xs text-center w-20 truncate">{userName}</p>
     </div>
   );
 }
