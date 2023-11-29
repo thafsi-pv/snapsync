@@ -5,6 +5,8 @@ import { timeAgo } from "../../utils/timeAgo";
 import { AiOutlineHeart } from "react-icons/ai";
 import { STORY_API } from "../../services/api/const";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
+import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 let count = 0;
 const Story = () => {
@@ -61,10 +63,10 @@ const Story = () => {
   return (
     <StoryLayout>
       <div className="w-full flex justify-center items-center">
-        <div className="text-white ">
+        <div className="text-white hidden md:block lg:block ">
           <GrFormPrevious className="p-0.5 bg-white h-6 w-6 rounded-full hover:bg-gray-400 cursor-pointer" />
         </div>
-        <div className="relative w-[33%] h-screen p-2 transition-transform">
+        <div className="relative w-full lg:w-[33%] h-screen  transition-transform ">
           {/* {stories?.map((user) => ( */}
           <div className="w-full h-full">
             <img
@@ -73,7 +75,7 @@ const Story = () => {
               alt=""
             />
             <div
-              className={`absolute pt-1 top-0 right-0 w-full  p-5 pb-1 gap-1 grid grid-rows-1`}
+              className={`absolute pt-1 top-0 right-0 w-full  p-5 pb-1 gap-1 grid grid-rows-1 bg-gradient-to-t from-transparent to-gray-900`}
               style={{
                 gridTemplateColumns: `repeat(${activeStoryUser?.stories.length}, minmax(0, 1fr))`,
               }}>
@@ -103,8 +105,13 @@ const Story = () => {
                   {timeAgo(activeStoryUser?.stories[currentStory].createdAt)}
                 </p>
               </div>
+              <div className="absolute top-8 right-4 ">
+                <Link to="/">
+                  <IoClose className="w-6 h-6 text-white" />
+                </Link>
+              </div>
             </div>
-            <div className=" absolute bottom-5 w-full col-span-4 px-4 flex gap-3">
+            <div className=" absolute bottom-0 w-full col-span-4 px-4 flex gap-3 bg-gradient-to-b from-transparent to-gray-900 py-4">
               <input
                 type="text"
                 className="w-full p-2 rounded-3xl"
@@ -115,7 +122,7 @@ const Story = () => {
           </div>
           {/* ))} */}
         </div>
-        <div className="text-white">
+        <div className="text-white hidden md:block lg:block">
           <GrFormNext className="p-0.5 bg-white h-6 w-6 rounded-full hover:bg-gray-400 cursor-pointer" />
         </div>
       </div>
