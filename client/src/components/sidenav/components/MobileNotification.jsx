@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { NOTIFICATION } from "../../../services/api/const";
+import { timeAgo } from "../../../utils/timeAgo";
 
 export const MobileNotification = () => {
     const [notificationList, setNotificationList] = useState([]);
