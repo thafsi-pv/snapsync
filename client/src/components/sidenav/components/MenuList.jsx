@@ -56,14 +56,14 @@ function MenuList({ showMenuName }) {
   return (
     <>
       <Link to="/" onClick={handleOnClick}>
-        <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+        <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
           {/* <AiFillHome className="h-7 w-7" /> */}
           <HomeIcon />
           {showMenuName && <p className={`font-semibold ${navbar} `}>Home</p>}
         </div>
       </Link>
       <div
-        className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg  cursor-pointer"
+        className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer"
         onClick={handleSearch}>
         {/* <AiOutlineSearch className="h-7 w-7" /> */}
         <SearchIcon />
@@ -73,19 +73,19 @@ function MenuList({ showMenuName }) {
         to="/explore"
         className="hidden md:block lg:block"
         onClick={handleOnClick}>
-        <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+        <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
           <AiOutlineCompass className="h-7 w-7" />
           {showMenuName && <p className={`font-normal ${navbar}`}>Explore</p>}
         </div>
       </Link>
       <div
-        className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg  cursor-pointer"
+        className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer"
         onClick={() => setAddStory(true)}>
         <BiSolidMoviePlay className="h-7 w-7" />
         {showMenuName && <p className={`font-normal ${navbar}`}>Story</p>}
       </div>
       <Link to={`direct/inbox`} onClick={handleOnClick}>
-        <div className=" flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+        <div className=" flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
           <div className="relative">
             {/* <img
               src="https://file.rendit.io/n/UK7bE1RkhuFEzt0TXV09.svg"
@@ -102,7 +102,7 @@ function MenuList({ showMenuName }) {
         </div>
       </Link>
       <div
-        className="hidden lg:flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+        className="hidden lg:flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer"
         onClick={handleNoti}>
         <div className="relative">
           <img
@@ -123,7 +123,7 @@ function MenuList({ showMenuName }) {
         )}
       </div>
       <div
-        className="hidden  lg:flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer"
+        className="hidden  lg:flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer"
         onClick={() => setAddPost(true)}>
         <img
           src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
@@ -132,7 +132,7 @@ function MenuList({ showMenuName }) {
         {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>}
       </div>
       <Link to={`/${userData?.userName}`} onClick={handleOnClick}>
-        <div className="flex items-center gap-3 hover:bg-gray-100 p-3 rounded-lg w-full cursor-pointer">
+        <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
           <img
             src={userData?.imageUrl}
             alt=""

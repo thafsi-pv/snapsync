@@ -36,7 +36,7 @@ function ChatListScreen({
     setMessages([]);
   };
   return (
-    <div className="relative  w-full flex flex-col justify-between lg:h-screen  mg:h-screen h-[95%]">
+    <div className="relative  w-full flex flex-col justify-between h-full">
       <div className="flex gap-3 w-full flex-0 border-b p-1">
         <div className="flex items-center gap-3">
           <MdOutlineKeyboardBackspace
