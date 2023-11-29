@@ -64,6 +64,14 @@ function Story() {
               imgUrl={story.imageUrl}
             />
           ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
         </div>
 
         {scrollPosition <
