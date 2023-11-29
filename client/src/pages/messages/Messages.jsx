@@ -152,7 +152,7 @@ function Messages() {
   };
 
   return (
-    <div className="overflow-hidden flex flex-col lg:flex-row w-full h-screen lg:items-center  max-h-screen">
+    <div className=" flex flex-col lg:flex-row w-full h-screen lg:items-center  max-h-screen">
       <div
         className={`lg:self-end flex flex-row justify-between items-start h-screen  border-r lg:w-2/5 ${
           !chatUser ? "sm:w-full h-full" : "lg:block hidden"
@@ -184,7 +184,7 @@ function Messages() {
         {/* </div> */}
       </div>
       <div
-        className={`mx-auto w-full p-2 h-full ${
+        className={`mx-auto w-full p-2 h-full  ${
           !chatUser ? "hidden lg:block" : "block"
         }`}>
         {chatUser != null ? (
