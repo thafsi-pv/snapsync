@@ -2,7 +2,7 @@ import React from "react";
 
 function PostShimmer() {
   return (
-    <div className="flex flex-col space-x-4 gap-3 lg:w-full w-[380px] ">
+    <div className="flex flex-col space-x-4 gap-3 lg:w-[500px] w-[380px] lg:ml-20">
       {/* Profile Section */}
       <div className="flex items-center gap-3">
         <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 rounded-full animate-pulse" />
