@@ -73,10 +73,7 @@ function Story() {
           {scrollPosition > 0 && (
             <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
           )}
-          {storyList?.some((story) => {
-            if (userData._id.includes(story._id)) {
-              return true;
-            }
+          {!storyList?.some((story) => story._id == userData?._id) && (
             <div className="relative text-sm cursor-pointer">
               <UserImage
                 imgUrl={userData?.imageUrl}
@@ -90,8 +87,8 @@ function Story() {
               <div className="absolute bottom-0 right-2 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">
                 <IoIosAdd />
               </div>
-            </div>;
-          })}
+            </div>
+          )}
           {storyList?.map((story) => (
             <UserStory
               key={story._id}
