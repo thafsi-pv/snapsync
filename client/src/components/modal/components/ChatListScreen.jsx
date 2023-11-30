@@ -2,7 +2,6 @@ import EmojiPicker from "emoji-picker-react";
 import React, { useCallback, useContext } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { RiSendPlaneFill } from "react-icons/ri";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
@@ -86,13 +85,13 @@ function ChatListScreen({
         <input
           type="text"
           placeholder="Message..."
-          className="w-full p-3 border rounded-md flex-1"
+          className="w-full p-2 border rounded-md flex-1"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button
           type="button"
-          className="p-2 rounded-full border bg-white hover:bg-gray-400"
+          className="p-2 rounded-md border bg-white hover:bg-gray-400 text-xs font-semibold h-full "
           onClick={handleSendMessage}>
           {/* <RiSendPlaneFill className="h- w-7 txtGreenColor" /> */}
           send

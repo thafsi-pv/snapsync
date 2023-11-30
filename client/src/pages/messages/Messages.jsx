@@ -43,7 +43,7 @@ function Messages() {
       bottomNav.style.display = "none";
     }
     // Set body height to screen height
-    document.body.style.height = window.innerHeight + "px";
+    document.body.style.height = window.innerHeight - "10px";
 
     // Avoid overflow scrolling
     document.body.style.overflow = "hidden";

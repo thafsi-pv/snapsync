@@ -9,7 +9,7 @@ function HomePage() {
     setNavbar("block");
   }, []);
   return (
-    <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start" style={{paddingTop:"env(safe-area-inset-top)",paddingBottom:"env(safe-area-inset-bottom)"}}>
+    <div className="overflow-hidden  relative flex flex-row justify-between w-full items-start">
       <Container />
     </div>
   );
