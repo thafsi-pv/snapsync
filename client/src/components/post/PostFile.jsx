@@ -24,6 +24,7 @@ function PostFile({
           autoPlay={autoplay}
           loop={loop}
           playsInline
+          poster={media_url.replace(/\.mp4$/, ".jpg")}
           className={`relative  max-w-xl xl:max-h-full  lg:rounded-l-md   bg-black ${extra}`}
         />
       )}
