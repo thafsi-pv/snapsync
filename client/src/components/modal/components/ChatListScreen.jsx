@@ -23,7 +23,7 @@ function ChatListScreen({
   setshowEmoji,
   setChatUser,
 }) {
-  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages)
+  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
   const { comments, setComments, setPostId, postId } =
     useContext(UserActionContext);
   const handleViewComments = useCallback((postId) => {
@@ -36,7 +36,7 @@ function ChatListScreen({
     setMessages([]);
   };
   return (
-    <div className="relative  w-full flex flex-col justify-between h-full">
+    <div className="relative  w-full flex flex-col justify-between h-full pb-safe">
       <div className="flex gap-3 w-full flex-0 border-b p-1">
         <div className="flex items-center gap-3">
           <MdOutlineKeyboardBackspace
@@ -86,15 +86,16 @@ function ChatListScreen({
         <input
           type="text"
           placeholder="Message..."
-          className="w-full p-4 border rounded-md flex-1"
+          className="w-full p-3 border rounded-md flex-1"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button
           type="button"
-          className="p-4 rounded-full border bg-white hover:bg-gray-400"
+          className="p-2 rounded-full border bg-white hover:bg-gray-400"
           onClick={handleSendMessage}>
-          <RiSendPlaneFill className="h-7 w-7 txtGreenColor" />
+          {/* <RiSendPlaneFill className="h- w-7 txtGreenColor" /> */}
+          send
         </button>
       </div>
       <Comments

@@ -100,3 +100,8 @@
     stroke-dasharray: 8;
   }
 }
+
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
