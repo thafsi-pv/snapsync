@@ -38,10 +38,15 @@ function Messages() {
     const topNav = document.getElementById("topNavId");
     const bottomNav = document.getElementById("bottmNavId");
     if (topNav || bottomNav) {
-      console.log("🚀 ~ file: Messages.jsx:41 ~ useEffect ~ topNav:", topNav)
+      console.log("🚀 ~ file: Messages.jsx:41 ~ useEffect ~ topNav:", topNav);
       topNav.style.display = "none";
       bottomNav.style.display = "none";
     }
+    // Set body height to screen height
+    document.body.style.height = window.innerHeight + "px";
+
+    // Avoid overflow scrolling
+    document.body.style.overflow = "hidden";
 
     return () => {
       const topNav = document.getElementById("topNavId");
@@ -50,6 +55,8 @@ function Messages() {
         topNav.style.display = "";
         bottomNav.style.display = "";
       }
+      document.body.style.height = ""; // Reset height
+      document.body.style.overflow = ""; // Reset overflow
     };
   }, [userData]);
 
