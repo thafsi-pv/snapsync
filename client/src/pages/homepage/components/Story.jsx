@@ -61,9 +61,9 @@ function Story() {
         containerRef.current.removeEventListener("scroll", handleScrolll);
       }
     };
-  }, []);
+  }, [storyList]);
 
-  if (storyList==null) return <StoryListShimmer />;
+  if (storyList == null) return <StoryListShimmer />;
 
   return (
     <div
@@ -194,9 +194,10 @@ function Story() {
               imgUrl={story.imageUrl}
             />
           ))}
-          {scrollPosition <
+          {(scrollPosition <
             containerRef.current?.scrollWidth -
-              containerRef.current?.clientWidth && (
+              containerRef.current?.clientWidth ||
+            scrollPosition == 0) && (
             <NextPrevButton onClick={() => handleScroll(400)} side="right" />
           )}
         </div>

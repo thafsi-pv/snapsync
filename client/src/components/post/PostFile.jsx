@@ -23,8 +23,7 @@ function PostFile({
           controls
           autoPlay={autoplay}
           loop={loop}
-          playsinline
-          webkit-playsInline
+          playsInline
           className={`relative  max-w-xl xl:max-h-full  lg:rounded-l-md   bg-black ${extra}`}
         />
       )}
