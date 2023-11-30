@@ -6,6 +6,7 @@ import { STORY_API } from "../../../services/api/const";
 import UserImage from "../../../components/user/UserImage";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import { IoIosAdd } from "react-icons/io";
+import StoryListShimmer from "../../../components/shimmerUi/StoryListShimmer";
 
 /**
  * Story Component:
@@ -15,9 +16,7 @@ import { IoIosAdd } from "react-icons/io";
 
 function Story() {
   const { userData } = useContext(UserActionContext);
-  console.log("🚀 ~ file: Story.jsx:17 ~ Story ~ userData:", userData);
   const [storyList, setStoryList] = useState();
-  console.log("🚀 ~ file: Story.jsx:20 ~ Story ~ storyList:", storyList);
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   console.log(
@@ -63,6 +62,8 @@ function Story() {
       }
     };
   }, []);
+
+  if (storyList==null) return <StoryListShimmer />;
 
   return (
     <div

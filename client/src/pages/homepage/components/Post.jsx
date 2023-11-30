@@ -8,6 +8,7 @@ import PostFile from "../../../components/post/PostFile";
 import PostHead from "../../../components/post/PostHead";
 import PostLikeAndCaption from "../../../components/post/PostLikeAndCaption";
 import useSocialAction from "../../../hooks/useSocialAction";
+import PostShimmer from "../../../components/shimmerUi/PostShimmer";
 
 function Post() {
   const {
@@ -22,6 +23,7 @@ function Post() {
     controls,
     likedId,
   } = useSocialAction();
+  console.log("🚀 ~ file: Post.jsx:26 ~ Post ~ posts:", posts);
 
   // const controls = useAnimation();
   // const [posts, setPosts] = useState();
@@ -33,7 +35,7 @@ function Post() {
   //   const post = await axiosInstance.get(POST_API);
   //   setPosts(post.data);
   // };
-
+  if (!posts || posts.length == 0 ) return <PostShimmer />;
   return (
     <div className="flex flex-col gap-4 lg:mx-20 w-full">
       {posts?.map((post, index) => {
