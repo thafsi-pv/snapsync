@@ -5,6 +5,7 @@ import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { STORY_API } from "../../../services/api/const";
 import UserImage from "../../../components/user/UserImage";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
+import { IoIosAdd } from "react-icons/io";
 
 /**
  * Story Component:
@@ -13,7 +14,10 @@ import { UserActionContext } from "../../../services/providers/UserActionContext
  */
 
 function Story() {
+  const { userData } = useContext(UserActionContext);
+  console.log("🚀 ~ file: Story.jsx:17 ~ Story ~ userData:", userData);
   const [storyList, setStoryList] = useState();
+  console.log("🚀 ~ file: Story.jsx:20 ~ Story ~ storyList:", storyList);
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   console.log(
@@ -64,11 +68,30 @@ function Story() {
     <div
       className="relative flex flex-col gap-1 max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide w-full"
       ref={containerRef}>
-      <div className="flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24 w-full">
-        {scrollPosition > 0 && (
-          <NextPrevButton onClick={()=>handleScroll(-400)} side="left" />
-        )}
-        <div className="relative text-sm w-[70px] lg:w-auto h-[70px] m p-[2px] flex">
+      <div className="relative flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24 w-full">
+        <div className="relative text-sm w-[70px] lg:w-auto h-[70px] m p-[2px] flex gap-2">
+          {scrollPosition > 0 && (
+            <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
+          )}
+          {storyList?.some((story) => {
+            if (userData._id.includes(story._id)) {
+              return true;
+            }
+            <div className="relative text-sm cursor-pointer">
+              <UserImage
+                imgUrl={userData?.imageUrl}
+                extra="w-20 h-20"
+                // loading={loadStory}
+                // id={id}
+              />
+              <p className="text-xs text-center w-20 truncate">
+                {userData?.userName}
+              </p>
+              <div className="absolute bottom-0 right-2 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">
+                <IoIosAdd />
+              </div>
+            </div>;
+          })}
           {storyList?.map((story) => (
             <UserStory
               key={story._id}
@@ -125,13 +148,60 @@ function Story() {
               imgUrl={story.imageUrl}
             />
           ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {storyList?.map((story) => (
+            <UserStory
+              key={story._id}
+              id={story._id}
+              userName={story.userName}
+              imgUrl={story.imageUrl}
+            />
+          ))}
+          {scrollPosition <
+            containerRef.current?.scrollWidth -
+              containerRef.current?.clientWidth && (
+            <NextPrevButton onClick={() => handleScroll(400)} side="right" />
+          )}
         </div>
-
-        {scrollPosition <
-          containerRef.current?.scrollWidth -
-            containerRef.current?.clientWidth && (
-          <NextPrevButton onClick={()=>handleScroll(400)} side="right" />
-        )}
       </div>
     </div>
     // <div
