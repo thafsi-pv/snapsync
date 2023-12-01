@@ -15,7 +15,7 @@ import StoryListShimmer from "../../../components/shimmerUi/StoryListShimmer";
  */
 
 function Story() {
-  const { userData } = useContext(UserActionContext);
+  const { userData, setAddStory } = useContext(UserActionContext);
   const [storyList, setStoryList] = useState();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -75,7 +75,9 @@ function Story() {
             <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
           )}
           {!storyList?.some((story) => story._id == userData?._id) && (
-            <div className="relative text-sm cursor-pointer">
+            <div
+              className="relative text-sm cursor-pointer"
+              onClick={() => setAddStory(true)}>
               <UserImage
                 imgUrl={userData?.imageUrl}
                 extra="w-20 h-20"
@@ -90,102 +92,6 @@ function Story() {
               </div>
             </div>
           )}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
-          {storyList?.map((story) => (
-            <UserStory
-              key={story._id}
-              id={story._id}
-              userName={story.userName}
-              imgUrl={story.imageUrl}
-            />
-          ))}
           {storyList?.map((story) => (
             <UserStory
               key={story._id}

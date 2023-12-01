@@ -23,16 +23,13 @@ function SideNav() {
     more,
     setMore,
   } = useContext(UserActionContext);
-  console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ more:", more);
 
   const handleMoreBtn = () => {
     setMore((prev) => !prev);
   };
   const handleMoreClose = () => {
     console.log("dsf");
-    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ before  more:", more);
     setMore(false);
-    console.log("🚀 ~ file: SideNav.jsx:26 ~ SideNav ~ afrter  more:", more);
   };
 
   return (
