@@ -1,11 +1,11 @@
 import React from "react";
 
-function ReelIcon({outline = false}) {
+function ReelIcon({ className, outline = false, color='#ffffff'}) {
   if (outline) {
     return (
       <svg
         aria-label=""
-        className="x1lliihq x1n2onr6 x1roi4f4"
+        className={className}
         fill="currentColor"
         height="12"
         role="img"
@@ -64,7 +64,7 @@ function ReelIcon({outline = false}) {
       height="20"
       viewBox="0,0,256,256">
       <g
-        fill="#ffffff"
+        fill={color}
         fillRule="nonzero"
         stroke="none"
         strokeWidth="1"
@@ -87,3 +87,4 @@ function ReelIcon({outline = false}) {
 }
 
 export default ReelIcon;
+

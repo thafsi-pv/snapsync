@@ -11,6 +11,7 @@ import HeartIcon from "../../../assets/svg/HeartIcon";
 import MessengerIcon from "../../../assets/svg/MessengerIcon";
 import HomeIcon from "../../../assets/svg/HomeIcon";
 import SearchIcon from "../../../assets/svg/SearchIcon";
+import ReelIcon from "../../../assets/svg/ReelIcon";
 
 let noti = false;
 function MenuList({ showMenuName }) {
@@ -80,7 +81,8 @@ function MenuList({ showMenuName }) {
       </Link>
       <Link to="/reels">
         <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer">
-          <BiSolidMoviePlay className="h-7 w-7" />
+          {/* <BiSolidMoviePlay className="h-7 w-7" /> */}
+          <ReelIcon color='black' outline={true} className='w-6 h-6'/>
           {showMenuName && <p className={`font-normal ${navbar}`}>Reels</p>}
         </div>
       </Link>
