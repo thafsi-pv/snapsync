@@ -42,11 +42,11 @@ function Messages() {
       topNav.style.display = "none";
       bottomNav.style.display = "none";
     }
-    // Set body height to screen height
-    document.body.style.height = window.innerHeight - "10px";
+    // // Set body height to screen height
+    // document.body.style.height = window.innerHeight - "10px";
 
-    // Avoid overflow scrolling
-    document.body.style.overflow = "hidden";
+    // // Avoid overflow scrolling
+    // document.body.style.overflow = "hidden";
 
     return () => {
       const topNav = document.getElementById("topNavId");
