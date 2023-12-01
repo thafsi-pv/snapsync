@@ -39,7 +39,7 @@ export const Notification = ({
   
     return (
       <motion.div
-        className={`z-10 fixed top-0 left-12 w-full h-full`}
+        className={`z-20 fixed top-0 left-12 w-full h-full`}
         initial={{ x: navbar != "hidden" && !notificationBar ? "-10%" : "-100%" }}
         exit={{ x: "0%" }}
         animate={{ x: "2%" }}

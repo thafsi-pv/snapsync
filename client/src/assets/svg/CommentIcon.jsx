@@ -1,6 +1,6 @@
 import React from "react";
 
-function CommentIcon({ onClick }) {
+function CommentIcon({ onClick,className }) {
   return (
     <div onClick={onClick}>
       {/* <svg
@@ -18,7 +18,7 @@ function CommentIcon({ onClick }) {
       </svg> */}
       <svg
         aria-label="Comment"
-        className=""
+        className={className}
         fill="currentColor"
         height="24"
         role="img"

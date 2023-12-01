@@ -14,6 +14,7 @@ import FileUploadContextProvider from "./services/providers/FileUploadContext";
 import UserActionContextProvider from "./services/providers/UserActionContext";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
+import Reels from "./pages/Reels/Reels";
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -60,6 +61,10 @@ function App() {
     {
       path: "/story/:id",
       element: <Story />,
+    },
+    {
+      path: "/reels/:id",
+      element: <Reels />,
     },
     {
       path: "/auth/login",

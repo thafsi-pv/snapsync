@@ -1,10 +1,10 @@
 import React from "react";
 
-function BookmarkIcon({fill='none',color='black'}) {
+function BookmarkIcon({fill='none',color='black',className}) {
   return (
     <svg
       aria-label="Save"
-      className="cursor-pointer"
+      className={`cursor-pointer ${className}`}
       fill={color}
       height="24"
       role="img"

@@ -1,10 +1,10 @@
 import React from "react";
 
-function MessageIcon() {
+function MessageIcon({className}) {
   return (
     <svg
       aria-label="Share Post"
-      className="cursor-pointer"
+      className={`cursor-pointer ${className}`}
       fill="currentColor"
       height="24"
       role="img"
