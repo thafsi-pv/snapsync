@@ -7,6 +7,7 @@ import { UserActionContext } from "../../../services/providers/UserActionContext
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comments from "../Comments";
+import { Loading } from "../../../assets/svg/Loading";
 
 function ChatListScreen({
   message,
@@ -35,8 +36,8 @@ function ChatListScreen({
     setMessages([]);
   };
   return (
-    <div className="relative  w-full flex flex-col justify-between h-full" >
-      <div className="flex gap-3 w-full flex-0 border-b p-1">
+    <div className="relative  w-full flex flex-col justify-between h-full">
+      <div className="flex gap-3 w-full flex-0 border-b p-1 absolute top-0 bg-white z-10">
         <div className="flex items-center gap-3">
           <MdOutlineKeyboardBackspace
             className="h-5 w-5 lg:hidden cursor-pointer"
@@ -56,7 +57,7 @@ function ChatListScreen({
         </div>
       </div>
       <div className="p-2 flex-1 overflow-y-scroll" h-full ref={chatListRef}>
-        {messages &&
+        {messages.length > 0 ? (
           messages?.map((msg) => (
             <ChatMessage
               message={msg.message}
@@ -64,9 +65,15 @@ function ChatListScreen({
               handleViewComments={handleViewComments}
               isMine={msg.sender._id == userData?._id ? true : false}
             />
-          ))}
+          ))
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            {" "}
+            <Loading />
+          </div>
+        )}
       </div>
-      <div className=" p-4 border-t flex items-center gap-2">
+      <div className="w-full p-4 border-t flex items-center gap-2  absolute bottom-0 bg-white z-10">
         {showEmoji && (
           <div className="absolute bottom-24">
             <EmojiPicker

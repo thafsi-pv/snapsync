@@ -81,6 +81,7 @@ function Messages() {
   }, [chatUser]);
 
   const handleRecentChatClick = (recent) => {
+    setMessages([]);
     const chatUser =
       recent.senderInfo._id == userData._id
         ? recent.recipientInfo
