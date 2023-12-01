@@ -111,10 +111,6 @@ const getAllPosts = async (req, res) => {
     ]);
     if (!postsWithLikes)
       return res.status(404).json({ message: "No post found!" });
-    console.log(
-      "🚀 ~ file: postController.js:109 ~ getAllPosts ~ postsWithLikes:",
-      postsWithLikes
-    );
     return res.status(200).json(postsWithLikes);
   } catch (error) {
     console.log(error);
@@ -202,10 +198,61 @@ const getSavedPosts = async (req, res) => {
   }
 };
 
+const getReels = async (req, res) => {
+  try {
+    const reels = await postModal.aggregate([
+      {
+        $match: { media_type: /^video\// },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $lookup: {
+          from: "likes",
+          localField: "_id",
+          foreignField: "post_id",
+          as: "likes",
+        },
+      },
+      {
+        $lookup: {
+          from: "comments",
+          localField: "_id",
+          foreignField: "post_id",
+          as: "comments",
+        },
+      },
+      {
+        $project: {
+          media_url: 1,
+          media_type: 1,
+          caption: 1,
+          location: 1,
+          createdAt: 1,
+          likeCount: { $size: "$likes" },
+          commentCount: { $size: "$comments" },
+          user: 1,
+        },
+      },
+    ]);
+    res.status(200).json(reels);
+  } catch (error) {
+    res.status(500).json({ error, error: "Internal server error" });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getEntiryPost,
   savePost,
   getSavedPosts,
+  getReels,
 };

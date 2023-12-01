@@ -23,7 +23,9 @@ const VideoList = ({ videos }) => {
       {videos.map((video, index) => (
         <VideoPlayer
           key={index}
-          src={video.src}
+          src={video.media_url}
+          caption={video.caption}
+          alldata={video}
           onIntersection={(inView) => handleVideoIntersection(index, inView)}
           ref={videoRefs.current[index]}
         />
@@ -32,54 +34,69 @@ const VideoList = ({ videos }) => {
   );
 };
 
-const VideoPlayer = React.forwardRef(({ src, onIntersection }, ref) => {
-  const [videoRef, inView] = useInView();
+const VideoPlayer = React.forwardRef(
+  ({ src, onIntersection, caption, alldata }, ref) => {
+    const [videoRef, inView] = useInView();
 
-  useEffect(() => {
-    onIntersection(inView);
-  }, [inView, onIntersection]);
+    useEffect(() => {
+      onIntersection(inView);
+    }, [inView, onIntersection]);
 
-  return (
-    <div className="relative overflow-hidden w-full  bg-black">
-      <div className="w-full flex justify-center my-7">
-        <div className=" relative w-full md:w-fit lg:w-fit h-screen flex justify-center ">
-          <video
-          
-            ref={(node) => {
-              videoRef(node);
-              ref.current = node;
-            }}
-            controls={true} loop={true}
-            className="object-cover h-full w-fit">
-            <source src={src} type="video/mp4"  />
-            Your browser does not support the video tag.
-          </video>
-          <div className="absolute inset-0 right-0 w-full flex items-center justify-center  bg-opacity-30 ml-0 md:ml-14 lg:ml-14">
-            <div className="absolute  right-0 flex flex-col  h-full top-1/2 gap-10 w-16 items-end mr-3">
-              <HeartIcon className="w-7 h-7" />
-              <CommentIcon className="w-7 h-7" />
-              <MessageIcon className="w-7 h-7" />
-              <BookmarkIcon className="w-7 h-7" />
+    return (
+      <div className="relative overflow-hidden w-full  bg-black">
+        <div className="w-full flex justify-center my-7">
+          <div className=" relative w-full md:w-fit lg:w-fit h-screen flex justify-center ">
+            <video
+              ref={(node) => {
+                videoRef(node);
+                ref.current = node;
+              }}
+              controls={true}
+              loop={true}
+              className="object-cover h-full w-fit">
+              <source src={src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div className="absolute inset-0 right-0 w-full flex items-center justify-center ml-0 md:ml-14 lg:ml-14">
+              <div className="absolute  right-0 flex flex-col  h-full top-1/2 gap-6 w-16 items-end mr-3">
+                <div className="flex flex-col items-center font-semibold text-white">
+                  <HeartIcon className="w-7 h-7 text-white" />
+                  <p>{alldata.likeCount}</p>
+                </div>
+                <div className="flex flex-col items-center font-semibold text-white">
+                  <CommentIcon className="w-7 h-7 text-white" />
+                  <p>{alldata.commentCount}</p>
+                </div>
+                <MessageIcon className="w-7 h-7 text-white" />
+                <BookmarkIcon className="w-7 h-7 text-white" color="white" />
+              </div>
             </div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black to-transparent p-4">
-            <div className="flex items-center space-x-4">
-              <img
-                alt="thelonercodergirl's profile picture"
-                className="h-8 w-8 rounded-full"
-                src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1698316845/jnifjbcgpds1pg4dkb0y.jpg"
-              />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black to-transparent p-4">
+              <div className="flex items-center space-x-4">
+                <img
+                  alt="thelonercodergirl's profile picture"
+                  className="h-10 w-10 rounded-full"
+                  src={alldata.user.imageUrl}
+                />
 
-              <div>
-                <p className="text-white font-bold">thelonercodergirl</p>
-                <p className="text-white">These are my 💎👇</p>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2 items-center">
+                    <p className="text-white font-bold">
+                      {alldata.user.fullName}
+                    </p>
+                    <button className="border text-white px-3 py-1 rounded-md">
+                      Follow
+                    </button>
+                  </div>
+                  <p className="text-white line-clamp-2">{caption}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default VideoList;

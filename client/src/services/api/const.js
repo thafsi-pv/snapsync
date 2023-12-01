@@ -39,3 +39,5 @@ export const STORY_API = "story/";
 export const HAVING_STORY_API = "story/havigstory";
 
 export const NOTIFICATION = "/notification";
+
+export const REELS = "/post/reels";

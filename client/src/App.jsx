@@ -63,6 +63,10 @@ function App() {
       element: <Story />,
     },
     {
+      path: "/reels/",
+      element: <Reels />,
+    },
+    {
       path: "/reels/:id",
       element: <Reels />,
     },

@@ -78,12 +78,12 @@ function MenuList({ showMenuName }) {
           {showMenuName && <p className={`font-normal ${navbar}`}>Explore</p>}
         </div>
       </Link>
-      <div
-        className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer"
-        onClick={() => setAddStory(true)}>
-        <BiSolidMoviePlay className="h-7 w-7" />
-        {showMenuName && <p className={`font-normal ${navbar}`}>Story</p>}
-      </div>
+      <Link to="/reels">
+        <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer">
+          <BiSolidMoviePlay className="h-7 w-7" />
+          {showMenuName && <p className={`font-normal ${navbar}`}>Reels</p>}
+        </div>
+      </Link>
       <Link to={`direct/inbox`} onClick={handleOnClick}>
         <div className=" flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
           <div className="relative">
