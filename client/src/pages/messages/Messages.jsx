@@ -1,164 +1,79 @@
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { IoCreateOutline } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { Link } from "react-router-dom";
 import NewChatModal from "../../components/modal/NewChatModal";
 import ChatListScreen from "../../components/modal/components/ChatListScreen";
 import NoMessage from "../../components/modal/components/NoMessage";
 import RecentChatList from "../../components/modal/components/RecentChatList";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { GET_CHATS_API } from "../../services/api/const";
-import { genericError } from "../../services/api/genericError";
-import { SocketContext } from "../../services/providers/SocketContext";
-import { UserActionContext } from "../../services/providers/UserActionContext";
 import useChat from "../../hooks/useChat";
-import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import { UserActionContext } from "../../services/providers/UserActionContext";
+
+/**
+ * Messages component
+ * 
+ * This component handles the display of recent chats, allowing users to send messages.
+ * It includes a chat list, a message input area, and a modal for creating new chats.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered Messages component.
+ */
+
 
 function Messages() {
-  const navigate = useNavigate();
+  // Ref for scrolling to the bottom of the chat list
   const chatListRef = useRef(null);
-  const [chatUser, setChatUser] = useState(null);
   const { userData, setNavbar } = useContext(UserActionContext);
-  const { socket, messages, setMessages } = useContext(SocketContext);
-  const { sendMessage } = useChat();
+  const {
+    messages,
+    setMessages,
+    recentChatList,
+    sendMessage,
+    handleRecentChatClick,
+    chatUser,
+    setChatUser,
+    handleNewChat,
+    newChat,
+    setNewChat,
+    showEmoji,
+    setshowEmoji,
+    onEmojiClick,
+    message,
+    setMessage,
+  } = useChat();
 
-  const [message, setMessage] = useState("");
-  const [showEmoji, setshowEmoji] = useState(false);
-  const [newChat, setNewChat] = useState(false);
-  const [recentChatList, setRecentChatList] = useState();
-
+  //in messages screen hide top navbar and bottom navbar
   useEffect(() => {
-    getRecentChats();
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");
     const bottomNav = document.getElementById("bottmNavId");
     const sideNav = document.getElementById("sideNavId");
     if (topNav || bottomNav) {
-      console.log("🚀 ~ file: Messages.jsx:41 ~ useEffect ~ topNav:", topNav);
       topNav.style.display = "none";
       bottomNav.style.display = "none";
       sideNav.style.width = "7%";
     }
-    // // Set body height to screen height
-    // document.body.style.height = window.innerHeight - "10px";
-
-    // // Avoid overflow scrolling
-    // document.body.style.overflow = "hidden";
-
+    //clean up on unmount
     return () => {
-      // const topNav = document.getElementById("topNavId");
-      // const bottomNav = document.getElementById("bottmNavId");
       if (topNav || bottomNav) {
         topNav.style.display = "";
         bottomNav.style.display = "";
       }
-      // document.body.style.height = ""; // Reset height
-      // document.body.style.overflow = ""; // Reset overflow
       sideNav.style.width = "21%";
     };
-  }, [userData]);
+  }, []);
 
-  // useLayoutEffect(() => {
-  //   if (chatListRef && chatListRef.current) {
-  //     chatListRef.current.scrollTo({
-  //       top: chatListRef.current.scrollHeight,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, []);
+  //scroll to bottom of message list
   useLayoutEffect(() => {
     if (chatListRef && chatListRef.current) {
       chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
     }
   }, [messages]);
 
-  useEffect(() => {
-    if (chatUser) {
-      getChats();
-    }
-  }, [chatUser]);
-
-  const handleRecentChatClick = (recent) => {
-    setMessages([]);
-    const chatUser =
-      recent.senderInfo._id == userData._id
-        ? recent.recipientInfo
-        : recent.senderInfo;
-    chatUser.socketId = recent.socketId;
-    setChatUser(chatUser);
-    const newURL = `/direct/inbox/${chatUser._id}`;
-    navigate(newURL);
-  };
-
-  const getChats = async () => {
-    try {
-      const dt = { sender: userData._id, recipient: chatUser._id };
-      const data = await axiosInstance.post(GET_CHATS_API, dt);
-
-      if (data.status == 200) {
-        const chats = data?.data.map((chat) => ({
-          ...chat,
-          sender: chat.sender,
-          recipient: chat.recipient,
-        }));
-        setMessages(chats);
-        console.log("🚀 ~ file: Messages.jsx:63 ~ chats ~ chats:", chats);
-        const response = await axiosInstance.post(READALL_CHATS_API, dt);
-      }
-    } catch (error) {
-      console.log("🚀 ~ file: Chat.jsx:89 ~ getChats ~ error:", error);
-    }
-  };
-
-  const handleNewChat = () => {
-    setNewChat((prev) => !prev);
-  };
-
   const handleSendMessage = () => {
-    if (chatUser && message) {
-      // socket.emit("private message", {
-      //   sender: userData._id,
-      //   recipient: chatUser._id,
-      //   messageType: "TextMessage",
-      //   // recipientSocketId: chatUser.socketId,
-      //   message,
-      // });
+    if (chatUser && message != "") {
       sendMessage(chatUser._id, message, "TextMessage");
-      // setMessages((prevMessages) => [
-      //   ...prevMessages,
-      //   {
-      //     // sender: userData._id,
-      //     sender: { _id: userData._id },
-      //     recipient: chatUser._id,
-      //     message: message,
-      //   },
-      // ]);
       setMessage("");
-    }
-  };
-
-  // const createChat = async (newChat) => {
-  //   const data = await axios.post(`${CREATE_CHAT}`, newChat);
-  // };
-
-  const onEmojiClick = (event) => {
-    setMessage((prev) => prev + event.emoji);
-    setshowEmoji(false);
-  };
-
-  const getRecentChats = async () => {
-    try {
-      socket.emit("recentChatList", userData._id);
-      socket.on("recentChatList", (recentList) => {
-        setRecentChatList(recentList);
-      });
-    } catch (error) {
-      genericError(error);
     }
   };
 

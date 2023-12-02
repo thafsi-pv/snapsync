@@ -56,7 +56,10 @@ function ChatListScreen({
           </p>
         </div>
       </div>
-      <div className="p-2 flex-1 overflow-y-scroll my-16" h-full ref={chatListRef}>
+      <div
+        className="p-2 flex-1 overflow-y-scroll my-16"
+        h-full
+        ref={chatListRef}>
         {messages.length > 0 ? (
           messages?.map((msg) => (
             <ChatMessage
@@ -96,13 +99,15 @@ function ChatListScreen({
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button
-          type="button"
-          className="p-2 rounded-md border bg-white hover:bg-gray-400 text-xs font-semibold h-full "
-          onClick={handleSendMessage}>
-          {/* <RiSendPlaneFill className="h- w-7 txtGreenColor" /> */}
-          send
-        </button>
+        {message && (
+          <button
+            type="button"
+            className="p-2 rounded-md border bg-white hover:bg-gray-400 text-xs font-semibold h-full "
+            onClick={handleSendMessage}>
+            {/* <RiSendPlaneFill className="h- w-7 txtGreenColor" /> */}
+            send
+          </button>
+        )}
       </div>
       <Comments
         postId={postId}
