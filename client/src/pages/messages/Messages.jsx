@@ -37,10 +37,12 @@ function Messages() {
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");
     const bottomNav = document.getElementById("bottmNavId");
+    const sideNav = document.getElementById("sideNavId");
     if (topNav || bottomNav) {
       console.log("🚀 ~ file: Messages.jsx:41 ~ useEffect ~ topNav:", topNav);
       topNav.style.display = "none";
       bottomNav.style.display = "none";
+      sideNav.style.width = "7%";
     }
     // // Set body height to screen height
     // document.body.style.height = window.innerHeight - "10px";
@@ -49,14 +51,15 @@ function Messages() {
     // document.body.style.overflow = "hidden";
 
     return () => {
-      const topNav = document.getElementById("topNavId");
-      const bottomNav = document.getElementById("bottmNavId");
+      // const topNav = document.getElementById("topNavId");
+      // const bottomNav = document.getElementById("bottmNavId");
       if (topNav || bottomNav) {
         topNav.style.display = "";
         bottomNav.style.display = "";
       }
-      document.body.style.height = ""; // Reset height
-      document.body.style.overflow = ""; // Reset overflow
+      // document.body.style.height = ""; // Reset height
+      // document.body.style.overflow = ""; // Reset overflow
+      sideNav.style.width = "21%";
     };
   }, [userData]);
 

@@ -36,7 +36,7 @@ function SideNav() {
     <>
       <div
         className={`hidden lg:block md:flex relative  border-r w-[21%]
-       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}>
+       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`} id="sideNavId">
         <div
           className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
           <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
