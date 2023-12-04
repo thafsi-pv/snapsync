@@ -12,10 +12,6 @@ function UserActionContextProvider({ children }) {
   console.log("user action context---rendered");
   // const { getStorage } = useLocalStorage();
   const [userData, setUserData] = useState();
-  console.log(
-    "🚀 ~ file: UserActionContext.jsx:15 ~ UserActionContextProvider ~ userData:",
-    userData
-  );
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);
   const [postId, setPostId] = useState(null);
@@ -33,6 +29,8 @@ function UserActionContextProvider({ children }) {
   }, []);
 
   const getUserData = async () => {
+    const token = localStorage.getItem("ssaccesstoken");
+    console.log("🚀 ~ #############token:", token);
     const response = await axiosInstance.get(GET_USER_DATA);
     setUserData(response?.data);
     userDataRef.current = response.data;

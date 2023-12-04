@@ -14,9 +14,9 @@ import { genericError } from "../services/api/genericError";
 
 function useChat() {
   const navigate = useNavigate();
-  const { userData,userDataRef, setShare } = useContext(UserActionContext);
-  console.log("🚀 ~ file: useChat.jsx:18 ~ useChat ~ userData:", userData)
-  const { socket, messages, setMessages,setNewMessageNotif } = useContext(SocketContext);
+  const { userData, userDataRef, setShare } = useContext(UserActionContext);
+  const { socket, messages, setMessages, setNewMessageNotif } =
+    useContext(SocketContext);
   const [recentChatList, setRecentChatList] = useState();
   const { addToast } = useToast();
   const [chatUser, setChatUser] = useState(null); //currently active chat user
@@ -43,7 +43,7 @@ function useChat() {
 
   useEffect(() => {
     getRecentChats();
-  }, [userData,socket]);
+  }, [userData, socket]);
 
   useEffect(() => {
     if (chatUser) {
@@ -54,10 +54,17 @@ function useChat() {
   // get recent chats of loged in user when enter to messages
   const getRecentChats = async () => {
     try {
-      console.log("🚀 ~ file: useChat.jsx:57 ~ getRecentChats ~ socket:", socket)
       socket.current.emit("recentChatList", userDataRef.current._id);
       socket.current.on("recentChatList", (recentList) => {
         setRecentChatList(recentList);
+
+        //count total isRead=false and not equal to sender=loged in user
+        const countOfUnReadItems = recentList.filter(
+          (item) =>
+            item.isRead == false &&
+            item.senderInfo._id != userDataRef.current._id
+        ).length;
+        setNewMessageNotif(countOfUnReadItems);
       });
     } catch (error) {
       genericError(error);
@@ -134,17 +141,18 @@ function useChat() {
     setshowEmoji(false);
   };
 
-  const connectSocket = (token) => {
-    const newSocket = io(`${socketBaseUrl}?token=${token}`);
-    setSocket(newSocket);
-  };
+  // const connectSocket = (token) => {
+  //   const newSocket = io(`${socketBaseUrl}?token=${token}`);
+  //   setSocket(newSocket);
+  // };
 
   return {
+    socket,
     messages,
     setMessages,
     recentChatList,
     sendMessage,
-    connectSocket,
+    // connectSocket,
     handleRecentChatClick,
     chatUser,
     setChatUser,
@@ -158,7 +166,7 @@ function useChat() {
     message,
     setMessage,
     getRecentChats,
-    setNewMessageNotif
+    setNewMessageNotif,
   };
 }
 

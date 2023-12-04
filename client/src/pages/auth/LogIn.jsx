@@ -1,17 +1,14 @@
 import { useFormik } from "formik";
-import React, { useCallback } from "react";
+import React from "react";
 import { AiFillFacebook } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import OrLine from "../../components/uiPrimitives/OrLine";
 import Logo from "../../components/uiPrimitives/logo/Logo";
-import useChat from "../../hooks/useChat";
+import useAuth from "../../hooks/useAuth";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AuthLayout from "../../layout/AuthLayout";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { LOGIN_API } from "../../services/api/const";
 import { logInValidationSchema } from "../../utils/validation";
 import LogInForm from "./forms/LogInForm";
-import { tokenName } from "../../utils/const";
 
 /* 
 # Render the login page, including a formik login form ,social login option,
@@ -20,10 +17,10 @@ import { tokenName } from "../../utils/const";
 */
 
 function LogIn() {
-  const { setStorage } = useLocalStorage();
+  // const { setStorage } = useLocalStorage();
+  const { handleLogIn } = useAuth();
   //  const { connectSocket } = useChat();
 
-  const navigate = useNavigate();
   const logInFormik = useFormik({
     initialValues: {
       emailPhone: "",
@@ -35,17 +32,18 @@ function LogIn() {
     },
   });
 
-  const handleLogIn = useCallback(async (values) => {
-    const result = await axiosInstance.post(LOGIN_API, values);
-    if (result.status === 200) {
-      alert("success");
-      setStorage(tokenName, result.data.accesstoken);
-      navigate("/");
-      // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
-    } else {
-      alert(result, "failed");
-    }
-  }, []);
+  // const handleLogIn = useCallback(async (values) => {
+
+  //   const result = await axiosInstance.post(LOGIN_API, values);
+  //   if (result.status === 200) {
+  //     alert("success");
+  //     setStorage(tokenName, result.data.accesstoken);
+  //     navigate("/");
+  //     // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
+  //   } else {
+  //     alert(result, "failed");
+  //   }
+  // }, []);
 
   return (
     <AuthLayout>

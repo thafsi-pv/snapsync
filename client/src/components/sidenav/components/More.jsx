@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 function More({ more, setMore }) {
+  const { handleLogOut } = useAuth();
   const handleMoreBtn = () => {
     setMore((prev) => !prev);
   };
@@ -45,8 +47,8 @@ function More({ more, setMore }) {
         </div>
         <div className="flex flex-col gap-6 h-12 shrink-0 items-start">
           <div className="bg-[#f1f1f1] self-stretch h-1 shrink-0" />
-          <Link
-            to="/auth/login"
+          <div
+            onClick={handleLogOut}
             className="flex flex-row px-2 gap-1 items-center">
             <img
               src="https://file.rendit.io/n/dXnHZC1XLgB5QGihZwkb.svg"
@@ -55,7 +57,7 @@ function More({ more, setMore }) {
             <div className="text-lg font-['Microsoft_Sans_Serif'] tracking-[0.54] mt-px">
               Log out
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>

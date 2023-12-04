@@ -5,13 +5,16 @@ import "./index.css";
 import SocketContextProvider from "./services/providers/SocketContext.jsx";
 import { ToastProvider } from "./services/providers/ToastContext.jsx";
 import InternetStatusChecker from "./services/providers/InternetStatusChecker.jsx";
+import UserActionContextProvider from "./services/providers/UserActionContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <InternetStatusChecker>
     <ToastProvider>
-      <SocketContextProvider>
-        <App />
-      </SocketContextProvider>
+      <UserActionContextProvider>
+        <SocketContextProvider>
+          <App />
+        </SocketContextProvider>
+      </UserActionContextProvider>
     </ToastProvider>
   </InternetStatusChecker>
 );

@@ -9,7 +9,7 @@ function useNotification() {
   const [notification, setNotification] = useState([]);
 
   useEffect(() => {
-    if (socket) {
+    if (socket.current) {
       socket.current.on("notification", (postdetails) => {
         setNotification((prev) => [...prev, postdetails]);
       });

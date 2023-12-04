@@ -50,8 +50,6 @@ function Messages() {
       getRecentChats();
     }, 5000);
 
-    setNewMessageNotif([]);
-
     //hide top and bottom nav in mobile
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");

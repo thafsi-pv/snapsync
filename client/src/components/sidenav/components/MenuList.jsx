@@ -82,7 +82,7 @@ function MenuList({ showMenuName }) {
       <Link to="/reels">
         <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg  cursor-pointer">
           {/* <BiSolidMoviePlay className="h-7 w-7" /> */}
-          <ReelIcon color='black' outline={true} className='w-6 h-6'/>
+          <ReelIcon color="black" outline={true} className="w-6 h-6" />
           {showMenuName && <p className={`font-normal ${navbar}`}>Reels</p>}
         </div>
       </Link>
@@ -94,9 +94,9 @@ function MenuList({ showMenuName }) {
               className="w-6 shrink-0"
             /> */}
             <MessengerIcon />
-            {newMessageNotif.length > 0 && (
+            {newMessageNotif > 0 && (
               <p className="absolute -right-2 -top-2 bg-red-500 rounded-full w-5 h-5 text-white text-xs text-center border-2 border-white">
-                {newMessageNotif.length}
+                {newMessageNotif}
               </p>
             )}
           </div>

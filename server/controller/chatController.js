@@ -47,7 +47,7 @@ const createChat = async (req, res) => {
 };
 
 async function createChatFn(chat) {
-  const { sender, recipient, messageType, message } = chat;
+  const { sender, recipient, messageType, message, isRead } = chat;
 
   let messageObject;
   switch (messageType) {
@@ -69,7 +69,7 @@ async function createChatFn(chat) {
     recipient,
     messageType,
     message: messageObject._id,
-    isRead: false,
+    isRead,
   });
   return chatMessage;
 }
@@ -304,11 +304,6 @@ const getRecentChatsList = async (Id) => {
       },
     },
   ]);
-
-  console.log(
-    "🚀 ~ file: chatController.js:195 ~ getRecentChatsList ~ recentChats:",
-    recentChats
-  );
   return recentChats;
 };
 

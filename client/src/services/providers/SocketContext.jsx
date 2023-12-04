@@ -21,13 +21,14 @@ function SocketContextProvider({ children }) {
   // const [socket, setSocket] = useState();
   const socket = useRef();
   const [messages, setMessages] = useState([]);
-  const [newMessageNotif, setNewMessageNotif] = useState([]);
+  const [newMessageNotif, setNewMessageNotif] = useState(0);
 
   //const { connectSocket } = useChat();
   const { getStorage } = useLocalStorage();
 
   useLayoutEffect(() => {
     const token = getStorage(tokenName);
+    console.log("🚀 ~ file: SocketContext.jsx:31 ~ useLayoutEffect ~ token:", token)
     if (token) {
       const newSocket = io(`${socketBaseUrl}?token=${token}`);
       // setSocket(newSocket);
@@ -42,26 +43,31 @@ function SocketContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (socket) {
-      socket.current.on("private message", ({ _id, sender, message, messageType }) => {
-        const currentURL = window.location.href;
-        const id = getIdFromUrl(currentURL);
-        if (id != sender) {
-          socket.current.emit("isReadUpdata", { _id, flag: false });
-          setNewMessageNotif((prev) => [...prev, _id]);
-        } else {
-          let text = {};
-          if (messageType == "TextMessage") {
-            text = { text: message };
+    if (socket.current) {
+      console.log("🚀 ~ file: SocketContext.jsx:47 ~ useEffect ~ socket:", socket)
+      socket.current.on(
+        "private message",
+        ({ _id, sender, message, messageType }) => {
+          const currentURL = window.location.href;
+          const id = getIdFromUrl(currentURL);
+          console.log('######---private message')
+          if (id != sender) {
+            socket.current.emit("isReadUpdata", { _id, flag: false });
+            setNewMessageNotif((prev) => prev + 1);
           } else {
-            text = message;
+            let text = {};
+            if (messageType == "TextMessage") {
+              text = { text: message };
+            } else {
+              text = message;
+            }
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { sender: sender, message: text, messageType },
+            ]);
           }
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            { sender: sender, message: text, messageType },
-          ]);
         }
-      });
+      );
     }
   }, [socket]);
 
@@ -73,7 +79,7 @@ function SocketContextProvider({ children }) {
         messages,
         setMessages,
         newMessageNotif,
-        setNewMessageNotif
+        setNewMessageNotif,
       }}>
       {children}
     </SocketContext.Provider>

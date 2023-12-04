@@ -1,10 +1,5 @@
 import { useAnimation } from "framer-motion";
-import {
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
   COMMENT_API,
@@ -21,14 +16,14 @@ import { useToast } from "./useToast";
  * useSocialAction custom hook
  * Responsible for like, comment save post from home page
  * Responsible for comments popup
- * Responsible post double tap like fly heart 
+ * Responsible post double tap like fly heart
  */
 
 function useSocialAction() {
   const controls = useAnimation();
   const [posts, setPosts] = useState([]);
   const [likedId, setLikedId] = useState(); //variable for post double tap
-  const { comments, setComments, postId, setPostId, setShare } =
+  const { userData, comments, setComments, postId, setPostId, setShare } =
     useContext(UserActionContext);
 
   const { createNotification } = useNotification(); //notification hook
@@ -135,7 +130,7 @@ function useSocialAction() {
     }
   };
 
-  //start region post double tap like 
+  //start region post double tap like
   const lastTapTimeRef = useRef(0);
 
   const handleDoubleClick = (index, id) => {
@@ -193,6 +188,7 @@ function useSocialAction() {
   //end region post double tap like
 
   return {
+    userData,
     posts,
     setPosts,
     likePost,
@@ -205,8 +201,8 @@ function useSocialAction() {
     sharePost,
     handleDoubleClick, //for post double click desktop
     handleTouchStart, //for post double tap mobile
-    controls,//fley heart animation controls
-    likedId
+    controls, //fley heart animation controls
+    likedId,
   };
 }
 

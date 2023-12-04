@@ -2,10 +2,6 @@ import React from "react";
 import { timeAgo } from "../../../utils/timeAgo";
 
 function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
-  console.log(
-    "🚀 ~ file: RecentChatList.jsx:5 ~ RecentChatList ~ recentChatList:",
-    recentChatList
-  );
   return (
     <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll ">
       {recentChatList?.map((recent) => (
