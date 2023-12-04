@@ -26,50 +26,50 @@ function SocketContextProvider({ children }) {
   //const { connectSocket } = useChat();
   const { getStorage } = useLocalStorage();
 
-  useLayoutEffect(() => {
-    const token = getStorage(tokenName);
-    console.log("🚀 ~ file: SocketContext.jsx:31 ~ useLayoutEffect ~ token:", token)
-    if (token) {
-      const newSocket = io(`${socketBaseUrl}?token=${token}`);
-      // setSocket(newSocket);
-      if (newSocket) {
-        // setSocket(newSocket);
-        socket.current = newSocket;
-      } else {
-        const error = { response: { status: 401 } };
-        genericError(error);
-      }
-    }
-  }, []);
+  // useLayoutEffect(() => {
+  //   const token = getStorage(tokenName);
+  //   console.log("🚀 ~ file: SocketContext.jsx:31 ~ useLayoutEffect ~ token:", token)
+  //   if (token) {
+  //     const newSocket = io(`${socketBaseUrl}?token=${token}`);
+  //     // setSocket(newSocket);
+  //     if (newSocket) {
+  //       // setSocket(newSocket);
+  //       socket.current = newSocket;
+  //     } else {
+  //       const error = { response: { status: 401 } };
+  //       genericError(error);
+  //     }
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (socket.current) {
-      console.log("🚀 ~ file: SocketContext.jsx:47 ~ useEffect ~ socket:", socket)
-      socket.current.on(
-        "private message",
-        ({ _id, sender, message, messageType }) => {
-          const currentURL = window.location.href;
-          const id = getIdFromUrl(currentURL);
-          console.log('######---private message')
-          if (id != sender) {
-            socket.current.emit("isReadUpdata", { _id, flag: false });
-            setNewMessageNotif((prev) => prev + 1);
-          } else {
-            let text = {};
-            if (messageType == "TextMessage") {
-              text = { text: message };
-            } else {
-              text = message;
-            }
-            setMessages((prevMessages) => [
-              ...prevMessages,
-              { sender: sender, message: text, messageType },
-            ]);
-          }
-        }
-      );
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   if (socket.current) {
+  //     console.log("🚀 ~ file: SocketContext.jsx:47 ~ useEffect ~ socket:", socket)
+  //     socket.current.on(
+  //       "private message",
+  //       ({ _id, sender, message, messageType }) => {
+  //         const currentURL = window.location.href;
+  //         const id = getIdFromUrl(currentURL);
+  //         console.log('######---private message')
+  //         if (id != sender) {
+  //           socket.current.emit("isReadUpdata", { _id, flag: false });
+  //           setNewMessageNotif((prev) => prev + 1);
+  //         } else {
+  //           let text = {};
+  //           if (messageType == "TextMessage") {
+  //             text = { text: message };
+  //           } else {
+  //             text = message;
+  //           }
+  //           setMessages((prevMessages) => [
+  //             ...prevMessages,
+  //             { sender: sender, message: text, messageType },
+  //           ]);
+  //         }
+  //       }
+  //     );
+  //   }
+  // }, [socket]);
 
   return (
     <SocketContext.Provider

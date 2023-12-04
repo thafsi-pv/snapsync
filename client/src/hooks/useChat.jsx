@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
   GET_CHATS_API,
   READALL_CHATS_API,
+  SEARCH_USER_API,
   socketBaseUrl,
 } from "../services/api/const";
 import { SocketContext } from "../services/providers/SocketContext";
@@ -11,18 +12,71 @@ import { UserActionContext } from "../services/providers/UserActionContext";
 import { useToast } from "./useToast";
 import { useNavigate } from "react-router-dom";
 import { genericError } from "../services/api/genericError";
+import { getIdFromUrl } from "../utils/getIdFromUrl";
+import useLocalStorage from "./useLocalStorage";
+import { tokenName } from "../utils/const";
 
 function useChat() {
   const navigate = useNavigate();
   const { userData, userDataRef, setShare } = useContext(UserActionContext);
   const { socket, messages, setMessages, setNewMessageNotif } =
     useContext(SocketContext);
+  const { getStorage } = useLocalStorage();
+
   const [recentChatList, setRecentChatList] = useState();
   const { addToast } = useToast();
   const [chatUser, setChatUser] = useState(null); //currently active chat user
   const [newChat, setNewChat] = useState(false); // new chat modal view
   const [showEmoji, setshowEmoji] = useState(false);
   const [message, setMessage] = useState("");
+  const [usersList, setUsersList] = useState(null); //state for store user list while search in new chat popup
+
+  useEffect(() => {
+    connectSocket();
+  }, []);
+  const connectSocket = () => {
+    const token = getStorage(tokenName);
+    if (token) {
+      const newSocket = io(`${socketBaseUrl}?token=${token}`);
+      // setSocket(newSocket);
+      if (newSocket) {
+        // setSocket(newSocket);
+        socket.current = newSocket;
+      } else {
+        const error = { response: { status: 401 } };
+        genericError(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on(
+        "private message",
+        ({ _id, sender, message, messageType }) => {
+          const currentURL = window.location.href;
+          const id = getIdFromUrl(currentURL);
+          console.log("######---private message");
+          if (id != sender) {
+            socket.current.emit("isReadUpdata", { _id, flag: false });
+            setNewMessageNotif((prev) => prev + 1);
+          } else {
+            let text = {};
+            if (messageType == "TextMessage") {
+              text = { text: message };
+            } else {
+              text = message;
+            }
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { sender: sender, message: text, messageType },
+            ]);
+          }
+        }
+      );
+    }
+  }, [socket]);
+
   // useEffect(() => {
   //   if (socket) {
   //     socket.on("forceDisconnect", (reason) => {
@@ -132,13 +186,47 @@ function useChat() {
   }
 
   //start new chat
-  const handleNewChat = () => {
+  const handleNewChat = useCallback(() => {
     setNewChat((prev) => !prev);
-  };
+  }, []);
 
   const onEmojiClick = (event) => {
     setMessage((prev) => prev + event.emoji);
     setshowEmoji(false);
+  };
+
+  //search user function for new chat start
+  const searchUser = async (debouncedSearchTerm) => {
+    const result = await axiosInstance.get(
+      `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
+    );
+    setUsersList(result.data);
+  };
+
+  //start new chat from new chat popup user click event
+  const handleStartNewChat = (userId) => {
+    return new Promise((resolve, reject) => {
+      console.log(
+        "🚀 ~ file: useChat.jsx:208 ~ handleStartNewChat ~ userId:",
+        userId
+      );
+      socket.current.emit("newChat", userId);
+      socket.current.on("usersocketId", (socketId) => {
+        const user = usersList.find((user) => {
+          return (user._id = userId);
+        });
+        // setChatUser(user);
+        //  setNewChat(false);
+        //handleNewChat();
+
+        if (user) {
+          user.socketId = socketId;
+          resolve(user);
+        } else {
+          reject("User not found");
+        }
+      });
+    });
   };
 
   // const connectSocket = (token) => {
@@ -147,12 +235,13 @@ function useChat() {
   // };
 
   return {
+    connectSocket,
     socket,
     messages,
     setMessages,
     recentChatList,
     sendMessage,
-    // connectSocket,
+    connectSocket,
     handleRecentChatClick,
     chatUser,
     setChatUser,
@@ -167,6 +256,9 @@ function useChat() {
     setMessage,
     getRecentChats,
     setNewMessageNotif,
+    handleStartNewChat,
+    searchUser,
+    usersList,
   };
 }
 

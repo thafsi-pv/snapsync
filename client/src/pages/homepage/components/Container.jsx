@@ -1,17 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Story from "./Story";
 import Suggestions from "./Suggestions";
 import Post from "./Post";
 import Comments from "../../../components/modal/Comments";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import Share from "../../../components/modal/Share";
+import useChat from "../../../hooks/useChat";
 
 function Container() {
   const { comments, setComments, postId, share, setShare } =
     useContext(UserActionContext);
+  const { connectSocket } = useChat();
 
   // const [comments, setComments] = useState(false);
   // const [postId, setPostId] = useState(null);
+
+  useEffect(() => {
+    connectSocket();
+  }, []);
 
   return (
     <div className="flex overflow-hidden min-h-full min-w-full max-w-full lg:justify-evenly ">

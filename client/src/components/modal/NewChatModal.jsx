@@ -8,44 +8,53 @@ import { axiosInstance } from "../../services/api/axiosInterceptor";
 import PortalModal from "../uiPrimitives/modal/PortalModal";
 import InputField from "../uiPrimitives/fields/InputField";
 import SearchUser from "./components/SearchUser";
+import useChat from "../../hooks/useChat";
 
 function NewChatModal({ newChat, setNewChat, setChatUser }) {
+  console.log(
+    "🚀 ~ file: NewChatModal.jsx:14 ~ NewChatModal ~ newChat:",
+    newChat
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const [usersList, setUsersList] = useState(null);
-  const { socket } = useContext(SocketContext);
+  // const [usersList, setUsersList] = useState(null);
+  // const { socket } = useContext(SocketContext);
+  const { handleStartNewChat, searchUser, usersList } = useChat();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (debouncedSearchTerm != "") {
-      searchUser();
+      searchUser(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
 
-  const searchUser = async () => {
-    console.log("search for inside if", debouncedSearchTerm);
-    const result = await axiosInstance.get(
-      `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
-    );
+  // const searchUser = async () => {
+  //   console.log("search for inside if", debouncedSearchTerm);
+  //   const result = await axiosInstance.get(
+  //     `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
+  //   );
 
-    setUsersList(result.data);
-  };
+  //   setUsersList(result.data);
+  // };
 
-  const handleNewChat = (userId) => {
-    socket.emit("newChat", userId);
-    socket.on("usersocketId", (socketId) => {
-      console.log("🚀 ~ file: NewChatModal.jsx:40 ~ socket.on ~ id:", socketId);
-
-      const user = usersList.find((user) => {
-        return (user._id = userId);
-      });
-      console.log("🚀 ~ file: NewChatModal.jsx:43 ~ socket.on ~ user:", user);
-      user.socketId = socketId;
-      setChatUser(user);
-      setNewChat(false);
-      const newURL = `/direct/inbox/${userId}`;
-      navigate(newURL);
-    });
+  const handleNewChat = async (userId) => {
+    const user = await handleStartNewChat(userId);
+    console.log("🚀 ~ file: NewChatModal.jsx:42 ~ handleNewChat ~ user:", user);
+    setNewChat(false);
+    setChatUser(user);
+    const newURL = `/direct/inbox/${userId}`;
+    navigate(newURL);
+    // socket.current.emit("newChat", userId);
+    // socket.current.on("usersocketId", (socketId) => {
+    //   const user = usersList.find((user) => {
+    //     return (user._id = userId);
+    //   });
+    //   user.socketId = socketId;
+    //   setChatUser(user);
+    //   setNewChat(false);
+    //   const newURL = `/direct/inbox/${userId}`;
+    //   navigate(newURL);
+    // });
   };
 
   if (!newChat) return null;

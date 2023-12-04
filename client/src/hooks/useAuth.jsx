@@ -9,7 +9,7 @@ import { LOGIN_API } from "../services/api/const";
 
 function useAuth() {
   const navigate = useNavigate();
-  const { socket } = useChat();
+  const { connectSocket, socket } = useChat();
   const { userData } = useSocialAction();
   const { setStorage, clearStorage } = useLocalStorage();
 
@@ -18,6 +18,7 @@ function useAuth() {
     if (result.status === 200) {
       setStorage(tokenName, result.data.accesstoken);
       navigate("/");
+      
       // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
     } else {
       alert(result, "failed");
@@ -25,7 +26,9 @@ function useAuth() {
   };
 
   const handleLogOut = () => {
-    socket.current.emit("logOut", userData?._id);
+    if (socket.current) {
+      socket.current.emit("logOut", userData?._id);
+    }
     clearStorage(tokenName);
     navigate("/auth/login");
   };

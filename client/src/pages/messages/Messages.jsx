@@ -22,7 +22,9 @@ import { UserActionContext } from "../../services/providers/UserActionContext";
 function Messages() {
   // Ref for scrolling to the bottom of the chat list
   const chatListRef = useRef(null);
+  
   const { userData, setNavbar } = useContext(UserActionContext);
+
   const {
     messages,
     setMessages,
