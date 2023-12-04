@@ -10,7 +10,7 @@ function useNotification() {
 
   useEffect(() => {
     if (socket) {
-      socket.on("notification", (postdetails) => {
+      socket.current.on("notification", (postdetails) => {
         setNotification((prev) => [...prev, postdetails]);
       });
     }

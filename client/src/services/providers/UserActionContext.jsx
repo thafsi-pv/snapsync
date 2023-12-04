@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import useChat from "../../hooks/useChat";
 import { GET_USER_DATA, socketBaseUrl } from "../api/const";
 import useLocalStorage from "../../hooks/useLocalStorage";
@@ -9,8 +9,13 @@ import { axiosInstance } from "../api/axiosInterceptor";
 export const UserActionContext = createContext(null);
 
 function UserActionContextProvider({ children }) {
+  console.log("user action context---rendered");
   // const { getStorage } = useLocalStorage();
   const [userData, setUserData] = useState();
+  console.log(
+    "🚀 ~ file: UserActionContext.jsx:15 ~ UserActionContextProvider ~ userData:",
+    userData
+  );
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);
   const [postId, setPostId] = useState(null);
@@ -22,6 +27,7 @@ function UserActionContextProvider({ children }) {
   const [share, setShare] = useState(false);
   const [more, setMore] = useState(false);
 
+  const userDataRef = useRef();
   useEffect(() => {
     getUserData();
   }, []);
@@ -29,12 +35,14 @@ function UserActionContextProvider({ children }) {
   const getUserData = async () => {
     const response = await axiosInstance.get(GET_USER_DATA);
     setUserData(response?.data);
+    userDataRef.current = response.data;
   };
 
   return (
     <UserActionContext.Provider
       value={{
         userData,
+        userDataRef,
         setUserData,
         addPost,
         setAddPost,

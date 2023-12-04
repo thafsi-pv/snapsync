@@ -55,11 +55,9 @@ async function createChatFn(chat) {
       messageObject = await textMessageModal.create({ text: message });
       break;
     case "PostMessage":
-      // Assuming postId is provided in the request
       messageObject = await postMessageModal.create({ postId: message });
       break;
     case "ProfileMessage":
-      // Assuming profileId is provided in the request
       messageObject = await profileMessageModel.create({ profileId: message });
       break;
     default:
@@ -176,7 +174,7 @@ const getRecentChats = async (req, res) => {
 //         as: "recipientInfo",
 //       },
 //     },
-    
+
 //     {
 //       $unwind: "$senderInfo",
 //     },
@@ -248,7 +246,7 @@ const getRecentChatsList = async (Id) => {
     },
     {
       $lookup: {
-        from: "textmessages", // Adjust based on your model names
+        from: "textmessages",
         localField: "message",
         foreignField: "_id",
         as: "textMessage",
@@ -256,7 +254,7 @@ const getRecentChatsList = async (Id) => {
     },
     {
       $lookup: {
-        from: "postmessages", // Adjust based on your model names
+        from: "postmessages",
         localField: "message",
         foreignField: "_id",
         as: "postMessage",
@@ -264,7 +262,7 @@ const getRecentChatsList = async (Id) => {
     },
     {
       $lookup: {
-        from: "profilemessages", // Adjust based on your model names
+        from: "profilemessages",
         localField: "message",
         foreignField: "_id",
         as: "profileMessage",
@@ -302,6 +300,7 @@ const getRecentChatsList = async (Id) => {
         recipientInfo: 1,
         messageType: 1,
         messageTypeDetails: 1,
+        isRead: 1,
       },
     },
   ]);
@@ -313,7 +312,6 @@ const getRecentChatsList = async (Id) => {
   return recentChats;
 };
 
-
 const readAllMessage = async (req, res) => {
   try {
     console.log(
@@ -322,7 +320,7 @@ const readAllMessage = async (req, res) => {
     );
     const { sender, recipient } = req.body;
     const result = await chatModel.updateMany(
-      { sender, recipient },
+      { sender: recipient, recipient: sender },
       { $set: { isRead: true } }
     );
     res.status(200).json(result);

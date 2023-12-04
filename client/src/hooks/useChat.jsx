@@ -10,11 +10,13 @@ import { SocketContext } from "../services/providers/SocketContext";
 import { UserActionContext } from "../services/providers/UserActionContext";
 import { useToast } from "./useToast";
 import { useNavigate } from "react-router-dom";
+import { genericError } from "../services/api/genericError";
 
 function useChat() {
   const navigate = useNavigate();
-  const { userData, setShare } = useContext(UserActionContext);
-  const { socket, messages, setMessages } = useContext(SocketContext);
+  const { userData,userDataRef, setShare } = useContext(UserActionContext);
+  console.log("🚀 ~ file: useChat.jsx:18 ~ useChat ~ userData:", userData)
+  const { socket, messages, setMessages,setNewMessageNotif } = useContext(SocketContext);
   const [recentChatList, setRecentChatList] = useState();
   const { addToast } = useToast();
   const [chatUser, setChatUser] = useState(null); //currently active chat user
@@ -41,7 +43,7 @@ function useChat() {
 
   useEffect(() => {
     getRecentChats();
-  }, [userData]);
+  }, [userData,socket]);
 
   useEffect(() => {
     if (chatUser) {
@@ -52,8 +54,9 @@ function useChat() {
   // get recent chats of loged in user when enter to messages
   const getRecentChats = async () => {
     try {
-      socket.emit("recentChatList", userData._id);
-      socket.on("recentChatList", (recentList) => {
+      console.log("🚀 ~ file: useChat.jsx:57 ~ getRecentChats ~ socket:", socket)
+      socket.current.emit("recentChatList", userDataRef.current._id);
+      socket.current.on("recentChatList", (recentList) => {
         setRecentChatList(recentList);
       });
     } catch (error) {
@@ -95,7 +98,7 @@ function useChat() {
 
   function sendMessage(recipientId, message, messageType) {
     if (recipientId && message) {
-      socket.emit("private message", {
+      socket.current.emit("private message", {
         sender: userData._id,
         recipient: recipientId,
         messageType,
@@ -154,6 +157,8 @@ function useChat() {
     onEmojiClick,
     message,
     setMessage,
+    getRecentChats,
+    setNewMessageNotif
   };
 }
 

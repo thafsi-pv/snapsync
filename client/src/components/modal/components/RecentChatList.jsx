@@ -13,8 +13,8 @@ function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
           onClick={() => handleRecentChatClick(recent)}
           key={recent._id}
           className="relative flex flex-col justify-end items-start mb-px px-3 cursor-pointer hover:bg-gray-100 m-2 rounded-md">
-          <div className="flex flex-row gap-4 items-center">
-            <div className="relative w-16 h-16 shrink-0">
+          <div className="flex flex-row gap-4 items-center w-full">
+            <div className="relative w-16 h-16 shrink-0 flex-0">
               <img
                 src={
                   recent.senderInfo._id == userData?._id
@@ -28,7 +28,7 @@ function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
                   recent.socketId != 0 ? "bg-green-500" : "bg-red-500"
                 } border-2 border-white `}></span>
             </div>
-            <div className="text-sm ">
+            <div className="text-sm flex-1">
               <p>
                 {recent.senderInfo._id == userData?._id
                   ? recent.recipientInfo.fullName
@@ -44,6 +44,11 @@ function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
                 · {timeAgo(recent.createdAt)}
               </p>
             </div>
+            {!recent.isRead && recent.senderInfo._id != userData?._id && (
+              <div className="relative h-2 w-2  flex-0">
+                <span className="absolute w-full h-full bg-blue-500 rounded-full"></span>
+              </div>
+            )}
           </div>
         </div>
       ))}

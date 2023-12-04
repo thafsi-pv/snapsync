@@ -11,14 +11,13 @@ import { UserActionContext } from "../../services/providers/UserActionContext";
 
 /**
  * Messages component
- * 
+ *
  * This component handles the display of recent chats, allowing users to send messages.
  * It includes a chat list, a message input area, and a modal for creating new chats.
- * 
+ *
  * @component
  * @returns {JSX.Element} The rendered Messages component.
  */
-
 
 function Messages() {
   // Ref for scrolling to the bottom of the chat list
@@ -40,10 +39,20 @@ function Messages() {
     onEmojiClick,
     message,
     setMessage,
+    getRecentChats,
+    setNewMessageNotif,
   } = useChat();
 
   //in messages screen hide top navbar and bottom navbar
   useEffect(() => {
+    //pollint  for recent chat list in every 5sec
+    const pollingInterval = setInterval(() => {
+      getRecentChats();
+    }, 5000);
+
+    setNewMessageNotif([]);
+
+    //hide top and bottom nav in mobile
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");
     const bottomNav = document.getElementById("bottmNavId");
@@ -60,6 +69,7 @@ function Messages() {
         bottomNav.style.display = "";
       }
       sideNav.style.width = "21%";
+      clearInterval(pollingInterval);
     };
   }, []);
 
@@ -72,7 +82,7 @@ function Messages() {
 
   const handleSendMessage = () => {
     if (chatUser && message != "") {
-      sendMessage(chatUser._id, message, "TextMessage");
+      sendMessage(chatUser._id, message, "TextMessage"); //send message using custom hook useChat
       setMessage("");
     }
   };

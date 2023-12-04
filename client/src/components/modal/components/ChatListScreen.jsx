@@ -23,7 +23,6 @@ function ChatListScreen({
   setshowEmoji,
   setChatUser,
 }) {
-  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
   const { comments, setComments, setPostId, postId } =
     useContext(UserActionContext);
   const handleViewComments = useCallback((postId) => {
@@ -61,12 +60,15 @@ function ChatListScreen({
         h-full
         ref={chatListRef}>
         {messages.length > 0 ? (
-          messages?.map((msg) => (
+          messages?.map((msg, index) => (
             <ChatMessage
+              key={msg._id}
               message={msg.message}
               messageType={msg.messageType}
               handleViewComments={handleViewComments}
-              isMine={msg.sender._id == userData?._id ? true : false}
+              isMine={msg?.sender?._id == userData?._id ? true : false}
+              isRead={msg.isRead}
+              isLastMsg={index == messages.length - 1}
             />
           ))
         ) : (
@@ -120,20 +122,34 @@ function ChatListScreen({
 
 export default ChatListScreen;
 
-const ChatMessage = ({ message, isMine, messageType, handleViewComments }) => {
+const ChatMessage = ({
+  message,
+  isMine,
+  messageType,
+  handleViewComments,
+  isLastMsg,
+  isRead,
+}) => {
   if (messageType === "TextMessage") {
     return (
       <div
-        className={`flex ${
+        className={`flex  ${
           isMine ? "justify-end" : "justify-start"
         } mb-4 items-end `}>
-        <div
-          className={`max-w-xs p-3  whitespace-normal break-all ${
-            isMine
-              ? "bg-blue-500 text-white rounded-l-2xl rounded-tr-2xl"
-              : "bg-gray-300 rounded-r-2xl rounded-tl-2xl"
-          }  ${containsOnlyEmojis(message.text) == true ? "text-5xl" : ""}`}>
-          {message.text}
+        <div className="flex-flex-col items-end">
+          <div
+            className={`max-w-xs p-3  whitespace-normal break-all ${
+              isMine
+                ? "bg-blue-500 text-white rounded-l-2xl rounded-tr-2xl"
+                : "bg-gray-300 rounded-r-2xl rounded-tl-2xl"
+            }  ${containsOnlyEmojis(message.text) == true ? "text-5xl" : ""}`}>
+            {message.text}
+          </div>
+          {isMine && isLastMsg && isRead && (
+            <p className="text-xs text-gray-500 items-end w-full flex justify-end">
+              seen
+            </p>
+          )}
         </div>
       </div>
     );
