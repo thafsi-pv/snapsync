@@ -33,8 +33,8 @@ const io = require("socket.io")(server, {
   },
 });
 
-app.use(cors({ origin: "https://snapsync.onrender.com", credentials: true }));
-// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+// app.use(cors({ origin: "https://snapsync.onrender.com", credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 // app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "assets")));

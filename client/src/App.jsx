@@ -41,7 +41,7 @@ function App() {
           element: <Explore />,
         },
         {
-          path: "/:username/",
+          path: "/:username",
           element: <Profile />,
         },
         {

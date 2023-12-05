@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import logo from "../../assets/img/snapsync_logo.png";
@@ -10,10 +10,12 @@ import { MobileSearch } from "./components/MobileSearch";
 import { Notification } from "./components/Notification";
 import Search from "./components/Search";
 import More from "./components/More";
+import { useParams } from "react-router-dom";
+import ProfileHeader from "./components/ProfileHeader";
 
 function SideNav() {
   const {
-    userData,
+    userDataRef,
     navbar,
     setNavbar,
     searchBar,
@@ -23,6 +25,7 @@ function SideNav() {
     more,
     setMore,
   } = useContext(UserActionContext);
+  const { username } = useParams();
 
   const handleMoreBtn = () => {
     setMore((prev) => !prev);
@@ -32,11 +35,16 @@ function SideNav() {
     setMore(false);
   };
 
+  //  useEffect(() => {
+  //   username
+  //  }, []);
+
   return (
     <>
       <div
         className={`hidden lg:block md:flex relative  border-r w-[21%]
-       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`} id="sideNavId">
+       ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}
+        id="sideNavId">
         <div
           className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
           <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
@@ -78,7 +86,7 @@ function SideNav() {
           <Search
             navbar={navbar}
             setNavbar={setNavbar}
-            userData={userData}
+            userData={userDataRef.current}
             searchBar={searchBar}
             setSearchBar={setSearchBar}
           />
@@ -87,7 +95,7 @@ function SideNav() {
           <Notification
             navbar={navbar}
             setNavbar={setNavbar}
-            userData={userData}
+            userData={userDataRef.current}
             notificationBar={notificationBar}
           />
         )}
@@ -96,12 +104,18 @@ function SideNav() {
       <div
         className="fixed md:hidden lg:hidden  top-0 left-0 right-0 z-[8] bg-white  "
         id="topNavId">
-        <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
-          <div className="items-center">
-            <img src={logo} alt="" className="w-[110px] " />
+        {!username ? (
+          <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
+            <div className="items-center">
+              <img src={logo} alt="" className="w-[110px] " />
+            </div>
+            <TopSmMenuList />
           </div>
-          <TopSmMenuList />
-        </div>
+        ) : (
+          <ProfileHeader
+            isOwnProfile={username === userDataRef?.current?.userName}
+          />
+        )}
       </div>
 
       <nav
@@ -123,7 +137,6 @@ function SideNav() {
 
 export default SideNav;
 
-// const SearchComp = ({
 //   navbar,
 //   setNavbar,
 //   userData,
