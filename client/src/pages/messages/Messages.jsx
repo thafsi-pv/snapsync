@@ -22,7 +22,7 @@ import { UserActionContext } from "../../services/providers/UserActionContext";
 function Messages() {
   // Ref for scrolling to the bottom of the chat list
   const chatListRef = useRef(null);
-  
+
   const { userData, setNavbar } = useContext(UserActionContext);
 
   const {
@@ -55,13 +55,13 @@ function Messages() {
     //hide top and bottom nav in mobile
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");
-    console.log("🚀 ~ file: Messages.jsx:58 ~ useEffect ~ topNav:", topNav)
+    console.log("🚀 ~ file: Messages.jsx:58 ~ useEffect ~ topNav:", topNav);
     const bottomNav = document.getElementById("bottmNavId");
     const sideNav = document.getElementById("sideNavId");
+    if (sideNav) sideNav.style.width = "7%";
     if (topNav || bottomNav) {
       topNav.style.display = "none";
       bottomNav.style.display = "none";
-      sideNav.style.width = "7%";
     }
     //clean up on unmount
     return () => {
