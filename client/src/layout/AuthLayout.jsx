@@ -1,12 +1,14 @@
 import React from "react";
 import playstoreImg from "../assets/img/playstore.png";
 import appstoreImg from "../assets/img/appstore.png";
+import { Outlet } from "react-router-dom";
 
 function AuthLayout({ children }) {
   return (
     <div className="overflow-hidden bg-white flex flex-col justify-center w-full items-center min-h-screen mb-10">
       <div className="flex flex-col gap-3 items-center">
-        {children}
+        {/* {children} */}
+        <Outlet />
         <div className="text-center text-sm font-['Microsoft_Sans_Serif'] tracking-[-0.77] leading-[26.1px] text-[#6e6e6e]">
           Get the app.
         </div>

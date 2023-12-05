@@ -206,19 +206,11 @@ function useChat() {
   //start new chat from new chat popup user click event
   const handleStartNewChat = (userId) => {
     return new Promise((resolve, reject) => {
-      console.log(
-        "🚀 ~ file: useChat.jsx:208 ~ handleStartNewChat ~ userId:",
-        userId
-      );
       socket.current.emit("newChat", userId);
       socket.current.on("usersocketId", (socketId) => {
         const user = usersList.find((user) => {
           return (user._id = userId);
         });
-        // setChatUser(user);
-        //  setNewChat(false);
-        //handleNewChat();
-
         if (user) {
           user.socketId = socketId;
           resolve(user);

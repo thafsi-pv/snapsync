@@ -41,7 +41,7 @@ function SignUp() {
   };
 
   return (
-    <AuthLayout>
+    // <AuthLayout>
       <div className="self-start flex flex-col gap-3 w-[360px]">
         <div className="border-solid border-[#d7d7d7] flex flex-col gap-4 pt-6 pb-12 px-8 lg:border">
           <div className="self-center flex flex-col w-56 pb- items-center">
@@ -77,7 +77,7 @@ function SignUp() {
           </div>
         </div>
       </div>
-    </AuthLayout>
+    // </AuthLayout>
   );
 }
 

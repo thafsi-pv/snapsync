@@ -15,17 +15,22 @@ import UserActionContextProvider from "./services/providers/UserActionContext";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
 import Reels from "./pages/Reels/Reels";
+import HomePageProtectedRoute from "./services/protectedRoute/HomePageProtectedRoute";
+import AuthProtectedRoute from "./services/protectedRoute/AuthProtectedRoute";
+import AuthLayout from "./layout/AuthLayout";
 
 function App() {
   const appRouter = createBrowserRouter([
     {
       path: "/",
       element: (
-        <FileUploadContextProvider>
-          {/* <UserActionContextProvider> */}
+        <HomePageProtectedRoute>
+          <FileUploadContextProvider>
+            {/* <UserActionContextProvider> */}
             <HomeLayout />
-          {/* </UserActionContextProvider> */}
-        </FileUploadContextProvider>
+            {/* </UserActionContextProvider> */}
+          </FileUploadContextProvider>
+        </HomePageProtectedRoute>
       ),
       children: [
         {
@@ -56,35 +61,62 @@ function App() {
     },
     {
       path: "/story",
-      element: <Story />,
+      element: (
+        <HomePageProtectedRoute>
+          <Story />
+        </HomePageProtectedRoute>
+      ),
     },
     {
       path: "/story/:id",
-      element: <Story />,
+      element: (
+        <HomePageProtectedRoute>
+          <Story />
+        </HomePageProtectedRoute>
+      ),
     },
     {
       path: "/reels/",
-      element: <Reels />,
+      element: (
+        <HomePageProtectedRoute>
+          <Reels />
+        </HomePageProtectedRoute>
+      ),
     },
     {
       path: "/reels/:id",
-      element: <Reels />,
+      element: (
+        <HomePageProtectedRoute>
+          <Reels />
+        </HomePageProtectedRoute>
+      ),
     },
+
     {
-      path: "/auth/login",
-      element: <LogIn />,
-    },
-    {
-      path: "/auth/signup",
-      element: <SignUp />,
-    },
-    {
-      path: "/accounts/password/reset",
-      element: <ResetPassword />,
-    },
-    {
-      path: "/accounts/password/reset/confirm",
-      element: <ConfirmResetPassword />,
+      path: "/auth/",
+      element: (
+        <AuthProtectedRoute>
+          <AuthLayout />
+        </AuthProtectedRoute>
+      ),
+      children: [
+        {
+          path: "login",
+          element: <LogIn />,
+        },
+        {
+          path: "signup",
+          element: <SignUp />,
+        },
+        {
+          path: "accounts/password/reset",
+          element: <ResetPassword />,
+        },
+        {
+          path: "accounts/password/reset/confirm",
+          element: <ConfirmResetPassword />,
+        },
+      ],
     },
   ]);
 

@@ -18,7 +18,6 @@ function useAuth() {
     if (result.status === 200) {
       setStorage(tokenName, result.data.accesstoken);
       navigate("/");
-      
       // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
     } else {
       alert(result, "failed");
@@ -33,7 +32,14 @@ function useAuth() {
     navigate("/auth/login");
   };
 
-  return { handleLogIn, handleLogOut };
+  const navigateToHome = () => {
+    navigate("/");
+  };
+  const navigateToLogin = () => {
+    navigate("/auth/login");
+  };
+
+  return { handleLogIn, handleLogOut, navigateToHome, navigateToLogin };
 }
 
 export default useAuth;

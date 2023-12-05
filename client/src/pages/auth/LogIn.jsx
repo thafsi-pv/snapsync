@@ -7,6 +7,7 @@ import Logo from "../../components/uiPrimitives/logo/Logo";
 import useAuth from "../../hooks/useAuth";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import AuthLayout from "../../layout/AuthLayout";
+import { tokenName } from "../../utils/const";
 import { logInValidationSchema } from "../../utils/validation";
 import LogInForm from "./forms/LogInForm";
 
@@ -17,9 +18,8 @@ import LogInForm from "./forms/LogInForm";
 */
 
 function LogIn() {
-  // const { setStorage } = useLocalStorage();
-  const { handleLogIn } = useAuth();
-  //  const { connectSocket } = useChat();
+  const { getStorage } = useLocalStorage();
+  const { handleLogIn, navigateToHome } = useAuth();
 
   const logInFormik = useFormik({
     initialValues: {
@@ -45,45 +45,48 @@ function LogIn() {
   //   }
   // }, []);
 
+  //protected route: if token exist navigate to home
+  // if (getStorage(tokenName)) {
+  //   navigateToHome();
+  // }
+
   return (
-    <AuthLayout>
-      <div className="flex flex-col items-center">
-        <div className="relative flex flex-col w-[360px]">
-          <div className="border-solid border-[#d7d7d7] relative flex flex-col justify-start  pb-5 shrink-0 px-10 lg:border ">
-            <div className="flex flex-col gap-7">
-              <div className="self-center flex flex-col w-56  items-center">
-                <Logo />
-              </div>
-              <LogInForm logInFormik={logInFormik} />
+    // <AuthLayout>
+    <div className="flex flex-col items-center">
+      <div className="relative flex flex-col w-[360px]">
+        <div className="border-solid border-[#d7d7d7] relative flex flex-col justify-start  pb-5 shrink-0 px-10 lg:border ">
+          <div className="flex flex-col gap-7">
+            <div className="self-center flex flex-col w-56  items-center">
+              <Logo />
             </div>
-            <div className="flex flex-col  items-start mt-5">
-              <OrLine />
-              <div className="flex flex-col gap-2 w-full  shrink-0 items-center mt-4">
-                <div className="text-center text-sm font-semibold mb-1 flex justify-center items-center gap-2 text-[#385185]">
-                  <AiFillFacebook className="w-5 h-5 text-[#385185]" />
-                  Log in with Facebook
+            <LogInForm logInFormik={logInFormik} />
+          </div>
+          <div className="flex flex-col  items-start mt-5">
+            <OrLine />
+            <div className="flex flex-col gap-2 w-full  shrink-0 items-center mt-4">
+              <div className="text-center text-sm font-semibold mb-1 flex justify-center items-center gap-2 text-[#385185]">
+                <AiFillFacebook className="w-5 h-5 text-[#385185]" />
+                Log in with Facebook
+              </div>
+              <Link to="/auth/accounts/password/reset">
+                <div className="text-xs  self-center">
+                  Forgotten your password?
                 </div>
-                <Link to="/accounts/password/reset">
-                  <div className="text-xs  self-center">
-                    Forgotten your password?
-                  </div>
-                </Link>
-              </div>
+              </Link>
             </div>
           </div>
-        </div>
-        <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center lg:border mt-3">
-          <div className="text-sm  tracking-[-0.63]">
-            Don’t have an account?
-          </div>
-          <Link to="/auth/signup">
-            <div className="text-sm text-[#0095f6]">
-              <strong>Sign up</strong>
-            </div>
-          </Link>
         </div>
       </div>
-    </AuthLayout>
+      <div className="border-solid border-[#d7d7d7] flex flex-row justify-center gap-px w-[360px] h-16 shrink-0 items-center lg:border mt-3">
+        <div className="text-sm  tracking-[-0.63]">Don’t have an account?</div>
+        <Link to="/auth/signup">
+          <div className="text-sm text-[#0095f6]">
+            <strong>Sign up</strong>
+          </div>
+        </Link>
+      </div>
+    </div>
+    // </AuthLayout>
   );
 }
 

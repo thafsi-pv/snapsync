@@ -40,6 +40,7 @@ function UserActionContextProvider({ children }) {
     <UserActionContext.Provider
       value={{
         userData,
+        getUserData,
         userDataRef,
         setUserData,
         addPost,
