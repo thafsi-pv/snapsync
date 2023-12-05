@@ -21,6 +21,7 @@ const createPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
+    const { page = 1, limit = 10 } = req.query;
     const user_id = req.userId;
     const followingUsers = await followsModel
       .find({
@@ -33,6 +34,7 @@ const getAllPosts = async (req, res) => {
       (follow) => follow.followed_user_id
     );
     const objUserId = new mongoose.Types.ObjectId(user_id);
+
     const postsWithLikes = await postModal.aggregate([
       {
         $match: {
@@ -108,9 +110,13 @@ const getAllPosts = async (req, res) => {
           },
         },
       },
+      { $skip: (page - 1) * limit },
+      {
+        $limit: parseInt(limit),
+      },
     ]);
-    if (!postsWithLikes)
-      return res.status(404).json({ message: "No post found!" });
+    if (!postsWithLikes || postsWithLikes.length === 0)
+      return res.status(202).json({ message: "No post found!" });
     return res.status(200).json(postsWithLikes);
   } catch (error) {
     console.log(error);

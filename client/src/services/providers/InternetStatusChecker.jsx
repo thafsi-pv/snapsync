@@ -3,6 +3,7 @@ import { RiSignalWifiOffLine } from "react-icons/ri";
 
 const InternetStatusChecker = ({ children }) => {
   const [isOnline, setIsOnline] = useState(window.navigator.onLine);
+  console.log("🚀 ~ file: InternetStatusChecker.jsx:6 ~ InternetStatusChecker ~ isOnline:", isOnline)
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);

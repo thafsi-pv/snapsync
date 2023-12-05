@@ -56,6 +56,7 @@ app.use("/api/notification", NotificationRouter);
 
 //socket
 const connectedUsers = new Map();
+
 io.on("connection", (socket) => {
   try {
     const token = socket.handshake.query.token;
@@ -71,11 +72,6 @@ io.on("connection", (socket) => {
       connectedUsers.delete(userId);
     }
     connectedUsers.set(userId, socket.id);
-    console.log(
-      "🚀 ~ file: index.js:74 ~ io.on ~ connectedUsers:",
-      connectedUsers
-    );
-
     const getSocketId = (userId) => {
       if (connectedUsers.has(userId)) {
         const existingSocket = connectedUsers.get(userId);
@@ -93,6 +89,7 @@ io.on("connection", (socket) => {
       }
       return;
     });
+
     socket.on(
       "private message",
       async ({
@@ -106,13 +103,7 @@ io.on("connection", (socket) => {
         const sockeid = getSocketId(recipient);
         if (sockeid) {
           data.isRead = true;
-          console.log("🚀 ~ file: index.js:105 ~ io.on ~ data:", data);
           const newChat = await createChatFn(data);
-          console.log(
-            "🚀 ~ file: index.js:105 ~ io.on ~ newChat@#@#:",
-            newChat
-          );
-
           socket.to(sockeid).emit("private message", {
             //sender: socket.id,
             _id: newChat._id,
@@ -157,7 +148,6 @@ io.on("connection", (socket) => {
 
     socket.on("notification", async (data) => {
       const { type, recipient_Id, post_Id } = data;
-
       const sockeid = getSocketId(recipient_Id);
       if (sockeid) {
         const postdetails = await postModel.findOne({ _id: post_Id });
