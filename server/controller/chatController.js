@@ -303,7 +303,14 @@ const getRecentChatsList = async (Id) => {
         isRead: 1,
       },
     },
+    {
+      $sort: { createdAt: -1 },
+    },
   ]);
+  console.log(
+    "🚀 ~ file: chatController.js:308 ~ getRecentChatsList ~ recentChats:",
+    recentChats
+  );
   return recentChats;
 };
 

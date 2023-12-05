@@ -1,8 +1,12 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 
+import AuthLayout from "./layout/AuthLayout";
 import HomeLayout from "./layout/HomeLayout";
+import Reels from "./pages/Reels/Reels";
+import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
 import LogIn from "./pages/auth/LogIn";
+import ResetPassword from "./pages/auth/ResetPassword";
 import SignUp from "./pages/auth/SignUp";
 import Explore from "./pages/explore/Explore";
 import HomePage from "./pages/homepage/HomePage";
@@ -10,14 +14,9 @@ import Messages from "./pages/messages/Messages";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/components/EditProfile";
 import Story from "./pages/story/Story";
-import FileUploadContextProvider from "./services/providers/FileUploadContext";
-import UserActionContextProvider from "./services/providers/UserActionContext";
-import ResetPassword from "./pages/auth/ResetPassword";
-import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
-import Reels from "./pages/Reels/Reels";
-import HomePageProtectedRoute from "./services/protectedRoute/HomePageProtectedRoute";
 import AuthProtectedRoute from "./services/protectedRoute/AuthProtectedRoute";
-import AuthLayout from "./layout/AuthLayout";
+import HomePageProtectedRoute from "./services/protectedRoute/HomePageProtectedRoute";
+import FileUploadContextProvider from "./services/providers/FileUploadContext";
 
 function App() {
   const appRouter = createBrowserRouter([
