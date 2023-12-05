@@ -55,6 +55,7 @@ function Messages() {
     //hide top and bottom nav in mobile
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");
+    console.log("🚀 ~ file: Messages.jsx:58 ~ useEffect ~ topNav:", topNav)
     const bottomNav = document.getElementById("bottmNavId");
     const sideNav = document.getElementById("sideNavId");
     if (topNav || bottomNav) {

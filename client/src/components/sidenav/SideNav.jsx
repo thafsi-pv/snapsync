@@ -116,18 +116,22 @@ function SideNav() {
         </div>
       )}
 
-      <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t"
-        id="bottmNavId">
-        <div className="flex items-center justify-evenly">
-          <MenuList showMenuName={false} setNavbar={setNavbar} />
-        </div>
-      </nav>
-      {navbar == "hidden" && searchBar && (
-        <MobileSearch setSearchBar={setSearchBar} />
-      )}
-      {navbar == "hidden" && notificationBar && (
-        <MobileNotification setNotificationBar={setNotificationBar} />
+      {!lg && (
+        <>
+          <nav
+            className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t"
+            id="bottmNavId">
+            <div className="flex items-center justify-evenly">
+              <MenuList showMenuName={false} setNavbar={setNavbar} />
+            </div>
+          </nav>
+          {navbar == "hidden" && searchBar && (
+            <MobileSearch setSearchBar={setSearchBar} />
+          )}
+          {navbar == "hidden" && notificationBar && (
+            <MobileNotification setNotificationBar={setNotificationBar} />
+          )}
+        </>
       )}
     </>
   );
