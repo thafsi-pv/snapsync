@@ -1,7 +1,14 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 
+/**
+ * PortalModal component
+ * Responsible for modal
+ * @param {*} param0
+ * @returns
+ */
 function PortalModal({ children, show, close }) {
+  //hide body overflow
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => {
@@ -10,7 +17,9 @@ function PortalModal({ children, show, close }) {
   }, []);
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm z-50 ">
+    <div
+      className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm z-50 "
+      onClick={close}>
       {children}
     </div>,
     document.getElementById("portal")

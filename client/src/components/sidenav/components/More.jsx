@@ -8,7 +8,7 @@ function More({ more, setMore }) {
     setMore((prev) => !prev);
   };
   return (
-    <div className="flex flex-col w-full relative ">
+    <div className="flex flex-col w-full relative m-9 ">
       <div className="fixed top-0 left-0 right-0 w-screen h-screen">
         <button onClick={() => setMore((prev) => !prev)}></button>
       </div>

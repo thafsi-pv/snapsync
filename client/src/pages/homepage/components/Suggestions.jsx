@@ -16,7 +16,7 @@ function Suggestions() {
     setSuggestionList(response.data);
   };
   return (
-    <div className="relative flex flex-col w-full gap-12 items-start mt-10 mx-8">
+    <div className="relative flex flex-col w-full gap-12 items-start mt-10 mx-8 bg-white p-4">
       <div className="flex flex-row justify-between ml-px w-full  items-center">
         <div className="self-start flex flex-col gap-8 w-full items-start">
           <User />

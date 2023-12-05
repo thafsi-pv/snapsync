@@ -33,8 +33,8 @@ const io = require("socket.io")(server, {
   },
 });
 
-// app.use(cors({ origin: "https://snapsync.onrender.com", credentials: true }));
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://snapsync.onrender.com", credentials: true }));
+// app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 // app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "assets")));
@@ -71,7 +71,10 @@ io.on("connection", (socket) => {
       connectedUsers.delete(userId);
     }
     connectedUsers.set(userId, socket.id);
-    console.log("🚀 ~ file: index.js:74 ~ io.on ~ connectedUsers:", connectedUsers)
+    console.log(
+      "🚀 ~ file: index.js:74 ~ io.on ~ connectedUsers:",
+      connectedUsers
+    );
 
     const getSocketId = (userId) => {
       if (connectedUsers.has(userId)) {
@@ -169,7 +172,6 @@ io.on("connection", (socket) => {
         connectedUsers.get(userId) === socket.id
       ) {
         connectedUsers.delete(userId);
-        console.log("🚀 ~ file: index.js:172 ~ socket.on ~ connectedUsers:", connectedUsers)
       }
     });
   } catch (error) {

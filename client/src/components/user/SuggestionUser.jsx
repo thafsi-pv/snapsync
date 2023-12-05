@@ -24,7 +24,7 @@ function SuggestionUser({ user }) {
         </p>
       </div>
       <div className="items-end flex-grow-0 p-2">
-        {user._id != followedUserId ? (
+        {user?._id != followedUserId ? (
           <button
             className="text-xs font-semibold text-blue-500 "
             onClick={() => {
@@ -36,7 +36,7 @@ function SuggestionUser({ user }) {
           <button
             className="text-xs font-semibold text-gray-500 "
             onClick={() => {
-              handleFollowing(user._id, false);
+              handleFollowing(user?._id, false);
             }}>
             Unfollow
           </button>

@@ -13,6 +13,7 @@ import More from "./components/More";
 import { useParams } from "react-router-dom";
 import ProfileHeader from "./components/ProfileHeader";
 
+const lg = window.innerWidth >= 1024;
 function SideNav() {
   const {
     userDataRef,
@@ -30,14 +31,9 @@ function SideNav() {
   const handleMoreBtn = () => {
     setMore((prev) => !prev);
   };
-  const handleMoreClose = () => {
-    console.log("dsf");
-    setMore(false);
-  };
-
-  //  useEffect(() => {
-  //   username
-  //  }, []);
+  // const handleMoreClose = () => {
+  //   setMore(false);
+  // };
 
   return (
     <>
@@ -101,22 +97,24 @@ function SideNav() {
         )}
       </div>
 
-      <div
-        className="fixed md:hidden lg:hidden  top-0 left-0 right-0 z-[8] bg-white  "
-        id="topNavId">
-        {!username ? (
-          <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
-            <div className="items-center">
-              <img src={logo} alt="" className="w-[110px] " />
+      {!lg && ( //mount only if device is sm
+        <div
+          className="fixed md:hidden lg:hidden  top-0 left-0 right-0 z-[8] bg-white  "
+          id="topNavId">
+          {!username ? (
+            <div className="flex p-0 border-b px-4 py-1 items-center justify-between">
+              <div className="items-center">
+                <img src={logo} alt="" className="w-[110px] " />
+              </div>
+              <TopSmMenuList />
             </div>
-            <TopSmMenuList />
-          </div>
-        ) : (
-          <ProfileHeader
-            isOwnProfile={username === userDataRef?.current?.userName}
-          />
-        )}
-      </div>
+          ) : (
+            <ProfileHeader
+              isOwnProfile={username === userDataRef?.current?.userName}
+            />
+          )}
+        </div>
+      )}
 
       <nav
         className="md:hidden fixed bottom-0 left-0 right-0 p-1 bg-white text-black z-10 border-t"
