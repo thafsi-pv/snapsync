@@ -110,7 +110,9 @@ function Post() {
       {posts.length > 0 && posts[posts.length - 1]._id === -1 ? (
         <AllCaughtUp />
       ) : (
-        <div ref={ref}>Loading.........</div>
+        <div ref={ref}>
+          <PostShimmer />
+        </div>
       )}
     </div>
   );
