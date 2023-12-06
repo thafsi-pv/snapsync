@@ -7,17 +7,17 @@ function PostLikeAndCaption({ post, posts, setPosts, index }) {
     setPosts(data);
   };
   return (
-    <div className="self-stretch flex gap-2 flex-col items-start">
+    <div className="self-stretch flex gap-1 flex-col items-start">
       <div className="relative flex text-sm font-semibold ">
         {post.likeCount} likes
       </div>
       <div className=" gap-2 items-start  text-sm">
         <span
-          className={`bold text-[#262626] ${
+          className={` text-[#262626] ${
             post.showFullCaption ? "line-clamp-none" : "line-clamp-2"
           }`}>
           <span className=" font-semibold text-[#262626]">
-            {post?.user[0]?.fullName}
+            {post?.user[0]?.fullName} {' '}{' '}
           </span>
           {post.caption}
         </span>

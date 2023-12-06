@@ -20,50 +20,6 @@ function PostBottom({
   savePost,
   sharePost,
 }) {
-  const { comments, setComments, postId, setPostId } =
-    useContext(UserActionContext);
-
-  // const { likePost, viewComments } = useSocialAction();
-
-  // const handleLikePost = async (index, post_id) => {
-  //   likePost(index, post_id, posts);
-
-  // try {
-  //   const data = [...posts];
-  //   // const postData = { liked: !data[index].liked, post_id };
-  //   // const response = await axiosInstance.post(LIKE_API, postData);
-
-  //   const likepost = await likePost(!data[index].liked, post_id);
-  //   if (likepost.status == 200) {
-  //     data[index].liked = !data[index].liked;
-  //     data[index].likeCount =
-  //       parseInt(data[index].likeCount) + (data[index].liked ? 1 : -1);
-  //     setPosts(data);
-  //   }
-  // } catch (error) {
-  //   genericError(error);
-  // }
-  // };
-  // const handleViewComments = (postId) => {
-  //   setComments(true);
-  //   setPostId(postId);
-  // };
-
-  // const handleSavePost = async (post_id) => {
-  //   try {
-  //     const data = { post_id };
-  //     const response = await axiosInstance.post(SAVE_POST_API, data);
-  //     const postIndex = posts.findIndex((item) => item._id === post_id);
-  //     if (postIndex !== -1) {
-  //       const updatedPosts = [...posts];
-  //       updatedPosts[postIndex].saved = response.data.flag;
-  //       setPosts(updatedPosts);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error handling save post:", error);
-  //   }
-  // };
-
   return (
     <div className="flex flex-row justify-between items-center px-4 ">
       <div className="flex flex-row gap-4 items-start">
@@ -89,13 +45,13 @@ function PostBottom({
             }}
           />
         </div>
-        <div className="cursor-pointer" onClick={() => {
-              console.log('dfdsf')
-              sharePost(post._id);
-            }}>
-          <MessageIcon
-            
-          />
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            console.log("dfdsf");
+            sharePost(post._id);
+          }}>
+          <MessageIcon />
         </div>
       </div>
       <div className="cursor-pointer" onClick={() => savePost(post._id)}>

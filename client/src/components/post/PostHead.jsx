@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import UserImgName from "../user/UserImgName";
 import { IoIosMore } from "react-icons/io";
 import { timeAgo } from "../../utils/timeAgo";
+import VerifiedBadgeIcon from "../../assets/svg/VerifiedBadgeIcon";
 
 function PostHead({ post }) {
   return (
@@ -16,7 +17,12 @@ function PostHead({ post }) {
             username={post.user[0].userName}
             imgUrl={post.user[0].imageUrl}
           />
-          <div className="flex items-center text-xs text-gray-400 gap-1">
+          {post.user[0].isVerified && (
+            <div className="-mt-3">
+              <VerifiedBadgeIcon />
+            </div>
+          )}
+          <div className="flex items-center text-xs text-gray-400 gap-1 -mt-3">
             <div className="flex justify-center items-center font-bold">•</div>
             <div className=" text-xs font-normal ">
               {timeAgo(post.createdAt)}
