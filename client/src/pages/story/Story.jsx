@@ -11,11 +11,9 @@ import { Link } from "react-router-dom";
 let count = 0;
 const Story = () => {
   const [activeStoryUser, setActiveStoryUser] = useState();
-  console.log(
-    "🚀 ~ file: Story.jsx:11 ~ Story ~ activeStoryUser:",
-    activeStoryUser
-  );
+
   const [stories, setStories] = useState();
+  console.log("🚀 ~ file: Story.jsx:19 ~ Story ~ stories:", stories);
   const [currentStory, setCurrentStory] = useState(0);
   const [progress, setProgress] = useState(0);
 
@@ -23,16 +21,21 @@ const Story = () => {
     getAllStories();
   }, []);
   const getAllStories = async () => {
+    console.log("----get all stories---useeffect 1--");
     const response = await axiosInstance.get(STORY_API);
+
     console.log(
-      "🚀 ~ file: Story.jsx:21 ~ getAllStories ~ response:",
+      "🚀 ~ file: Story.jsx:25 ~ getAllStories ~ response:",
       response
     );
+
     setStories(response.data);
     setActiveStoryUser(response.data[0]);
   };
   useEffect(() => {
-    const interval = setInterval(() => {
+    console.log("-------useeffect 2--");
+     const interval = setInterval(() => {
+    if (stories) {
       if (currentStory < stories[count].stories.length - 1) {
         setCurrentStory(currentStory + 1);
         setProgress(0); // Reset progress when changing the story
@@ -43,7 +46,8 @@ const Story = () => {
 
         setActiveStoryUser(stories[count++]);
       }
-    }, 1000);
+    }
+     }, 1000);
 
     const progressInterval = setInterval(() => {
       if (progress < 100) {
@@ -55,10 +59,10 @@ const Story = () => {
     }, 100);
 
     return () => {
-      clearInterval(interval);
+       clearInterval(interval);
       clearInterval(progressInterval);
     };
-  }, [currentStory, stories, progress]);
+  }, [stories,progress,currentStory]);
 
   return (
     <StoryLayout>
