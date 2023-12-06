@@ -1,22 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Suspense, lazy, useContext, useEffect, useState } from "react";
 import Story from "./Story";
 import Suggestions from "./Suggestions";
 import Post from "./Post";
-import Comments from "../../../components/modal/Comments";
+
+// import Comments from "../../../components/modal/Comments";
+const Comments = lazy(() => import("../../../components/modal/Comments"));
+
 import { UserActionContext } from "../../../services/providers/UserActionContext";
-import Share from "../../../components/modal/Share";
+// import Share from "../../../components/modal/Share";
+const Share = lazy(() => import("../../../components/modal/Share"));
 import useChat from "../../../hooks/useChat";
+import { Loading } from "../../../assets/svg/Loading";
+import { SocketContext } from "../../../services/providers/SocketContext";
+
+/**
+ * Container component
+ * Responsible for home page view story component
+ * post component and suggestions
+ * Using userAction context for modal show hide
+ * In first render getting socket connection using useChat hook
+ * @returns
+ */
 
 function Container() {
   const { comments, setComments, postId, share, setShare } =
     useContext(UserActionContext);
-  const { connectSocket } = useChat();
-
-  // const [comments, setComments] = useState(false);
-  // const [postId, setPostId] = useState(null);
+  // const { connectSocket } = useContext(SocketContext);
+  const { connectSocket, socket } = useChat();
 
   useEffect(() => {
-    connectSocket();
+    if (!socket.current) {
+      connectSocket();
+    }
   }, []);
 
   return (
@@ -28,12 +43,20 @@ function Container() {
       <div className="hidden lg:block w-3/12">
         <Suggestions />
       </div>
-      <Comments
-        postId={postId}
-        show={comments}
-        closeModal={() => setComments(false)}
-      />
-      <Share share={share} setShare={setShare} />
+      {comments && (
+        <Suspense fallback={<Loading />}>
+          <Comments
+            postId={postId}
+            show={comments}
+            closeModal={() => setComments(false)}
+          />
+        </Suspense>
+      )}
+      {share && (
+        <Suspense fallback={<Loading />}>
+          <Share share={share} setShare={setShare} />
+        </Suspense>
+      )}
     </div>
   );
 }

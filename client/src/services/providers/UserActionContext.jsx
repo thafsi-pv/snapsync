@@ -1,10 +1,12 @@
-import React, { createContext, useEffect, useRef, useState } from "react";
-import useChat from "../../hooks/useChat";
-import { GET_USER_DATA, socketBaseUrl } from "../api/const";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { tokenName } from "../../utils/const";
-import io from "socket.io-client";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { axiosInstance } from "../api/axiosInterceptor";
+import { GET_USER_DATA } from "../api/const";
 
 export const UserActionContext = createContext(null);
 
@@ -28,13 +30,13 @@ function UserActionContextProvider({ children }) {
     getUserData();
   }, []);
 
-  const getUserData = async () => {
+  const getUserData = useCallback(async () => {
     const token = localStorage.getItem("ssaccesstoken");
     console.log("🚀 ~ #############token:", token);
     const response = await axiosInstance.get(GET_USER_DATA);
     setUserData(response?.data);
     userDataRef.current = response.data;
-  };
+  }, []);
 
   return (
     <UserActionContext.Provider

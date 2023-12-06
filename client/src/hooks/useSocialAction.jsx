@@ -25,15 +25,9 @@ function useSocialAction() {
   const [likedId, setLikedId] = useState(); //variable for post double tap
   const { userData, comments, setComments, postId, setPostId, setShare } =
     useContext(UserActionContext);
-
   const [page, setPage] = useState(1);
-
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
-
-  // useEffect(() => {
-  //   getAllPosts();
-  // }, []);
 
   const getAllPosts = useCallback(async () => {
     const post = await axiosInstance.get(`${POST_API}?page=${page}&limit=10`);
@@ -42,10 +36,6 @@ function useSocialAction() {
     } else if (post.status == 202) {
       setPosts((prev) => [...prev, { _id: -1, end: true }]);
     }
-    console.log(
-      "🚀 ~ file: useSocialAction.jsx:41 ~ getAllPosts ~ post:",
-      post
-    );
   }, [page]);
 
   const likePost = async (index, post_id, postss) => {

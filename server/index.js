@@ -63,6 +63,7 @@ io.on("connection", (socket) => {
     const token = socket.handshake.query.token;
     const verifyT = verifyToken(token);
     const userId = verifyT._id;
+    console.log("🚀 ~ file: index.js:66 ~ io.on ~ userId:", userId)
 
     if (connectedUsers.has(userId)) {
       const existingSocket = connectedUsers.get(userId);

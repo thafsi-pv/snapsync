@@ -121,4 +121,4 @@ function NewChatModal({ newChat, setNewChat, setChatUser }) {
   );
 }
 
-export default NewChatModal;
+export default React.memo(NewChatModal);

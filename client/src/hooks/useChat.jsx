@@ -1,4 +1,10 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import io from "socket.io-client";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
@@ -17,6 +23,7 @@ import useLocalStorage from "./useLocalStorage";
 import { tokenName } from "../utils/const";
 
 function useChat() {
+  console.log("########## useChat @@@@@@@@@");
   const navigate = useNavigate();
   const { userData, userDataRef, setShare } = useContext(UserActionContext);
   const { socket, messages, setMessages, setNewMessageNotif } =
@@ -31,10 +38,12 @@ function useChat() {
   const [message, setMessage] = useState("");
   const [usersList, setUsersList] = useState(null); //state for store user list while search in new chat popup
 
-  useEffect(() => {
-    connectSocket();
-  }, []);
-  const connectSocket = () => {
+  useLayoutEffect(() => {
+    if (!socket.current) {
+      connectSocket();
+    }
+  }, [socket]);
+  const connectSocket = useCallback(() => {
     const token = getStorage(tokenName);
     if (token) {
       const newSocket = io(`${socketBaseUrl}?token=${token}`);
@@ -47,7 +56,7 @@ function useChat() {
         genericError(error);
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (socket.current) {
@@ -127,6 +136,9 @@ function useChat() {
 
   //recent chat list click event
   const handleRecentChatClick = (recent) => {
+    console.log(
+      "🚀 ~ file: useChat.jsx:133 ~ handleRecentChatClick inside console"
+    );
     setMessages([]);
     const chatUser =
       recent.senderInfo._id == userData._id

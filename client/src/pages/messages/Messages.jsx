@@ -1,13 +1,26 @@
-import React, { useContext, useEffect, useLayoutEffect, useRef } from "react";
+import React, {
+  Suspense,
+  lazy,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { Link } from "react-router-dom";
-import NewChatModal from "../../components/modal/NewChatModal";
-import ChatListScreen from "../../components/modal/components/ChatListScreen";
+// import NewChatModal from "../../components/modal/NewChatModal";
+const NewChatModal = lazy(() => import("../../components/modal/NewChatModal"));
+
+// import ChatListScreen from "../../components/modal/components/ChatListScreen";
+const ChatListScreen = lazy(() =>
+  import("../../components/modal/components/ChatListScreen")
+);
 import NoMessage from "../../components/modal/components/NoMessage";
 import RecentChatList from "../../components/modal/components/RecentChatList";
 import useChat from "../../hooks/useChat";
 import { UserActionContext } from "../../services/providers/UserActionContext";
+import { Loading } from "../../assets/svg/Loading";
 
 /**
  * Messages component
@@ -143,11 +156,15 @@ function Messages() {
           <NoMessage handleNewChat={handleNewChat} />
         )}
       </div>
-      <NewChatModal
-        setChatUser={setChatUser}
-        newChat={newChat}
-        setNewChat={setNewChat}
-      />
+      {newChat && (
+        <Suspense fallback={<Loading />}>
+          <NewChatModal
+            setChatUser={setChatUser}
+            newChat={newChat}
+            setNewChat={setNewChat}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

@@ -7,10 +7,6 @@ const createStory = async (req, res) => {
   try {
     const { mediaUrl, media_type } = req.body;
     const user_id = req.userId;
-    console.log(
-      "🚀 ~ file: storyController.js:6 ~ createStory ~ req.body:",
-      req.body
-    );
     const expireAt = new Date();
     expireAt.setHours(expireAt.getHours() + 24);
     const newStory = new storyModel({
@@ -105,11 +101,6 @@ const getStoriesOfFollowers = async (req, res) => {
     } else {
       storyList = storiesOfFollowers;
     }
-
-    console.log(
-      "🚀 ~ file: storyController.js:123 ~ getStoriesOfFollowers ~ storyList:",
-      storyList
-    );
 
     res.status(200).json(storyList);
   } catch (error) {
