@@ -11,8 +11,8 @@ const StoryLayout = lazy(() => import("./layout/StoryLayout"));
 // import AuthLayout from "./layout/AuthLayout";
 const AuthLayout = lazy(() => import("./layout/AuthLayout"));
 
-// import HomeLayout from "./layout/HomeLayout";
-const HomeLayout = lazy(() => import("./layout/HomeLayout"));
+import HomeLayout from "./layout/HomeLayout";
+// const HomeLayout = lazy(() => import("./layout/HomeLayout"));
 
 // import Reels from "./pages/Reels/Reels";
 const Reels = lazy(() => import("./pages/Reels/Reels"));
@@ -71,7 +71,7 @@ function App() {
     {
       path: "/",
       element: (
-        <Suspense fallback={<Loading/>}>
+        // <Suspense fallback={<Loading/>}>
           <HomePageProtectedRoute>
             <SocketContextProvider>
               <FileUploadContextProvider>
@@ -81,7 +81,7 @@ function App() {
               </FileUploadContextProvider>
             </SocketContextProvider>
           </HomePageProtectedRoute>
-        </Suspense>
+        // </Suspense>
       ),
       children: [
         {
