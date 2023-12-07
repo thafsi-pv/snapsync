@@ -1,5 +1,6 @@
 import EmojiPicker from "emoji-picker-react";
 import React, { useCallback, useContext } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { BsEmojiSmile } from "react-icons/bs";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import ReelIcon from "../../../assets/svg/ReelIcon";
@@ -7,7 +8,6 @@ import { UserActionContext } from "../../../services/providers/UserActionContext
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
 import Comments from "../Comments";
-import { Loading } from "../../../assets/svg/Loading";
 
 function ChatListScreen({
   message,
@@ -73,8 +73,7 @@ function ChatListScreen({
           ))
         ) : (
           <div className="flex justify-center items-center h-full">
-            {" "}
-            <Loading />
+            <AiOutlineLoading3Quarters class="animate-spin h-5 w-5" />
           </div>
         )}
       </div>
