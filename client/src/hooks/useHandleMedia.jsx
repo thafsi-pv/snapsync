@@ -36,7 +36,11 @@ function useHandleMedia() {
       } else if (mediaType.startsWith("video/")) {
         const videoURL = URL.createObjectURL(selectedMedia);
         setMedia(
-          <video src={videoURL} controls className="object-fit lg:w-full lg:h-full  w-1/2 h-full" />
+          <video
+            src={videoURL}
+            controls
+            className="object-fit lg:w-full lg:h-full  w-1/2 h-full"
+          />
         );
       }
     }
@@ -53,7 +57,8 @@ function useHandleMedia() {
       fileUrl = await uploadFileToCloudinary(file);
     }
     if (fileUrl) {
-      handleSavePost(values, fileUrl);
+      const uploadStatus = handleSavePost(values, fileUrl);
+      return uploadStatus;
     }
   };
 
@@ -70,7 +75,8 @@ function useHandleMedia() {
       setUploadProgress(0);
       setMedia(null);
       setFile(null);
-    }
+      return true;
+    } else return false;
   };
 
   return {
