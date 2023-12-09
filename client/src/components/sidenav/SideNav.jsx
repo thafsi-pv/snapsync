@@ -12,6 +12,7 @@ import Search from "./components/Search";
 import More from "./components/More";
 import { useParams } from "react-router-dom";
 import ProfileHeader from "./components/ProfileHeader";
+import { getIdFromUrl } from "../../utils/getIdFromUrl";
 
 const lg = window.innerWidth >= 1024;
 function SideNav() {
@@ -35,19 +36,22 @@ function SideNav() {
   //   setMore(false);
   // };
 
+
   return (
     <>
       <div
-        className={`hidden lg:block md:flex relative  border-r w-[21%]
+        className={`hidden lg:block md:flex relative  w-[21%]
        ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}
         id="sideNavId">
-        <div
-          className={`relative self-stretch   flex flex-row  items-start min-h-screen  dark:bg-black z-20`}>
-          <div className="fixed flex flex-col  items-center   py-8 pl-2 h-full ">
-            <div className="h-10">
+        <div class="relative flex flex-row items-start min-h-screen dark:bg-black z-20">
+          <div
+            class={`fixed inset-y-0 left-0  flex flex-col items-start py-8 pl-2 h-full   ${
+              navbar == "hidden" ? "" : "w-72"
+            } border-r`}>
+            <div className="h-10 px-5">
               {navbar == "block" && (
-                <div className="items-center hidden lg:block">
-                  <img src={logo} alt="" className="w-[110px]" />
+                <div className="items-start hidden lg:block">
+                  <img src={logo} alt="" className="w-[100px]" />
                 </div>
               )}
               {navbar == "hidden" && (

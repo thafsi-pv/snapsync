@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { NOTIFICATION } from '../../../services/api/const';
 import { axiosInstance } from '../../../services/api/axiosInterceptor';
 import { timeAgo } from '../../../utils/timeAgo';
+import { getIdFromUrl } from '../../../utils/getIdFromUrl';
 
 
 /**
@@ -20,8 +21,12 @@ export const Notification = ({
     setNotificationBar,
   }) => {
     const handleNotiBar = () => {
-      setNavbar("block");
       setNotificationBar(false);
+      const currentURL = window.location.href;
+      const id = getIdFromUrl(currentURL);
+      if (id != "inbox") {
+        setNavbar("block");
+      }
     };
     const [notificationList, setNotificationList] = useState([]);
   

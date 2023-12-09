@@ -12,6 +12,7 @@ import MessengerIcon from "../../../assets/svg/MessengerIcon";
 import HomeIcon from "../../../assets/svg/HomeIcon";
 import SearchIcon from "../../../assets/svg/SearchIcon";
 import ReelIcon from "../../../assets/svg/ReelIcon";
+import { getIdFromUrl } from "../../../utils/getIdFromUrl";
 
 let noti = false;
 function MenuList({ showMenuName }) {
@@ -35,7 +36,12 @@ function MenuList({ showMenuName }) {
       setNavbar("hidden");
     } else {
       setSearchBar(false);
-      setNavbar("block");
+
+      const currentURL = window.location.href;
+      const id = getIdFromUrl(currentURL);
+      if (id != "inbox") {
+        setNavbar("block");
+      }
     }
     // const navbar = "hidden";
   };
@@ -45,7 +51,11 @@ function MenuList({ showMenuName }) {
       setNavbar("hidden");
     } else {
       setNotificationBar(false);
-      setNavbar("block");
+      const currentURL = window.location.href;
+      const id = getIdFromUrl(currentURL);
+      if (id != "inbox") {
+        setNavbar("block");
+      }
     }
     // const navbar = "hidden";
   };

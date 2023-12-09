@@ -7,6 +7,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { SEARCH_USER_API } from "../../../services/api/const";
 import { Link } from "react-router-dom";
+import { getIdFromUrl } from "../../../utils/getIdFromUrl";
 
 /**
  * Search Component
@@ -21,8 +22,13 @@ function Search({ navbar, setNavbar, userData, searchBar, setSearchBar }) {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const handleSearchBar = () => {
-    setNavbar("block");
+    // setNavbar("hidden");
     setSearchBar(false);
+    const currentURL = window.location.href;
+      const id = getIdFromUrl(currentURL);
+      if (id != "inbox") {
+        setNavbar("block");
+      }
   };
 
   const handleSearch = (e) => {

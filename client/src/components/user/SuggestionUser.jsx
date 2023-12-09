@@ -20,7 +20,7 @@ function SuggestionUser({ user }) {
       <div className="flex flex-col gap-1 w-24 shrink-0 flex-grow items-start">
         <p className="text-sm  tracking-[0.42]">{user?.fullName}</p>
         <p className="text-xs  tracking-[0.39] text-[#737373]">
-          Followed by zia
+          Snapsync recommended
         </p>
       </div>
       <div className="items-end flex-grow-0 p-2">
