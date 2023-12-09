@@ -4,12 +4,16 @@ import useUploadToCloudinary from "./useUploadToCloudinary";
 import { FileUploadContext } from "../services/providers/FileUploadContext";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import { POST_API } from "../services/api/const";
+import useSocialAction from "./useSocialAction";
 
 function useHandleMedia() {
   const { userData, addPost, setAddPost } = useContext(UserActionContext);
   const { uploadFileToCloudinary, uploadProgress, fileSize } =
     useUploadToCloudinary();
-  const { setUploadProgress, setFileSize } = useContext(FileUploadContext);
+  const { setUploadProgress, setFileSize, setUploadStatus } =
+    useContext(FileUploadContext);
+
+  const { getAllPosts, setPage } = useSocialAction();
 
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
@@ -52,13 +56,17 @@ function useHandleMedia() {
 
   const handleUploadPost = async (values) => {
     setAddPost(false);
+    setUploadStatus(false);
+    setUploadProgress(0);
     let fileUrl = null;
     if (file) {
       fileUrl = await uploadFileToCloudinary(file);
     }
     if (fileUrl) {
       const uploadStatus = handleSavePost(values, fileUrl);
-      return uploadStatus;
+      setUploadStatus(uploadStatus);
+      //setPage(0);
+      //getAllPosts();
     }
   };
 
@@ -72,7 +80,6 @@ function useHandleMedia() {
 
     const createdPost = await axiosInstance.post(POST_API, post);
     if (createdPost.status === 200) {
-      setUploadProgress(0);
       setMedia(null);
       setFile(null);
       return true;

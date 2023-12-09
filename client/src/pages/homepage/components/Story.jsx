@@ -19,10 +19,6 @@ function Story() {
   const [storyList, setStoryList] = useState();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  console.log(
-    "🚀 ~ file: Story.jsx:19 ~ Story ~ scrollPosition:",
-    scrollPosition
-  );
 
   // const { loadStory, setLoadStory } = useContext(UserActionContext);
 

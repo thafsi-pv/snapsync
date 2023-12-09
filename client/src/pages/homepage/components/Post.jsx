@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import GradiantHeartIcon from "../../../assets/svg/GradiantHeartIcon";
 import PostBottom from "../../../components/post/PostBottom";
 import PostComment from "../../../components/post/PostComment";
@@ -7,10 +8,9 @@ import PostFile from "../../../components/post/PostFile";
 import PostHead from "../../../components/post/PostHead";
 import PostLikeAndCaption from "../../../components/post/PostLikeAndCaption";
 import PostShimmer from "../../../components/shimmerUi/PostShimmer";
-import useSocialAction from "../../../hooks/useSocialAction";
-import { Loading } from "../../../assets/svg/Loading";
-import { useInView } from "react-intersection-observer";
 import AllCaughtUp from "../../../components/uiPrimitives/AllCaughtUp";
+import useSocialAction from "../../../hooks/useSocialAction";
+import { FileUploadContext } from "../../../services/providers/FileUploadContext";
 
 function Post() {
   const {
@@ -26,26 +26,25 @@ function Post() {
     likedId,
     getAllPosts,
     page,
-    setPage,
   } = useSocialAction();
 
+  const { uploadStatus } = useContext(FileUploadContext); //using for rerender after new post upload
   const [ref, inView] = useInView();
 
+  //after post upload set post empty page=1 and get all posts with new post
   useEffect(() => {
+    setPosts([]);
+    page.current = 1;
     getAllPosts();
-  }, [page]);
+  }, [uploadStatus]);
 
   useEffect(() => {
     if (inView) {
-      setPage((prev) => prev + 1);
+      page.current = page.current + 1;
+      getAllPosts();
       console.log("-------In view-----");
     }
   }, [inView]);
-
-  // If the loader is in view, fetch more data
-  // if (inView) {
-
-  // }
 
   if (!posts || posts.length == 0) return <PostShimmer />;
   return (

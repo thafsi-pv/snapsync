@@ -1,5 +1,12 @@
 import { useAnimation } from "framer-motion";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
   COMMENT_API,
@@ -25,15 +32,22 @@ function useSocialAction() {
   const [likedId, setLikedId] = useState(); //variable for post double tap
   const { userData, comments, setComments, postId, setPostId, setShare } =
     useContext(UserActionContext);
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
+  const page = useRef(1);
+  console.log(
+    "🚀 ~ file: useSocialAction.jsx:37 ~ useSocialAction ~ page:",
+    page
+  );
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
 
   const getAllPosts = useCallback(async () => {
-    const post = await axiosInstance.get(`${POST_API}?page=${page}&limit=10`);
-    if (post.status == 200) {
+    const post = await axiosInstance.get(
+      `${POST_API}?page=${page.current}&limit=10`
+    );
+    if (post.status === 200) {
       setPosts((prev) => [...prev, ...post.data]);
-    } else if (post.status == 202) {
+    } else if (post.status === 202) {
       setPosts((prev) => [...prev, { _id: -1, end: true }]);
     }
   }, [page]);
@@ -202,10 +216,10 @@ function useSocialAction() {
     sharePost,
     handleDoubleClick, //for post double click desktop
     handleTouchStart, //for post double tap mobile
-    controls, //fley heart animation controls
+    controls, //fly heart animation controls
     likedId,
     page,
-    setPage,
+    // setPage,
   };
 }
 

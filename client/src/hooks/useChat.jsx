@@ -23,7 +23,6 @@ import useLocalStorage from "./useLocalStorage";
 import { tokenName } from "../utils/const";
 
 function useChat() {
-  console.log("########## useChat @@@@@@@@@");
   const navigate = useNavigate();
   const { userData, userDataRef, setShare } = useContext(UserActionContext);
   const { socket, messages, setMessages, setNewMessageNotif } =
