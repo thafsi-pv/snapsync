@@ -26,6 +26,7 @@ function Post() {
     likedId,
     getAllPosts,
     page,
+    setPostDetails,
   } = useSocialAction();
 
   const { uploadStatus } = useContext(FileUploadContext); //using for rerender after new post upload
@@ -55,7 +56,7 @@ function Post() {
             <div
               className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[500px] w-full"
               key={post._id}>
-              <PostHead post={post} />
+              <PostHead post={post} setPostDetails={setPostDetails} />
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-3">

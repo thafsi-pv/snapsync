@@ -24,6 +24,7 @@ function UserActionContextProvider({ children }) {
   const [notificationBar, setNotificationBar] = useState(false);
   const [share, setShare] = useState(false);
   const [more, setMore] = useState(false);
+  const [postDetails, setPostDetails] = useState(false);
 
   const userDataRef = useRef();
   useEffect(() => {
@@ -65,6 +66,8 @@ function UserActionContextProvider({ children }) {
         setShare,
         more,
         setMore,
+        postDetails,
+        setPostDetails,
       }}>
       {children}
     </UserActionContext.Provider>

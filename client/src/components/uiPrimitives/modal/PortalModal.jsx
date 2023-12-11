@@ -18,7 +18,7 @@ function PortalModal({ children, show, close }) {
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm z-50 "
+      className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm z-50 bg-black bg-opacity-50"
       onClick={close}>
       {children}
     </div>,

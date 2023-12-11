@@ -4,7 +4,7 @@ import { IoIosMore } from "react-icons/io";
 import { timeAgo } from "../../utils/timeAgo";
 import VerifiedBadgeIcon from "../../assets/svg/VerifiedBadgeIcon";
 
-function PostHead({ post }) {
+function PostHead({ post, setPostDetails }) {
   return (
     <div className="flex flex-row justify-between items-center mb-2 px-4">
       <div className="flex flex-row gap-3 items-start w-full">
@@ -31,7 +31,10 @@ function PostHead({ post }) {
         </div>
       </div>
       <div>
-        <IoIosMore className="font-bold text-xl" />
+        <IoIosMore
+          className="font-bold text-xl"
+          onClick={() => setPostDetails(true)}
+        />
       </div>
     </div>
   );

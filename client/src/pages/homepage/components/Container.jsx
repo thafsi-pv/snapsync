@@ -12,6 +12,7 @@ const Share = lazy(() => import("../../../components/modal/Share"));
 import useChat from "../../../hooks/useChat";
 import { Loading } from "../../../assets/svg/Loading";
 import { SocketContext } from "../../../services/providers/SocketContext";
+import PostDetails from "../../../components/modal/PostDetails";
 
 /**
  * Container component
@@ -23,7 +24,7 @@ import { SocketContext } from "../../../services/providers/SocketContext";
  */
 
 function Container() {
-  const { comments, setComments, postId, share, setShare } =
+  const { comments, setComments, postId, share, setShare,postDetails, setPostDetails } =
     useContext(UserActionContext);
   // const { connectSocket } = useContext(SocketContext);
   const { connectSocket, socket } = useChat();
@@ -55,6 +56,11 @@ function Container() {
       {share && (
         <Suspense fallback={<Loading />}>
           <Share share={share} setShare={setShare} />
+        </Suspense>
+      )}
+      {postDetails && (
+        <Suspense fallback={<Loading />}>
+          <PostDetails postDetail={postDetails} setPostDetails={setPostDetails} />
         </Suspense>
       )}
     </div>

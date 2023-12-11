@@ -30,7 +30,7 @@ function useSocialAction() {
   const controls = useAnimation();
   const [posts, setPosts] = useState([]);
   const [likedId, setLikedId] = useState(); //variable for post double tap
-  const { userData, comments, setComments, postId, setPostId, setShare } =
+  const { userData, comments, setComments, postId, setPostId, setShare,setPostDetails } =
     useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
@@ -219,6 +219,7 @@ function useSocialAction() {
     controls, //fly heart animation controls
     likedId,
     page,
+    setPostDetails
     // setPage,
   };
 }
