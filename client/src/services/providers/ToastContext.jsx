@@ -6,6 +6,7 @@ export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
   const addToast = (message, duration = 4000) => {
+    console.log("🚀 ~ file: ToastContext.jsx:9 ~ addToast ~ message:", message)
     const id = Date.now();
     setToasts([...toasts, { id, message }]);
     setTimeout(() => {
@@ -20,7 +21,7 @@ export const ToastProvider = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast, toasts }}>
       {children}
-      <div className="fixed bottom-[60px] lg:bottom-0 w-full ">
+      <div className="fixed bottom-[60px] lg:bottom-0 w-full z-50">
         {toasts.map((toast) => (
           <div
             key={toast.id}

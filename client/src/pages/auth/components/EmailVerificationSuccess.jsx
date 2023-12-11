@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../../components/uiPrimitives/button";
+import { Link, useNavigate } from "react-router-dom";
 
 function EmailVerificationSuccess() {
     const navigate = useNavigate();
-    const [countdown, setCountdown] = useState(-1);
+    const [countdown, setCountdown] = useState(5);
   useEffect(() => {
     if (countdown >= 0) {
       const timer = setInterval(() => {

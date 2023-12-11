@@ -12,6 +12,7 @@ const StoryLayout = lazy(() => import("./layout/StoryLayout"));
 const AuthLayout = lazy(() => import("./layout/AuthLayout"));
 
 import HomeLayout from "./layout/HomeLayout";
+import EmailVerification from "./pages/auth/EmailVerification";
 // const HomeLayout = lazy(() => import("./layout/HomeLayout"));
 
 // import Reels from "./pages/Reels/Reels";
@@ -72,22 +73,22 @@ function App() {
       path: "/",
       element: (
         // <Suspense fallback={<Loading/>}>
-          <HomePageProtectedRoute>
-            <SocketContextProvider>
-              <FileUploadContextProvider>
-                {/* <UserActionContextProvider> */}
-                <HomeLayout />
-                {/* </UserActionContextProvider> */}
-              </FileUploadContextProvider>
-            </SocketContextProvider>
-          </HomePageProtectedRoute>
+        <HomePageProtectedRoute>
+          <SocketContextProvider>
+            <FileUploadContextProvider>
+              {/* <UserActionContextProvider> */}
+              <HomeLayout />
+              {/* </UserActionContextProvider> */}
+            </FileUploadContextProvider>
+          </SocketContextProvider>
+        </HomePageProtectedRoute>
         // </Suspense>
       ),
       children: [
         {
           path: "/",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <HomePage />
             </Suspense>
           ),
@@ -95,7 +96,7 @@ function App() {
         {
           path: "/explore",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <Explore />
             </Suspense>
           ),
@@ -103,7 +104,7 @@ function App() {
         {
           path: "/:username",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <Profile />
             </Suspense>
           ),
@@ -111,7 +112,7 @@ function App() {
         {
           path: "accounts/edit",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <EditProfile />
             </Suspense>
           ),
@@ -119,7 +120,7 @@ function App() {
         {
           path: "direct/inbox",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <Messages />
             </Suspense>
           ),
@@ -127,7 +128,7 @@ function App() {
         {
           path: "direct/inbox/:id/",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <Messages />
             </Suspense>
           ),
@@ -137,34 +138,20 @@ function App() {
     {
       path: "/",
       element: (
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<Loading />}>
           <HomePageProtectedRoute>
-            {/* <SocketContextProvider> */}
-              <StoryLayout />
-            {/* </SocketContextProvider> */}
+            <StoryLayout />
           </HomePageProtectedRoute>
         </Suspense>
       ),
       children: [
         {
           path: "story",
-          element: (
-            // <Suspense fallback={<Loading/>}>
-            // <HomePageProtectedRoute>
-            <Story />
-            // </HomePageProtectedRoute>
-            // </Suspense>
-          ),
+          element: <Story />,
         },
         {
           path: "story/:id",
-          element: (
-            // <Suspense fallback={<Loading/>}>
-            // <HomePageProtectedRoute>
-            <Story />
-            // </HomePageProtectedRoute>
-            // </Suspense>
-          ),
+          element: <Story />,
         },
       ],
     },
@@ -191,7 +178,7 @@ function App() {
     {
       path: "/reels/",
       element: (
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<Loading />}>
           <HomePageProtectedRoute>
             <Reels />
           </HomePageProtectedRoute>
@@ -201,7 +188,7 @@ function App() {
     {
       path: "/reels/:id",
       element: (
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<Loading />}>
           <HomePageProtectedRoute>
             <Reels />
           </HomePageProtectedRoute>
@@ -212,7 +199,7 @@ function App() {
     {
       path: "/auth/",
       element: (
-        <Suspense fallback={<Loading/>}>
+        <Suspense fallback={<Loading />}>
           <AuthProtectedRoute>
             <AuthLayout />
           </AuthProtectedRoute>
@@ -222,7 +209,7 @@ function App() {
         {
           path: "login",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <LogIn />
             </Suspense>
           ),
@@ -230,15 +217,23 @@ function App() {
         {
           path: "signup",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <SignUp />
+            </Suspense>
+          ),
+        },
+        {
+          path: "verifyemail/",
+          element: (
+            <Suspense fallback={<Loading />}>
+              <EmailVerification />
             </Suspense>
           ),
         },
         {
           path: "accounts/password/reset",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <ResetPassword />
             </Suspense>
           ),
@@ -246,7 +241,7 @@ function App() {
         {
           path: "accounts/password/reset/confirm",
           element: (
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loading />}>
               <ConfirmResetPassword />
             </Suspense>
           ),

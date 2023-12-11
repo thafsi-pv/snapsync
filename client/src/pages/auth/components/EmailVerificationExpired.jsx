@@ -1,4 +1,5 @@
 import React from "react";
+import Button from '../../../components/uiPrimitives/button'
 
 function EmailVerificationExpired({handleResendEmail}) {
   return (

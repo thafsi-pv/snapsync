@@ -1,8 +1,8 @@
-export const baseUrl = "http://localhost:8090/api";
-export const socketBaseUrl = "http://localhost:8090/";
+// export const baseUrl = "http://localhost:8090/api";
+// export const socketBaseUrl = "http://localhost:8090/";
 
-// export const baseUrl = "https://snapsync-api.onrender.com/api";
-// export const socketBaseUrl = "https://snapsync-api.onrender.com/";
+export const baseUrl = "https://snapsync-api.onrender.com/api";
+export const socketBaseUrl = "https://snapsync-api.onrender.com/";
 
 export const CLOUDINARY_IMAGE_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dm4djc1b1/image/upload";
@@ -16,6 +16,7 @@ export const CONFIRM_RESET_PASSWORD_API = "/auth/reset-password";
 export const ISUSERNAME_EXIST_API = "/auth/isUserName-exist";
 export const VERIFY_EMAIL_API = "/auth/verify-email";
 export const ROTATE_REFRESH_TOKEN_API = "/auth/refresh-token";
+export const RESEND_EMAIL_ACTIVATION_API = "/auth/resend-email-verification";
 
 export const GET_USER_DATA = "/user/details";
 export const GET_SUGGESTION_LIST = "/user/suggestion";

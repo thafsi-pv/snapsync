@@ -19,7 +19,7 @@ function UserStory({ id, imgUrl, userName, extra }) {
     <div className="text-sm cursor-pointer" onClick={handleLoadStory}>
       <UserImage
         imgUrl={imgUrl}
-        extra="w-20 h-20"
+        extra="w-[74px] h-[74px]"
         loading={loadStory}
         id={id}
       />

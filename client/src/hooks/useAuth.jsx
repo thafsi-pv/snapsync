@@ -5,20 +5,24 @@ import useSocialAction from "./useSocialAction";
 import useLocalStorage from "./useLocalStorage";
 import { tokenName } from "../utils/const";
 import { axiosInstance } from "../services/api/axiosInterceptor";
-import { LOGIN_API } from "../services/api/const";
+import { LOGIN_API, RESEND_EMAIL_ACTIVATION_API } from "../services/api/const";
 
 function useAuth() {
   const navigate = useNavigate();
-  const { connectSocket, socket } = useChat();
+  const { socket } = useChat();
   const { userData } = useSocialAction();
   const { setStorage, clearStorage } = useLocalStorage();
 
   const handleLogIn = async (values) => {
     const result = await axiosInstance.post(LOGIN_API, values);
+    console.log("🚀 ~ file: useAuth.jsx:18 ~ handleLogIn ~ result:", result);
     if (result.status === 200) {
-      setStorage(tokenName, result.data.accesstoken);
-      navigate("/");
-      // connectSocket(result.data.accesstoken); // Connect to the socket only on successful login
+      if (result?.data?.isVerified === false) {
+        navigateVerification(result.data.emailPhone, result.data._id);
+      } else {
+        setStorage(tokenName, result.data.accesstoken);
+        navigate("/");
+      }
     } else {
       alert(result, "failed");
     }
@@ -32,14 +36,32 @@ function useAuth() {
     navigate("/auth/login");
   };
 
+  const navigateVerification = (email, id) => {
+    navigate("/auth/verifyemail", { state: { email, id } });
+  };
+
   const navigateToHome = () => {
     navigate("/");
   };
   const navigateToLogin = () => {
-    navigate("/auth/login");
+    // navigate("/auth/login");
+    window.location="/auth/login"
   };
 
-  return { handleLogIn, handleLogOut, navigateToHome, navigateToLogin };
+  const resendEmailActivation = async (id) => {
+    const mailStatus = await axiosInstance.get(
+      `${RESEND_EMAIL_ACTIVATION_API}?id=${id}`
+    );
+    return mailStatus;
+  };
+
+  return {
+    handleLogIn,
+    handleLogOut,
+    navigateToHome,
+    navigateToLogin,
+    resendEmailActivation,
+  };
 }
 
 export default useAuth;

@@ -25,27 +25,43 @@ const signUp = async (req, res) => {
     const hash = await generatePasswordHash(data.password);
     delete data.cpassword;
     const newUser = await userModal.create({ ...data, password: hash });
-
-    const activationCode = uuidv4();
-    const responseCode = userCodeModel.create({
-      user_id: newUser._id,
-      code: activationCode,
-    });
-
-    const activationToken = generateEmailVerifyToken(
-      newUser._id,
-      activationCode
-    );
-
-    const mailStatus = await sendAccountActivationEmail(
-      newUser.emailPhone,
-      activationToken,
-      newUser.fullName
-    );
-
+    sendEmailActiationMail(newUser._id, newUser.emailPhone, newUser.fullName);
     res.json(newUser);
   } catch (error) {
     console.log(error);
+  }
+};
+
+const sendEmailActiationMail = async (id, emailPhone, fullName) => {
+  try {
+    const activationCode = uuidv4();
+    const filter = { user_id: id };
+    const update = { code: activationCode };
+    const existingDocument = await userCodeModel.findOne(filter);
+    if (existingDocument) {
+      const updatedDocument = await userCodeModel.findOneAndUpdate(
+        filter,
+        update,
+        {
+          new: true,
+        }
+      );
+      console.log("Document updated:", updatedDocument);
+    } else {
+      const newDocument = await userCodeModel.create({
+        user_id: id,
+        code: activationCode,
+      });
+    }
+    const activationToken = generateEmailVerifyToken(id, activationCode);
+    const mailStatus = await sendAccountActivationEmail(
+      emailPhone,
+      activationToken,
+      fullName
+    );
+    return mailStatus;
+  } catch (error) {
+    return error;
   }
 };
 
@@ -55,6 +71,14 @@ const signIn = async (req, res) => {
     const isUserExist = await userModal.findOne({ emailPhone });
     if (!isUserExist) {
       return res.status(400).json({ message: "Incorrect email/password" });
+    }
+
+    if (isUserExist?.isVerified == false) {
+      return res.status(200).json({
+        _id: isUserExist._id,
+        isVerified: isUserExist.isVerified,
+        emailPhone: isUserExist.emailPhone,
+      });
     }
 
     const validPassword = await comparePassword(password, isUserExist.password);
@@ -70,16 +94,7 @@ const signIn = async (req, res) => {
 const isUserNameExist = async (req, res) => {
   try {
     const userName = req.query.username;
-    console.log(
-      "🚀 ~ file: auth.js:56 ~ isUserNameExist ~ userName:",
-      userName
-    );
-
     const existingUser = await userModal.findOne({ userName });
-    console.log(
-      "🚀 ~ file: auth.js:59 ~ isUserNameExist ~ existingUser:",
-      existingUser
-    );
     if (existingUser) {
       res.json({ exists: true });
     } else {
@@ -93,10 +108,18 @@ const isUserNameExist = async (req, res) => {
 const emailVerification = async (req, res) => {
   try {
     const { userId, activationCode } = req;
+    console.log(
+      "🚀 ~ file: auth.js:97 ~ emailVerification ~ activationCode:",
+      activationCode
+    );
 
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,
     });
+    console.log(
+      "🚀 ~ file: auth.js:101 ~ emailVerification ~ savedActivationCode:",
+      savedActivationCode
+    );
     if (savedActivationCode.code == activationCode) {
       const result = await userModal.updateOne(
         { _id: userId },
@@ -154,18 +177,12 @@ function generateAccessAndRefreshToken(userId, res) {
 const resetPasswordEmail = async (req, res) => {
   try {
     const emailUsername = req.query.query;
-    console.log(
-      "🚀 ~ file: auth.js:156 ~ resetPassword ~ emailUsername:",
-      emailUsername
-    );
-
     const user = await userModal.findOne({
       $or: [
         { emailPhone: { $regex: emailUsername, $options: "i" } },
         { userName: { $regex: emailUsername, $options: "i" } },
       ],
     });
-    console.log("🚀 ~ file: auth.js:163 ~ resetPassword ~ user:", user);
 
     if (!user) {
       return res.status(401).json({ message: "No user found" });
@@ -190,11 +207,6 @@ const resetPasswordEmail = async (req, res) => {
       activationToken,
       user.fullName
     );
-    console.log(
-      "🚀 ~ file: auth.js:192 ~ resetPasswordEmail ~ mailStatus:",
-      mailStatus
-    );
-
     res.status(200).json(mailStatus);
   } catch (error) {
     res.status(400).json({
@@ -206,14 +218,7 @@ const resetPasswordEmail = async (req, res) => {
 const resetPassword = async (req, res) => {
   try {
     const { userId, activationCode } = req;
-    console.log(
-      "🚀 ~ file: auth.js:205 ~ resetPassword ~ activationCode:",
-      activationCode
-    );
-    console.log("🚀 ~ file: auth.js:205 ~ resetPassword ~ userId:", userId);
     const { password } = req.body;
-    console.log("🚀 ~ file: auth.js:207 ~ resetPassword ~ req.body:", req.body);
-
     const savedActivationCode = await userCodeModel.findOne({
       user_id: userId,
     });
@@ -225,10 +230,6 @@ const resetPassword = async (req, res) => {
         { new: true }
       );
 
-      console.log(
-        "🚀 ~ file: auth.js:109 ~ emailVerification ~ newUser:",
-        newUser
-      );
       if (newUser.modifiedCount === 1) {
         console.log(`User with userId ${userId} new password saved.`);
         res
@@ -248,6 +249,35 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const resendEmailActivationMail = async (req, res) => {
+  try {
+    const { id } = req.query;
+    console.log("🚀 ~ file: auth.js:233 ~ resendEmailActivationMail ~ id:", id);
+    const isExist = await userModal.findOne({ _id: id });
+    if (!isExist) {
+      return res.status(400).json({
+        message: "Something went wrong, please try again later",
+      });
+    }
+    const mailStatus = await sendEmailActiationMail(
+      isExist._id,
+      isExist.emailPhone,
+      isExist.fullName
+    );
+    console.log(
+      "🚀 ~ file: auth.js:245 ~ resendEmailActivationMail ~ mailStatus:",
+      mailStatus
+    );
+    res.status(200).json(mailStatus);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: auth.js:247 ~ resendEmailActivationMail ~ error:",
+      error
+    );
+    res.status(400).json({ message: error.message });
+  }
+};
+
 module.exports = {
   signUp,
   signIn,
@@ -256,4 +286,5 @@ module.exports = {
   rotateRefreshToken,
   resetPasswordEmail,
   resetPassword,
+  resendEmailActivationMail,
 };
