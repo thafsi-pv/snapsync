@@ -3,19 +3,46 @@ const postModal = require("../model/postModel");
 const followsModel = require("../model/followsModel");
 const savedPostModel = require("../model/savedPostModel");
 
+// const createPost = async (req, res) => {
+//   try {
+//     const userId = req.userId;
+//     const { _id, media_url, caption, location, media_type } = req.body;
+//     if (!userId) return res.status(404).json({ message: "User not found!" });
+
+//     const post = { user_id: userId, media_url, caption, location, media_type };
+//     const newPost = await postModal.create(post);
+
+//     return res.status(200).json(newPost);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json(error);
+//   }
+// };
+
 const createPost = async (req, res) => {
   try {
     const userId = req.userId;
-    const { media_url, caption, location, media_type } = req.body;
+    const { _id, media_url, caption, location, media_type } = req.body;
+
     if (!userId) return res.status(404).json({ message: "User not found!" });
 
     const post = { user_id: userId, media_url, caption, location, media_type };
-    const newPost = await postModal.create(post);
 
-    return res.status(200).json(newPost);
+    // Check if _id exists in the request body
+    if (_id) {
+      // If _id exists, update the existing post
+      const updatedPost = await postModal.findByIdAndUpdate(_id, post, {
+        new: true,
+      });
+      return res.status(200).json(updatedPost);
+    } else {
+      // If _id does not exist, create a new post
+      const newPost = await postModal.create(post);
+      return res.status(200).json(newPost);
+    }
   } catch (error) {
-    console.log(error);
-    res.status(400).json(error);
+    console.error(error);
+    res.status(400).json({ message: "Error creating/updating post" });
   }
 };
 
@@ -255,6 +282,34 @@ const getReels = async (req, res) => {
   }
 };
 
+const deletePostById = async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    // Check if postId is a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(postId)) {
+      return res.status(400).json({ message: "Invalid post ID" });
+    }
+
+    // Check if the post exists
+    const existingPost = await postModal.findById(postId);
+    if (!existingPost) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Delete the post
+    await postModal.findByIdAndRemove(postId);
+
+    return res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Assuming you have your postModal defined somewhere using Mongoose, for example:
+// const postModal = mongoose.model('Post', postSchema);
+
 module.exports = {
   createPost,
   getAllPosts,
@@ -262,4 +317,5 @@ module.exports = {
   savePost,
   getSavedPosts,
   getReels,
+  deletePostById,
 };

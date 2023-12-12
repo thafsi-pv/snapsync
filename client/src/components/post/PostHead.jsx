@@ -3,8 +3,14 @@ import UserImgName from "../user/UserImgName";
 import { IoIosMore } from "react-icons/io";
 import { timeAgo } from "../../utils/timeAgo";
 import VerifiedBadgeIcon from "../../assets/svg/VerifiedBadgeIcon";
+import useSocialAction from "../../hooks/useSocialAction";
 
 function PostHead({ post, setPostDetails }) {
+  const { setPostId } = useSocialAction();
+
+  const handlePostDetails = () => {
+    setPostDetails(post);
+  };
   return (
     <div className="flex flex-row justify-between items-center mb-2 px-4">
       <div className="flex flex-row gap-3 items-start w-full">
@@ -31,10 +37,7 @@ function PostHead({ post, setPostDetails }) {
         </div>
       </div>
       <div>
-        <IoIosMore
-          className="font-bold text-xl"
-          onClick={() => setPostDetails(true)}
-        />
+        <IoIosMore className="font-bold text-xl" onClick={handlePostDetails} />
       </div>
     </div>
   );

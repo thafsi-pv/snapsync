@@ -12,10 +12,11 @@ const Share = lazy(() => import("../../../components/modal/Share"));
 import useChat from "../../../hooks/useChat";
 import { Loading } from "../../../assets/svg/Loading";
 import { SocketContext } from "../../../services/providers/SocketContext";
-import PostDetails from "../../../components/modal/PostDetails";
+// import PostDetails from "../../../components/modal/PostDetails";
+const PostDetails = lazy(() => import("../../../components/modal/PostDetails"));
 
 /**
- * Container component
+ * Container component (page component)
  * Responsible for home page view story component
  * post component and suggestions
  * Using userAction context for modal show hide
@@ -24,8 +25,15 @@ import PostDetails from "../../../components/modal/PostDetails";
  */
 
 function Container() {
-  const { comments, setComments, postId, share, setShare,postDetails, setPostDetails } =
-    useContext(UserActionContext);
+  const {
+    comments,
+    setComments,
+    postId,
+    share,
+    setShare,
+    postDetails,
+    setPostDetails,
+  } = useContext(UserActionContext);
   // const { connectSocket } = useContext(SocketContext);
   const { connectSocket, socket } = useChat();
 
@@ -60,7 +68,10 @@ function Container() {
       )}
       {postDetails && (
         <Suspense fallback={<Loading />}>
-          <PostDetails postDetail={postDetails} setPostDetails={setPostDetails} />
+          <PostDetails
+            postDetail={postDetails}
+            setPostDetails={setPostDetails}
+          />
         </Suspense>
       )}
     </div>

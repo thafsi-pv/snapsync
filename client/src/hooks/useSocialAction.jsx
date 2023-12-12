@@ -30,18 +30,22 @@ function useSocialAction() {
   const controls = useAnimation();
   const [posts, setPosts] = useState([]);
   const [likedId, setLikedId] = useState(); //variable for post double tap
-  const { userData, comments, setComments, postId, setPostId, setShare,setPostDetails } =
-    useContext(UserActionContext);
+  const {
+    userData,
+    comments,
+    setComments,
+    postId,
+    setPostId,
+    setShare,
+    setPostDetails,
+  } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
-  console.log(
-    "🚀 ~ file: useSocialAction.jsx:37 ~ useSocialAction ~ page:",
-    page
-  );
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
 
   const getAllPosts = useCallback(async () => {
+    console.log('get all post..runnnnnningggxs')
     const post = await axiosInstance.get(
       `${POST_API}?page=${page.current}&limit=10`
     );
@@ -205,6 +209,8 @@ function useSocialAction() {
     userData,
     getAllPosts,
     posts,
+    postId,
+    setPostId,
     setPosts,
     likePost,
     savePost,
@@ -219,7 +225,7 @@ function useSocialAction() {
     controls, //fly heart animation controls
     likedId,
     page,
-    setPostDetails
+    setPostDetails,
     // setPage,
   };
 }

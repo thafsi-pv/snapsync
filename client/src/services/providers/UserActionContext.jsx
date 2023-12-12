@@ -24,7 +24,7 @@ function UserActionContextProvider({ children }) {
   const [notificationBar, setNotificationBar] = useState(false);
   const [share, setShare] = useState(false);
   const [more, setMore] = useState(false);
-  const [postDetails, setPostDetails] = useState(false);
+  const [postDetails, setPostDetails] = useState();
 
   const userDataRef = useRef();
   useEffect(() => {
