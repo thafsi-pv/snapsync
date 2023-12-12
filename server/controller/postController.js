@@ -284,12 +284,11 @@ const getReels = async (req, res) => {
 
 const deletePostById = async (req, res) => {
   try {
-    const postId = req.params.id;
-
-    // Check if postId is a valid MongoDB ObjectId
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-      return res.status(400).json({ message: "Invalid post ID" });
-    }
+    const postId = req.query.postId;
+    console.log(
+      "🚀 ~ file: postController.js:288 ~ deletePostById ~ postId:",
+      postId
+    );
 
     // Check if the post exists
     const existingPost = await postModal.findById(postId);

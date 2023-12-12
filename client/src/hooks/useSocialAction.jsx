@@ -28,7 +28,7 @@ import { useToast } from "./useToast";
 
 function useSocialAction() {
   const controls = useAnimation();
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   const [likedId, setLikedId] = useState(); //variable for post double tap
   const {
     userData,
@@ -38,6 +38,8 @@ function useSocialAction() {
     setPostId,
     setShare,
     setPostDetails,
+    posts,
+    setPosts,
   } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
@@ -45,7 +47,7 @@ function useSocialAction() {
   const { addToast } = useToast();
 
   const getAllPosts = useCallback(async () => {
-    console.log('get all post..runnnnnningggxs')
+    console.log("get all post..runnnnnningggxs");
     const post = await axiosInstance.get(
       `${POST_API}?page=${page.current}&limit=10`
     );
@@ -205,6 +207,18 @@ function useSocialAction() {
   };
   //end region post double tap like
 
+  const handleDeletePost = async (postId) => {
+    const response = await axiosInstance.delete(`${POST_API}?postId=${postId}`);
+
+    if (response.status == 200) {
+      const filterList = posts.filter((post) => post._id !== postId);
+      setPosts(filterList);
+      addToast("Post deleted successfully 👍🏻", 3000);
+    }
+    setPostDetails(false);
+    return response;
+  };
+
   return {
     userData,
     getAllPosts,
@@ -226,6 +240,7 @@ function useSocialAction() {
     likedId,
     page,
     setPostDetails,
+    handleDeletePost, //delete post
     // setPage,
   };
 }

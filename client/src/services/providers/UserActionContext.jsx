@@ -13,6 +13,7 @@ export const UserActionContext = createContext(null);
 function UserActionContextProvider({ children }) {
   console.log("user action context---rendered");
   // const { getStorage } = useLocalStorage();
+  const [posts, setPosts] = useState([]); //post List
   const [userData, setUserData] = useState();
   const [addPost, setAddPost] = useState(false);
   const [comments, setComments] = useState(false);
@@ -42,6 +43,8 @@ function UserActionContextProvider({ children }) {
   return (
     <UserActionContext.Provider
       value={{
+        posts,
+        setPosts,
         userData,
         getUserData,
         userDataRef,
