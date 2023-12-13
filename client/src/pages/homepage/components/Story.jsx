@@ -69,21 +69,21 @@ function Story() {
         {scrollPosition > 0 && storyList.length > 9 && (
           <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
         )}
-        <div className="relative text-sm w-[70px] lg:w-full h-[70px] m p-[2px] flex gap-1">
+        <div className="relative text-sm w-[70px] lg:w-full h-[70px] m p-[2px] flex gap-2">
           {!storyList?.some((story) => story._id == userData?._id) && (
             <div
-              className="w-16 text-sm cursor-pointer "
+              className="relative w-16 text-sm cursor-pointer "
               onClick={() => setAddStory(true)}>
               <UserImage
                 imgUrl={userData?.imageUrl}
-                extra="w-20 h-20"
+                extra="w-[74px] h-[74px]"
                 // loading={loadStory}
                 // id={id}
               />
               <p className="text-xs text-center w-20 truncate">
                 {userData?.userName}
               </p>
-              <div className="absolute bottom-0 right-2 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">
+              <div className="absolute bottom-0 right-0 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">
                 <IoIosAdd />
               </div>
             </div>

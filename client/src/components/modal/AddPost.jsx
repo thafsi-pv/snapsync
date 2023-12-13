@@ -27,17 +27,7 @@ function AddPost() {
 
   useEffect(() => {
     if (isEditPost) {
-      console.log(
-        "🚀 ~ file: AddPost.jsx:29 ~ useEffect ~ isEditPost:",
-        isEditPost
-      );
-
       const postDetails = posts.filter((post) => post._id == isEditPost);
-      console.log(
-        "🚀 ~ file: AddPost.jsx:36 ~ useEffect ~ postDetails:",
-        postDetails
-      );
-
       postFormik.initialValues._id = postDetails[0]._id;
       postFormik.initialValues.caption = postDetails[0].caption;
       postFormik.initialValues.location = postDetails[0].location;
