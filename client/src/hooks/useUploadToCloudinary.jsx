@@ -1,12 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { CLOUDINARY_IMAGE_UPLOAD_URL, CLOUDINARY_VIDEO_UPLOAD_URL } from "../services/api/const";
-
+import React, { useContext, useEffect, useState } from "react";
+import {
+  CLOUDINARY_IMAGE_UPLOAD_URL,
+  CLOUDINARY_VIDEO_UPLOAD_URL,
+} from "../services/api/const";
+import { FileUploadContext } from "../services/providers/FileUploadContext";
 
 const useUploadToCloudinary = () => {
+  const { uploadProgress, setUploadProgress, fileSize, setFileSize } =
+    useContext(FileUploadContext);
   const [uploadedUrl, setUploadedUrl] = useState();
-  const [uploadProgress, setUploadProgress] = useState();
-  const [fileSize, setFileSize] = useState(0);
+  // const [uploadProgress, setUploadProgress] = useState();
+  // const [fileSize, setFileSize] = useState(0);
 
   const uploadFileToCloudinary = async (file) => {
     setFileSize(file.size / (1024 * 1024));

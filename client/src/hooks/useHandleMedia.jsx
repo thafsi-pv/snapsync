@@ -12,16 +12,18 @@ function useHandleMedia() {
     useUploadToCloudinary();
   const { setUploadProgress, setFileSize, setUploadStatus } =
     useContext(FileUploadContext);
+    console.log("🚀 ~ file: useHandleMedia.jsx:12 ~ useHandleMedia ~ uploadProgress:", uploadProgress)
+
 
   const { getAllPosts, setPage } = useSocialAction();
 
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
 
-  useEffect(() => {
-    setUploadProgress(uploadProgress);
-    setFileSize(fileSize);
-  }, [uploadProgress, fileSize]);
+  // useEffect(() => {
+  //   setUploadProgress(uploadProgress);
+  //   setFileSize(fileSize);
+  // }, [uploadProgress, fileSize]);
 
   const handleMedia = (e) => {
     const selectedMedia = e.target.files[0];
@@ -59,8 +61,13 @@ function useHandleMedia() {
     setUploadStatus(false);
     setUploadProgress(0);
     let fileUrl = null;
-    if (file) {
-      fileUrl = await uploadFileToCloudinary(file);
+    if (!values._id) {
+      if (file) {
+        fileUrl = await uploadFileToCloudinary(file);
+        values.media_type = file.type;
+      }
+    } else {
+      fileUrl = values.media_url;
     }
     if (fileUrl) {
       const uploadStatus = handleSavePost(values, fileUrl);
@@ -72,10 +79,11 @@ function useHandleMedia() {
 
   const handleSavePost = async (values, fileUrl) => {
     const post = {
+      _id: values._id,
       media_url: fileUrl,
       location: values.location,
       caption: values.caption,
-      media_type: file.type,
+      media_type: values.media_type,
     };
 
     const createdPost = await axiosInstance.post(POST_API, post);

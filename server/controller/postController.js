@@ -21,6 +21,7 @@ const savedPostModel = require("../model/savedPostModel");
 
 const createPost = async (req, res) => {
   try {
+    console.log("🚀 ~ file: postController.js:26 ~ createPost ~ req.body:", req.body)
     const userId = req.userId;
     const { _id, media_url, caption, location, media_type } = req.body;
 

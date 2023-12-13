@@ -38,6 +38,12 @@ function AddPost() {
         postDetails
       );
 
+      postFormik.initialValues._id = postDetails[0]._id;
+      postFormik.initialValues.caption = postDetails[0].caption;
+      postFormik.initialValues.location = postDetails[0].location;
+      postFormik.initialValues.media_url = postDetails[0].media_url;
+      postFormik.initialValues.media_type = postDetails[0].media_type;
+
       if (postDetails) {
         const mediaType = postDetails[0].media_type;
         if (mediaType.startsWith("image/")) {
