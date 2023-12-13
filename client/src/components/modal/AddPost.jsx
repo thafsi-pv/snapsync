@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import useHandleMedia from "../../hooks/useHandleMedia";
 import { UserActionContext } from "../../services/providers/UserActionContext";
@@ -11,7 +11,8 @@ import PortalModal from "../uiPrimitives/modal/PortalModal";
 import CreatePostIcon from "../../assets/svg/CreatePostIcon";
 
 function AddPost() {
-  const { userData, addPost, setAddPost } = useContext(UserActionContext);
+  const { posts, userData, addPost, setAddPost, isEditPost, setIsEditPost } =
+    useContext(UserActionContext);
   const { media, setMedia, handleMedia, handleUploadPost, handleImageRemove } =
     useHandleMedia();
   const postFormik = useFormik({
@@ -24,13 +25,52 @@ function AddPost() {
     },
   });
 
+  useEffect(() => {
+    if (isEditPost) {
+      console.log(
+        "🚀 ~ file: AddPost.jsx:29 ~ useEffect ~ isEditPost:",
+        isEditPost
+      );
+
+      const postDetails = posts.filter((post) => post._id == isEditPost);
+      console.log(
+        "🚀 ~ file: AddPost.jsx:36 ~ useEffect ~ postDetails:",
+        postDetails
+      );
+
+      if (postDetails) {
+        const mediaType = postDetails[0].media_type;
+        if (mediaType.startsWith("image/")) {
+          const imageURL = postDetails[0].media_url;
+          setMedia(
+            <img
+              src={imageURL}
+              alt="Selected Image"
+              className="object-contain lg:w-full lg:h-full w-1/2 h-full "
+            />
+          );
+        } else if (mediaType.startsWith("video/")) {
+          const videoURL = postDetails[0].media_url;
+          setMedia(
+            <video
+              src={videoURL}
+              controls
+              className="object-fit lg:w-full lg:h-full  w-1/2 h-full"
+            />
+          );
+        }
+      }
+    }
+    return () => {
+      setIsEditPost(null);
+    };
+  }, []);
+
   if (!addPost) return null;
   return (
     <PortalModal show={addPost}>
       <div className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm">
-        <div
-          className="fixed inset-0 bg-black opacity-50 "
-          onClick={() => setAddPost(false)}></div>
+        <div className="fixed inset-0" onClick={() => setAddPost(false)}></div>
         <div className="flex flex-col items-center justify-center h-[70%] lg:w-[60%] w-[95%]">
           <div
             className="absolute top-4 right-4 cursor-pointer"
@@ -82,10 +122,12 @@ function AddPost() {
                 </div>
               ) : (
                 <div className="lg:w-full lg:h-full relative flex justify-center bg-black">
-                  <AiOutlineClose
-                    className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
-                    onClick={handleImageRemove}
-                  />
+                  {!isEditPost && (
+                    <AiOutlineClose
+                      className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
+                      onClick={handleImageRemove}
+                    />
+                  )}
                   {media}
                 </div>
               )}

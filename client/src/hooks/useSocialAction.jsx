@@ -40,6 +40,10 @@ function useSocialAction() {
     setPostDetails,
     posts,
     setPosts,
+    isEditPost,
+    setIsEditPost,
+    addPost,
+    setAddPost,
   } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
@@ -219,6 +223,11 @@ function useSocialAction() {
     return response;
   };
 
+  const handlePostEdit = async (postId) => {
+    setAddPost(true);
+    setIsEditPost(postId);
+  };
+
   return {
     userData,
     getAllPosts,
@@ -241,6 +250,7 @@ function useSocialAction() {
     page,
     setPostDetails,
     handleDeletePost, //delete post
+    handlePostEdit,
     // setPage,
   };
 }

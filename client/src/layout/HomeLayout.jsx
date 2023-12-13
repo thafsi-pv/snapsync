@@ -14,8 +14,10 @@ function HomeLayout() {
       className="overflow-hidden  relative flex flex-row justify-center w-full items-start lg:pr-1  max-w-[1650px]">
       <SideNav />
       <Outlet />
-      <AddPost show={addPost} closeModal={() => setAddPost(false)} />
-      <AddStory/>
+      {addPost && (
+        <AddPost show={addPost} closeModal={() => setAddPost(false)} />
+      )}
+      <AddStory />
       <UploadProgress />
     </div>
   );

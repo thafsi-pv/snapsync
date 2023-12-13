@@ -26,6 +26,7 @@ function UserActionContextProvider({ children }) {
   const [share, setShare] = useState(false);
   const [more, setMore] = useState(false);
   const [postDetails, setPostDetails] = useState();
+  const [isEditPost, setIsEditPost] = useState();
 
   const userDataRef = useRef();
   useEffect(() => {
@@ -71,6 +72,8 @@ function UserActionContextProvider({ children }) {
         setMore,
         postDetails,
         setPostDetails,
+        isEditPost,
+        setIsEditPost,
       }}>
       {children}
     </UserActionContext.Provider>

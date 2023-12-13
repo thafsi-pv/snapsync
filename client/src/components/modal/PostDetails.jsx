@@ -5,7 +5,7 @@ import useSocialAction from "../../hooks/useSocialAction";
 
 function PostDetails({ postDetail, setPostDetails }) {
   const { userData } = useContext(UserActionContext);
-  const { handleDeletePost } = useSocialAction();
+  const { handleDeletePost, handlePostEdit } = useSocialAction();
   if (!postDetail) return null;
   return (
     <PortalModal>
@@ -15,7 +15,9 @@ function PostDetails({ postDetail, setPostDetails }) {
       <div className="relative  flex flex-col bg-white w-1/2 lg:w-1/5 lg:h-fit justify-center items-center border shadow-lg rounded-md z-10">
         {postDetail.user[0]._id == userData._id && (
           <>
-            <div className="w-full border-b text-center p-4  font-semibold text-sm cursor-pointer hover:bg-gray-100">
+            <div
+              onClick={()=>handlePostEdit(postDetail._id)}
+              className="w-full border-b text-center p-4  font-semibold text-sm cursor-pointer hover:bg-gray-100">
               Edit
             </div>
             <div
