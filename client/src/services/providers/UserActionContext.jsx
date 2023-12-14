@@ -27,6 +27,7 @@ function UserActionContextProvider({ children }) {
   const [more, setMore] = useState(false);
   const [postDetails, setPostDetails] = useState();
   const [isEditPost, setIsEditPost] = useState();
+  const [followedUserId, setFollowedUserId] = useState(null);
 
   const userDataRef = useRef();
   useEffect(() => {
@@ -74,6 +75,7 @@ function UserActionContextProvider({ children }) {
         setPostDetails,
         isEditPost,
         setIsEditPost,
+        followedUserId, setFollowedUserId
       }}>
       {children}
     </UserActionContext.Provider>

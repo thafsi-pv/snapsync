@@ -10,6 +10,8 @@ import {
 import { axiosInstance } from "../services/api/axiosInterceptor";
 import {
   COMMENT_API,
+  FOLLOW_USER,
+  GET_SUGGESTION_LIST,
   LIKE_API,
   POST_API,
   SAVE_POST_API,
@@ -44,11 +46,19 @@ function useSocialAction() {
     setIsEditPost,
     addPost,
     setAddPost,
+    followedUserId,
+    setFollowedUserId,
   } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
+  const [suggestionList, setSuggestionList] = useState();
+
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
+
+  useEffect( () => {
+    suggestionUsers();
+  }, [suggestionList]);
 
   const getAllPosts = useCallback(async () => {
     console.log("get all post..runnnnnningggxs");
@@ -228,6 +238,21 @@ function useSocialAction() {
     setIsEditPost(postId);
   };
 
+  const handleFollowing = async (followedUserId, followStatus) => {
+    const data = { followed_user_id: followedUserId, followStatus };
+    const response = await axiosInstance.post(FOLLOW_USER, data);
+    if (response.status == 200 && followStatus == true) {
+      setFollowedUserId(followedUserId);
+    } else {
+      setFollowedUserId(null);
+    }
+  };
+
+  const suggestionUsers = async () => {
+    const response = await axiosInstance.get(GET_SUGGESTION_LIST);
+    setSuggestionList(response.data);
+  };
+
   return {
     userData,
     getAllPosts,
@@ -251,6 +276,11 @@ function useSocialAction() {
     setPostDetails,
     handleDeletePost, //delete post
     handlePostEdit,
+    followedUserId,
+    setFollowedUserId,
+    handleFollowing,
+    // suggestionUsers,
+    suggestionList,
     // setPage,
   };
 }

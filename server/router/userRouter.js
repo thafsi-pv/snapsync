@@ -10,6 +10,7 @@ const { checkAuth } = require("../middleware/checkAuth");
 const {
   followUser,
   getFollowersList,
+  removeFollowedUser,
 } = require("../controller/followsController");
 const {
   getUserDetailsWithUserName,
@@ -23,6 +24,7 @@ userRouter.post("/follow", checkAuth, followUser);
 userRouter.get("/profile", getProfileData);
 userRouter.get("/searchUsers", searchUsers);
 userRouter.put("/profile", checkAuth, updateProfile);
+userRouter.delete("/follow", checkAuth, removeFollowedUser);
 userRouter.get(
   "/follower-users",
   checkAuth,
