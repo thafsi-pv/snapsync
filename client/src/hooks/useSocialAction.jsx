@@ -56,9 +56,7 @@ function useSocialAction() {
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
 
-  useEffect( () => {
-    suggestionUsers();
-  }, [suggestionList]);
+ 
 
   const getAllPosts = useCallback(async () => {
     console.log("get all post..runnnnnningggxs");
@@ -248,10 +246,15 @@ function useSocialAction() {
     }
   };
 
-  const suggestionUsers = async () => {
-    const response = await axiosInstance.get(GET_SUGGESTION_LIST);
-    setSuggestionList(response.data);
-  };
+  const suggestionUsers = useCallback(async () => {
+    try {
+      const response = await axiosInstance.get(GET_SUGGESTION_LIST);
+      setSuggestionList(response.data);
+    } catch (error) {
+      console.error("Error fetching suggestion list:", error);
+      // Handle the error as needed, e.g., show an error message or log it
+    }
+  }, [suggestionList]);
 
   return {
     userData,
@@ -279,7 +282,7 @@ function useSocialAction() {
     followedUserId,
     setFollowedUserId,
     handleFollowing,
-    // suggestionUsers,
+    suggestionUsers,
     suggestionList,
     // setPage,
   };

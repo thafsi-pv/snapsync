@@ -4,6 +4,7 @@ const { default: mongoose, mongo } = require("mongoose");
 const followUser = async (req, res) => {
   try {
     const { followStatus, followed_user_id } = req.body;
+    console.log("🚀 ~ file: followsController.js:7 ~ followUser ~ req.body:", req.body)
     const following_user_id = req.userId;
 
     const alreadyFollowed = await followsModel.findOne({

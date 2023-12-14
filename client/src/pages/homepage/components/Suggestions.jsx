@@ -7,12 +7,14 @@ import useSocialAction from "../../../hooks/useSocialAction";
 
 function Suggestions() {
   // const [suggestionList, setSuggestionList] = useState();
-  const { suggestionList } = useSocialAction();
+  const { suggestionList, suggestionUsers } = useSocialAction();
   // useEffect(async () => {
   //   const list = await suggestionUsers();
   //   setSuggestionList(list);
   // }, []);
-
+  useEffect(() => {
+    suggestionUsers();
+  }, []);
   return (
     <div className="relative flex flex-col w-full gap-12 items-start mt-10 mx-8 bg-white p-4">
       <div className="flex flex-row justify-between ml-px w-full  items-center">

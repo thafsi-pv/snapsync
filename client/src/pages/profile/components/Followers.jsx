@@ -6,10 +6,12 @@ import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { FOLLOWERS_USER_API } from "../../../services/api/const";
 import UserImage from "../../../components/user/UserImage";
 import { useNavigate } from "react-router-dom";
+import useSocialAction from "../../../hooks/useSocialAction";
 
 function Followers({ userName, showModal, setShowModal, listType }) {
   const navigate = useNavigate();
   const [userList, setUserList] = useState();
+  const { handleFollowing } = useSocialAction();
 
   useEffect(() => {
     getUserList();
@@ -25,6 +27,12 @@ function Followers({ userName, showModal, setShowModal, listType }) {
   const handleProfileClick = (userName) => {
     navigate(`/${userName}`, { replace: true });
     setShowModal(false);
+  };
+
+  const handleRemoveBtn = (userId) => {
+    if (listType == "following") {
+      handleFollowing(userId, false);
+    }
   };
 
   return (
@@ -76,6 +84,9 @@ function Followers({ userName, showModal, setShowModal, listType }) {
                       </div>
                       <div>
                         <Button
+                          onClick={() => {
+                            handleRemoveBtn(user.followedUserInfo._id);
+                          }}
                           label="Remove"
                           extraClass="!bg-gray-200 !text-black !p-1 w-24"
                         />
