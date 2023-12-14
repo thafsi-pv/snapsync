@@ -36,7 +36,7 @@ function useHandleMedia() {
           <img
             src={imageURL}
             alt="Selected Image"
-            className="object-fit lg:w-full lg:h-full w-1/2 h-full "
+            className="object-contain lg:w-full lg:h-full w-1/2 h-full "
           />
         );
       } else if (mediaType.startsWith("video/")) {
