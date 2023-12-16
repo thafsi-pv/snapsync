@@ -151,6 +151,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("notification", async (data) => {
+      console.log("🚀 ~ file: index.js:154 ~ socket.on ~ data:", data)
       const { type, recipient_Id, post_Id } = data;
       const sockeid = getSocketId(recipient_Id);
       if (sockeid) {

@@ -64,8 +64,6 @@ function useChat() {
       const id = getIdFromUrl(currentURL);
       console.log("######---private message");
       if (id !== sender) {
-        console.log('read update false')
-        console.log("🚀 ~ file: useChat.jsx:69 ~ handlePrivateMessage ~ _id:", _id)
         socket.current.emit("isReadUpdata", { _id, flag: false });
         setNewMessageNotif((prev) => prev + 1);
       } else {
@@ -126,9 +124,6 @@ function useChat() {
 
   //recent chat list click event
   const handleRecentChatClick = (recent) => {
-    console.log(
-      "🚀 ~ file: useChat.jsx:133 ~ handleRecentChatClick inside console"
-    );
     setMessages([]);
     const chatUser =
       recent.senderInfo._id == userData._id

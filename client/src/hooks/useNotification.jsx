@@ -19,7 +19,7 @@ function useNotification() {
   const createNotification = async (type, recipient_Id, post_Id) => {
     const data = { type, recipient_Id, post_Id };
     const response = await axiosInstance.post(NOTIFICATION, data);
-    socket.emit("notification", data);
+    socket.current.emit("notification", data);
 
     return response;
   };
