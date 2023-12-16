@@ -23,7 +23,7 @@ function ChatListScreen({
   setshowEmoji,
   setChatUser,
 }) {
-  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
+  // console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
   const { comments, setComments, setPostId, postId } =
     useContext(UserActionContext);
   const handleViewComments = useCallback((postId) => {
@@ -120,7 +120,7 @@ function ChatListScreen({
   );
 }
 
-export default ChatListScreen;
+export default React.memo(ChatListScreen);
 
 const ChatMessage = ({
   message,
@@ -217,7 +217,9 @@ const ChatMessage = ({
           </div>
         ) : (
           <div className="max-w-[250px] lg:max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl ">
-            <p className="italic p-2 rounded-md text-xs bg-gray-200 my-2">Post is unavailable</p>
+            <p className="italic p-2 rounded-md text-xs bg-gray-200 my-2">
+              Post is unavailable
+            </p>
           </div>
         )}
       </div>

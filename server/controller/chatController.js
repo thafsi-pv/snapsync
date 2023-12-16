@@ -328,7 +328,11 @@ const readAllMessage = async (req, res) => {
 };
 
 const isReadUpdate = async (_id, flag) => {
-  const update = await chatModel.findByIdAndUpdate(_id, { isRead: flag });
+  const update = await chatModel.findByIdAndUpdate(
+    _id,
+    { isRead: flag },
+    { new: true }
+  );
   return update;
 };
 

@@ -55,8 +55,8 @@ function Messages() {
     message,
     setMessage,
     getRecentChats,
-    setNewMessageNotif,
   } = useChat();
+    console.log("🚀 ~ file: Messages.jsx:59 ~ Messages ~ recentChatList:", recentChatList)
 
   //in messages screen hide top navbar and bottom navbar
   useEffect(() => {
@@ -64,7 +64,6 @@ function Messages() {
     const pollingInterval = setInterval(() => {
       getRecentChats();
     }, 5000);
-
     //hide top and bottom nav in mobile
     setNavbar("hidden");
     const topNav = document.getElementById("topNavId");

@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
     const token = socket.handshake.query.token;
     const verifyT = verifyToken(token);
     const userId = verifyT._id;
-    console.log("🚀 ~ file: index.js:66 ~ io.on ~ userId:", userId)
+    console.log("🚀 ~ file: index.js:66 ~ io.on ~ userId:", userId);
 
     if (connectedUsers.has(userId)) {
       const existingSocket = connectedUsers.get(userId);
@@ -121,7 +121,9 @@ io.on("connection", (socket) => {
     );
 
     socket.on("isReadUpdata", async ({ _id, flag }) => {
+      console.log("🚀 ~ file: index.js:126 ~ socket.on ~ _id:", _id);
       const update = await isReadUpdate(_id, flag);
+      console.log("🚀 ~ file: index.js:126 ~ socket.on ~ update:", update)
     });
 
     socket.on("recentChatList", async (_id) => {

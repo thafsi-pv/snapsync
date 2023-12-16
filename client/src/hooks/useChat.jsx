@@ -27,6 +27,7 @@ function useChat() {
   const { userData, userDataRef, setShare } = useContext(UserActionContext);
   const { socket, messages, setMessages, setNewMessageNotif } =
     useContext(SocketContext);
+  console.log("🚀 ~ file: useChat.jsx:29 ~ useChat ~ messages:", messages);
   const { getStorage } = useLocalStorage();
 
   const [recentChatList, setRecentChatList] = useState();
@@ -58,50 +59,40 @@ function useChat() {
   }, []);
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on(
-        "private message",
-        ({ _id, sender, message, messageType }) => {
-          const currentURL = window.location.href;
-          const id = getIdFromUrl(currentURL);
-          console.log("######---private message");
-          if (id != sender) {
-            socket.current.emit("isReadUpdata", { _id, flag: false });
-            setNewMessageNotif((prev) => prev + 1);
-          } else {
-            let text = {};
-            if (messageType == "TextMessage") {
-              text = { text: message };
-            } else {
-              text = message;
-            }
-            setMessages((prevMessages) => [
-              ...prevMessages,
-              { sender: sender, message: text, messageType },
-            ]);
-          }
+    const handlePrivateMessage = ({ _id, sender, message, messageType }) => {
+      const currentURL = window.location.href;
+      const id = getIdFromUrl(currentURL);
+      console.log("######---private message");
+      if (id !== sender) {
+        console.log('read update false')
+        console.log("🚀 ~ file: useChat.jsx:69 ~ handlePrivateMessage ~ _id:", _id)
+        socket.current.emit("isReadUpdata", { _id, flag: false });
+        setNewMessageNotif((prev) => prev + 1);
+      } else {
+        let text = {};
+        if (messageType === "TextMessage") {
+          text = { text: message };
+        } else {
+          text = message;
         }
-      );
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: sender, message: text, messageType },
+        ]);
+      }
+    };
+
+    if (socket.current && !socket.current.hasListeners("private message")) {
+      socket.current.on("private message", handlePrivateMessage);
     }
+
+    // return () => {
+    //   // Cleanup: Remove the event listener when the component unmounts
+    //   if (socket.current) {
+    //     socket.current.off("private message", handlePrivateMessage);
+    //   }
+    // };
   }, [socket]);
-
-  // useEffect(() => {
-  //   if (socket) {
-  //     socket.on("forceDisconnect", (reason) => {
-  //       // Handle the forced disconnection here
-  //       console.log(`Forced disconnection: ${reason}`);
-  //       // You can also redirect the user or show a message
-  //       // For example, you can use React Router to navigate to a different page
-  //       // history.push('/login');
-  //       // navigate("/auth/login");
-  //     });
-
-  //     // Clean up the event listener when the component unmounts
-  //     return () => {
-  //       socket.off("forceDisconnect");
-  //     };
-  //   }
-  // }, [socket]);
 
   useEffect(() => {
     getRecentChats();
@@ -114,7 +105,7 @@ function useChat() {
   }, [chatUser]);
 
   // get recent chats of loged in user when enter to messages
-  const getRecentChats = async () => {
+  const getRecentChats = useCallback(async () => {
     try {
       socket.current.emit("recentChatList", userDataRef.current._id);
       socket.current.on("recentChatList", (recentList) => {
@@ -131,7 +122,7 @@ function useChat() {
     } catch (error) {
       genericError(error);
     }
-  };
+  }, [chatUser]);
 
   //recent chat list click event
   const handleRecentChatClick = (recent) => {

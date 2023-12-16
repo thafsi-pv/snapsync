@@ -11,6 +11,7 @@ import { socketBaseUrl } from "../api/const";
 import { tokenName } from "../../utils/const";
 import { io } from "socket.io-client";
 import useChat from "../../hooks/useChat";
+import { getIdFromUrl } from "../../utils/getIdFromUrl";
 
 export const SocketContext = createContext(null);
 
@@ -30,6 +31,35 @@ function SocketContextProvider({ children }) {
   //     socket.current = soket;
   //   }
   // }, []);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on(
+        "private message",
+        ({ _id, sender, message, messageType }) => {
+          const currentURL = window.location.href;
+          const id = getIdFromUrl(currentURL);
+          console.log("######---private message");
+          if (id != sender) {
+            socket.current.emit("isReadUpdata", { _id, flag: false });
+            setNewMessageNotif((prev) => prev + 1);
+          } else {
+            let text = {};
+            if (messageType == "TextMessage") {
+              text = { text: message };
+            } else {
+              text = message;
+            }
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              { sender: sender, message: text, messageType },
+            ]);
+          }
+        }
+      );
+    }
+  }, []);
+
   return (
     <SocketContext.Provider
       value={{
