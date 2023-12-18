@@ -10,7 +10,7 @@ function StoryLayout({ children }) {
           <img src={logo6} alt="snapsync" />
         </div>
       </Link>
-      <Outlet />
+     {children}
     </div>
   );
 }

@@ -105,7 +105,7 @@ function Comments({ show, closeModal, postId }) {
                       fullName={postDetails?.user[0]?.userName}
                       desc={postDetails?.location}
                       imgUrl={postDetails?.user[0]?.imageUrl}
-                      extra="w-12"
+                      extra="w-12 h-12"
                     />
                   </div>
                   <div className="flex flex-row justify-between  w-5 shrink-0 items-start">
@@ -119,8 +119,8 @@ function Comments({ show, closeModal, postId }) {
                         id={postDetails?.user[0]?._id}
                         imgUrl={postDetails?.user[0]?.imageUrl}
                         username={postDetails?.user[0]?.userName}
-                        extra="w-14 "
-                        imgStyle=""
+                        extra="w-12 h-12"
+                        imgStyle="!p-0.5"
                       />
                     </div>
                     <div className="flex-1">

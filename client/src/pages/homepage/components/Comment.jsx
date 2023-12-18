@@ -19,7 +19,7 @@ function Comment({ postId, callBack }) {
       className="flex flex-row ml-1 gap-5 w-full  items-center border-t">
       <img
         src="https://file.rendit.io/n/sW1YVBq1yktiO0tHe8fZ.svg"
-        className="w-6 shrink-0"
+        className="w-6 h-6 shrink-0"
       />
       <div className=" w-full h-full">
         <InputField
