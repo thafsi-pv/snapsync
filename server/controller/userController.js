@@ -86,6 +86,7 @@ const getProfileData = async (req, res) => {
         fullName: 1,
         userName: 1,
         imageUrl: 1,
+        bio: 1,
         followingCount: { $size: "$followingUsers" },
         followedCount: { $size: "$followedUsers" },
       },
@@ -115,6 +116,7 @@ const getProfileData = async (req, res) => {
       },
     ]);
     profile.posts = posts;
+    console.log("🚀 ~ file: userController.js:119 ~ getProfileData ~ profile:", profile)
     res.status(200).json({ profile: profile, post: posts });
   } else {
     // Handle the case where no user with the specified username is found.
@@ -158,8 +160,6 @@ const updateProfile = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-
 
 module.exports = {
   getUserData,

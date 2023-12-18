@@ -69,8 +69,9 @@ function UserDetails({ profile, postCount }) {
         <div className="flex flex-col gap-1 items-start ml-px mr-20">
           <div className="text-lg">{profile?.userName}</div>
           <div className="self-stretch flex flex-col gap-px items-start">
-            <div className=" text-[#a7a1a1]">UI/UX desginer</div>
-            <div className="text-sm">Front end developer & Game Desginer</div>
+            {/* <div className=" text-[#a7a1a1]">UI/UX desginer</div> */}
+            {/* <div className="text-sm">{profile?.bio}</div> */}
+            <div dangerouslySetInnerHTML={{ __html: profile?.bio }}></div>
           </div>
         </div>
       </div>

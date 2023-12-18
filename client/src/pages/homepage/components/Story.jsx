@@ -69,7 +69,7 @@ function Story() {
         {scrollPosition > 0 && storyList.length > 7 && (
           <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
         )}
-        <div className="relative text-sm w-[70px] lg:w-full h-[70px] m p-[2px] flex gap-2">
+        <div className="relative text-sm w-[70px] lg:w-full h-[70px] m p-[2px] gap-1 lg:gap-2 flex ">
           {!storyList?.some((story) => story._id == userData?._id) && (
             <div
               className="relative w-16 text-sm cursor-pointer "
@@ -80,7 +80,7 @@ function Story() {
                 // loading={loadStory}
                 // id={id}
               />
-              <p className="text-xs text-center w-20 truncate">
+              <p className="text-xs text-center w-18 truncate">
                 {userData?.userName}
               </p>
               <div className="absolute bottom-0 right-0 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">

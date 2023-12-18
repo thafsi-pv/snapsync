@@ -15,8 +15,8 @@ import HomeLayout from "./layout/HomeLayout";
 import EmailVerification from "./pages/auth/EmailVerification";
 // const HomeLayout = lazy(() => import("./layout/HomeLayout"));
 
- import Reels from "./pages/Reels/Reels";
-// const Reels = lazy(() => import("./pages/Reels/Reels"));
+//import Reels from "./pages/Reels/Reels";
+const Reels = lazy(() => import("./pages/Reels/Reels"));
 
 // import ConfirmResetPassword from "./pages/auth/ConfirmResetPassword";
 const ConfirmResetPassword = lazy(() =>
@@ -175,25 +175,46 @@ function App() {
     //     </Suspense>
     //   ),
     // },
+    // {
+    //   path: "/reels/",
+    //   element: (
+    //     <Suspense fallback={<Loading />}>
+    //       <HomePageProtectedRoute>
+    //         <Reels />
+    //       </HomePageProtectedRoute>
+    //     </Suspense>
+    //   ),
+    // },
+    // {
+    //   path: "/reels/:id",
+    //   element: (
+    //     <Suspense fallback={<Loading />}>
+    //       <HomePageProtectedRoute>
+    //         <Reels />
+    //       </HomePageProtectedRoute>
+    //     </Suspense>
+    //   ),
+    // },
+
     {
-      path: "/reels/",
+      path: "/",
       element: (
-        // <Suspense fallback={<Loading />}>
-          // <HomePageProtectedRoute>
-            <Reels />
-          // </HomePageProtectedRoute>
-        // </Suspense>
+        <Suspense fallback={<Loading />}>
+          <HomePageProtectedRoute>
+            <StoryLayout />
+          </HomePageProtectedRoute>
+        </Suspense>
       ),
-    },
-    {
-      path: "/reels/:id",
-      element: (
-        // <Suspense fallback={<Loading />}>
-          // <HomePageProtectedRoute>
-            <Reels />
-          // </HomePageProtectedRoute>
-        // </Suspense>
-      ),
+      children: [
+        {
+          path: "reels",
+          element: <Reels />,
+        },
+        {
+          path: "reels/:id",
+          element: <Reels />,
+        },
+      ],
     },
 
     {
