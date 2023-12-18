@@ -37,4 +37,4 @@ function SavedStory() {
   );
 }
 
-export default memo(SavedStory);
+export default (SavedStory);

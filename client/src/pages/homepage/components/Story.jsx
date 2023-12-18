@@ -66,7 +66,7 @@ function Story() {
       className="relative flex flex-col gap-1 max-w-full  overflow-x-auto lg:mt-10 mt-14 scrollbar-hide w-full"
       ref={containerRef}>
       <div className="relative flex flex-row gap-1 items-start ml-1 lg:mr-5 sm:mr-0 my-1 h-24 w-fit min-w-full">
-        {scrollPosition > 0 && storyList.length > 9 && (
+        {scrollPosition > 0 && storyList.length > 7 && (
           <NextPrevButton onClick={() => handleScroll(-400)} side="left" />
         )}
         <div className="relative text-sm w-[70px] lg:w-full h-[70px] m p-[2px] flex gap-2">
@@ -102,7 +102,7 @@ function Story() {
           containerRef.current?.scrollWidth -
             containerRef.current?.clientWidth ||
           scrollPosition == 0) &&
-          storyList.length > 9 && (
+          storyList.length > 7 && (
             <NextPrevButton onClick={() => handleScroll(400)} side="right" />
           )}
       </div>

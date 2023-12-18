@@ -9,7 +9,6 @@ import UserPosts from "./components/UserPosts";
 let postCount = "";
 function Profile() {
   const [profile, setProfile] = useState();
-  console.log("🚀 ~ file: Profile.jsx:12 ~ Profile ~ profile:", profile);
   const [posts, setPosts] = useState([]);
   const [type, setType] = useState(0);
   const { username } = useParams();
