@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 function UserImage({ id, imgUrl, extra, username, imgStyle }) {
   const navigate = useNavigate();
-  const [haveStory, setHaveStory] = useState();
+  const [haveStory, setHaveStory] = useState(false);
   const { loadStory, setLoadStory } = useContext(UserActionContext);
 
   useEffect(() => {
     checkUserHaveStory();
     return () => {
-      setHaveStory(null);
+      setHaveStory(false);
       setLoadStory({ loading: false, id: "" });
     };
   }, [id]);
@@ -22,14 +22,14 @@ function UserImage({ id, imgUrl, extra, username, imgStyle }) {
     const response = await axiosInstance.get(
       `${HAVING_STORY_API}?userId=${id}`
     );
-    setHaveStory(response.data.length != 0 ? response.data[0] : false);
+    setHaveStory(response.data.length != 0 ? true : false);
   };
 
   const handleStoryClick = () => {
     setLoadStory({ loading: true, id });
     if (haveStory) {
       const timeOut = setTimeout(() => {
-        navigate(`/story/${haveStory._id}`);
+        navigate(`/story/${id}`);
       }, 3000);
       return () => clearTimeout(timeOut);
     } else navigate(`/${username}`);
