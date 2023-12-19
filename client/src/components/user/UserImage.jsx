@@ -7,25 +7,29 @@ import { useNavigate } from "react-router-dom";
 
 function UserImage({ id, imgUrl, extra, username, imgStyle }) {
   const navigate = useNavigate();
-  const [haveStory, setHaveStory] = useState(false);
+  const [haveStory, setHaveStory] = useState();
   const { loadStory, setLoadStory } = useContext(UserActionContext);
 
   useEffect(() => {
     checkUserHaveStory();
+    return () => {
+      setHaveStory(null);
+      setLoadStory({ loading: false, id: "" });
+    };
   }, [id]);
 
   const checkUserHaveStory = async () => {
     const response = await axiosInstance.get(
       `${HAVING_STORY_API}?userId=${id}`
     );
-    setHaveStory(response.data.length != 0 ? true : false);
+    setHaveStory(response.data.length != 0 ? response.data[0] : false);
   };
 
   const handleStoryClick = () => {
     setLoadStory({ loading: true, id });
     if (haveStory) {
       const timeOut = setTimeout(() => {
-        navigate("/story");
+        navigate(`/story/${haveStory._id}`);
       }, 3000);
       return () => clearTimeout(timeOut);
     } else navigate(`/${username}`);
