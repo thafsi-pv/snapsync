@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AiFillHome, AiOutlineCompass, AiOutlineSearch } from "react-icons/ai";
 import { BiSolidMoviePlay } from "react-icons/bi";
 import { Link } from "react-router-dom";
@@ -13,8 +13,8 @@ import HomeIcon from "../../../assets/svg/HomeIcon";
 import SearchIcon from "../../../assets/svg/SearchIcon";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { getIdFromUrl } from "../../../utils/getIdFromUrl";
+import AddPopover from "../../popover/AddPopover";
 
-let noti = false;
 function MenuList({ showMenuName }) {
   const {
     userData,
@@ -26,9 +26,12 @@ function MenuList({ showMenuName }) {
     setSearchBar,
     notificationBar,
     setNotificationBar,
+    popover,
+    setPopover,
   } = useContext(UserActionContext);
   const { newMessageNotif } = useContext(SocketContext);
   const { notification } = useNotification();
+  console.log("🚀 ~ file: MenuList.jsx:36 ~ MenuList ~ popover:", popover);
 
   const handleSearch = () => {
     if (searchBar == false) {
@@ -60,6 +63,9 @@ function MenuList({ showMenuName }) {
     // const navbar = "hidden";
   };
 
+  const handleclose = () => {
+    setPopover(false);
+  };
   const handleOnClick = () => {
     setSearchBar(false);
     setNotificationBar(false);
@@ -134,14 +140,21 @@ function MenuList({ showMenuName }) {
           <p className={`font-normal ${navbar}`}>Notification</p>
         )}
       </div>
-      <div
-        className="hidden  lg:flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer"
-        onClick={() => setAddPost(true)}>
-        <img
-          src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
-          className="mb-1 w-6 shrink-0"
-        />
-        {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>}
+      <div className="relative hidden lg:flex items-center w-full ">
+        <div
+          onClick={() => setPopover((prev) => !prev)}
+          className="relative flex w-full h-full  gap-3 hover:bg-gray-100 lg:p-4 rounded-lg cursor-pointer">
+          <img
+            src="https://file.rendit.io/n/Qw8xabla0WV1dzCWjhDr.svg"
+            className="mb-1 w-6 shrink-0"
+          />
+          {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>}
+        </div>
+        {popover && (
+          <div className="absolute top-0 -right-20 -mt-[80px] -mr-9 w-full z-[9]">
+            <AddPopover handleclose={handleclose} />
+          </div>
+        )}
       </div>
       <Link to={`/${userData?.userName}`} onClick={handleOnClick}>
         <div className="flex items-center gap-3 hover:bg-gray-100 p-2 lg:p-4 rounded-lg w-full cursor-pointer">
@@ -160,8 +173,15 @@ function MenuList({ showMenuName }) {
 export default MenuList;
 
 export const TopSmMenuList = () => {
-  const { setAddPost, notificationBar, setNotificationBar, navbar, setNavbar } =
-    useContext(UserActionContext);
+  const {
+    setAddPost,
+    notificationBar,
+    setNotificationBar,
+    navbar,
+    setNavbar,
+    popover,
+    setPopover,
+  } = useContext(UserActionContext);
   const { notification } = useNotification();
 
   const handleNoti = () => {
@@ -174,14 +194,28 @@ export const TopSmMenuList = () => {
     }
     // const navbar = "hidden";
   };
-
+  const handleclose = () => {
+    setPopover(false);
+  };
   return (
     <div className="flex gap-px p-1">
-      <div
+      {/* <div
         className="flex items-center hover:bg-gray-100 rounded-lg w-full cursor-pointer"
         onClick={() => setAddPost(true)}>
-        <AddPostIcon className="w-12" />
+        <AddPostIcon className="w-12" /> */}
         {/* {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>} */}
+      {/* </div> */}
+      <div className="relative flex items-center w-full ">
+        <div
+          onClick={() => setPopover((prev) => !prev)}
+          className="relative flex w-full h-full  gap-3 hover:bg-gray-100 lg:p-4 rounded-lg cursor-pointer">
+          <AddPostIcon className="w-12" />
+        </div>
+        {popover && (
+          <div className="fixed top-0 right-0 z-[9] ">
+            <AddPopover handleclose={handleclose} />
+          </div>
+        )}
       </div>
       <div
         className="flex items-center hover:bg-gray-100 rounded-lg w-full cursor-pointer"

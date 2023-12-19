@@ -48,6 +48,8 @@ function useSocialAction() {
     setAddPost,
     followedUserId,
     setFollowedUserId,
+    popover,
+    setPopover,
   } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
@@ -55,8 +57,6 @@ function useSocialAction() {
 
   const { createNotification } = useNotification(); //notification hook
   const { addToast } = useToast();
-
- 
 
   const getAllPosts = useCallback(async () => {
     console.log("get all post..runnnnnningggxs");
@@ -285,6 +285,8 @@ function useSocialAction() {
     suggestionUsers,
     suggestionList,
     // setPage,
+    popover,
+    setPopover,
   };
 }
 

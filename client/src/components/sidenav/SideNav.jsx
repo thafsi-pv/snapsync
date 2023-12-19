@@ -1,18 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { FaThreads } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useParams } from "react-router-dom";
 import logo from "../../assets/img/snapsync_logo.png";
 import SnapsyncIcon from "../../assets/svg/SnapsyncIcon";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 import MenuList, { TopSmMenuList } from "./components/MenuList";
 import { MobileNotification } from "./components/MobileNotification";
 import { MobileSearch } from "./components/MobileSearch";
-import { Notification } from "./components/Notification";
-import Search from "./components/Search";
 import More from "./components/More";
-import { useParams } from "react-router-dom";
+import { Notification } from "./components/Notification";
 import ProfileHeader from "./components/ProfileHeader";
-import { getIdFromUrl } from "../../utils/getIdFromUrl";
+import Search from "./components/Search";
 
 const lg = window.innerWidth >= 1024;
 function SideNav() {
@@ -35,7 +34,6 @@ function SideNav() {
   // const handleMoreClose = () => {
   //   setMore(false);
   // };
-
 
   return (
     <>

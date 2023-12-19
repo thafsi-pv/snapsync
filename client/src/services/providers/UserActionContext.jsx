@@ -25,9 +25,14 @@ function UserActionContextProvider({ children }) {
   const [notificationBar, setNotificationBar] = useState(false);
   const [share, setShare] = useState(false);
   const [more, setMore] = useState(false);
+  const [popover, setPopover] = useState(false);
   const [postDetails, setPostDetails] = useState();
   const [isEditPost, setIsEditPost] = useState();
   const [followedUserId, setFollowedUserId] = useState(null);
+  console.log(
+    "🚀 ~ file: UserActionContext.jsx:32 ~ UserActionContextProvider ~ popover:",
+    popover
+  );
 
   const userDataRef = useRef();
   useEffect(() => {
@@ -71,11 +76,14 @@ function UserActionContextProvider({ children }) {
         setShare,
         more,
         setMore,
+        popover,
+        setPopover,
         postDetails,
         setPostDetails,
         isEditPost,
         setIsEditPost,
-        followedUserId, setFollowedUserId
+        followedUserId,
+        setFollowedUserId,
       }}>
       {children}
     </UserActionContext.Provider>
