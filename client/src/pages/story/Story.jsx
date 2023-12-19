@@ -6,15 +6,15 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { STORY_API } from "../../services/api/const";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { IoClose } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Story = () => {
   const [activeStoryUser, setActiveStoryUser] = useState(null);
   const [stories, setStories] = useState([]);
   const [currentStory, setCurrentStory] = useState(0);
   const [progress, setProgress] = useState(0);
-
   const progressRef = useRef({ current: 0 });
+  const { id } = useParams();
 
   useEffect(() => {
     getAllStories();
@@ -24,7 +24,12 @@ const Story = () => {
     try {
       const response = await axiosInstance.get(STORY_API);
       setStories(response.data);
-      setActiveStoryUser(response.data[0]);
+      if (id) {
+        const story = response.data.filter((item) => item._id == id);
+        setActiveStoryUser(story[0]);
+      } else {
+        setActiveStoryUser(response.data[0]);
+      }
       startProgress();
     } catch (error) {
       console.error("Error fetching stories:", error);
