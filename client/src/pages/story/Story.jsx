@@ -39,6 +39,8 @@ const Story = () => {
       interval = setInterval(() => {
         console.log("interval runnnnn");
         if (activeStoryUser) {
+          setProgress(0); // Reset progress when changing the story
+          startProgress(); // Start progress for the new story
           setCurrentStory((prevStory) => {
             if (prevStory < activeStoryUser.stories.length - 1) {
               return prevStory + 1;
@@ -47,8 +49,7 @@ const Story = () => {
               const nextStoryUserIndex =
                 (stories.indexOf(activeStoryUser) + 1) % stories.length;
               setActiveStoryUser(stories[nextStoryUserIndex]);
-              setProgress(0); // Reset progress when changing the story
-              startProgress(); // Start progress for the new story
+
               return 0;
             }
           });
