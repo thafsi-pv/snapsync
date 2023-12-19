@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StoryLayout from "../../layout/StoryLayout";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { timeAgo } from "../../utils/timeAgo";
@@ -14,6 +14,8 @@ const Story = () => {
   const [currentStory, setCurrentStory] = useState(0);
   const [progress, setProgress] = useState(0);
 
+  const progressRef = useRef({ current: 0 });
+
   useEffect(() => {
     getAllStories();
   }, []);
@@ -23,54 +25,65 @@ const Story = () => {
       const response = await axiosInstance.get(STORY_API);
       setStories(response.data);
       setActiveStoryUser(response.data[0]);
+      startProgress();
     } catch (error) {
       console.error("Error fetching stories:", error);
     }
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("story set interval runnnnn");
-      if (activeStoryUser) {
-        if (currentStory < activeStoryUser.stories.length - 1) {
-          setCurrentStory(currentStory + 1);
-          setProgress(0); // Reset progress when changing the story
-        } else {
-          // End of stories, you can handle this as needed
-          setCurrentStory(0);
-          setProgress(0); // Reset progress when changing the story
+    let interval;
+    console.log("useeffect start runnnnn");
 
-          const nextStoryUserIndex =
-            (stories.indexOf(activeStoryUser) + 1) % stories.length;
-          setActiveStoryUser(stories[nextStoryUserIndex]);
+    const startInterval = () => {
+      interval = setInterval(() => {
+        console.log("interval runnnnn");
+        if (activeStoryUser) {
+          setCurrentStory((prevStory) => {
+            if (prevStory < activeStoryUser.stories.length - 1) {
+              return prevStory + 1;
+            } else {
+              // End of stories for the current user, switch to the next user
+              const nextStoryUserIndex =
+                (stories.indexOf(activeStoryUser) + 1) % stories.length;
+              setActiveStoryUser(stories[nextStoryUserIndex]);
+              setProgress(0); // Reset progress when changing the story
+              startProgress(); // Start progress for the new story
+              return 0;
+            }
+          });
         }
-      }
-    }, 5000);
+      }, 5000);
+    };
+
+    startInterval(); // Start the story change interval
+
     return () => {
       clearInterval(interval);
     };
-  }, [setProgress]);
+  }, [activeStoryUser]);
 
-  useEffect(() => {
+  const startProgress = () => {
+    progressRef.current.current = 0;
+
     const progressInterval = setInterval(() => {
-      console.log("progress set interval runnnnn");
-      if (progress < 100) {
-        setProgress(progress + 2.3);
+      console.log("progress interval runnnnn");
+      if (progressRef.current.current < 100) {
+        setProgress(progressRef.current.current);
+        progressRef.current.current += 2; // Adjust the increment based on the desired completion time
       } else {
-        setProgress(100); // Set progress to 100 when it reaches the desired value
-        clearInterval(progressInterval); // Stop the interval
+        setProgress(100);
+        clearInterval(progressInterval);
       }
     }, 100);
 
     return () => {
       clearInterval(progressInterval);
     };
-  }, [activeStoryUser, stories, progress, currentStory]);
-
+  };
   return (
-    // <StoryLayout>
     <div className="w-full flex justify-center items-center">
-      <div className="text-white hidden md:block lg:block ">
+      <div className="text-white hidden md:block lg:block">
         <GrFormPrevious className="p-0.5 bg-white h-6 w-6 rounded-full hover:bg-gray-400 cursor-pointer" />
       </div>
       <div className="relative w-full lg:w-[33%] h-screen transition-transform">
@@ -132,7 +145,6 @@ const Story = () => {
         <GrFormNext className="p-0.5 bg-white h-6 w-6 rounded-full hover:bg-gray-400 cursor-pointer" />
       </div>
     </div>
-    // </StoryLayout>
   );
 };
 
