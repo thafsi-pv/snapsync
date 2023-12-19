@@ -80,7 +80,7 @@ function Story() {
                 // loading={loadStory}
                 // id={id}
               />
-              <p className="text-xs text-center w-18 truncate">
+              <p className="text-xs text-center w-16 truncate">
                 {userData?.userName}
               </p>
               <div className="absolute bottom-0 right-0 w-4 h-4 bg-blue-400 rounded-full flex justify-center items-center text-white border">
