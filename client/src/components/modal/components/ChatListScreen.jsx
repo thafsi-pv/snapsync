@@ -38,7 +38,7 @@ function ChatListScreen({
   };
   return (
     <div className="relative  w-full flex flex-col justify-between h-full">
-      <div className="flex gap-3 w-full flex-0 border-b p-1 absolute top-0 bg-white z-10">
+      <div className="flex gap-3 w-full flex-0 border-b p-2 absolute top-0 bg-white z-10">
         <div className="flex items-center gap-3">
           <MdOutlineKeyboardBackspace
             className="h-5 w-5 lg:hidden cursor-pointer"

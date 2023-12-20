@@ -3,7 +3,7 @@ import { timeAgo } from "../../../utils/timeAgo";
 
 function RecentChatList({ recentChatList, handleRecentChatClick, userData }) {
   return (
-    <div className="flex flex-col gap-3 w-full h-full overflow-y-scroll ">
+    <div className="flex flex-col gap-3 w-full h-fit">
       {recentChatList?.map((recent) => (
         <div
           onClick={() => handleRecentChatClick(recent)}

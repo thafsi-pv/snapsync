@@ -56,7 +56,6 @@ function Messages() {
     setMessage,
     getRecentChats,
   } = useChat();
-    console.log("🚀 ~ file: Messages.jsx:59 ~ Messages ~ recentChatList:", recentChatList)
 
   //in messages screen hide top navbar and bottom navbar
   useEffect(() => {
@@ -107,8 +106,8 @@ function Messages() {
           !chatUser ? "sm:w-full h-full" : "lg:block hidden"
         }`}>
         {/* <div className="flex flex-row gap-6 w-full items-start "> */}
-        <div className="relative flex flex-col gap-8  lg:pt-6 lg:pb-16 w-full">
-          <div className="relative flex flex-row justify-between lg:gap-12 items-center border-b py-3 mx-4 ">
+        <div className="relative flex flex-col gap-8  lg:pt-6 lg:pb-16 w-full overflow-scroll h-full">
+          <div className="relative flex flex-row justify-between lg:gap-12 items-center border-b py-3 px-6 ">
             <div>
               <Link to="/">
                 <MdOutlineKeyboardBackspace className="h-5 w-5 lg:hidden cursor-pointer" />
@@ -124,16 +123,18 @@ function Messages() {
               />
             </div>
           </div>
-          <RecentChatList
-            recentChatList={recentChatList}
-            handleRecentChatClick={handleRecentChatClick}
-            userData={userData}
-          />
+          <div className="flex-1 overflow-y-scroll h-full">
+            <RecentChatList
+              recentChatList={recentChatList}
+              handleRecentChatClick={handleRecentChatClick}
+              userData={userData}
+            />
+          </div>
         </div>
         {/* </div> */}
       </div>
       <div
-        className={`mx-auto w-full p-2 h-full  ${
+        className={`mx-auto w-full  h-full  ${
           !chatUser ? "hidden lg:block" : "block"
         }`}>
         {chatUser != null ? (

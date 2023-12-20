@@ -17,7 +17,7 @@ function More({ more, setMore }) {
                 src="https://file.rendit.io/n/LxVGRgkUcHki0oQQ4qEv.svg"
                 className="w-4 shrink-0"
               />
-              <div className="text-lg font-['Microsoft_Sans_Serif'] tracking-[0.54] ">
+              <div className="text-lg ">
                 Settings
               </div>
             </div>
@@ -26,7 +26,7 @@ function More({ more, setMore }) {
                 src="https://file.rendit.io/n/pIGsoPoYe9y0aVxXtVDt.svg"
                 className="mt-px w-4 shrink-0"
               />
-              <div className="text-lg font-['Microsoft_Sans_Serif'] tracking-[0.54]">
+              <div className="text-lg">
                 Saved
               </div>
             </div>
@@ -38,7 +38,7 @@ function More({ more, setMore }) {
             src="https://file.rendit.io/n/SWv2jHiBqrkHLDdqe64p.svg"
             className="w-4 shrink-0"
           />
-          <div className="text-lg font-['Microsoft_Sans_Serif'] tracking-[0.54] self-start">
+          <div className="text-lg self-start">
             Dark Mode
           </div>
         </div>
@@ -51,7 +51,7 @@ function More({ more, setMore }) {
               src="https://file.rendit.io/n/dXnHZC1XLgB5QGihZwkb.svg"
               className="w-6 shrink-0"
             />
-            <div className="text-lg font-['Microsoft_Sans_Serif'] tracking-[0.54] mt-px">
+            <div className="text-lg mt-px">
               Log out
             </div>
           </div>
