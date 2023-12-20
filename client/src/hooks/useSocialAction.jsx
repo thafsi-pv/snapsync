@@ -50,6 +50,8 @@ function useSocialAction() {
     setFollowedUserId,
     popover,
     setPopover,
+    addStory,
+    setAddStory,
   } = useContext(UserActionContext);
   // const [page, setPage] = useState(1);
   const page = useRef(1);
@@ -287,6 +289,8 @@ function useSocialAction() {
     // setPage,
     popover,
     setPopover,
+    setAddPost,
+    setAddStory,
   };
 }
 

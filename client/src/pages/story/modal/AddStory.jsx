@@ -81,7 +81,7 @@ function AddStory() {
         <div
           className="fixed inset-0 bg-black opacity-50 "
           onClick={() => setAddStory(false)}></div>
-        <div className="flex flex-col items-center justify-center h-[90%] w-[30%] ">
+        <div className="flex flex-col items-center justify-center h-[90%] w-[90%] lg:w-[30%] md:w-[30%]  ">
           <div
             className="absolute top-4 right-4 cursor-pointer"
             onClick={() => setAddStory(false)}>

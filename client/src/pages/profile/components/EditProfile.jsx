@@ -33,7 +33,7 @@ function EditProfile() {
 
   return (
     <div className="flex flex-1 h-screen w-full  justify-start items-center">
-      <div className="w-1/2">
+      <div className="lg:w-1/2 md:w-1/2 w-full m-3">
         <p className="font-semibold text-2xl">Edit Profile</p>
         <div className="gap-3 flex flex-col ml-10 mt-10">
           <div className="flex gap-10">
