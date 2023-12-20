@@ -104,7 +104,7 @@ const accountVerificatinMailTemplate = `<!doctype html>
                               <tr>
                                 <td style="padding-right: 0px;padding-left: 0px;" align="center">
 
-                                  <img alt="Image" src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1697605433/m058iv2lvotqdnw3sn2c.png" width="370" height="93" layout="intrinsic" style="width: 36%;max-width: 36%;"/>
+                                  <img alt="Image" src="https://res.cloudinary.com/dm4djc1b1/image/upload/v1703061596/snapsync_logo_zebyqj.png" width="370" height="93" layout="intrinsic" style="width: 36%;max-width: 36%;"/>
 
                                  
                                 </td>
@@ -263,41 +263,5 @@ const accountVerificatinMailTemplate = `<!doctype html>
 </body>
 
 </html>`;
-
-// const accountVerificatinMailTemplate = `<!DOCTYPE html>
-// <html lang="en">
-// <head>
-//     <meta charset="UTF-8">
-//     <title>Snapsync Account Verification</title>
-// </head>
-// <body>
-//     <table width="100%" border="0" cellspacing="0" cellpadding="0" margin="auto">
-//     <tr>
-//     <td style="text-align: center; background-color: #0b4f78; padding: 20px;">
-//         <img src="[LOGO]" alt="Your Website Logo" width="200" style="display: block;">
-//         <h1>Account Verification</h1>
-//     </td>
-// </tr>
-//         <tr>
-//             <td style="padding: 20px;">
-//                 <p>Hello,</p>
-//                 <p>Thank you for registering an account with our website. To activate your account, please click the following link:</p>
-//                 <p><a href="[ACTIVATION_URL]" style="text-decoration: none; background-color: #007BFF; color: #ffffff; padding: 10px 20px; border-radius: 5px; display: inline-block;">Activate Account</a></p>
-//                 <p>If the button above doesn't work, you can copy and paste the following URL into your web browser:</p>
-//                 <p>[ACTIVATION_URL]</p>
-//                 <p>This activation link will expire after a certain period of time.</p>
-//                 <p>If you didn't create an account on our website, please ignore this email.</p>
-//                 <p>Best regards,<br>SnapSync</p>
-//             </td>
-//         </tr>
-//         <tr>
-//             <td style="background-color: #0b4f78; text-align: center; padding: 20px;">
-//                 <p>&copy; 2023 SnspSync</p>
-//             </td>
-//         </tr>
-//     </table>
-// </body>
-// </html>
-// `;
 
 module.exports = { accountVerificatinMailTemplate };
