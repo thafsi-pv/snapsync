@@ -13,14 +13,14 @@ function UserDetails({ profile, postCount }) {
   };
 
   return (
-    <div className="flex flex-col justify-between items-start lg:ml-20 w-full ">
+    <div className="flex flex-col justify-between items-start lg:ml-20 w-full">
       <div className="flex">
         <div className=" m-6 ">
           {profile && (
             <UserImage
               id={profile?._id}
               imgUrl={profile?.imageUrl}
-              extra="lg:w-44 lg:h-44 "
+              extra="lg:w-44 lg:h-44 h-32 w-32 "
               imgStyle="!p-3 lg:!p-4"
               username={profile?.userName}
             />
