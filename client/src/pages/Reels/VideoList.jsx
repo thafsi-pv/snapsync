@@ -59,7 +59,7 @@ const VideoPlayer = React.forwardRef(
   ({ src, caption, alldata, index }, ref) => {
     return (
       // <StoryLayout>
-      <div className="relative flex justify-center overflow-hidden w-full ">
+      <div className="relative flex justify-center overflow-hidden w-full bg-black">
         <div className="w-full flex justify-center my-16 lg:w-[400px] rounded-md">
           <div className="relative w-full h-screen flex justify-center">
             <video
@@ -73,7 +73,7 @@ const VideoPlayer = React.forwardRef(
               playsInline
               autoPlay
               loop={true}
-              className="object-cover h-full w-full rounded-md">
+              className="object-fit h-full w-full rounded-md">
               <source src={src} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -92,7 +92,7 @@ const VideoPlayer = React.forwardRef(
               </div>
             </div>
             <div className="absolute bottom-0 left-0 right-0 w-full bg-gradient-to-t from-black via-black to-transparent p-4">
-              <div className="flex items-center space-x-4 py-14">
+              <div className="flex items-center space-x-4 py-4">
                 <img
                   alt="thelonercodergirl's profile picture"
                   className="h-10 w-10 rounded-full"
