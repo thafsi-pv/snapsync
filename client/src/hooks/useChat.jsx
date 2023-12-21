@@ -3,6 +3,7 @@ import {
   useContext,
   useEffect,
   useLayoutEffect,
+  useRef,
   useState,
 } from "react";
 import io from "socket.io-client";
@@ -27,8 +28,9 @@ function useChat() {
   const { userData, userDataRef, setShare } = useContext(UserActionContext);
   const { socket, messages, setMessages, setNewMessageNotif } =
     useContext(SocketContext);
-  console.log("🚀 ~ file: useChat.jsx:29 ~ useChat ~ messages:", messages);
   const { getStorage } = useLocalStorage();
+  // Ref for scrolling to the bottom of the chat list
+  const chatListRef = useRef(null);
 
   const [recentChatList, setRecentChatList] = useState();
   const { addToast } = useToast();
@@ -218,10 +220,19 @@ function useChat() {
     });
   };
 
-  // const connectSocket = (token) => {
-  //   const newSocket = io(`${socketBaseUrl}?token=${token}`);
-  //   setSocket(newSocket);
-  // };
+  //scroll to bottom of message list
+  useLayoutEffect(() => {
+    if (chatListRef && chatListRef.current) {
+      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
+    }
+  }, [messages]);
+
+  const handleSendMessage = () => {
+    if (chatUser && message != "") {
+      sendMessage(chatUser._id, message, "TextMessage"); //send message using custom hook useChat
+      setMessage("");
+    }
+  };
 
   return {
     connectSocket,
@@ -248,6 +259,8 @@ function useChat() {
     handleStartNewChat,
     searchUser,
     usersList,
+    handleSendMessage,
+    chatListRef,
   };
 }
 

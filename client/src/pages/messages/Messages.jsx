@@ -1,26 +1,16 @@
-import React, {
-  Suspense,
-  lazy,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import React, { Suspense, lazy, useContext, useEffect } from "react";
 import { IoCreateOutline } from "react-icons/io5";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import NewChatModal from "../../components/modal/NewChatModal";
-const NewChatModal = lazy(() => import("../../components/modal/NewChatModal"));
-
-// import ChatListScreen from "../../components/modal/components/ChatListScreen";
-const ChatListScreen = lazy(() =>
-  import("../../components/modal/components/ChatListScreen")
-);
+import { Loading } from "../../assets/svg/Loading";
 import NoMessage from "../../components/modal/components/NoMessage";
 import RecentChatList from "../../components/modal/components/RecentChatList";
 import useChat from "../../hooks/useChat";
 import { UserActionContext } from "../../services/providers/UserActionContext";
-import { Loading } from "../../assets/svg/Loading";
+const NewChatModal = lazy(() => import("../../components/modal/NewChatModal"));
+const ChatListScreen = lazy(() =>
+  import("../../components/modal/components/ChatListScreen")
+);
 
 /**
  * Messages component
@@ -33,9 +23,6 @@ import { Loading } from "../../assets/svg/Loading";
  */
 
 function Messages() {
-  // Ref for scrolling to the bottom of the chat list
-  const chatListRef = useRef(null);
-
   const { userData, setNavbar } = useContext(UserActionContext);
 
   const {
@@ -55,6 +42,8 @@ function Messages() {
     message,
     setMessage,
     getRecentChats,
+    handleSendMessage,
+    chatListRef,
   } = useChat();
 
   //in messages screen hide top navbar and bottom navbar
@@ -85,27 +74,12 @@ function Messages() {
     };
   }, []);
 
-  //scroll to bottom of message list
-  useLayoutEffect(() => {
-    if (chatListRef && chatListRef.current) {
-      chatListRef.current.scrollTop = chatListRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  const handleSendMessage = () => {
-    if (chatUser && message != "") {
-      sendMessage(chatUser._id, message, "TextMessage"); //send message using custom hook useChat
-      setMessage("");
-    }
-  };
-
   return (
     <div className=" flex flex-col lg:flex-row w-full h-screen lg:items-center  max-h-screen">
       <div
         className={`lg:self-end flex flex-row justify-between items-start h-screen  border-r lg:w-2/5 ${
           !chatUser ? "sm:w-full h-full" : "lg:block hidden"
         }`}>
-        {/* <div className="flex flex-row gap-6 w-full items-start "> */}
         <div className="relative flex flex-col gap-8  lg:pt-6 lg:pb-16 w-full overflow-scroll h-full">
           <div className="relative flex flex-row justify-between lg:gap-12 items-center border-b py-3 px-6 ">
             <div>
@@ -131,7 +105,6 @@ function Messages() {
             />
           </div>
         </div>
-        {/* </div> */}
       </div>
       <div
         className={`mx-auto w-full  h-full  ${
