@@ -1,6 +1,9 @@
 
 # SnapSync - Instagram Clone App
+https://github.com/thafsi-pv/MERN/assets/22377348/9ad81831-ba7e-4310-9794-8ae96cdbd126
 
+Demo:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XZyjKs38n9Q?si=1NJa81SnrL5dstPg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 ## Overview
 
 SnapSync is a social media application that mirrors the key features of the popular Instagram platform. Users can share images and videos, view stories, engage with posts, chat with other users, and explore a personalized feed.
