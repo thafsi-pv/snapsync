@@ -7,7 +7,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { axiosInstance } from "../services/api/axiosInterceptor";
+import {
+  abortController,
+  axiosInstance,
+} from "../services/api/axiosInterceptor";
 import {
   COMMENT_API,
   FOLLOW_USER,
@@ -62,8 +65,10 @@ function useSocialAction() {
 
   const getAllPosts = useCallback(async () => {
     console.log("get all post..runnnnnningggxs");
+    const { signal } = abortController;
     const post = await axiosInstance.get(
-      `${POST_API}?page=${page.current}&limit=10`
+      `${POST_API}?page=${page.current}&limit=10`,
+      { signal }
     );
     if (post.status === 200) {
       setPosts((prev) => [...prev, ...post.data]);
@@ -74,9 +79,10 @@ function useSocialAction() {
 
   const likePost = async (index, post_id, postss) => {
     try {
+      const { signal } = abortController;
       const data = [...postss];
       const postData = { liked: !data[index].liked, post_id };
-      const response = await axiosInstance.post(LIKE_API, postData);
+      const response = await axiosInstance.post(LIKE_API, postData, { signal });
       if (response.status === 200) {
         const updatedData = [...data];
         updatedData[index] = {

@@ -1,54 +1,20 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import InputField from "../../uiPrimitives/fields/InputField";
+import React from "react";
 import { IoIosClose } from "react-icons/io";
-import UserImage from "../../user/UserImage";
-import useDebounce from "../../../hooks/useDebounce";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
-import { SEARCH_USER_API } from "../../../services/api/const";
 import { Link } from "react-router-dom";
-import { getIdFromUrl } from "../../../utils/getIdFromUrl";
+import useSearch from "../../../hooks/useSearch";
+import InputField from "../../uiPrimitives/fields/InputField";
+import UserImage from "../../user/UserImage";
 
 /**
  * Search Component
  * Responsible for show side search bar with framer motion animation and list search list
- *
+ * Using custom hook useSearch
  */
 
-function Search({ navbar, setNavbar, userData, searchBar, setSearchBar }) {
-  const [searchTerm, setSearchTerm] = useState();
-  const [searchList, setSearchList] = useState([]);
-  console.log("🚀 ~ file: Search.jsx:19 ~ Search ~ searchList:", searchList);
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-  const handleSearchBar = () => {
-    // setNavbar("hidden");
-    setSearchBar(false);
-    const currentURL = window.location.href;
-      const id = getIdFromUrl(currentURL);
-      if (id != "inbox") {
-        setNavbar("block");
-      }
-  };
-
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    console.log("🚀 ~ file: Search.jsx:22 ~ handleSearch ~ value:", value);
-  };
-
-  useEffect(() => {
-    if (debouncedSearchTerm != "") {
-      searchUser(debouncedSearchTerm);
-    }
-  }, [debouncedSearchTerm]);
-
-  const searchUser = async (debouncedSearchTerm) => {
-    const result = await axiosInstance.get(
-      `${SEARCH_USER_API}?param=${debouncedSearchTerm}`
-    );
-    setSearchList(result.data);
-  };
+function Search({ navbar, searchBar }) {
+  const { handleSearchBar, handleSearch, searchUser, searchTerm, searchList } =
+    useSearch();
 
   return (
     <motion.div
