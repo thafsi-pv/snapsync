@@ -2,7 +2,7 @@
 # SnapSync - Instagram Clone App
 https://github.com/thafsi-pv/MERN/assets/22377348/9ad81831-ba7e-4310-9794-8ae96cdbd126
 
-Demo:
+Demo Video:
 [![Video](https://img.youtube.com/vi/XZyjKs38n9Q/0.jpg)](https://youtu.be/XZyjKs38n9Q?si=pGh4V4mhk2cJhciY)
 
 ## Overview
@@ -13,17 +13,22 @@ SnapSync is a social media application that mirrors the key features of the popu
 
 - **MongoDB**: Database to store user data, posts, and other information.
 - **Express.js**: Backend framework for building a RESTful API.
-- **React.js**: Frontend library for building a dynamic and interactive user interface.
-- **Node.js**: JavaScript runtime for executing server-side code.
 - **Axios**: HTTP client for making API requests.
-- **Emoji Picker React**: Library for adding emoji picker functionality.
 - **Formik**: Form library for handling forms with React.
 - **Framer Motion**: Library for creating animations in React.
-- **React Hot Toast**: Toast notifications for React applications.
 - **React Icons**: Library for popular icon sets in React applications.
 - **React Intersection Observer**: Utilizes the Intersection Observer API for infinite scrolling.
 - **React Router DOM**: Library for navigation in React applications.
 - **Socket.IO Client**: Real-time bidirectional event-based communication.
+- **bcrypt**: Library for hashing passwords.
+- **cookie-parser**: Middleware to parse cookies.
+- **cors**: Middleware for enabling Cross-Origin Resource Sharing.
+- **dotenv**: Zero-dependency module to load environment variables.
+- **jsonwebtoken**: JSON Web Token implementation.
+- **mongoose**: MongoDB object modeling for Node.js.
+- **nodemailer**: Send emails from Node.js.
+- **socket.io**: Real-time bidirectional event-based communication for the web.
+- **uuid**: Generate unique identifiers.
 
 ## Features
 
