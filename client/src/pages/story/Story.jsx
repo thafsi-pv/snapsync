@@ -38,8 +38,6 @@ const Story = () => {
 
   useEffect(() => {
     let interval;
-    console.log("useeffect start runnnnn");
-
     const startInterval = () => {
       interval = setInterval(() => {
         console.log("interval runnnnn");
