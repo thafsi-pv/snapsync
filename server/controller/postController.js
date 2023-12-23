@@ -21,13 +21,17 @@ const savedPostModel = require("../model/savedPostModel");
 
 const createPost = async (req, res) => {
   try {
-    console.log("🚀 ~ file: postController.js:26 ~ createPost ~ req.body:", req.body)
+    console.log(
+      "🚀 ~ file: postController.js:26 ~ createPost ~ req.body:",
+      req.body
+    );
     const userId = req.userId;
-    const { _id, media_url, caption, location, media_type } = req.body;
+    const { _id, files, caption, location, media_type } = req.body;
 
     if (!userId) return res.status(404).json({ message: "User not found!" });
 
-    const post = { user_id: userId, media_url, caption, location, media_type };
+    // const post = { user_id: userId, media_url, caption, location, media_type };
+    const post = { user_id: userId, files, caption, location, media_type };
 
     // Check if _id exists in the request body
     if (_id) {

@@ -111,20 +111,25 @@ function AddPost() {
                       className="hidden"
                       name="file"
                       accept="image/*,video/*"
+                      multiple={true}
                       onChange={handleMedia}
                       // Add your file input attributes and event handlers here
                     />
                   </div>
                 </div>
               ) : (
-                <div className="lg:w-full lg:h-full relative flex justify-center bg-black">
-                  {!isEditPost && (
-                    <AiOutlineClose
-                      className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
-                      onClick={handleImageRemove}
-                    />
-                  )}
-                  {media}
+                <div className="lg:w-full lg:h-full relative flex justify-center bg-black overflow-scroll">
+                  {media.map((med) => (
+                    <div className="lg:w-full lg:h-full relative flex justify-center">
+                      {!isEditPost && (
+                        <AiOutlineClose
+                          className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
+                          onClick={handleImageRemove}
+                        />
+                      )}
+                      {med}
+                    </div>
+                  ))}
                 </div>
               )}
               {media && (

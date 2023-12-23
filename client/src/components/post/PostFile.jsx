@@ -18,13 +18,19 @@ function PostFile({
             <img
               src={media_url}
               id="Element3"
-              className={`relative object-fit max-w-3xl lg:rounded-l-md h-full w-fit max-h-fit ${extra} m-0 md:mx-5 lg:mx-5`}
+              className={`relative object-fit max-w-3xl lg:rounded-l-md h-full w-fit max-h-fit ${extra} m-0 md:mr-5 lg:mr-5`}
             />
             <img
               src={media_url}
               id="Element3"
-              className={`relative object-fit max-w-3xl lg:rounded-l-md h-full w-fit max-h-fit ${extra}`}
+              className={`relative object-fit max-w-3xl lg:rounded-l-md h-full w-fit max-h-fit ${extra} m-0 md:mr-5 lg:mr-5`}
             />
+            <img
+              src={media_url}
+              id="Element3"
+              className={`relative object-fit max-w-3xl lg:rounded-l-md h-full w-fit max-h-fit ${extra} m-0 md:mr-5 lg:mr-5`}
+            />
+           
           </div>
         </div>
       ) : (

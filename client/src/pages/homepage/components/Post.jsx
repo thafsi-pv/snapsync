@@ -94,7 +94,7 @@ function Post() {
         if (post._id != -1) {
           return (
             <div
-              className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[500px] w-full"
+              className="mb-px lg:ml-4 lg:mr-5 lg:max-w-[480px] w-full"
               key={post._id}>
               <PostHead post={post} setPostDetails={setPostDetails} />
               <div className="flex flex-col gap-4">
@@ -126,7 +126,7 @@ function Post() {
                         <FaAngleRight className="w-5 h-5 text-black bg-white rounded-full bg-opacity-90 shadow-md p-0.5 cursor-pointer" />
                       </div>
                       <div
-                        className="absolute top-1/2 left-6 transform -translate-y-1/2 cursor-pointers"
+                        className="absolute top-1/2 left-2 transform -translate-y-1/2 cursor-pointers"
                         onClick={() => handleScroll(index, -500)}>
                         <FaAngleLeft className="w-5 h-5 text-black bg-white rounded-full bg-opacity-90 shadow-md p-0.5 cursor-pointer" />
                       </div>

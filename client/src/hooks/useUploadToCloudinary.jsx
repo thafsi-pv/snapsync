@@ -13,39 +13,83 @@ const useUploadToCloudinary = () => {
   // const [uploadProgress, setUploadProgress] = useState();
   // const [fileSize, setFileSize] = useState(0);
 
-  const uploadFileToCloudinary = async (file) => {
-    setFileSize(file.size / (1024 * 1024));
-    const formData = new FormData();
-    formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
-    formData.append("file", file);
+  const uploadFilesToCloudinary = async (files) => {
+    const uploadedFiles = [];
 
-    var cloudinaryUrl = "";
-    if (file.type.startsWith("image/")) {
-      cloudinaryUrl = CLOUDINARY_IMAGE_UPLOAD_URL;
-    } else if (file.type.startsWith("video/")) {
-      cloudinaryUrl = CLOUDINARY_VIDEO_UPLOAD_URL;
+    for (const file of files) {
+      setFileSize(file.size / (1024 * 1024));
+
+      const formData = new FormData();
+      formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+      formData.append("file", file);
+
+      let cloudinaryUrl = "";
+      if (file.type.startsWith("image/")) {
+        cloudinaryUrl = CLOUDINARY_IMAGE_UPLOAD_URL;
+      } else if (file.type.startsWith("video/")) {
+        cloudinaryUrl = CLOUDINARY_VIDEO_UPLOAD_URL;
+      }
+
+      try {
+        const response = await axios.post(cloudinaryUrl, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: false,
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+          },
+        });
+
+        const responseData = response.data;
+        uploadedFiles.push({
+          fileUrl: responseData.secure_url,
+          fileType: file.type,
+        });
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
     }
 
-    try {
-      const response = await axios.post(cloudinaryUrl, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: false,
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadProgress(percentCompleted);
-        },
-      });
-
-      const responseData = response.data;
-      return responseData.secure_url;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+    return uploadedFiles;
   };
+
+  // const uploadFileToCloudinary = async (file) => {
+  //   setFileSize(file.size / (1024 * 1024));
+  //   const formData = new FormData();
+  //   formData.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+  //   formData.append("file", file);
+
+  //   var cloudinaryUrl = "";
+  //   if (file.type.startsWith("image/")) {
+  //     cloudinaryUrl = CLOUDINARY_IMAGE_UPLOAD_URL;
+  //   } else if (file.type.startsWith("video/")) {
+  //     cloudinaryUrl = CLOUDINARY_VIDEO_UPLOAD_URL;
+  //   }
+
+  //   try {
+  //     const response = await axios.post(cloudinaryUrl, formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //       withCredentials: false,
+  //       onUploadProgress: (progressEvent) => {
+  //         const percentCompleted = Math.round(
+  //           (progressEvent.loaded * 100) / progressEvent.total
+  //         );
+  //         setUploadProgress(percentCompleted);
+  //       },
+  //     });
+
+  //     const responseData = response.data;
+  //     return responseData.secure_url;
+  //   } catch (error) {
+  //     console.error("Error uploading file:", error);
+  //   }
+  // };
 
   useEffect(() => {
     return () => {
@@ -54,7 +98,7 @@ const useUploadToCloudinary = () => {
     };
   }, []);
 
-  return { uploadFileToCloudinary, uploadedUrl, uploadProgress, fileSize };
+  return { uploadFilesToCloudinary, uploadedUrl, uploadProgress, fileSize };
 };
 
 export default useUploadToCloudinary;

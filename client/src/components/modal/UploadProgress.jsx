@@ -14,8 +14,6 @@ function UploadProgress() {
     uploadStatus,
     setUploadStatus,
   } = useContext(FileUploadContext);
-    console.log("🚀 ~ file: UploadProgress.jsx:17 ~ UploadProgress ~ uploadProgress:", uploadProgress)
-
 
   const handleClose = () => {
     setUploadProgress(0);

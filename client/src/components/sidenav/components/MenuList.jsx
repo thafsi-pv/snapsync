@@ -31,7 +31,6 @@ function MenuList({ showMenuName }) {
   } = useContext(UserActionContext);
   const { newMessageNotif } = useContext(SocketContext);
   const { notification } = useNotification();
-  console.log("🚀 ~ file: MenuList.jsx:36 ~ MenuList ~ popover:", popover);
 
   const handleSearch = () => {
     if (searchBar == false) {
@@ -203,7 +202,7 @@ export const TopSmMenuList = () => {
         className="flex items-center hover:bg-gray-100 rounded-lg w-full cursor-pointer"
         onClick={() => setAddPost(true)}>
         <AddPostIcon className="w-12" /> */}
-        {/* {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>} */}
+      {/* {showMenuName && <p className={`font-normal ${navbar}`}>Create</p>} */}
       {/* </div> */}
       <div className="relative flex items-center w-full ">
         <div

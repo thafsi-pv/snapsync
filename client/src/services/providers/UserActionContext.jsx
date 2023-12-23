@@ -11,7 +11,6 @@ import { GET_USER_DATA } from "../api/const";
 export const UserActionContext = createContext(null);
 
 function UserActionContextProvider({ children }) {
-  console.log("user action context---rendered");
   // const { getStorage } = useLocalStorage();
   const [posts, setPosts] = useState([]); //post List
   const [userData, setUserData] = useState();
@@ -29,10 +28,6 @@ function UserActionContextProvider({ children }) {
   const [postDetails, setPostDetails] = useState();
   const [isEditPost, setIsEditPost] = useState();
   const [followedUserId, setFollowedUserId] = useState(null);
-  console.log(
-    "🚀 ~ file: UserActionContext.jsx:32 ~ UserActionContextProvider ~ popover:",
-    popover
-  );
 
   const userDataRef = useRef();
   useEffect(() => {
@@ -41,7 +36,6 @@ function UserActionContextProvider({ children }) {
 
   const getUserData = useCallback(async () => {
     const token = localStorage.getItem("ssaccesstoken");
-    console.log("🚀 ~ #############token:", token);
     const response = await axiosInstance.get(GET_USER_DATA);
     setUserData(response?.data);
     userDataRef.current = response.data;
