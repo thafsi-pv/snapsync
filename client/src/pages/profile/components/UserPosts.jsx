@@ -4,6 +4,7 @@ import { Loading } from "../../../assets/svg/Loading";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
 import Comments from "../../../components/modal/Comments";
+import MultiPostIcon from "../../../assets/svg/MultiPostIcon";
 
 function UserPosts({ posts, type, setType, userId }) {
   const { userData, comments, setComments, postId, setPostId } =
@@ -67,37 +68,46 @@ function UserPosts({ posts, type, setType, userId }) {
       <div className="flex justify-center items-center mt-4">
         {posts?.length > 0 ? (
           <div className=" columns-3 gap-0.5 grid grid-cols-3">
-            {posts?.map((post) =>
-              // post.media_type.startsWith("image/") ? (
-              //   <img
-              //     className="h-72 w-72 py-[1px] aspect-video"
-              //     src={post.media_url}
-              //     alt=""
-              //     onClick={() => {
-              //       handleViewComments(post._id);
-              //     }}
-              //   />
-              // ) : (
+            {posts?.map(
+              (post) => (
+                // post.media_type.startsWith("image/") ? (
+                //   <img
+                //     className="h-72 w-72 py-[1px] aspect-video"
+                //     src={post.media_url}
+                //     alt=""
+                //     onClick={() => {
+                //       handleViewComments(post._id);
+                //     }}
+                //   />
+                // ) : (
                 <div
                   className="relative"
                   onClick={() => {
                     handleViewComments(post._id);
                   }}>
-                 { post.media_type.startsWith("video/")&& <div className="absolute right-3 top-2 ">
-                    <ReelIcon color="#ffffff" />
-                  </div>}
+                  {post.files[0].fileType.startsWith("video/") && (
+                    <div className="absolute right-3 top-2 ">
+                      <ReelIcon color="#ffffff" />
+                    </div>
+                  )}
+                  {post.files[0].fileType.startsWith("image/") && (
+                    <div className="absolute right-3 top-2 ">
+                      <MultiPostIcon color="#ffffff" />
+                    </div>
+                  )}
                   {/* <video
                     className="h-72 w-72 py-[1px] object-cover"
                     src={post.media_url}></video> */}
                   <img
                     className="h-36 lg:h-72 lg:w-72 py-[1px] aspect-video object-cover"
-                    src={post.media_url.replace(/\.mp4$/, ".jpg")}
+                    src={post.files[0].fileUrl.replace(/\.mp4$/, ".jpg")}
                     alt=""
                     onClick={() => {
                       handleViewComments(post._id);
                     }}
                   />
                 </div>
+              )
               // )
             )}
           </div>

@@ -23,6 +23,7 @@ function Profile() {
         ? GET_SAVED_POST_API
         : `${PROFILE_API}?type=${type}&username=${username}`;
     const response = await axiosInstance.get(apiUrl);
+    console.log("🚀 ~ file: Profile.jsx:26 ~ getProfileData ~ response:", response)
     if (type == 0) {
       setProfile(response.data.profile[0]);
       postCount = response.data.post.length;

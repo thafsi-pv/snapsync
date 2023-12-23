@@ -7,16 +7,23 @@ import {
 import { FileUploadContext } from "../services/providers/FileUploadContext";
 
 const useUploadToCloudinary = () => {
-  const { uploadProgress, setUploadProgress, fileSize, setFileSize } =
-    useContext(FileUploadContext);
+  const {
+    uploadProgress,
+    setUploadProgress,
+    fileSize,
+    setFileSize,
+    setUploadingFiles,
+  } = useContext(FileUploadContext);
   const [uploadedUrl, setUploadedUrl] = useState();
+
   // const [uploadProgress, setUploadProgress] = useState();
   // const [fileSize, setFileSize] = useState(0);
 
   const uploadFilesToCloudinary = async (files) => {
     const uploadedFiles = [];
 
-    for (const file of files) {
+    for (const [index, file] of files.entries()) {
+      setUploadingFiles({ total: files.length, current: index + 1 });
       setFileSize(file.size / (1024 * 1024));
 
       const formData = new FormData();
@@ -98,7 +105,12 @@ const useUploadToCloudinary = () => {
     };
   }, []);
 
-  return { uploadFilesToCloudinary, uploadedUrl, uploadProgress, fileSize };
+  return {
+    uploadFilesToCloudinary,
+    uploadedUrl,
+    uploadProgress,
+    fileSize,
+  };
 };
 
 export default useUploadToCloudinary;

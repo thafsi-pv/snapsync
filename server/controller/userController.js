@@ -107,8 +107,7 @@ const getProfileData = async (req, res) => {
       },
       {
         $project: {
-          media_url: 1,
-          media_type: 1,
+          files: 1,
           caption: 1,
           location: 1,
           createdAt: 1,
@@ -116,7 +115,10 @@ const getProfileData = async (req, res) => {
       },
     ]);
     profile.posts = posts;
-    console.log("🚀 ~ file: userController.js:119 ~ getProfileData ~ profile:", profile)
+    console.log(
+      "🚀 ~ file: userController.js:119 ~ getProfileData ~ profile:",
+      profile
+    );
     res.status(200).json({ profile: profile, post: posts });
   } else {
     // Handle the case where no user with the specified username is found.

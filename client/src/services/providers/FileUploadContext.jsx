@@ -6,6 +6,10 @@ function FileUploadContextProvider({ children }) {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [fileSize, setFileSize] = useState(0);
   const [uploadStatus, setUploadStatus] = useState(false);
+  const [uploadingFiles, setUploadingFiles] = useState({
+    total: 0,
+    current: 0,
+  });
 
   return (
     <FileUploadContext.Provider
@@ -16,6 +20,8 @@ function FileUploadContextProvider({ children }) {
         setFileSize,
         uploadStatus,
         setUploadStatus,
+        uploadingFiles,
+        setUploadingFiles,
       }}>
       {children}
     </FileUploadContext.Provider>

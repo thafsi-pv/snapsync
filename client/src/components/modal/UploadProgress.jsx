@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import ReactDOM from "react-dom";
-import { FileUploadContext } from "../../services/providers/FileUploadContext";
-import TickAnimatedIcon from "../../assets/svg/TickAnimatedIcon";
-import successicon from "../../assets/gif/success1.gif";
 import { IoClose } from "react-icons/io5";
-import useSocialAction from "../../hooks/useSocialAction";
+import TickAnimatedIcon from "../../assets/svg/TickAnimatedIcon";
+import { FileUploadContext } from "../../services/providers/FileUploadContext";
 
 function UploadProgress() {
   const {
@@ -12,7 +10,7 @@ function UploadProgress() {
     setUploadProgress,
     fileSize,
     uploadStatus,
-    setUploadStatus,
+    uploadingFiles,
   } = useContext(FileUploadContext);
 
   const handleClose = () => {
@@ -37,7 +35,9 @@ function UploadProgress() {
       )}
       {!uploadStatus && uploadProgress > 0 && (
         <div>
-          <p className="text-xs font-semibold">Uploading Post..</p>
+          <p className="text-xs font-semibold">
+            Uploading Post.. {uploadingFiles.current}/{uploadingFiles.total}
+          </p>
           <div className="flex justify-center items-center gap-1">
             <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 ">
               <div
