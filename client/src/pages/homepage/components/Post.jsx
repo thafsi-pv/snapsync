@@ -20,6 +20,7 @@ import useSocialAction from "../../../hooks/useSocialAction";
 import { FileUploadContext } from "../../../services/providers/FileUploadContext";
 import { CiCircleChevRight } from "react-icons/ci";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import PostCarousel from "../../../components/post/PostCarousel";
 
 function Post() {
   const {
@@ -38,24 +39,24 @@ function Post() {
     setPostDetails,
   } = useSocialAction();
   console.log("🚀 ~ file: Post.jsx:40 ~ Post ~ posts:", posts);
-  const [item, setItem] = useState(0);
-  const [items, setItems] = useState(posts.map(() => 0));
-  console.log("🚀 ~ file: Post.jsx:43 ~ Post ~ items:", items);
+  // const [item, setItem] = useState(0);
+  // const [items, setItems] = useState(posts.map(() => 0));
+  // console.log("🚀 ~ file: Post.jsx:43 ~ Post ~ items:", items);
 
-  useEffect(() => {
-    setItems(posts.map(() => 0));
-  }, [posts]);
+  // useEffect(() => {
+  //   setItems(posts.map(() => 0));
+  // }, [posts]);
 
   const { uploadStatus } = useContext(FileUploadContext); //using for rerender after new post upload
   const [ref, inView] = useInView();
   // const postContainerRef = useRef();
   // Initialize postContainerRefs as an empty array
-  const postContainerRefs = useRef([]);
+  // const postContainerRefs = useRef([]);
 
   // Update postContainerRefs when posts are available
-  useEffect(() => {
-    postContainerRefs.current = posts.map(() => createRef());
-  }, [posts]);
+  // useEffect(() => {
+  //   postContainerRefs.current = posts.map(() => createRef());
+  // }, [posts]);
 
   //after post upload set post empty page=1 and get all posts with new post
   useEffect(() => {
@@ -84,26 +85,36 @@ function Post() {
   //     container.scrollBy({ left: scrollOffset, behavior: "smooth" });
   //   }
   // };
-  const handleScroll = (index, scrollOffset) => {
-    const container = postContainerRefs.current[index]?.current;
-    if (container) {
-      container.scrollBy({ left: scrollOffset, behavior: "smooth" });
-    }
-    // updateState(scrollOffset);
-    if (scrollOffset === 480 && items[index] < posts[index]?.files.length - 1) {
-      setItems((prevItems) => {
-        const newItems = [...prevItems];
-        newItems[index] += 1;
-        return newItems;
-      });
-    } else if (scrollOffset === -480 && items[index] > 0) {
-      setItems((prevItems) => {
-        const newItems = [...prevItems];
-        newItems[index] -= 1;
-        return newItems;
-      });
-    }
-  };
+  // const handleScroll = (index, scrollOffset) => {
+  //   console.log("🚀 ~ file: Post.jsx:89 ~ handleScroll ~ index:", index);
+  //   console.log(
+  //     "🚀 ~ file: Post.jsx:55 ~ Post ~ postContainerRefs:",
+  //     postContainerRefs
+  //   );
+
+  //   const container = postContainerRefs.current[index]?.current;
+  //   console.log(
+  //     "🚀 ~ file: Post.jsx:91 ~ handleScroll ~ container:",
+  //     container
+  //   );
+  //   if (container) {
+  //     container.scrollBy({ left: scrollOffset, behavior: "smooth" });
+  //   }
+  //   // updateState(scrollOffset);
+  //   if (scrollOffset === 480 && items[index] < posts[index]?.files.length - 1) {
+  //     setItems((prevItems) => {
+  //       const newItems = [...prevItems];
+  //       newItems[index] += 1;
+  //       return newItems;
+  //     });
+  //   } else if (scrollOffset === -480 && items[index] > 0) {
+  //     setItems((prevItems) => {
+  //       const newItems = [...prevItems];
+  //       newItems[index] -= 1;
+  //       return newItems;
+  //     });
+  //   }
+  // };
 
   // const updateState = (index, scrollOffset) => {
   //   if (scrollOffset === 480) {
@@ -125,11 +136,6 @@ function Post() {
   //   }
   // };
 
-  // Use useEffect to ensure re-render after state update
-  useEffect(() => {
-    // Additional actions or logging can be added here
-  }, [posts]); // Ensure useEffect runs when 'posts' state changes
-
   if (!posts || posts.length == 0) return <PostShimmer />;
   return (
     <div className="flex flex-col gap-4 lg:mx-20 w-full relative">
@@ -143,7 +149,15 @@ function Post() {
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col gap-3">
-                    <div
+                    <PostCarousel
+                      post={post}
+                      likedId={likedId}
+                      index={index}
+                      extraClass='rounded-md'
+                      extraFileClass='lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px] object-contain'
+                    />
+
+                    {/* <div
                       className="relative flex flex-col items-center w-full"
                       onDoubleClick={() => handleDoubleClick(index, post._id)}
                       onTouchStart={() => handleTouchStart(index, post._id)}>
@@ -159,6 +173,7 @@ function Post() {
                           />
                         ))}
                       </div>
+
 
                       {likedId == post._id && (
                         <div className="absolute inset-1/2 -ml-8 -mt-6 ping-animation ">
@@ -194,7 +209,7 @@ function Post() {
                           ))}
                         </div>
                       )}
-                    </div>
+                    </div> */}
                     <PostBottom
                       post={post}
                       posts={posts}

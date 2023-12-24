@@ -12,10 +12,16 @@ import PostFile from "../post/PostFile";
 import PortalModal from "../uiPrimitives/modal/PortalModal";
 import UserImage from "../user/UserImage";
 import UserImgName from "../user/UserImgName";
+import PostCarousel from "../post/PostCarousel";
+import CommentedUser from "./components/CommentedUser";
 
-const autoplay = window.innerWidth >= 1024
+const autoplay = window.innerWidth >= 1024;
 function Comments({ show, closeModal, postId }) {
   const [postDetails, setPostDetails] = useState();
+  console.log(
+    "🚀 ~ file: Comments.jsx:19 ~ Comments ~ postDetails:",
+    postDetails
+  );
   const {
     getCommentsByPostId,
     likePostInCommentModal,
@@ -34,16 +40,7 @@ function Comments({ show, closeModal, postId }) {
     setPostDetails(data);
   }
 
-  // const getCommentsByPostId = async () => {
-  //   const comments = await axiosInstance.get(
-  //     `${COMMENT_API}?post_id=${postId}`
-  //   );
-  //   setPostDetails(comments.data[0]);
-  // };
-
   const handleAddComment = async (postId, values) => {
-    // const data = { post_id: postId, comment: values.comment };
-    // const createdPost = await axiosInstance.post(COMMENT_API, data);
     const data = await addComment(postId, values);
     if (data.status == 200) {
       getdetails();
@@ -51,24 +48,12 @@ function Comments({ show, closeModal, postId }) {
   };
 
   const handleLikePost = async () => {
-    // const data = { ...postDetails };
-    // const postData = { liked: !postDetails.liked, post_id: data._id };
-    // const response = await axiosInstance.post(LIKE_API, postData);
-    // data.liked = !data.liked;
-    // data.likeCount = parseInt(data.likeCount) + (data.liked ? 1 : -1);
-    // setPostDetails(data);
     const data = await likePostInCommentModal(postDetails);
     setPostDetails(data);
   };
 
   const handleSavePost = async (post_id) => {
     try {
-      // const data = { post_id };
-      // const response = await axiosInstance.post(SAVE_POST_API, data);
-      // const postdata = { ...postDetails };
-      // postdata.saved = !postdata.saved;
-      // setPostDetails(postdata);
-
       const data = await savePostInCommentModal(post_id);
       if (data.status == 201) {
         getdetails();
@@ -87,12 +72,12 @@ function Comments({ show, closeModal, postId }) {
           onClick={closeModal}></div>
         {postDetails && (
           <div className="shadow-md w-full lg:w-4/5 h-[90%] bg-white  flex z-10  rounded-md">
-            <div className="hidden lg:flex justify-center items-center bg-black rounded-l-md ">
-              <PostFile
-                autoplay={autoplay}
+            <div className=" hidden lg:flex justify-center items-center bg-black rounded-l-md max-w-[480px]">
+              <PostCarousel
+                post={postDetails}
+                extraFileClass="relative !max-h-[650px] !max-w-[480px] object-contain"
                 loop={true}
-                media_type={postDetails?.media_type}
-                media_url={postDetails?.media_url}
+                autoplay={autoplay}
               />
             </div>
             <div className="p-4 flex-1 h-full flex flex-col justify-between ">
@@ -136,30 +121,7 @@ function Comments({ show, closeModal, postId }) {
                     </div>
                   </div>
                   {postDetails?.comments?.map((cmt) => (
-                    <div
-                      key={cmt._id}
-                      className="bg-cover flex w-full items-start p-1 gap-3">
-                      <div className="flex-0">
-                        <UserImage
-                          id={cmt.user._id}
-                          imgUrl={cmt.user.imageUrl}
-                          username={cmt.user.userName}
-                          extra="w-14 "
-                          imgStyle=""
-                        />
-                      </div>
-                      <div className="flex-1 w-[90%] ">
-                        <div className=" flex flex-wrap  items-start  text-sm gap-2">
-                          <span className=" font-semibold text-[#262626]">
-                            {cmt.user?.fullName}
-                          </span>
-                          {cmt.comment}
-                        </div>
-                        <span className="text-xs text-gray-400">
-                          {timeAgo(cmt.createdAt)}
-                        </span>
-                      </div>
-                    </div>
+                    <CommentedUser cmt={cmt} />
                   ))}
                 </div>
                 <div className="flex flex-row justify-between items-start mx-px w-full ">

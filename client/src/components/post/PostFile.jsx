@@ -12,15 +12,15 @@ function PostFile({
   return (
     <>
       {media_type.startsWith("image/") ? (
-        <div className="min-w-[480px]">
+        <div className="min-w-[480px] max-w-[480px]">
           <img
             src={media_url}
             id="Element3"
-            className={`relative object-contain max-w-xl xl:max-h-full    bg-black ${extra}`}
+            className={`relative  max-w-xl xl:max-h-full    bg-black ${extra}`}
           />
         </div>
       ) : (
-        <div className="min-w-[480px]">
+        <div className="min-w-[480px] max-w-[480px]">
           <video
             src={media_url}
             controls

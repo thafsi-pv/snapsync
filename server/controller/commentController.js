@@ -69,8 +69,7 @@ const getCommentsByPostId = async (req, res) => {
       {
         $project: {
           user: 1,
-          media_url: 1,
-          media_type: 1,
+          files: 1,
           caption: 1,
           location: 1,
           createdAt: 1,

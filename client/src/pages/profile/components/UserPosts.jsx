@@ -99,7 +99,7 @@ function UserPosts({ posts, type, setType, userId }) {
                     className="h-72 w-72 py-[1px] object-cover"
                     src={post.media_url}></video> */}
                   <img
-                    className="h-36 lg:h-72 lg:w-72 py-[1px] aspect-video object-cover"
+                    className="h-36 lg:h-72 lg:w-72 py-[0px] aspect-video object-cover"
                     src={post.files[0].fileUrl.replace(/\.mp4$/, ".jpg")}
                     alt=""
                     onClick={() => {
