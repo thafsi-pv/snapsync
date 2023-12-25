@@ -12,7 +12,7 @@ function AddStory() {
   const { addStory, setAddStory } = useContext(UserActionContext);
 
   const { setUploadProgress } = useContext(FileUploadContext);
-  const { uploadFileToCloudinary, uploadProgress } = useUploadToCloudinary();
+  const { uploadSingleFileToCloudinary, uploadProgress } = useUploadToCloudinary();
 
   const [media, setMedia] = useState();
   const [file, setFile] = useState();
@@ -53,7 +53,7 @@ function AddStory() {
     setAddStory(false);
     let fileUrl = null;
     if (file) {
-      fileUrl = await uploadFileToCloudinary(file);
+      fileUrl = await uploadSingleFileToCloudinary(file);
     }
     if (fileUrl) {
       handleSavePost(values, fileUrl);
@@ -65,7 +65,6 @@ function AddStory() {
       mediaUrl: fileUrl,
       media_type: file.type,
     };
-
     const createdPost = await axiosInstance.post(STORY_API, post);
     if (createdPost.status === 200) {
       // setUploadProgress(0);
