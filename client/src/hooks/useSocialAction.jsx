@@ -188,6 +188,7 @@ function useSocialAction() {
   };
 
   const handleClick = async (index, id) => {
+    console.log("🚀 ~ file: useSocialAction.jsx:191 ~ handleClick ~ id:", id)
     setLikedId(id);
     if (!posts[index].liked) {
       likePost(index, id, posts);

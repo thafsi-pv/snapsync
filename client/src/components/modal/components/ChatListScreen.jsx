@@ -22,7 +22,6 @@ function ChatListScreen({
   setshowEmoji,
   setChatUser,
 }) {
-  // console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
   const { comments, setComments, setPostId, postId } =
     useContext(UserActionContext);
   const handleViewComments = useCallback((postId) => {
@@ -31,6 +30,7 @@ function ChatListScreen({
   }, []);
 
   const { messages } = useContext(SocketContext);
+  console.log("🚀 ~ file: ChatListScreen.jsx:26 ~ messages:", messages);
 
   const handleBack = () => {
     setChatUser(null);

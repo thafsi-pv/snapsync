@@ -12,7 +12,7 @@ function PostFile({
   return (
     <>
       {media_type.startsWith("image/") ? (
-        <div className="min-w-[480px] max-w-[480px]">
+        <div className="min-w-full lg:min-w-[480px] lg:max-w-[480px]">
           <img
             src={media_url}
             id="Element3"
@@ -20,7 +20,7 @@ function PostFile({
           />
         </div>
       ) : (
-        <div className="min-w-[480px] max-w-[480px]">
+        <div className="min-w-full lg:min-w-[480px] lg:max-w-[480px]">
           <video
             src={media_url}
             controls

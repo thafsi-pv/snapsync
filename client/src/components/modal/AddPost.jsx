@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import useHandleMedia from "../../hooks/useHandleMedia";
 import { UserActionContext } from "../../services/providers/UserActionContext";
@@ -9,6 +9,7 @@ import InputField from "../uiPrimitives/fields/InputField";
 import TextField from "../uiPrimitives/fields/TextField";
 import PortalModal from "../uiPrimitives/modal/PortalModal";
 import CreatePostIcon from "../../assets/svg/CreatePostIcon";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 function AddPost() {
   const { posts, userData, addPost, setAddPost, isEditPost, setIsEditPost } =
@@ -62,12 +63,15 @@ function AddPost() {
     };
   }, []);
 
+  const itemref = useRef(null);
+  const [itemNo, setItemNo] = useState(0);
+
   if (!addPost) return null;
   return (
     <PortalModal show={addPost}>
       <div className="fixed inset-0 flex items-center justify-center overflow-hidden backdrop-blur-sm">
         <div className="fixed inset-0" onClick={() => setAddPost(false)}></div>
-        <div className="flex flex-col items-center justify-center h-[70%] lg:w-[60%] w-[95%]">
+        <div className="flex flex-col items-center justify-center h-[70%] lg:w-[60%] w-[95%] ">
           <div
             className="absolute top-4 right-4 cursor-pointer"
             onClick={() => setAddPost(false)}>
@@ -119,17 +123,52 @@ function AddPost() {
                 </div>
               ) : (
                 <div className="lg:w-full lg:h-full relative flex justify-center bg-black overflow-scroll">
-                  {media.map((med) => (
-                    <div className="lg:w-full lg:h-full relative flex justify-center">
-                      {!isEditPost && (
-                        <AiOutlineClose
-                          className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
-                          onClick={handleImageRemove}
-                        />
-                      )}
-                      {med}
+                  <div
+                    className="relative flex flex-col items-center w-full"
+                    onDoubleClick={() => handleDoubleClick(index, post._id)}
+                    onTouchStart={() => handleTouchStart(index, post._id)}>
+                    <div
+                      className={`flex overflow-scroll items-center w-full relative bg-black  scrollbar-hide`}
+                      ref={itemref}>
+                      {media.map((med) => (
+                        <div className="lg:w-full lg:h-full relative flex justify-center">
+                          {!isEditPost && (
+                            <AiOutlineClose
+                              className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
+                              onClick={handleImageRemove}
+                            />
+                          )}
+                          {med}
+                        </div>
+                      ))}
                     </div>
-                  ))}
+
+                   
+                    {itemNo <media.length - 1 && (
+                      <div
+                        className="absolute top-1/2 right-1 transform -translate-y-1/2 cursor-pointers"
+                        onClick={() => handleScrollz(480)}>
+                        <FaAngleRight className="w-5 h-5 text-black bg-white rounded-full bg-opacity-60 shadow-md p-0.5 cursor-pointer" />
+                      </div>
+                    )}
+                    {itemNo > 0 && (
+                      <div
+                        className="absolute top-1/2 left-2 transform -translate-y-1/2 cursor-pointers"
+                        onClick={() => handleScrollz(-480)}>
+                        <FaAngleLeft className="w-5 h-5 text-black bg-white rounded-full bg-opacity-60 shadow-md p-0.5 cursor-pointer" />
+                      </div>
+                    )}
+                    {media.length > 1 && (
+                      <div className="absolute  bottom-2 transform -translate-y-1/2 cursor-pointers flex gap-1">
+                        {media.map((item, ind) => (
+                          <div
+                            className={`h-1.5 w-1.5 rounded-full  ${
+                              itemNo == ind ? `bg-white` : `bg-gray-400`
+                            }`}></div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
               {media && (

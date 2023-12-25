@@ -2,17 +2,15 @@ import React, { useRef, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import GradiantHeartIcon from "../../assets/svg/GradiantHeartIcon";
 import PostFile from "./PostFile";
+import useSocialAction from "../../hooks/useSocialAction";
+import { motion } from "framer-motion";
 
-function PostCarousel({
-  post,
-  likedId,
-  index,
-  extraClass = "",
-  extraFileClass,
-  loop,
-}) {
+
+function PostCarousel({ post, index, extraClass = "", extraFileClass, loop }) {
   const itemref = useRef(null);
   const [itemNo, setItemNo] = useState(0);
+  const { handleDoubleClick, handleTouchStart, likedId, controls, } = useSocialAction();
+
 
   const handleScrollz = (scrollOffset) => {
     if (itemref.current) {

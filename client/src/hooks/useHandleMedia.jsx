@@ -34,12 +34,14 @@ function useHandleMedia() {
         if (mediaType.startsWith("image/")) {
           const imageURL = URL.createObjectURL(selectedMedia);
           return (
-            <img
-              key={index}
-              src={imageURL}
-              alt="Selected Image"
-              className="object-contain lg:w-full lg:h-full w-1/2 h-full"
-            />
+            <div className=" min-w-[580px] max-w-[580px]">
+              <img
+                key={index}
+                src={imageURL}
+                alt="Selected Image"
+                className="object-contain lg:w-full lg:h-full w-1/2 h-full"
+              />
+            </div>
           );
         } else if (mediaType.startsWith("video/")) {
           const videoURL = URL.createObjectURL(selectedMedia);

@@ -1,26 +1,17 @@
-import { motion } from "framer-motion";
 import React, {
-  createRef,
   useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
+  useEffect
 } from "react";
 import { useInView } from "react-intersection-observer";
-import GradiantHeartIcon from "../../../assets/svg/GradiantHeartIcon";
 import PostBottom from "../../../components/post/PostBottom";
+import PostCarousel from "../../../components/post/PostCarousel";
 import PostComment from "../../../components/post/PostComment";
-import PostFile from "../../../components/post/PostFile";
 import PostHead from "../../../components/post/PostHead";
 import PostLikeAndCaption from "../../../components/post/PostLikeAndCaption";
 import PostShimmer from "../../../components/shimmerUi/PostShimmer";
 import AllCaughtUp from "../../../components/uiPrimitives/AllCaughtUp";
 import useSocialAction from "../../../hooks/useSocialAction";
 import { FileUploadContext } from "../../../services/providers/FileUploadContext";
-import { CiCircleChevRight } from "react-icons/ci";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
-import PostCarousel from "../../../components/post/PostCarousel";
 
 function Post() {
   const {
@@ -30,9 +21,6 @@ function Post() {
     viewComments,
     savePost,
     sharePost,
-    handleDoubleClick,
-    handleTouchStart,
-    controls,
     likedId,
     getAllPosts,
     page,
@@ -153,7 +141,7 @@ function Post() {
                       post={post}
                       likedId={likedId}
                       index={index}
-                      extraClass='rounded-md'
+                      extraClass='lg:rounded-md'
                       extraFileClass='lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px] object-contain'
                     />
 

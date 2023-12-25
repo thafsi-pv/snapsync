@@ -1,3 +1,4 @@
+import MultiPostIcon from "../../../assets/svg/MultiPostIcon";
 import ReelIcon from "../../../assets/svg/ReelIcon";
 import { containsOnlyEmojis } from "../../../utils/containsOnlyEmojis";
 import { timeAgo } from "../../../utils/timeAgo";
@@ -40,7 +41,7 @@ export const ChatMessage = ({
         className={`flex ${
           isMine ? "justify-end" : "justify-start"
         } items-end `}>
-        {message.postId ? (
+        {message?.postId?.files[0] ? (
           <div
             className={`max-w-[250px] lg:max-w-xs  whitespace-normal break-all rounded-l-2xl rounded-tr-2xl `}>
             <div className="flex flex-col items-start max-w-xs mx-auto mb-4  bg-gray-100 rounded-lg">
@@ -76,15 +77,24 @@ export const ChatMessage = ({
                 onClick={() => {
                   handleViewComments(message?.postId?._id);
                 }}>
-                {message?.postId?.media_type?.startsWith("video/") && (
+                {message?.postId?.files[0]?.fileType?.startsWith(
+                  "video/"
+                ) && (
                   <div className="absolute right-3 top-2 ">
                     <ReelIcon color="#ffffff" />
+                  </div>
+                )}
+                {message?.postId?.files[0]?.fileType?.startsWith(
+                  "image/"
+                ) && (
+                  <div className="absolute right-3 top-2 ">
+                    <MultiPostIcon color="#ffffff" />
                   </div>
                 )}
                 <img
                   alt="Collage"
                   className=" w-[250px] h-[250px] lg:w-[350px] lg:h-[350px] object-cover"
-                  src={message?.postId?.media_url?.replace(/\.mp4$/, ".jpg")}
+                  src={message?.postId?.files[0]?.fileUrl?.replace(/\.mp4$/, ".jpg")}
                 />
               </div>
 
