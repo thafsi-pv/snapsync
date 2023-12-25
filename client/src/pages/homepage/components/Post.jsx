@@ -58,7 +58,7 @@ function Post() {
                       likedId={likedId}
                       index={index}
                       extraClass="lg:rounded-md"
-                      extraFileClass="lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px] object-contain"
+                      extraFileClass="lg:!max-w-[504px] lg:!max-h-[599px] sm:!w-full !max-h-[490px] object-contain"
                     />
                     <PostBottom
                       post={post}

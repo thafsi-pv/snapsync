@@ -32,30 +32,41 @@ function AddPost() {
       postFormik.initialValues._id = postDetails[0]._id;
       postFormik.initialValues.caption = postDetails[0].caption;
       postFormik.initialValues.location = postDetails[0].location;
-      postFormik.initialValues.media_url = postDetails[0].media_url;
-      postFormik.initialValues.media_type = postDetails[0].media_type;
-
       if (postDetails) {
-        const mediaType = postDetails[0].media_type;
-        if (mediaType.startsWith("image/")) {
-          const imageURL = postDetails[0].media_url;
-          setMedia(
-            <img
-              src={imageURL}
-              alt="Selected Image"
-              className="object-contain lg:w-full lg:h-full w-1/2 h-full "
-            />
-          );
-        } else if (mediaType.startsWith("video/")) {
-          const videoURL = postDetails[0].media_url;
-          setMedia(
-            <video
-              src={videoURL}
-              controls
-              className="object-fit lg:w-full lg:h-full  w-1/2 h-full"
-            />
-          );
-        }
+        const data = postFormik.files.map((file, index) => {
+          const selectedMedia = file;
+          if (selectedMedia) {
+            const mediaType = selectedMedia.fileType;
+            if (mediaType.startsWith("image/")) {
+              const imageURL = selectedMedia.fileUrl;
+              return (
+                <div className=" min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
+                  <img
+                    key={index}
+                    src={imageURL}
+                    alt="Selected Image"
+                    className="object-fit lg:w-full lg:h-full h-full flex items-center"
+                  />
+                </div>
+              );
+            } else if (mediaType.startsWith("video/")) {
+              const videoURL = selectedMedia.fileUrl;
+              return (
+                <div className=" min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
+                  <video
+                    key={index}
+                    src={videoURL}
+                    controls
+                    className="object-fit lg:w-full lg:h-full w-1/2 h-full"
+                  />
+                </div>
+              );
+            } else {
+              return <div key={index}>Unsupported file type</div>;
+            }
+          }
+        });
+        setMedia(data);
       }
     }
     return () => {
@@ -141,7 +152,7 @@ function AddPost() {
                     <div
                       className={`flex overflow-scroll items-center w-full relative bg-black  scrollbar-hide`}
                       ref={itemref}>
-                      {media.map((med,index) => (
+                      {media.map((med, index) => (
                         <div className="lg:w-full lg:h-full relative flex justify-center">
                           {!isEditPost && (
                             <AiOutlineClose

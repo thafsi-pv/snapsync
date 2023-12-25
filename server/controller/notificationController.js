@@ -295,10 +295,6 @@ const getNotification = async (req, res) => {
       },
     ]);
 
-    console.log(notifications);
-
-    console.log(notifications);
-
     res.json(notifications);
   } catch (error) {
     console.error("Error fetching notifications:", error);

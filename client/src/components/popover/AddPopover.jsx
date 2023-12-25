@@ -6,7 +6,7 @@ import useSocialAction from "../../hooks/useSocialAction";
 function AddPopover({ handleclose }) {
   const { setAddPost, setAddStory } = useSocialAction();
   return (
-    <div className="flex flex-col w-fit relative m-9 ">
+    <div className="flex flex-col w-[150px]  relative m-9 ">
       <div
         className="fixed top-0 left-0 right-0 w-screen h-screen"
         onClick={handleclose}></div>

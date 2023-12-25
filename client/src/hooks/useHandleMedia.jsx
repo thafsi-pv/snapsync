@@ -34,7 +34,7 @@ function useHandleMedia() {
         if (mediaType.startsWith("image/")) {
           const imageURL = URL.createObjectURL(selectedMedia);
           return (
-            <div className=" min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
+            <div className="min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
               <img
                 key={index}
                 src={imageURL}
@@ -46,12 +46,14 @@ function useHandleMedia() {
         } else if (mediaType.startsWith("video/")) {
           const videoURL = URL.createObjectURL(selectedMedia);
           return (
-            <video
-              key={index}
-              src={videoURL}
-              controls
-              className="object-fit lg:w-full lg:h-full w-1/2 h-full"
-            />
+            <div className=" min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
+              <video
+                key={index}
+                src={videoURL}
+                controls
+                className="object-fit lg:w-full lg:h-full w-1/2 h-full"
+              />
+            </div>
           );
         } else {
           return <div key={index}>Unsupported file type</div>;
@@ -109,16 +111,12 @@ function useHandleMedia() {
     if (!values._id) {
       if (file) {
         files = await uploadFilesToCloudinary(file);
-        console.log(
-          "🚀 ~ file: useHandleMedia.jsx:107 ~ handleUploadPost ~ files:",
-          files
-        );
         //values.media_type = file.type;
       }
     } else {
-      files = values.media_url;
+      files = values.files;
     }
-    if (files) {
+    if (values._id) {
       const uploadStatus = handleSavePost(values, files);
       setUploadStatus(uploadStatus);
       //setPage(0);
