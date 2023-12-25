@@ -1,19 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { IoIosHeartEmpty } from "react-icons/io";
 import BookmarkIcon from "../../assets/svg/BookmarkIcon";
 import CommentIcon from "../../assets/svg/CommentIcon";
 import MessageIcon from "../../assets/svg/MessageIcon";
-import { axiosInstance } from "../../services/api/axiosInterceptor";
-import { LIKE_API, SAVE_POST_API } from "../../services/api/const";
-import { UserActionContext } from "../../services/providers/UserActionContext";
-import useSocialAction from "../../hooks/useSocialAction";
-import { genericError } from "../../services/api/genericError";
 
 function PostBottom({
   post,
   posts,
-  setPosts,
   index,
   likePost,
   viewComments,
@@ -21,7 +15,7 @@ function PostBottom({
   sharePost,
 }) {
   return (
-    <div className="flex flex-row justify-between items-center px-4 ">
+    <div className="flex flex-row justify-between items-center lg:px-0 px-1">
       <div className="flex flex-row gap-4 items-start">
         <div onClick={() => likePost(index, post._id, posts)}>
           {post.liked ? (

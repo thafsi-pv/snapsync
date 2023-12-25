@@ -1,7 +1,4 @@
-import React, {
-  useContext,
-  useEffect
-} from "react";
+import React, { useContext, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import PostBottom from "../../../components/post/PostBottom";
 import PostCarousel from "../../../components/post/PostCarousel";
@@ -26,27 +23,9 @@ function Post() {
     page,
     setPostDetails,
   } = useSocialAction();
-  console.log("🚀 ~ file: Post.jsx:40 ~ Post ~ posts:", posts);
-  // const [item, setItem] = useState(0);
-  // const [items, setItems] = useState(posts.map(() => 0));
-  // console.log("🚀 ~ file: Post.jsx:43 ~ Post ~ items:", items);
-
-  // useEffect(() => {
-  //   setItems(posts.map(() => 0));
-  // }, [posts]);
-
   const { uploadStatus } = useContext(FileUploadContext); //using for rerender after new post upload
   const [ref, inView] = useInView();
-  // const postContainerRef = useRef();
-  // Initialize postContainerRefs as an empty array
-  // const postContainerRefs = useRef([]);
 
-  // Update postContainerRefs when posts are available
-  // useEffect(() => {
-  //   postContainerRefs.current = posts.map(() => createRef());
-  // }, [posts]);
-
-  //after post upload set post empty page=1 and get all posts with new post
   useEffect(() => {
     setPosts([]);
     page.current = 1;
@@ -60,69 +39,6 @@ function Post() {
       console.log("-------In view-----");
     }
   }, [inView]);
-
-  // const handleScroll = (scrollOffset) => {
-  //   console.log("handle scroll");
-
-  //   const container = postContainerRef.current;
-  //   if (container) {
-  //     console.log(
-  //       "🚀 ~ file: Post.jsx:57 ~ handleScroll ~ container:",
-  //       container
-  //     );
-  //     container.scrollBy({ left: scrollOffset, behavior: "smooth" });
-  //   }
-  // };
-  // const handleScroll = (index, scrollOffset) => {
-  //   console.log("🚀 ~ file: Post.jsx:89 ~ handleScroll ~ index:", index);
-  //   console.log(
-  //     "🚀 ~ file: Post.jsx:55 ~ Post ~ postContainerRefs:",
-  //     postContainerRefs
-  //   );
-
-  //   const container = postContainerRefs.current[index]?.current;
-  //   console.log(
-  //     "🚀 ~ file: Post.jsx:91 ~ handleScroll ~ container:",
-  //     container
-  //   );
-  //   if (container) {
-  //     container.scrollBy({ left: scrollOffset, behavior: "smooth" });
-  //   }
-  //   // updateState(scrollOffset);
-  //   if (scrollOffset === 480 && items[index] < posts[index]?.files.length - 1) {
-  //     setItems((prevItems) => {
-  //       const newItems = [...prevItems];
-  //       newItems[index] += 1;
-  //       return newItems;
-  //     });
-  //   } else if (scrollOffset === -480 && items[index] > 0) {
-  //     setItems((prevItems) => {
-  //       const newItems = [...prevItems];
-  //       newItems[index] -= 1;
-  //       return newItems;
-  //     });
-  //   }
-  // };
-
-  // const updateState = (index, scrollOffset) => {
-  //   if (scrollOffset === 480) {
-  //     setPosts((prevPosts) => {
-  //       const updatedPosts = [...prevPosts];
-  //       if (updatedPosts[index]) {
-  //         updatedPosts[index].item = (updatedPosts[index].item || 0) + 1;
-  //       }
-  //       return updatedPosts;
-  //     });
-  //   } else {
-  //     setPosts((prevPosts) => {
-  //       const updatedPosts = [...prevPosts];
-  //       if (updatedPosts[index]) {
-  //         updatedPosts[index].item = (updatedPosts[index].item || 0) - 1;
-  //       }
-  //       return updatedPosts;
-  //     });
-  //   }
-  // };
 
   if (!posts || posts.length == 0) return <PostShimmer />;
   return (
@@ -141,63 +57,9 @@ function Post() {
                       post={post}
                       likedId={likedId}
                       index={index}
-                      extraClass='lg:rounded-md'
-                      extraFileClass='lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px] object-contain'
+                      extraClass="lg:rounded-md"
+                      extraFileClass="lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px] object-contain"
                     />
-
-                    {/* <div
-                      className="relative flex flex-col items-center w-full"
-                      onDoubleClick={() => handleDoubleClick(index, post._id)}
-                      onTouchStart={() => handleTouchStart(index, post._id)}>
-                      <div
-                        className="flex overflow-scroll items-center w-full relative bg-black rounded-md scrollbar-hide"
-                        ref={postContainerRefs.current[index]}>
-                        {post.files.map((file) => (
-                          <PostFile
-                            key={file._id}
-                            media_url={file.fileUrl}
-                            media_type={file.fileType}
-                            extra="relative object-fit !w-full lg:!max-w-[480px] lg:!max-h-[600px] sm:!w-full !max-h-[490px]  bg-black"
-                          />
-                        ))}
-                      </div>
-
-
-                      {likedId == post._id && (
-                        <div className="absolute inset-1/2 -ml-8 -mt-6 ping-animation ">
-                          <motion.div
-                            className={`heart-icon ${likedId ? "liked" : ""}`}
-                            // onClick={handleClick}
-                            animate={controls}>
-                            <GradiantHeartIcon className="" />
-                          </motion.div>
-                        </div>
-                      )}
-                      {items[index] < post.files.length - 1 && (
-                        <div
-                          className="absolute top-1/2 right-1 transform -translate-y-1/2 cursor-pointers"
-                          onClick={() => handleScroll(index, 480)}>
-                          <FaAngleRight className="w-5 h-5 text-black bg-white rounded-full bg-opacity-60 shadow-md p-0.5 cursor-pointer" />
-                        </div>
-                      )}
-                      {items[index] > 0 && (
-                        <div
-                          className="absolute top-1/2 left-2 transform -translate-y-1/2 cursor-pointers"
-                          onClick={() => handleScroll(index, -480)}>
-                          <FaAngleLeft className="w-5 h-5 text-black bg-white rounded-full bg-opacity-60 shadow-md p-0.5 cursor-pointer" />
-                        </div>
-                      )}
-                      {post.files.length > 1 && (
-                        <div className="absolute  bottom-2 transform -translate-y-1/2 cursor-pointers flex gap-1">
-                          {post.files.map((item, i) => (
-                            <div
-                              className={`h-1.5 w-1.5 rounded-full  ${
-                                items[index] == i ? `bg-white` : `bg-gray-400`
-                              }`}></div>
-                          ))}
-                        </div>
-                      )}
-                    </div> */}
                     <PostBottom
                       post={post}
                       posts={posts}
@@ -209,7 +71,7 @@ function Post() {
                       sharePost={sharePost}
                     />
                   </div>
-                  <div className="flex flex-col justify-between items-start px-4">
+                  <div className="flex flex-col justify-between items-start lg:px-0 px-1">
                     <PostLikeAndCaption
                       post={post}
                       posts={posts}

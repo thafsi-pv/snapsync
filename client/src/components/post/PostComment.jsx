@@ -11,9 +11,6 @@ function PostComment({ post }) {
   const handleAddComment = async (postId, values) => {
     const data = { post_id: postId, comment: values.comment };
     const createdPost = await axiosInstance.post(COMMENT_API, data);
-    // if (createdPost.status == 200) {
-    //   getAllPosts();
-    // }
   };
   const handleViewComments = (postId) => {
     setComments(true);
@@ -23,7 +20,7 @@ function PostComment({ post }) {
     <div className="flex flex-col   shrink-0 w-full">
       {post.commentCount > 0 && (
         <div
-          className="text-xs  leading-[18px] cursor-pointer my-1"
+          className="text-xs cursor-pointer my-1"
           onClick={() => {
             handleViewComments(post._id);
           }}>

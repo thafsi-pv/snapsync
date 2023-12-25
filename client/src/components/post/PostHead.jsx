@@ -6,13 +6,11 @@ import VerifiedBadgeIcon from "../../assets/svg/VerifiedBadgeIcon";
 import useSocialAction from "../../hooks/useSocialAction";
 
 function PostHead({ post, setPostDetails }) {
-  const { setPostId } = useSocialAction();
-
   const handlePostDetails = () => {
     setPostDetails(post);
   };
   return (
-    <div className="flex flex-row justify-between items-center mb-2 px-4">
+    <div className="flex flex-row justify-between items-center mb-2 lg:px-0 px-1">
       <div className="flex flex-row gap-3 items-start w-full">
         <div className="flex gap-3 w-full items-center">
           <UserImgName

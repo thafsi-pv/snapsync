@@ -2,6 +2,10 @@ import React from "react";
 import { timeAgo } from "../../utils/timeAgo";
 
 function NotificationItem({ facet }) {
+  console.log(
+    "🚀 ~ file: NotificationItem.jsx:5 ~ NotificationItem ~ facet:",
+    facet
+  );
   return (
     <div className="flex flex-col gap-4 border-b pb-2" key={facet.key}>
       <p className="text-base font-semibold">{facet?.value[0]?.facetName}</p>
@@ -67,7 +71,10 @@ function NotificationItem({ facet }) {
           </div>
           <div className="flex-shrink-0">
             <img
-              src={noti?.postDetails[0].media_url.replace(/\.mp4$/, ".jpg")}
+              src={noti?.postDetails[0]?.files[0].fileUrl.replace(
+                /\.mp4$/,
+                ".jpg"
+              )}
               alt="Media thumbnail"
               className="object-cover w-10 h-10 rounded-sm"
             />
