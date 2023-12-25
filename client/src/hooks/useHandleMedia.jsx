@@ -34,12 +34,12 @@ function useHandleMedia() {
         if (mediaType.startsWith("image/")) {
           const imageURL = URL.createObjectURL(selectedMedia);
           return (
-            <div className=" min-w-[580px] max-w-[580px]">
+            <div className=" min-w-[340px] max-w-[340px] lg:min-w-[580px] lg:max-w-[580px] divide-x">
               <img
                 key={index}
                 src={imageURL}
                 alt="Selected Image"
-                className="object-contain lg:w-full lg:h-full w-1/2 h-full"
+                className="object-fit lg:w-full lg:h-full h-full flex items-center"
               />
             </div>
           );
@@ -54,11 +54,9 @@ function useHandleMedia() {
             />
           );
         } else {
-          // Return a default component or null for other types
           return <div key={index}>Unsupported file type</div>;
         }
       }
-      // Return null for cases where selectedMedia is falsy
       return null;
     });
 
@@ -94,8 +92,13 @@ function useHandleMedia() {
   //   }
   // };
 
-  const handleImageRemove = () => {
-    setMedia(null);
+  const handleImageRemove = (i) => {
+    // setMedia(null);
+    const filterList = file.filter((item, index) => index != i);
+    setFile(filterList);
+    const mediaList = media.filter((item, index) => index != i);
+    setMedia(mediaList.length > 0 ? mediaList : null);
+    handleMedia();
   };
 
   const handleUploadPost = async (values) => {

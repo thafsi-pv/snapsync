@@ -6,7 +6,7 @@ function StoryLayout({ children }) {
   return (
     <div className="relative w-screen h-screen bg-black ">
       <Link to="/">
-        <div className="fixed top-5 left-5 w-32 cursor-pointer">
+        <div className="fixed top-5 left-5 w-32 cursor-pointer z-40">
           <img src={logo6} alt="snapsync" />
         </div>
       </Link>

@@ -66,6 +66,17 @@ function AddPost() {
   const itemref = useRef(null);
   const [itemNo, setItemNo] = useState(0);
 
+  const handleScrollz = (scrollOffset) => {
+    if (itemref.current) {
+      itemref.current.scrollBy({ left: scrollOffset, behavior: "smooth" });
+    }
+    if (scrollOffset === 480 && itemNo < media.length - 1) {
+      setItemNo((prev) => prev + 1);
+    } else if (scrollOffset === -480 && itemNo > 0) {
+      setItemNo((prev) => prev - 1);
+    }
+  };
+
   if (!addPost) return null;
   return (
     <PortalModal show={addPost}>
@@ -130,21 +141,19 @@ function AddPost() {
                     <div
                       className={`flex overflow-scroll items-center w-full relative bg-black  scrollbar-hide`}
                       ref={itemref}>
-                      {media.map((med) => (
+                      {media.map((med,index) => (
                         <div className="lg:w-full lg:h-full relative flex justify-center">
                           {!isEditPost && (
                             <AiOutlineClose
                               className="absolute  h-5 w-5 text-black right-5 top-3 bg-white rounded-full p-1 shadow-lg cursor-pointer hover:bg-gray-100 z-10"
-                              onClick={handleImageRemove}
+                              onClick={() => handleImageRemove(index)}
                             />
                           )}
                           {med}
                         </div>
                       ))}
                     </div>
-
-                   
-                    {itemNo <media.length - 1 && (
+                    {itemNo < media.length - 1 && (
                       <div
                         className="absolute top-1/2 right-1 transform -translate-y-1/2 cursor-pointers"
                         onClick={() => handleScrollz(480)}>
