@@ -9,7 +9,7 @@ import UserPosts from "./components/UserPosts";
 let postCount = "";
 function Profile() {
   const [profile, setProfile] = useState();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState();
   const [type, setType] = useState(0);
   const { username } = useParams();
 
@@ -27,11 +27,11 @@ function Profile() {
     if (type == 0) {
       setProfile(response.data.profile[0]);
       postCount = response.data.post.length;
-      setPosts(response.data.post);
+      setPosts(response?.data?.post);
     } else if (type == 3) {
-      setPosts(response.data);
+      setPosts(response?.data);
     } else {
-      setPosts(response.data.post);
+      setPosts(response?.data?.post);
     }
   };
 

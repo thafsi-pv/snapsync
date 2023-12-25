@@ -9,7 +9,7 @@ function EditProfile() {
   const { userData } = useContext(UserActionContext);
   const [bio, setBio] = useState();
   const [profileImg, setProfileImg] = useState(null);
-  const { uploadFileToCloudinary } = useUploadToCloudinary();
+  const { uploadSingleFileToCloudinary } = useUploadToCloudinary();
 
   const handleProfileImage = (e) => {
     const selectedImage = e.target.files[0];
@@ -21,7 +21,7 @@ function EditProfile() {
   const handleSubmitProfile = async () => {
     let imageUrl = null;
     if (profileImg) {
-      imageUrl = await uploadFileToCloudinary(profileImg);
+      imageUrl = await uploadSingleFileToCloudinary(profileImg);
     }
     const data = { bio, imageUrl };
     const response = await axiosInstance.put(PROFILE_API, data);

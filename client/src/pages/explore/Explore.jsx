@@ -14,6 +14,10 @@ const Comments = lazy(() => import("../../components/modal/Comments"));
 function Explore() {
   const { handleViewComments, exploreList, comments, setComments, postId } =
     useExplore();
+  console.log(
+    "🚀 ~ file: Explore.jsx:16 ~ Explore ~ exploreList:",
+    exploreList
+  );
 
   return (
     <div className="container mx-auto py-6">
@@ -22,13 +26,15 @@ function Explore() {
           <Contents post={post} handleViewComments={handleViewComments} />
         ))}
       </div>
-      <Suspense fallback={<Loading />}>
-        <Comments
-          postId={postId}
-          show={comments}
-          closeModal={() => setComments(false)}
-        />
-      </Suspense>
+      {comments && (
+        <Suspense fallback={<Loading />}>
+          <Comments
+            postId={postId}
+            show={comments}
+            closeModal={() => setComments(false)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }

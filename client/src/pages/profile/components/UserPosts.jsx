@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React, { Suspense, lazy, useContext } from "react";
 import { BsGrid3X3 } from "react-icons/bs";
-import { Loading } from "../../../assets/svg/Loading";
-import ReelIcon from "../../../assets/svg/ReelIcon";
-import { UserActionContext } from "../../../services/providers/UserActionContext";
-import Comments from "../../../components/modal/Comments";
 import MultiPostIcon from "../../../assets/svg/MultiPostIcon";
+import ReelIcon from "../../../assets/svg/ReelIcon";
+const Comments = lazy(() => import("../../../components/modal/Comments"));
+import { UserActionContext } from "../../../services/providers/UserActionContext";
+import { Loading } from "../../../assets/svg/Loading";
 
 function UserPosts({ posts, type, setType, userId }) {
+  console.log("🚀 ~ file: UserPosts.jsx:10 ~ UserPosts ~ posts:", posts);
   const { userData, comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
 
@@ -112,14 +113,18 @@ function UserPosts({ posts, type, setType, userId }) {
             )}
           </div>
         ) : (
-          <Loading />
+          <div>
+            <p className="text-gray-400">No data found</p>
+          </div>
         )}
       </div>
-      <Comments
-        postId={postId}
-        show={comments}
-        closeModal={() => setComments(false)}
-      />
+      <Suspense fallback={<Loading />}>
+        <Comments
+          postId={postId}
+          show={comments}
+          closeModal={() => setComments(false)}
+        />
+      </Suspense>
     </div>
   );
 }

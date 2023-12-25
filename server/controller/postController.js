@@ -223,8 +223,7 @@ const getSavedPosts = async (req, res) => {
         $project: {
           caption: "$posts.caption",
           location: "$posts.location",
-          media_type: "$posts.media_type",
-          media_url: "$posts.media_url",
+          files: "$posts.files",
           user_id: "$posts.user_id",
           _id: "$posts._id",
         },
