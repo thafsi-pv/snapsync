@@ -6,6 +6,7 @@ import BookmarkIcon from "../../assets/svg/BookmarkIcon";
 import StoryLayout from "../../layout/StoryLayout";
 
 const VideoList = ({ videos }) => {
+  console.log("🚀 ~ file: VideoList.jsx:9 ~ VideoList ~ videos:", videos)
   const videoRefs = useRef(videos.map(() => React.createRef()));
 
   useEffect(() => {

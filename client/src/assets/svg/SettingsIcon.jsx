@@ -4,7 +4,7 @@ function SettingsIcon() {
   return (
     <svg
       aria-label="Options"
-      class=""
+      className=""
       fill="currentColor"
       height="24"
       role="img"

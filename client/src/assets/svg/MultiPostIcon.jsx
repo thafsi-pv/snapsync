@@ -4,7 +4,7 @@ function MultiPostIcon({ color }) {
   return (
     <svg
       aria-label="Carousel"
-      class=""
+      className=""
       fill={color}
       height="22"
       role="img"

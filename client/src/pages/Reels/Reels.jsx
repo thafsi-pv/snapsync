@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import VideoList from "./VideoList";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { REELS } from "../../services/api/const";
-
+import { transformedData } from "../../utils/transformData";
 
 function Reels() {
   const [reels, setReels] = useState();
@@ -13,14 +13,12 @@ function Reels() {
 
   const getReels = async () => {
     const response = await axiosInstance.get(REELS);
-    console.log("🚀 ~ file: Reels.jsx:31 ~ getReels ~ response:", response);
-    setReels(response.data);
+    const transformedDatas = transformedData(response.data);
+    setReels(transformedDatas);
   };
 
   if (!reels) return <div>Loading</div>;
-  return (
-    <VideoList videos={reels} />
-  );
+  return <VideoList videos={reels} />;
 }
 
 export default Reels;

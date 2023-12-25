@@ -63,7 +63,6 @@ io.on("connection", (socket) => {
     const token = socket.handshake.query.token;
     const verifyT = verifyToken(token);
     const userId = verifyT._id;
-    console.log("🚀 ~ file: index.js:66 ~ io.on ~ userId:", userId);
 
     if (connectedUsers.has(userId)) {
       const existingSocket = connectedUsers.get(userId);
@@ -151,7 +150,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on("notification", async (data) => {
-      console.log("🚀 ~ file: index.js:154 ~ socket.on ~ data:", data)
       const { type, recipient_Id, post_Id } = data;
       const sockeid = getSocketId(recipient_Id);
       if (sockeid) {

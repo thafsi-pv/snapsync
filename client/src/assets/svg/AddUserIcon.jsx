@@ -4,7 +4,7 @@ function AddUserIcon() {
   return (
     <svg
       aria-label="Discover people"
-      class=""
+      className=""
       fill="currentColor"
       height="24"
       role="img"

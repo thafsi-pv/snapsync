@@ -4,7 +4,7 @@ function VerifiedBadgeIcon() {
   return (
     <svg
       aria-label="Verified"
-      class=""
+      className=""
       fill="rgb(0, 149, 246)"
       height="12"
       role="img"

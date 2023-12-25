@@ -239,7 +239,7 @@ const getReels = async (req, res) => {
   try {
     const reels = await postModal.aggregate([
       {
-        $match: { media_type: /^video\// },
+        $match: { "files.fileType": /^video\// },
       },
       {
         $lookup: {
@@ -268,8 +268,13 @@ const getReels = async (req, res) => {
       },
       {
         $project: {
-          media_url: 1,
-          media_type: 1,
+          files: {
+            $filter: {
+              input: "$files",
+              as: "file",
+              cond: { $eq: ["$$file.fileType", "video/mp4"] },
+            },
+          },
           caption: 1,
           location: 1,
           createdAt: 1,
@@ -279,11 +284,41 @@ const getReels = async (req, res) => {
         },
       },
     ]);
+
+
     res.status(200).json(reels);
   } catch (error) {
-    res.status(500).json({ error, error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// const getReels = async (req, res) => {
+//   try {
+//     const reels = await postModal.aggregate([
+//       {
+//         $match: {
+//           "files.fileType": /^video\//,
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: 0, // Exclude _id field if not needed
+//           files: {
+//             $filter: {
+//               input: "$files",
+//               as: "file",
+//               cond: { $eq: ["$$file.fileType", "video/mp4"] },
+//             },
+//           },
+//         },
+//       },
+//     ]);
+
+//     res.status(200).json(reels);
+//   } catch (error) {
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
 
 const deletePostById = async (req, res) => {
   try {
