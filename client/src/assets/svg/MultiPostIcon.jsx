@@ -3,7 +3,7 @@ import React from "react";
 function MultiPostIcon({ color }) {
   return (
     <svg
-      aria-label="Carousel"
+    aria-label="Carousel"
       className=""
       fill={color}
       height="22"

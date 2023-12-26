@@ -21,19 +21,10 @@ const savedPostModel = require("../model/savedPostModel");
 
 const createPost = async (req, res) => {
   try {
-    console.log(
-      "🚀 ~ file: postController.js:26 ~ createPost ~ req.body:",
-      req.body
-    );
     const userId = req.userId;
     const { _id, files, caption, location, media_type } = req.body;
-
     if (!userId) return res.status(404).json({ message: "User not found!" });
-
-    // const post = { user_id: userId, media_url, caption, location, media_type };
     const post = { user_id: userId, files, caption, location, media_type };
-
-    // Check if _id exists in the request body
     if (_id) {
       // If _id exists, update the existing post
       const updatedPost = await postModal.findByIdAndUpdate(_id, post, {
@@ -285,40 +276,11 @@ const getReels = async (req, res) => {
       },
     ]);
 
-
     res.status(200).json(reels);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
-// const getReels = async (req, res) => {
-//   try {
-//     const reels = await postModal.aggregate([
-//       {
-//         $match: {
-//           "files.fileType": /^video\//,
-//         },
-//       },
-//       {
-//         $project: {
-//           _id: 0, // Exclude _id field if not needed
-//           files: {
-//             $filter: {
-//               input: "$files",
-//               as: "file",
-//               cond: { $eq: ["$$file.fileType", "video/mp4"] },
-//             },
-//           },
-//         },
-//       },
-//     ]);
-
-//     res.status(200).json(reels);
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
 
 const deletePostById = async (req, res) => {
   try {
@@ -343,9 +305,6 @@ const deletePostById = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// Assuming you have your postModal defined somewhere using Mongoose, for example:
-// const postModal = mongoose.model('Post', postSchema);
 
 module.exports = {
   createPost,

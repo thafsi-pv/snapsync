@@ -3,7 +3,7 @@ import React from "react";
 function MessengerIcon({ className }) {
   return (
     <svg
-      aria-label="Messenger"
+    aria-label="Messenger"
       className={className}
       fill="currentColor"
       height="24"

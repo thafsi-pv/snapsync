@@ -1,6 +1,6 @@
 import React from "react";
 
-function HomeIcon({className}) {
+function HomeIcon({ className }) {
   return (
     <svg
       aria-label="Home"

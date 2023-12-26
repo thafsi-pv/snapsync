@@ -1,6 +1,6 @@
 import React from "react";
 
-function BookmarkIcon({fill='none',color='black',className}) {
+function BookmarkIcon({ fill = "none", color = "black", className }) {
   return (
     <svg
       aria-label="Save"

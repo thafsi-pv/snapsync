@@ -3,7 +3,7 @@ import React from "react";
 function HeartIcon({ className }) {
   return (
     <svg
-      aria-label="Notifications"
+    aria-label="Notifications"
       className={className}
       fill="currentColor"
       height="24"

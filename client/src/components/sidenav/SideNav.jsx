@@ -41,9 +41,9 @@ function SideNav() {
         className={`hidden lg:block md:flex relative  w-[21%]
        ${navbar == "hidden" ? "w-[21%]" : "w-[21%]"}`}
         id="sideNavId">
-        <div class="relative flex flex-row items-start min-h-screen dark:bg-black z-20">
+        <div className="relative flex flex-row items-start min-h-screen dark:bg-black z-20">
           <div
-            class={`fixed inset-y-0 left-0  flex flex-col items-start py-8 pl-2 h-full   ${
+            className={`fixed inset-y-0 left-0  flex flex-col items-start py-8 pl-2 h-full   ${
               navbar == "hidden" ? "" : "w-72"
             } border-r`}>
             <div className="h-10 px-5">

@@ -5,12 +5,11 @@ import PostFile from "./PostFile";
 import useSocialAction from "../../hooks/useSocialAction";
 import { motion } from "framer-motion";
 
-
 function PostCarousel({ post, index, extraClass = "", extraFileClass, loop }) {
   const itemref = useRef(null);
   const [itemNo, setItemNo] = useState(0);
-  const { handleDoubleClick, handleTouchStart, likedId, controls, } = useSocialAction();
-
+  const { handleDoubleClick, handleTouchStart, likedId, controls } =
+    useSocialAction();
 
   const handleScrollz = (scrollOffset) => {
     if (itemref.current) {
@@ -70,6 +69,7 @@ function PostCarousel({ post, index, extraClass = "", extraFileClass, loop }) {
         <div className="absolute  bottom-2 transform -translate-y-1/2 cursor-pointers flex gap-1">
           {post.files.map((item, ind) => (
             <div
+              key={ind}
               className={`h-1.5 w-1.5 rounded-full  ${
                 itemNo == ind ? `bg-white` : `bg-gray-400`
               }`}></div>

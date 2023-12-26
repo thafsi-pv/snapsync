@@ -3,7 +3,7 @@ import React from "react";
 function SettingsIcon() {
   return (
     <svg
-      aria-label="Options"
+    aria-label="Options"
       className=""
       fill="currentColor"
       height="24"

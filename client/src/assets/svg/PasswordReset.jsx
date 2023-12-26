@@ -3,7 +3,7 @@ import React from "react";
 function PasswordReset() {
   return (
     <svg
-      data-name="Layer 1"
+      dataName="Layer 1"
       id="Layer_1"
       viewBox="0 0 120 120"
       xmlns="http://www.w3.org/2000/svg">

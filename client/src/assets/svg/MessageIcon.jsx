@@ -1,9 +1,9 @@
 import React from "react";
 
-function MessageIcon({className}) {
+function MessageIcon({ className }) {
   return (
     <svg
-      aria-label="Share Post"
+    aria-label="Share Post"
       className={`cursor-pointer ${className}`}
       fill="currentColor"
       height="24"
@@ -32,8 +32,9 @@ function MessageIcon({className}) {
 
 export default MessageIcon;
 
-
-{/* <img
+{
+  /* <img
 src="https://file.rendit.io/n/5qjbxZc2qX75hQkoeJkP.svg"
 className="mt-px w-6 shrink-0 cursor-pointer"
-/> */}
+/> */
+}

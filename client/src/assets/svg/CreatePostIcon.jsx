@@ -3,7 +3,7 @@ import React from "react";
 function CreatePostIcon() {
   return (
     <svg
-      aria-label="Icon to represent media such as images or videos"
+    aria-label="Icon to represent media such as images or videos"
       fill="currentColor"
       height="77"
       role="img"
