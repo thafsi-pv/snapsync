@@ -9,6 +9,46 @@ Demo Video:
 
 SnapSync is a social media application that mirrors the key features of the popular Instagram platform. Users can share images and videos, view stories, engage with posts, chat with other users, and explore a personalized feed.
 
+To enhance the "SnapSync" social media application, which already mirrors key features of Instagram, followed React best practices such as component composition and the use of custom hooks. These practices will help in managing the complexity of the application, improving its performance, and making it more maintainable. Here's how you can integrate these practices with the features of SnapSync:
+
+### Component Composition
+
+Component composition is about building small, reusable components that can be combined to create more complex UIs. This approach is particularly useful for a feature-rich application like Instagram.
+
+1. **Reusable UI Components**: Create components for buttons, modals, inputs, posts, stories, etc., that can be reused throughout the application. For instance, a `Post` component can display both images and videos, and a `Story` component can be used in different parts of the application.
+
+2. **Layout Components**: Develop layout components such as `Header`, `Footer`, `Sidebar`, and `MainContent` to maintain a consistent layout across different pages.
+
+3. **Protected Route**: If the user is authenticated, it will render the component passed to it; otherwise, it will redirect the user to the login page.
+
+### Custom Hooks
+
+Custom hooks allow you to extract component logic into reusable functions.
+
+1. **useAuth**: Manage user authentication state. This hook can provide user information and authentication status to any component that needs it.
+
+2. **useHandleMedia**:  Effortlessly handle file uploads to Cloudinary,.
+
+3. **useChat**: Handle chat functionalities. This hook can manage sending and receiving messages, connecting to a WebSocket (if real-time chat is implemented), and maintaining chat history.
+
+4. **useSocialAction**: Handle likes, comments, and shares for posts. It can provide functions to update the post’s state (like count, comment list) and communicate with the backend.
+
+5. **useDebounce**: Delays the execution of a function until a certain amount of time has passed since the last time it was invoked.
+
+6. **useNotification**: An exquisite tool for handling in-app notifications.
+
+7. **useToast**:A delightful touch for displaying short, auto-expiring messages in a non-intrusive way. It's ideal for confirmation messages, success states.
+
+### Additional Considerations
+
+- **Performance Optimization**: Use React’s memoization (`React.memo`, `useMemo`, `useCallback`) to prevent unnecessary re-renders, especially in components that display posts, feeds, or stories.
+
+- **State Management**: For global state management using Context API
+
+- **Responsive Design**: Ensure all components are responsive and provide a good user experience on various devices.
+
+By following these best practices, SnapSync will not only mirror the functionality of Instagram but also ensure a solid, maintainable, and scalable React application architecture.
+
 ## Tech Stack
 
 - **MongoDB**: Database to store user data, posts, and other information.
