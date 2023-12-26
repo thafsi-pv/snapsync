@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserImage from "./UserImage";
 import { UserActionContext } from "../../services/providers/UserActionContext";
 
-function 
-UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
+function UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
   const { setLoadStory } = useContext(UserActionContext);
   const navigate = useNavigate();
   const handleLoadStory = () => {
@@ -29,7 +28,9 @@ UserImgName({ id, username, fullName, desc, imgUrl, extra }) {
       </div>
 
       <div className="w-full gap-2 items-center">
-        <p className="text-sm font-semibold">{fullName}</p>
+        <Link to={`/${username}`}>
+          <p className="text-sm font-semibold">{fullName}</p>
+        </Link>
         <p className="text-xs text-gray-400">{desc}</p>
       </div>
     </div>

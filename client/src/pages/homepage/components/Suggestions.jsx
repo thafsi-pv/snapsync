@@ -1,9 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
-import User from "./User";
-import { GET_SUGGESTION_LIST } from "../../../services/api/const";
-import { axiosInstance } from "../../../services/api/axiosInterceptor";
+import React, { memo, useEffect } from "react";
 import SuggestionUser from "../../../components/user/SuggestionUser";
 import useSocialAction from "../../../hooks/useSocialAction";
+import User from "./User";
 
 function Suggestions() {
   // const [suggestionList, setSuggestionList] = useState();

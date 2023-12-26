@@ -14,10 +14,6 @@ const Comments = lazy(() => import("../../components/modal/Comments"));
 function Explore() {
   const { handleViewComments, exploreList, comments, setComments, postId } =
     useExplore();
-  console.log(
-    "🚀 ~ file: Explore.jsx:16 ~ Explore ~ exploreList:",
-    exploreList
-  );
 
   return (
     <div className="container mx-auto py-6">

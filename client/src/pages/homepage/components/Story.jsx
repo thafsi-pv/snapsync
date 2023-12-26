@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { IoIosAdd } from "react-icons/io";
+import StoryListShimmer from "../../../components/shimmerUi/StoryListShimmer";
 import NextPrevButton from "../../../components/uiPrimitives/button/NextPrevButton";
+import UserImage from "../../../components/user/UserImage";
 import UserStory from "../../../components/user/UserStory";
 import { axiosInstance } from "../../../services/api/axiosInterceptor";
 import { STORY_API } from "../../../services/api/const";
-import UserImage from "../../../components/user/UserImage";
 import { UserActionContext } from "../../../services/providers/UserActionContext";
-import { IoIosAdd } from "react-icons/io";
-import StoryListShimmer from "../../../components/shimmerUi/StoryListShimmer";
 
 /**
  * Story Component:
@@ -19,8 +19,6 @@ function Story() {
   const [storyList, setStoryList] = useState();
   const containerRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-
-  // const { loadStory, setLoadStory } = useContext(UserActionContext);
 
   const handleScroll = (scrollOffset) => {
     console.log("handle scroll");

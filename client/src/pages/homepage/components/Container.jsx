@@ -1,24 +1,17 @@
-import React, { Suspense, lazy, useContext, useEffect, useState } from "react";
+import React, { Suspense, lazy, useContext, useEffect } from "react";
+import { Loading } from "../../../assets/svg/Loading";
+import useChat from "../../../hooks/useChat";
+import { UserActionContext } from "../../../services/providers/UserActionContext";
+import Post from "./Post";
 import Story from "./Story";
 import Suggestions from "./Suggestions";
-import Post from "./Post";
-
-// import Comments from "../../../components/modal/Comments";
 const Comments = lazy(() => import("../../../components/modal/Comments"));
-
-import { UserActionContext } from "../../../services/providers/UserActionContext";
-// import Share from "../../../components/modal/Share";
 const Share = lazy(() => import("../../../components/modal/Share"));
-import useChat from "../../../hooks/useChat";
-import { Loading } from "../../../assets/svg/Loading";
-import { SocketContext } from "../../../services/providers/SocketContext";
-// import PostDetails from "../../../components/modal/PostDetails";
 const PostDetails = lazy(() => import("../../../components/modal/PostDetails"));
 
 /**
  * Container component (page component)
- * Responsible for home page view story component
- * post component and suggestions
+ * Responsible for post, story and suggestion list
  * Using userAction context for modal show hide
  * In first render getting socket connection using useChat hook
  * @returns
@@ -34,7 +27,6 @@ function Container() {
     postDetails,
     setPostDetails,
   } = useContext(UserActionContext);
-  // const { connectSocket } = useContext(SocketContext);
   const { connectSocket, socket } = useChat();
 
   useEffect(() => {
