@@ -85,11 +85,12 @@ function UserPosts({ posts, type, setType, userId }) {
                   onClick={() => {
                     handleViewComments(post._id);
                   }}>
-                  {post.files[0].fileType.startsWith("video/") && (
-                    <div className="absolute right-3 top-2 ">
-                      <ReelIcon color="#ffffff" />
-                    </div>
-                  )}
+                  {post.files.length == 1 &&
+                    post.files[0].fileType.startsWith("video/") && (
+                      <div className="absolute right-3 top-2 ">
+                        <ReelIcon color="#ffffff" />
+                      </div>
+                    )}
                   {post.files.length > 1 && (
                     <div className="absolute right-3 top-2 ">
                       <MultiPostIcon color="#ffffff" />
