@@ -7,7 +7,6 @@ import { UserActionContext } from "../../../services/providers/UserActionContext
 import { Loading } from "../../../assets/svg/Loading";
 
 function UserPosts({ posts, type, setType, userId }) {
-  console.log("🚀 ~ file: UserPosts.jsx:10 ~ UserPosts ~ posts:", posts);
   const { userData, comments, setComments, postId, setPostId } =
     useContext(UserActionContext);
 
@@ -91,7 +90,7 @@ function UserPosts({ posts, type, setType, userId }) {
                       <ReelIcon color="#ffffff" />
                     </div>
                   )}
-                  {post.files[0].fileType.startsWith("image/") && (
+                  {post.files.length > 1 && (
                     <div className="absolute right-3 top-2 ">
                       <MultiPostIcon color="#ffffff" />
                     </div>

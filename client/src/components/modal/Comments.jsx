@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -17,16 +17,15 @@ import CommentedUser from "./components/CommentedUser";
 
 const autoplay = window.innerWidth >= 1024;
 function Comments({ show, closeModal, postId }) {
+  const msgInputRef = useRef(null);
+
   const [postDetails, setPostDetails] = useState();
-  console.log(
-    "🚀 ~ file: Comments.jsx:19 ~ Comments ~ postDetails:",
-    postDetails
-  );
   const {
     getCommentsByPostId,
     likePostInCommentModal,
     savePostInCommentModal,
     addComment,
+    sharePost,
   } = useSocialAction();
 
   useEffect(() => {
@@ -142,8 +141,16 @@ function Comments({ show, closeModal, postId }) {
                             />
                           )}
                         </div>
-                        <CommentIcon />
-                        <MessageIcon />
+                        <div className="cursor-pointer" onClick={() => msgInputRef.current.focus()}>
+                          <CommentIcon />
+                        </div>
+                        <div
+                          onClick={() => {
+                            console.log("share");
+                            sharePost(postDetails?._id);
+                          }}>
+                          <MessageIcon />
+                        </div>
                         <div
                           className="cursor-pointer w-full flex-1 flex justify-end"
                           onClick={() => handleSavePost(postDetails?._id)}>
@@ -162,7 +169,11 @@ function Comments({ show, closeModal, postId }) {
                       </div>
                     </div>
 
-                    <Comment postId={postId} callBack={handleAddComment} />
+                    <Comment
+                      postId={postId}
+                      callBack={handleAddComment}
+                      msgInputRef={msgInputRef}
+                    />
                   </div>
                 </div>
                 {/* </div> */}

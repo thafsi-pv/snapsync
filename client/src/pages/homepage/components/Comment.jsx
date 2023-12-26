@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { memo } from "react";
 import InputField from "../../../components/uiPrimitives/fields/InputField";
 
-function Comment({ postId, callBack }) {
+function Comment({ postId, callBack, msgInputRef }) {
   const commentFormik = useFormik({
     initialValues: {
       comment: "",
@@ -23,6 +23,7 @@ function Comment({ postId, callBack }) {
       />
       <div className=" w-full h-full">
         <InputField
+          inputRef={msgInputRef}
           placeholder="Add a comment"
           extra="border-none bg-white"
           inputClass="border-none "

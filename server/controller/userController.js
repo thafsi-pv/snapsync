@@ -95,12 +95,66 @@ const getProfileData = async (req, res) => {
 
   if (profile.length > 0) {
     const userProfile = profile[0];
-    const matchStage =
-      type == 1
-        ? { media_type: /^video/ }
-        : type == 2
-        ? { media_type: /^image/ }
-        : {};
+    // const matchStage =
+    //   type == 1
+    //     ? { "files.fileType": /^video/ }
+    //     : type == 2
+    //     ? { "files.fileType": /^image/ }
+    //     : {};
+
+    const matchStage = {};
+
+    if (type == 1) {
+      matchStage["$expr"] = {
+        $and: [
+          { $eq: [{ $size: "$files" }, 1] },
+          {
+            $eq: [
+              {
+                $size: {
+                  $filter: {
+                    input: "$files",
+                    as: "file",
+                    cond: {
+                      $regexMatch: {
+                        input: "$$file.fileType",
+                        regex: /^video/,
+                      },
+                    },
+                  },
+                },
+              },
+              1,
+            ],
+          },
+        ],
+      };
+    } else if (type == 2) {
+      matchStage["$expr"] = {
+        $and: [
+          { $eq: [{ $size: "$files" }, 1] },
+          {
+            $eq: [
+              {
+                $size: {
+                  $filter: {
+                    input: "$files",
+                    as: "file",
+                    cond: {
+                      $regexMatch: {
+                        input: "$$file.fileType",
+                        regex: /^image/,
+                      },
+                    },
+                  },
+                },
+              },
+              1,
+            ],
+          },
+        ],
+      };
+    }
     const posts = await postModal.aggregate([
       {
         $match: { user_id: userProfile._id, ...matchStage },

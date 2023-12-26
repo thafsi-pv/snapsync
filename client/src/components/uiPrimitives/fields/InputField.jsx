@@ -20,6 +20,7 @@ function InputField(props) {
     step,
     name,
     inputClass,
+    inputRef,
   } = props;
 
   return (
@@ -36,6 +37,7 @@ function InputField(props) {
       )}
       <div className="flex w-full items-center">
         <input
+          ref={inputRef}
           name={name}
           onChange={onChange}
           onBlur={onBlur}

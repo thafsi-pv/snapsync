@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { IoIosHeartEmpty } from "react-icons/io";
 import BookmarkIcon from "../../assets/svg/BookmarkIcon";
@@ -42,7 +42,6 @@ function PostBottom({
         <div
           className="cursor-pointer"
           onClick={() => {
-            console.log("dfdsf");
             sharePost(post._id);
           }}>
           <MessageIcon />
