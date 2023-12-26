@@ -4,7 +4,7 @@ https://github.com/thafsi-pv/MERN/assets/22377348/2526aaa9-b2d6-463a-bd74-3a7a32
 
 ### LiveUrl: https://snapsync.onrender.com/
 
-Demo Video:
+### Demo Video:
 [![Video](https://img.youtube.com/vi/XZyjKs38n9Q/0.jpg)](https://youtu.be/XZyjKs38n9Q?si=pGh4V4mhk2cJhciY)
 
 ## Overview
