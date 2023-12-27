@@ -7,6 +7,9 @@ https://github.com/thafsi-pv/MERN/assets/22377348/2526aaa9-b2d6-463a-bd74-3a7a32
 ### Demo Video: https://youtu.be/XZyjKs38n9Q?si=pGh4V4mhk2cJhciY
 <!-- [![Video](https://img.youtube.com/vi/XZyjKs38n9Q/0.jpg)](https://youtu.be/XZyjKs38n9Q?si=pGh4V4mhk2cJhciY) -->
 
+#### Functional Requirement Document (FRD): https://docs.google.com/document/d/1ZANRQCTXW9wmTBztYvk0WFRVgXtaqc31rOFIxTh92JU/edit?usp=sharing
+#### Database Diagram: https://dbdiagram.io/d/SnapSync-652a7510ffbf5169f0acfcad
+
 ## Overview
 
 SnapSync is a social media application that mirrors the key features of the popular Instagram platform. Users can share images and videos, view stories, engage with posts, chat with other users, and explore a personalized feed.
