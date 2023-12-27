@@ -1,5 +1,5 @@
 
-# SnapSync - Social Media App
+# SnapSync - Unified Media Sharing Hub
 https://github.com/thafsi-pv/MERN/assets/22377348/2526aaa9-b2d6-463a-bd74-3a7a32ce5197
 
 ### LiveUrl: https://snapsync.onrender.com/
