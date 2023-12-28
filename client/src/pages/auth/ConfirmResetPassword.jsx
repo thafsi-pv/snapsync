@@ -21,10 +21,6 @@ function ConfirmResetPassword() {
     },
     validationSchema: resetPasswordSchema,
     onSubmit: (values) => {
-      console.log(
-        "🚀 ~ file: ConfirmResetPassword.jsx:21 ~ ConfirmResetPassword ~ values:",
-        values
-      );
       handlePasswordResetConfirm(values);
     },
   });
