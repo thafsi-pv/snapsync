@@ -1,13 +1,12 @@
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/uiPrimitives/button";
 import InputField from "../../components/uiPrimitives/fields/InputField";
 import Logo from "../../components/uiPrimitives/logo/Logo";
 import { axiosInstance } from "../../services/api/axiosInterceptor";
 import { CONFIRM_RESET_PASSWORD_API } from "../../services/api/const";
 import { resetPasswordSchema } from "../../utils/validation";
-import { useNavigate } from "react-router-dom";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function ConfirmResetPassword() {
   const queryParams = new URLSearchParams(location.search);
