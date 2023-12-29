@@ -12,7 +12,6 @@ const EmailVerification = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const code = queryParams.get("code");
-  console.log("🚀 ~ file: EmailVerification.jsx:15 ~ EmailVerification ~ code:", code)
 
   useEffect(() => {
     if (code) {
@@ -24,7 +23,6 @@ const EmailVerification = () => {
     const verification = await axiosInstance.post(
       `${VERIFY_EMAIL_API}?code=${code}`
     );
-    console.log("🚀 ~ file: EmailVerification.jsx:27 ~ handleVerification ~ verification:", verification)
     if (verification.status == 200) {
       setIsVerified(true);
       setCountdown(5);
