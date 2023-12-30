@@ -15,7 +15,6 @@ function useAuth() {
 
   const handleLogIn = async (values) => {
     const result = await axiosInstance.post(LOGIN_API, values);
-    console.log("🚀 ~ file: useAuth.jsx:18 ~ handleLogIn ~ result:", result);
     if (result.status === 200) {
       if (result?.data?.isVerified === false) {
         navigateVerification(result.data.emailPhone, result.data._id);
